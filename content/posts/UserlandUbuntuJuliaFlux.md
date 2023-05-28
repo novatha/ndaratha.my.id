@@ -1,0 +1,16 @@
+---
+title: "Instalasi Julia dan Flux pada Android"
+date: 2023-05-02T20:48:17+07:00
+draft: false
+---
+
+Dokumen ini memuat informasi tentang instalasi Flux dan Julia pada Android.
+
+1. Install [UserLand melalui Google Play](https://play.google.com/store/apps/details?id=tech.ula&pli=1).
+2. Jalankan UserLand, pilih Ubuntu, pilih minimum terminal.
+3. Download [Julia untuk ARM](https://julialang.org/downloads/).
+4. Untar file Julia.
+5. Test installasi Julia.
+6. Add [Flux](https://fluxml.ai/).
+7. Test installasi Flux.
+8. Kerjakan [tutorial Flux untuk pemula](https://fluxml.ai/).

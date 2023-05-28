@@ -1,0 +1,4 @@
+baseURL = 'http://ndaratha.my.id'
+languageCode = 'en-us'
+title = 'Novalio Daratha'
+theme = 'ananke'
