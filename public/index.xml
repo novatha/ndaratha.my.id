@@ -6,7 +6,19 @@
     <description>Recent content on Novalio Daratha</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 02 May 2023 20:48:17 +0700</lastBuildDate><atom:link href="http://ndaratha.my.id/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 29 May 2023 15:31:37 +0700</lastBuildDate><atom:link href="http://ndaratha.my.id/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Transformer</title>
+      <link>http://ndaratha.my.id/posts/transformer/</link>
+      <pubDate>Mon, 29 May 2023 15:31:37 +0700</pubDate>
+      
+      <guid>http://ndaratha.my.id/posts/transformer/</guid>
+      <description>Attention is all you need
+Transformer From Scratch
+Attention is all you need: Discovering the Transformer paper
+The Annotated Transformer </description>
+    </item>
+    
     <item>
       <title>Catatan tentang pengelolaan server</title>
       <link>http://ndaratha.my.id/posts/my-second-post/</link>
@@ -81,6 +93,21 @@ AI in Electrical Distribution System
 The Application of Artificial Intelligence to Electricity Power System
 Zhang, Z., Zhang, D. and Qiu, R.C., 2019. Deep reinforcement learning for power system applications: An overview. CSEE Journal of Power and Energy Systems, 6(1), pp.213-225.
 Power Electronics Zhao, S., Blaabjerg, F. and Wang, H., 2020. An overview of artificial intelligence applications for power electronics.</description>
+    </item>
+    
+    <item>
+      <title>Reinforcement Learning</title>
+      <link>http://ndaratha.my.id/posts/math/</link>
+      <pubDate>Tue, 02 May 2023 20:48:17 +0700</pubDate>
+      
+      <guid>http://ndaratha.my.id/posts/math/</guid>
+      <description>David Silver
+deepmind
+Quadedvlieg
+Paris
+openai
+[AMD-RIPS](https://github.com/AMD-RIPS/RL-2018/tree/master/literature
+[ \int f(x) dx]</description>
     </item>
     
     <item>
