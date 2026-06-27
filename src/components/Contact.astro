@@ -1,0 +1,120 @@
+---
+---
+<section id="contact" class="contact-section">
+	<h2 class="section-title">Get in Touch</h2>
+	<div class="contact-card">
+		<div class="contact-info">
+			<h3>Collaborations & Inquiries</h3>
+			<p>I am available for research partnerships, academic consultations, and professional discussions in the field of electrical engineering and optimization.</p>
+			
+			<div class="info-list">
+				<div class="info-item">
+					<strong>Official Email</strong>
+					<a href="mailto:ndaratha@unib.ac.id">ndaratha@unib.ac.id</a>
+				</div>
+				<div class="info-item">
+					<strong>Direct Message</strong>
+					<a href="https://wa.me/6281285198719">+62 812-8519-8719 (WhatsApp)</a>
+				</div>
+				<div class="info-item">
+					<strong>Office</strong>
+					<span>Dept. of Electrical Engineering, Universitas Bengkulu, Indonesia</span>
+				</div>
+			</div>
+		</div>
+		<div class="contact-action">
+			<a href="mailto:ndaratha@unib.ac.id" class="btn">Write an Email</a>
+			<div class="social-proof">
+				<p>Academic researcher with over 450+ citations.</p>
+			</div>
+		</div>
+	</div>
+</section>
+
+<style>
+	.contact-card {
+		display: grid;
+		grid-template-columns: 1.2fr 0.8fr;
+		background: white;
+		border: 1px solid var(--border);
+		border-radius: 4px;
+		overflow: hidden;
+		box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+	}
+
+	.contact-info {
+		padding: 5rem;
+		border-right: 1px solid var(--border);
+	}
+
+	.contact-info h3 {
+		font-size: 2.25rem;
+		margin-bottom: 1.5rem;
+		font-weight: 900;
+	}
+
+	.contact-info p {
+		font-size: 1.15rem;
+		color: var(--muted);
+		margin-bottom: 4rem;
+		max-width: 500px;
+	}
+
+	.info-list {
+		display: flex;
+		flex-direction: column;
+		gap: 2.5rem;
+	}
+
+	.info-item {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+
+	.info-item strong {
+		text-transform: uppercase;
+		font-size: 0.75rem;
+		letter-spacing: 0.15em;
+		color: var(--accent);
+		font-weight: 800;
+	}
+
+	.info-item a, .info-item span {
+		font-size: 1.1rem;
+		text-decoration: none;
+		color: var(--text);
+		font-weight: 600;
+		transition: color 0.2s;
+	}
+
+	.info-item a:hover {
+		color: var(--accent);
+	}
+
+	.contact-action {
+		padding: 5rem;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		background: var(--surface);
+		text-align: center;
+	}
+
+	.social-proof {
+		margin-top: 2rem;
+	}
+
+	.social-proof p {
+		font-size: 0.85rem;
+		color: var(--muted);
+		font-style: italic;
+	}
+
+	@media (max-width: 900px) {
+		.contact-card { grid-template-columns: 1fr; }
+		.contact-info { padding: 3rem 2rem; border-right: none; border-bottom: 1px solid var(--border); }
+		.contact-action { padding: 4rem 2rem; }
+	}
+</style>

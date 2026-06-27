@@ -1,0 +1,336 @@
+---
+const sintaData = {
+	profileUrl: "https://sinta.kemdiktisaintek.go.id/authors/profile/258463",
+	id: "258463",
+	overallScore: "722",
+	hIndexScopus: "5",
+	hIndexScholar: "7",
+	scopusDocs: "14",
+	scholarDocs: "38",
+	citations: "453"
+};
+
+const scopusPubs = [
+	{ title: "Enhancing Power System Security Through Deep CNN-Based N-1 and N-2 Contingency Screening", year: "2025", journal: "Applied Energy / IEEE Systems" },
+	{ title: "Optimizing N-1 Contingency Rankings Using a Nature-Inspired Modified Sine Cosine Algorithm", year: "2025", journal: "Energy Conversion and Management" },
+	{ title: "Probabilistic three-phase load flow for unbalanced electrical systems with wind farms", year: "2019", journal: "Int. Journal of Electrical Power & Energy Systems (Q1)" },
+	{ title: "NFT Hydroponic Control Using Mamdani Fuzzy Inference System", year: "2022", journal: "Recent Advances in Electrical Engineering" },
+	{ title: "Robust voltage regulation in unbalanced radial distribution system under uncertainty", year: "2017", journal: "IET Generation, Transmission & Distribution (Q1)" }
+];
+
+const researchProjects = [
+	{ title: "Development of low-cost wind power estimation system", focus: "Energy Sustainability", year: "2019-2021" },
+	{ title: "Optimal Selection of Network (OSN) for Contingency Analysis", focus: "Power System Security", year: "2023-Present" },
+	{ title: "Stochastic Optimization for Unbalanced Distribution Networks", focus: "Grid Modernization", year: "2018-2020" }
+];
+
+const serviceProjects = [
+	{ title: "OSN Informatika - National Olympiad Coaching Platform", client: "Universitas Bengkulu / Local Schools", impact: "Educational Outreach" },
+	{ title: "Smart Hydroponics implementation for local farmers", client: "Bengkulu Agricultural Community", impact: "Tech Transfer" },
+	{ title: "Renewable energy potential assessment for Enggano Island", client: "Local Government", impact: "Infrastructure Planning" }
+];
+---
+
+<section id="research" class="portfolio-section">
+	<h2 class="section-title">Research & Portfolio</h2>
+	
+	<div class="tabs-container">
+		<div class="tabs-nav" role="tablist">
+			<button class="tab-btn active" data-tab="scopus">Scopus</button>
+			<button class="tab-btn" data-tab="scholar">Google Scholar</button>
+			<button class="tab-btn" data-tab="research">Research Projects</button>
+			<button class="tab-btn" data-tab="service">Outreach</button>
+			<button class="tab-btn" data-tab="ipr">IPR & Books</button>
+		</div>
+
+		<div class="tabs-content">
+			<!-- Scopus Tab -->
+			<div class="tab-pane active" id="scopus">
+				<div class="pane-header">
+					<h3>Scopus Indexed Publications</h3>
+					<p>High-impact research across Q1/Q2 journals and top-tier IEEE conferences.</p>
+				</div>
+				<div class="item-list">
+					{scopusPubs.map(pub => (
+						<div class="list-item">
+							<span class="item-year">{pub.year}</span>
+							<div class="item-body">
+								<h4>{pub.title}</h4>
+								<p>{pub.journal}</p>
+							</div>
+						</div>
+					))}
+				</div>
+			</div>
+
+			<!-- Scholar Tab -->
+			<div class="tab-pane" id="scholar">
+				<div class="pane-header">
+					<h3>Full Academic Record</h3>
+					<p>Total Citations: <strong>{sintaData.citations}</strong> | H-Index: <strong>{sintaData.hIndexScholar}</strong></p>
+				</div>
+				<div class="scholar-cta">
+					<p>Extensive documentation covering power system stability, fuzzy logic, and nature-inspired optimization algorithms.</p>
+					<a href={sintaData.profileUrl} target="_blank" class="btn outline">View Full SINTA Profile</a>
+				</div>
+			</div>
+
+			<!-- Research Tab -->
+			<div class="tab-pane" id="research">
+				<div class="pane-header">
+					<h3>Ongoing & Past Research</h3>
+					<p>Projects focused on enhancing grid resilience and sustainable integration.</p>
+				</div>
+				<div class="item-grid">
+					{researchProjects.map(proj => (
+						<div class="grid-card">
+							<span class="card-tag">{proj.year}</span>
+							<h4>{proj.title}</h4>
+							<p>{proj.focus}</p>
+						</div>
+					))}
+				</div>
+			</div>
+
+			<!-- Service Tab -->
+			<div class="tab-pane" id="service">
+				<div class="pane-header">
+					<h3>Professional Outreach</h3>
+					<p>Bridging the gap between academic research and practical community solutions.</p>
+				</div>
+				<div class="item-list">
+					{serviceProjects.map(service => (
+						<div class="list-item">
+							<div class="item-body">
+								<h4>{service.title}</h4>
+								<p><strong>Impact:</strong> {service.impact} | <strong>Partner:</strong> {service.client}</p>
+							</div>
+						</div>
+					))}
+				</div>
+			</div>
+
+			<!-- IPR & Books Tab -->
+			<div class="tab-pane" id="ipr">
+				<div class="pane-header">
+					<h3>Intellectual Property & Publications</h3>
+				</div>
+				<div class="dual-grid">
+					<div class="ipr-box">
+						<h4>IPR (HKI)</h4>
+						<p>Registered copyrights for power system analysis software and intelligent optimization algorithms.</p>
+					</div>
+					<div class="book-box">
+						<h4>Book Chapters</h4>
+						<div class="book-item">
+							<strong>Low-cost wind power estimation system...</strong>
+							<p>Lecture Notes in Mechanical Engineering, Springer.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<script>
+	const tabs = document.querySelectorAll('.tab-btn');
+	const panes = document.querySelectorAll('.tab-pane');
+
+	tabs.forEach(tab => {
+		tab.addEventListener('click', () => {
+			const target = tab.getAttribute('data-tab');
+			
+			tabs.forEach(t => t.classList.remove('active'));
+			panes.forEach(p => p.classList.remove('active'));
+			
+			tab.classList.add('active');
+			document.getElementById(target).classList.add('active');
+		});
+	});
+</script>
+
+<style>
+	.portfolio-section {
+		padding-top: 1rem;
+	}
+
+	.tabs-container {
+		border: 1px solid var(--border);
+		border-radius: 4px;
+		background: white;
+		box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+	}
+
+	.tabs-nav {
+		display: flex;
+		background: var(--surface);
+		border-bottom: 1px solid var(--border);
+		overflow-x: auto;
+	}
+
+	.tab-btn {
+		padding: 1.5rem 2.5rem;
+		border: none;
+		background: none;
+		font-family: var(--font-main);
+		font-size: 0.85rem;
+		font-weight: 700;
+		color: var(--muted);
+		cursor: pointer;
+		white-space: nowrap;
+		transition: all 0.2s;
+		border-right: 1px solid var(--border);
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+	}
+
+	.tab-btn:hover {
+		color: var(--text);
+		background: white;
+	}
+
+	.tab-btn.active {
+		color: var(--accent);
+		background: white;
+		position: relative;
+	}
+
+	.tab-btn.active::after {
+		content: '';
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		height: 3px;
+		background: var(--accent);
+	}
+
+	.tabs-content {
+		padding: 4rem;
+	}
+
+	.tab-pane {
+		display: none;
+		animation: fadeIn 0.3s ease-out;
+	}
+
+	.tab-pane.active {
+		display: block;
+	}
+
+	.pane-header {
+		margin-bottom: 3.5rem;
+	}
+
+	.pane-header h3 {
+		font-size: 1.5rem;
+		margin-bottom: 0.75rem;
+		color: var(--text);
+		font-weight: 900;
+	}
+
+	.item-list {
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+	}
+
+	.list-item {
+		display: flex;
+		gap: 3rem;
+		padding-bottom: 2rem;
+		border-bottom: 1px solid var(--border);
+	}
+
+	.item-year {
+		font-weight: 800;
+		color: var(--text);
+		font-size: 0.85rem;
+		min-width: 60px;
+		opacity: 0.3;
+	}
+
+	.item-body h4 {
+		font-size: 1.25rem;
+		margin-bottom: 0.5rem;
+		color: var(--text);
+		font-family: var(--font-serif);
+		font-weight: 700;
+		line-height: 1.4;
+	}
+
+	.item-body p {
+		font-size: 1rem;
+		color: var(--muted);
+	}
+
+	.item-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+		gap: 2rem;
+	}
+
+	.grid-card {
+		padding: 2.5rem;
+		background: var(--surface);
+		border: 1px solid var(--border);
+		border-radius: 4px;
+	}
+
+	.card-tag {
+		font-size: 0.75rem;
+		font-weight: 800;
+		color: var(--accent);
+		text-transform: uppercase;
+		margin-bottom: 1.5rem;
+		display: block;
+		letter-spacing: 0.1em;
+	}
+
+	.scholar-cta {
+		padding: 4rem;
+		background: var(--surface);
+		border-radius: 4px;
+		text-align: center;
+		border: 1px dashed var(--border);
+	}
+
+	.scholar-cta p {
+		margin-bottom: 2.5rem;
+		font-size: 1.2rem;
+	}
+
+	.dual-grid {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 3rem;
+	}
+
+	.ipr-box, .book-box {
+		padding: 2.5rem;
+		border: 1px solid var(--border);
+		border-radius: 4px;
+	}
+
+	.ipr-box h4, .book-box h4 {
+		margin-bottom: 1.25rem;
+		color: var(--text);
+		font-weight: 800;
+		text-transform: uppercase;
+		font-size: 0.9rem;
+		letter-spacing: 0.1em;
+	}
+
+	@keyframes fadeIn {
+		from { opacity: 0; }
+		to { opacity: 1; }
+	}
+
+	@media (max-width: 768px) {
+		.tabs-content { padding: 2rem; }
+		.dual-grid { grid-template-columns: 1fr; }
+		.list-item { flex-direction: column; gap: 0.5rem; }
+		.item-year { opacity: 1; color: var(--accent); }
+	}
+</style>

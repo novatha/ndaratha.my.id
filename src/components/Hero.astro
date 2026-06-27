@@ -1,0 +1,106 @@
+---
+---
+<section id="hero" class="hero-section">
+	<div class="hero-content">
+		<div class="pre-title">Assoc. Professor</div>
+		<h1>Novalio Daratha, Ph.D.</h1>
+		<p class="description">
+			Leading research in power system operation, control, and intelligent optimization. 
+			Building a more resilient and sustainable energy future through computational intelligence.
+		</p>
+		<div class="hero-actions">
+			<a href="#publications" class="btn">View Portfolio</a>
+			<a href="#contact" class="btn outline">Inquiries</a>
+		</div>
+	</div>
+	<div class="hero-stats">
+		<div class="stat-item">
+			<div class="stat-value">450+</div>
+			<div class="stat-label">Citations</div>
+		</div>
+		<div class="stat-item">
+			<div class="stat-value">14</div>
+			<div class="stat-label">Scopus Docs</div>
+		</div>
+		<div class="stat-item">
+			<div class="stat-value">720+</div>
+			<div class="stat-label">SINTA Score</div>
+		</div>
+	</div>
+</section>
+
+<style>
+	.hero-section {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		min-height: 60vh;
+		padding: 2rem 0;
+	}
+
+	.pre-title {
+		font-weight: 700;
+		color: var(--accent);
+		text-transform: uppercase;
+		letter-spacing: 0.15em;
+		margin-bottom: 1.5rem;
+		font-size: 0.85rem;
+	}
+
+	h1 {
+		font-size: 5rem;
+		margin-bottom: 2rem;
+		color: var(--text);
+		font-weight: 900;
+		letter-spacing: -0.02em;
+	}
+
+	.description {
+		font-size: 1.4rem;
+		max-width: 800px;
+		margin-bottom: 3.5rem;
+		line-height: 1.5;
+		color: var(--muted);
+	}
+
+	.hero-actions {
+		display: flex;
+		gap: 1.5rem;
+		margin-bottom: 6rem;
+	}
+
+	.hero-stats {
+		display: flex;
+		gap: 6rem;
+		padding-top: 3rem;
+		border-top: 1px solid var(--border);
+		max-width: fit-content;
+	}
+
+	.stat-item {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.stat-value {
+		font-family: var(--font-serif);
+		font-size: 2.5rem;
+		font-weight: 900;
+		color: var(--text);
+	}
+
+	.stat-label {
+		font-size: 0.75rem;
+		font-weight: 700;
+		color: var(--muted);
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		margin-top: 0.25rem;
+	}
+
+	@media (max-width: 900px) {
+		h1 { font-size: 3.5rem; }
+		.hero-stats { gap: 3rem; flex-wrap: wrap; }
+		.description { font-size: 1.2rem; }
+	}
+</style>
