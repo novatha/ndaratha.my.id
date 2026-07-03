@@ -25,3 +25,5 @@ pnpm-debug.log*
 
 # Session summaries
 session_summary_*.md
+.vercel
+.env*
