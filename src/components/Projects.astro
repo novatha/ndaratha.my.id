@@ -25,6 +25,12 @@ const researchProjects = [
 ];
 
 const serviceProjects = [
+	{ 
+		title: "Differential Equations Diagnostic Readiness Test", 
+		client: "Electrical Engineering Students, Universitas Bengkulu", 
+		impact: "Interactive Learning Tool",
+		url: "/tes-kesiapan-pd-elektro/" 
+	},
 	{ title: "OSN Informatika - National Olympiad Coaching Platform", client: "Universitas Bengkulu / Local Schools", impact: "Educational Outreach" },
 	{ title: "Smart Hydroponics implementation for local farmers", client: "Bengkulu Agricultural Community", impact: "Tech Transfer" },
 	{ title: "Renewable energy potential assessment for Enggano Island", client: "Local Government", impact: "Infrastructure Planning" }
@@ -102,7 +108,13 @@ const serviceProjects = [
 					{serviceProjects.map(service => (
 						<div class="list-item">
 							<div class="item-body">
-								<h4>{service.title}</h4>
+								<h4>
+									{service.url ? (
+										<a href={service.url} class="project-link">{service.title} &rarr;</a>
+									) : (
+										service.title
+									)}
+								</h4>
 								<p><strong>Impact:</strong> {service.impact} | <strong>Partner:</strong> {service.client}</p>
 							</div>
 						</div>
@@ -151,6 +163,16 @@ const serviceProjects = [
 </script>
 
 <style>
+	.project-link {
+		color: var(--text);
+		text-decoration: none;
+		transition: color 0.2s;
+	}
+
+	.project-link:hover {
+		color: var(--accent);
+	}
+
 	.portfolio-section {
 		padding-top: 1rem;
 	}
