@@ -2113,7 +2113,16 @@
 
         function toggleReviewItem(idx) {
             const item = document.getElementById(`review-item-${idx}`);
-            item.classList.toggle('open');
+            const isOpen = item.classList.toggle('open');
+            if (isOpen && window.renderMathInElement) {
+                renderMathInElement(item.querySelector('.review-body'), {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false}
+                    ],
+                    throwOnError: false
+                });
+            }
         }
 
         function animateValue(id, start, end, duration) {
