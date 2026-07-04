@@ -1140,11 +1140,45 @@
         }
 
         function sendPin() {
+            const nama = document.getElementById('input-nama').value.trim();
+            const npm = document.getElementById('input-npm').value.trim();
+            const nohp = document.getElementById('input-nohp').value.trim();
             const emailInput = document.getElementById('input-email');
             const email = emailInput.value.trim();
-            
-            if (!email || !email.includes('@')) {
-                alert("Harap masukkan alamat email yang valid!");
+
+            if (!nama || !npm || !nohp || !email) {
+                alert("Harap isi Nama Lengkap, NPM, No. HP, dan Email terlebih dahulu sebelum meminta PIN verifikasi!");
+                return;
+            }
+
+            // Validasi Nama Lengkap: minimal 3 karakter, hanya huruf dan tanda baca nama
+            const nameRegex = /^[a-zA-Z\s'.,]{3,}$/;
+            if (!nameRegex.test(nama)) {
+                alert("Nama Lengkap tidak valid! Harus minimal 3 karakter dan hanya mengandung huruf.");
+                document.getElementById('input-nama').focus();
+                return;
+            }
+
+            // Validasi NPM: berawalan huruf diikuti angka/huruf (7 sampai 10 karakter)
+            const npmRegex = /^[a-zA-Z][0-9a-zA-Z]{7,9}$/;
+            if (!npmRegex.test(npm)) {
+                alert("Format NPM tidak valid! Masukkan NPM resmi Anda (contoh: G1A024001).");
+                document.getElementById('input-npm').focus();
+                return;
+            }
+
+            // Validasi No HP: format telepon Indonesia diawali 08, 628, atau +628
+            const phoneRegex = /^(08|628|\+628)[0-9]{8,12}$/;
+            if (!phoneRegex.test(nohp)) {
+                alert("Nomor HP/WhatsApp tidak valid! Masukkan nomor telepon Indonesia yang valid (contoh: 081234567890).");
+                document.getElementById('input-nohp').focus();
+                return;
+            }
+
+            // Validasi format email standard
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (!emailRegex.test(email)) {
+                alert("Email tidak valid! Harap masukkan alamat email yang benar.");
                 emailInput.focus();
                 return;
             }
@@ -1225,13 +1259,46 @@
                 return;
             }
 
+            // Validasi Nama Lengkap
+            const nameRegex = /^[a-zA-Z\s'.,]{3,}$/;
+            if (!nameRegex.test(nama)) {
+                alert("Nama Lengkap tidak valid! Harus minimal 3 karakter dan hanya mengandung huruf.");
+                document.getElementById('input-nama').focus();
+                return;
+            }
+
+            // Validasi NPM
+            const npmRegex = /^[a-zA-Z][0-9a-zA-Z]{7,9}$/;
+            if (!npmRegex.test(npm)) {
+                alert("Format NPM tidak valid! Masukkan NPM resmi Anda (contoh: G1A024001).");
+                document.getElementById('input-npm').focus();
+                return;
+            }
+
+            // Validasi No HP
+            const phoneRegex = /^(08|628|\+628)[0-9]{8,12}$/;
+            if (!phoneRegex.test(nohp)) {
+                alert("Nomor HP/WhatsApp tidak valid! Masukkan nomor telepon Indonesia yang valid (contoh: 081234567890).");
+                document.getElementById('input-nohp').focus();
+                return;
+            }
+
+            // Validasi Email
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (!emailRegex.test(email)) {
+                alert("Email tidak valid! Harap masukkan alamat email yang benar.");
+                document.getElementById('input-email').focus();
+                return;
+            }
+
             if (!generatedPin) {
                 alert("Harap klik 'Kirim PIN' terlebih dahulu!");
                 return;
             }
 
+            // PIN validation
             if (pin !== generatedPin) {
-                alert("PIN verifikasi salah! Periksa kembali email simulasi (lihat box notifikasi di kanan atas).");
+                alert("PIN verifikasi salah! Silakan periksa kembali.");
                 return;
             }
 
