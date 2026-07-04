@@ -954,6 +954,7 @@
         const questions = [
             {
                 id: 1,
+                type: "MC",
                 category: "Kalkulus",
                 subTopic: "Turunan Berantai (Chain Rule)",
                 bloomLevel: "C3 (Apply)",
@@ -971,6 +972,7 @@
             },
             {
                 id: 2,
+                type: "MC",
                 category: "Kalkulus",
                 subTopic: "Integral Substitusi",
                 bloomLevel: "C3 (Apply)",
@@ -988,6 +990,7 @@
             },
             {
                 id: 3,
+                type: "MC",
                 category: "Kalkulus",
                 subTopic: "Integral Parsial",
                 bloomLevel: "C3 (Apply)",
@@ -1005,6 +1008,7 @@
             },
             {
                 id: 4,
+                type: "MC",
                 category: "Kalkulus",
                 subTopic: "Integral Fungsi Rasional",
                 bloomLevel: "C2 (Understand)",
@@ -1018,100 +1022,106 @@
                     "$-\\frac{1}{(2x+3)^2} + C$"
                 ],
                 correctIndex: 0,
-                explanation: "Gunakan substitusi linear:\\newline Misalkan $u = 2x + 3 \\Rightarrow du = 2 \\, dx \\Rightarrow dx = \\frac{1}{2} du$.\\newline Maka:\\newline $$\\int \\frac{1}{u} \\left(\\frac{1}{2} du\\right) = \\frac{1}{2} \\ln|u| + C = \\frac{1}{2} \\ln|2x + 3| + C$$"
+                explanation: "Gunakan aturan dasar integral logaritma natural:\\newline Misalkan $u = 2x + 3 \\Rightarrow du = 2 \\, dx \\Rightarrow dx = \\frac{1}{2} du$.\\newline Maka:\\newline $$\\int \\frac{1}{u} \\left(\\frac{1}{2}\\right) du = \\frac{1}{2} \\ln|u| + C = \\frac{1}{2} \\ln|2x + 3| + C$$"
             },
             {
                 id: 5,
+                type: "MC",
                 category: "Aljabar Linier",
-                subTopic: "Operasi Matriks",
+                subTopic: "Perkalian Matriks-Vektor",
                 bloomLevel: "C3 (Apply)",
-                competency: "Mampu mengalikan matriks 2x2 dengan vektor kolom keadaan 2x1.",
-                relevance: "Menyusun model ruang-keadaan (\\textit{state-space representation}) sistem multi-variabel.",
-                questionText: "Jika diketahui matriks $A = \\begin{pmatrix} 1 & -2 \\\\ 3 & 0 \\end{pmatrix}$ dan vektor $x = \\begin{pmatrix} y_1 \\\\ y_2 \\end{pmatrix}$, tuliskan hasil perkalian $A \\cdot x$:",
+                competency: "Mampu mengalikan matriks 2x2 dengan vektor kolom 2x1.",
+                relevance: "Representasi ruang keadaan (state-space) sistem PDB linier simultan.",
+                questionText: "Hitung perkalian matriks berikut: $$\\begin{pmatrix} -3 & 1 \\\\ 2 & -4 \\end{pmatrix} \\begin{pmatrix} x_1(t) \\\\ x_2(t) \\end{pmatrix}$$",
                 options: [
-                    "$\\begin{pmatrix} y_1 - 2y_2 \\\\ 3y_1 \\end{pmatrix}$",
-                    "$\\begin{pmatrix} y_1 + 3y_2 \\\\ -2y_1 \\end{pmatrix}$",
-                    "$\\begin{pmatrix} y_1 \\\\ 3y_1 - 2y_2 \\end{pmatrix}$",
-                    "$\\begin{pmatrix} y_1 \\\\ 3y_2 \\end{pmatrix}$"
+                    "$$\\begin{pmatrix} -3x_1(t) + x_2(t) \\\\ 2x_1(t) - 4x_2(t) \\end{pmatrix}$$",
+                    "$$\\begin{pmatrix} -3x_1(t) - 4x_2(t) \\\\ 2x_1(t) + x_2(t) \\end{pmatrix}$$",
+                    "$$\\begin{pmatrix} -3x_1(t)x_2(t) \\\\ -8x_1(t)x_2(t) \\end{pmatrix}$$",
+                    "$$\\begin{pmatrix} -3x_1(t) \\\\ -4x_2(t) \\end{pmatrix}$$"
                 ],
                 correctIndex: 0,
-                explanation: "Gunakan perkalian baris kali kolom:\\newline Baris 1: $1 \\cdot y_1 + (-2) \\cdot y_2 = y_1 - 2y_2$.\\newline Baris 2: $3 \\cdot y_1 + 0 \\cdot y_2 = 3y_1$.\\newline Hasil akhirnya adalah $\\begin{pmatrix} y_1 - 2y_2 \\\\ 3y_1 \\end{pmatrix}$."
+                explanation: "Gunakan aturan perkalian baris kali kolom:\\newline Baris 1: $(-3 \\cdot x_1) + (1 \\cdot x_2) = -3x_1 + x_2$\\newline Baris 2: $(2 \\cdot x_1) + (-4 \\cdot x_2) = 2x_1 - 4x_2$\\newline Sehingga hasilnya berbentuk vektor kolom:\\newline $$\\begin{pmatrix} -3x_1(t) + x_2(t) \\\\ 2x_1(t) - 4x_2(t) \\end{pmatrix}$$"
             },
             {
                 id: 6,
+                type: "MC",
                 category: "Aljabar Linier",
-                subTopic: "Determinan Matriks",
-                bloomLevel: "C3 (Apply)",
-                competency: "Mampu menghitung determinan 2x2 secara simbolik (karakteristik).",
-                relevance: "Diperlukan untuk mencari nilai eigen guna menentukan karakteristik redaman.",
-                questionText: "Hitung nilai determinan dari matriks berikut: $M = \\begin{pmatrix} \\lambda - 2 & 3 \\\\ 1 & \\lambda - 4 \\end{pmatrix}$:",
+                subTopic: "Determinan Matriks 2x2",
+                bloomLevel: "C2 (Understand)",
+                competency: "Mampu menghitung nilai determinan dari matriks 2x2 dengan lambang.",
+                relevance: "Menghitung persamaan karakteristik sistem orde 2 dan kestabilan titik equilibrium.",
+                questionText: "Diberikan matriks koefisien sistem berikut: $$A = \\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix}$$ Tentukan persamaan determinan dari $\\det(A - \\lambda I)$ di mana $I$ adalah matriks identitas:",
                 options: [
-                    "$\\lambda^2 - 6\\lambda + 5$",
-                    "$\\lambda^2 - 6\\lambda - 11$",
-                    "$\\lambda^2 - 6\\lambda + 11$",
-                    "$\\lambda^2 - 8$"
+                    "$\\lambda^2 - (a + d)\\lambda + (ad - bc) = 0$",
+                    "$\\lambda^2 - (ad - bc)\\lambda + (a + d) = 0$",
+                    "$\\lambda^2 + (a + d)\\lambda - (ad - bc) = 0$",
+                    "$(a - \\lambda)(d - \\lambda) + bc = 0$"
                 ],
                 correctIndex: 0,
-                explanation: "Determinan dari matriks $\\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix}$ adalah $ad - bc$:\\newline $\\det(M) = (\\lambda - 2)(\\lambda - 4) - (3)(1)$ \\newline $\\det(M) = (\\lambda^2 - 6\\lambda + 8) - 3 = \\lambda^2 - 6\\lambda + 5$."
+                explanation: "Matriks $(A - \\lambda I)$ adalah:\\newline $$\\begin{pmatrix} a - \\lambda & b \\\\ c & d - \\lambda \\end{pmatrix}$$\\newline Determinannya adalah:\\newline $$\\det(A - \\lambda I) = (a - \\lambda)(d - \\lambda) - bc = 0$$ $$\\Rightarrow \\lambda^2 - a\\lambda - d\\lambda + ad - bc = 0$$ $$\\Rightarrow \\lambda^2 - (a + d)\\lambda + (ad - bc) = 0$$"
             },
             {
                 id: 7,
+                type: "MC",
                 category: "Aljabar Linier",
-                subTopic: "Sistem Persamaan Linier",
-                bloomLevel: "C4 (Analyze)",
-                competency: "Mampu menganalisis konsistensi dan keberadaan solusi SPL.",
-                relevance: "Menentukan konstanta integrasi dari nilai awal atau aturan Cramer domain s.",
-                questionText: "Tentukan karakteristik solusi dari sistem persamaan linier berikut: $$\\begin{aligned} 2x + 3y &= 8 \\\\ 4x + 6y &= 10 \\end{aligned}$$",
+                subTopic: "Keterbalikan Matriks (Invertibility)",
+                bloomLevel: "C2 (Understand)",
+                competency: "Mampu menganalisis keberadaan invers matriks berdasarkan determinannya.",
+                relevance: "Menentukan kestabilan dan keunikan solusi kondisi batas PDB linier.",
+                questionText: "Manakah pernyataan yang benar mengenai matriks $A$ yang memiliki determinan bernilai nol ($\\det(A) = 0$)?",
                 options: [
-                    "Tidak memiliki solusi",
-                    "Memiliki satu solusi unik",
-                    "Memiliki tak terhingga solusi",
-                    "Memiliki tepat dua solusi"
+                    "Matriks $A$ tidak memiliki invers (singular).",
+                    "Sistem persamaan linear $A\\mathbf{x} = \\mathbf{b}$ selalu memiliki solusi unik tunggal.",
+                    "Matriks $A$ pasti merupakan matriks identitas.",
+                    "Invers matriks $A$ dapat dihitung dengan rumus $\\frac{1}{\\det(A)} \\cdot \\text{adj}(A)$."
                 ],
                 correctIndex: 0,
-                explanation: "Persamaan kedua dapat dibagi 2 menjadi: $2x + 3y = 5$.\\newline Ini bertentangan dengan persamaan pertama yang menyatakan $2x + 3y = 8$ (dua garis ini sejajar namun memiliki konstanta berbeda).\\newline Maka sistem persamaan tidak memiliki titik potong (tidak memiliki solusi)."
+                explanation: "Sebuah matriks dikatakan singular jika determinannya nol. Matriks singular tidak memiliki invers karena rumus invers melibatkan pembagian dengan determinan ($\\frac{1}{0}$ tidak terdefinisi)."
             },
             {
                 id: 8,
+                type: "MC",
                 category: "Rangkaian Listrik",
-                subTopic: "Sifat Kapasitor ($C$)",
+                subTopic: "Karakteristik Kapasitor",
                 bloomLevel: "C2 (Understand)",
-                competency: "Mampu mendeskripsikan hubungan arus-tegangan kapasitor.",
-                relevance: "Merepresentasikan penyimpanan energi elektrostatik menjadi turunan tegangan.",
-                questionText: "Tuliskan hubungan arus $i_c(t)$ pada kapasitor terhadap tegangan $v_c(t)$:",
+                competency: "Mampu menerapkan relasi diferensial arus-tegangan pada kapasitor.",
+                relevance: "Menyusun PDB pemodelan tegangan kapasitor pada rangkaian transient RC.",
+                questionText: "Tuliskan persamaan diferensial hubungan tegangan-arus pada sebuah kapasitor $C$:",
                 options: [
-                    "$i_c(t) = C \\frac{dv_c(t)}{dt}$",
-                    "$i_c(t) = \\frac{1}{C} \\int v_c(t) dt$",
-                    "$i_c(t) = C \\cdot v_c(t)$",
-                    "$i_c(t) = \\frac{dv_c(t)}{dt}$"
+                    "$i(t) = C \\frac{dv(t)}{dt}$",
+                    "$v(t) = C \\frac{di(t)}{dt}$",
+                    "$i(t) = \\frac{1}{C} \\frac{dv(t)}{dt}$",
+                    "$v(t) = R \\cdot i(t) + C$"
                 ],
                 correctIndex: 0,
-                explanation: "Arus pada kapasitor sebanding dengan laju perubahan tegangan terhadap waktu ($dv_c/dt$), dengan konstanta kesebandingan berupa kapasitansi ($C$). Persamaannya: $i_c(t) = C \\frac{dv_c(t)}{dt}$."
+                explanation: "Hubungan arus dan tegangan pada kapasitor berbanding lurus dengan laju perubahan tegangan terhadap waktu, yang secara matematis dirumuskan sebagai: $i(t) = C \\frac{dv(t)}{dt}$."
             },
             {
                 id: 9,
+                type: "MC",
                 category: "Rangkaian Listrik",
-                subTopic: "Sifat Induktor ($L$)",
+                subTopic: "Karakteristik Induktor",
                 bloomLevel: "C2 (Understand)",
-                competency: "Mampu mendeskripsikan hubungan tegangan-arus induktor.",
-                relevance: "Merepresentasikan penyimpanan energi elektromagnetik menjadi turunannya.",
-                questionText: "Jika induktor $L = 2\\text{ H}$ dialiri arus $i(t) = 3\\sin(4t)\\text{ A}$, tentukan tegangan induktor $v_L(t)$:",
+                competency: "Mampu menerapkan relasi diferensial arus-tegangan pada induktor.",
+                relevance: "Menyusun PDB pemodelan arus induktor pada rangkaian transient RL.",
+                questionText: "Tuliskan persamaan diferensial hubungan tegangan-arus pada sebuah induktor $L$:",
                 options: [
-                    "$24\\cos(4t)\\text{ V}$",
-                    "$6\\cos(4t)\\text{ V}$",
-                    "$-24\\cos(4t)\\text{ V}$",
-                    "$6\\sin(4t)\\text{ V}$"
+                    "$v(t) = L \\frac{di(t)}{dt}$",
+                    "$i(t) = L \\frac{dv(t)}{dt}$",
+                    "$v(t) = \\frac{1}{L} \\frac{di(t)}{dt}$",
+                    "$v(t) = \\int i(t) dt$"
                 ],
                 correctIndex: 0,
-                explanation: "Gunakan hubungan arus-tegangan pada induktor $v_L(t) = L \\frac{di(t)}{dt}$:\\newline Turunan dari $i(t) = 3\\sin(4t)$ adalah $\\frac{di(t)}{dt} = 3 \\cdot 4 \\cos(4t) = 12\\cos(4t)$.\\newline Maka:\\newline $v_L(t) = 2 \\cdot 12\\cos(4t) = 24\\cos(4t)\\text{ V}$."
+                explanation: "Tegangan pada induktor berbanding lurus dengan laju perubahan arus terhadap waktu, yang secara matematis dirumuskan sebagai: $v(t) = L \\frac{di(t)}{dt}$."
             },
             {
                 id: 10,
+                type: "MC",
                 category: "Rangkaian Listrik",
-                subTopic: "Hukum Kirchoff (KVL/KCL)",
+                subTopic: "Hukum Kirchoff Tegangan (KVL)",
                 bloomLevel: "C3 (Apply)",
-                competency: "Mampu merumuskan persamaan loop tegangan (KVL) atau simpul (KCL).",
-                relevance: "Hukum fisika dasar untuk menurunkan model persamaan diferensial dari rangkaian fisik.",
+                competency: "Mampu menyusun persamaan loop tertutup menggunakan KVL.",
+                relevance: "Langkah pertama merumuskan PDB Orde 1 / Orde 2 dari sirkuit RLC nyata.",
                 questionText: "Tuliskan persamaan KVL dari loop tertutup seri yang terdiri dari sumber tegangan $V_s(t)$, resistor $R$, dan induktor $L$:",
                 options: [
                     "$V_s(t) = R \\cdot i(t) + L \\frac{di(t)}{dt}$",
@@ -1121,6 +1131,143 @@
                 ],
                 correctIndex: 0,
                 explanation: "Berdasarkan Hukum Tegangan Kirchoff (KVL): $\\sum V = 0$.\\newline $V_s(t) - v_R(t) - v_L(t) = 0 \\Rightarrow V_s(t) = v_R(t) + v_L(t)$.\\newline Karena $v_R(t) = R \\cdot i(t)$ dan $v_L(t) = L \\frac{di(t)}{dt}$, persamaannya menjadi:\\newline $V_s(t) = R \\cdot i(t) + L \\frac{di(t)}{dt}$."
+            },
+            {
+                id: 11,
+                type: "TF",
+                category: "Kalkulus",
+                subTopic: "Linearitas Integral",
+                bloomLevel: "C2 (Understand)",
+                competency: "Mampu menganalisis kebenaran sifat perkalian pada operasi integrasi.",
+                relevance: "Mencegah kesalahan fatal dalam memecahkan variabel integral PDB.",
+                questionText: "Apakah benar pernyataan matematika berikut untuk integral perkalian dua fungsi: $$\\int [f(t) \\cdot g(t)] dt = \\int f(t) dt \\cdot \\int g(t) dt$$",
+                options: ["Benar", "Salah"],
+                correctIndex: 1,
+                explanation: "Integrasi tidak memenuhi sifat perkalian secara distributif. Perkalian dua fungsi harus diselesaikan menggunakan teknik khusus seperti integral parsial atau substitusi, bukan mengalikan hasil integral masing-masing fungsi."
+            },
+            {
+                id: 12,
+                type: "TF",
+                category: "Kalkulus",
+                subTopic: "Teorema Dasar Kalkulus",
+                bloomLevel: "C2 (Understand)",
+                competency: "Mampu menerapkan hubungan turunan dan integral fungsi batas variabel.",
+                relevance: "Menghitung turunan dari fungsi integral akumulator dalam sistem kontrol transient.",
+                questionText: "Berdasarkan Teorema Dasar Kalkulus I, tentukan kebenaran pernyataan turunan fungsi integral berikut: $$\\frac{d}{dt} \\left[ \\int_{0}^{t} \\sin(x^2) dx \\right] = \\sin(t^2)$$",
+                options: ["Benar", "Salah"],
+                correctIndex: 0,
+                explanation: "Berdasarkan Teorema Dasar Kalkulus I (Fundamental Theorem of Calculus): $\\frac{d}{dt} \\left[ \\int_{a}^{t} f(x) dx \\right] = f(t)$. Maka turunan dari integral tersebut langsung menghasilkan fungsi asalnya dengan batas atas variabel $t$."
+            },
+            {
+                id: 13,
+                type: "TF",
+                category: "Aljabar Linier",
+                subTopic: "Solusi SPL Singular",
+                bloomLevel: "C2 (Understand)",
+                competency: "Mampu menganalisis jumlah solusi sistem linear berdasarkan determinannya.",
+                relevance: "Analisis eksistensi dan keunikan solusi titik kesetimbangan dinamik sistem.",
+                questionText: "Jika determinan dari matriks koefisien $A$ dalam sistem persamaan linear $A \\mathbf{x} = \\mathbf{b}$ bernilai nol ($\\det(A) = 0$), maka sistem tersebut dipastikan memiliki solusi tunggal.",
+                options: ["Benar", "Salah"],
+                correctIndex: 1,
+                explanation: "Jika $\\det(A) = 0$, matriks tersebut tidak memiliki invers (singular). Artinya, sistem persamaan linear tersebut mungkin memiliki tak hingga banyak solusi (tergantung vektor $\\mathbf{b}$) atau tidak memiliki solusi sama sekali, bukan solusi tunggal."
+            },
+            {
+                id: 14,
+                type: "TF",
+                category: "Rangkaian Listrik",
+                subTopic: "Induktor DC Steady-State",
+                bloomLevel: "C2 (Understand)",
+                competency: "Mampu menganalisis perilaku induktor pada kondisi tunak DC.",
+                relevance: "Menentukan kondisi batas arus induktor awal ($i_L(0^-)$) pada pemodelan transient rangkaian.",
+                questionText: "Pada kondisi tunak DC (DC steady-state), sebuah induktor bertindak sebagai hubungan terbuka (open circuit) karena tidak ada perubahan arus terhadap waktu.",
+                options: ["Benar", "Salah"],
+                correctIndex: 1,
+                explanation: "Pada keadaan DC tunak, arus bernilai konstan sehingga laju perubahan arus terhadap waktu $\\frac{di}{dt} = 0$. Karena tegangan induktor adalah $v_L = L \\frac{di}{dt}$, maka diperoleh $v_L = 0$ (beda potensial nol). Induktor yang tegangannya nol bertindak sebagai **hubungan singkat (short circuit)**, bukan hubungan terbuka."
+            },
+            {
+                id: 15,
+                type: "TF",
+                category: "Rangkaian Listrik",
+                subTopic: "Kapasitor DC Steady-State",
+                bloomLevel: "C2 (Understand)",
+                competency: "Mampu menganalisis perilaku kapasitor pada kondisi tunak DC.",
+                relevance: "Menentukan kondisi batas tegangan kapasitor awal ($v_c(0^-)$) pada pemodelan transient rangkaian.",
+                questionText: "Pada kondisi tunak DC (DC steady-state), kapasitor bertindak sebagai hubungan terbuka (open circuit) karena arus yang melaluinya bernilai nol.",
+                options: ["Benar", "Salah"],
+                correctIndex: 0,
+                explanation: "Arus kapasitor dirumuskan sebagai $i_C = C \\frac{dv}{dt}$. Pada keadaan DC tunak, tegangan kapasitor bernilai konstan sehingga $\\frac{dv}{dt} = 0$, yang menghasilkan arus $i_C = 0$. Arus nol berarti kapasitor bertindak sebagai **hubungan terbuka (open circuit)**."
+            },
+            {
+                id: 16,
+                type: "NUM",
+                category: "Aljabar Linier",
+                subTopic: "Perhitungan Determinan 2x2",
+                bloomLevel: "C3 (Apply)",
+                competency: "Mampu melakukan perhitungan numerik determinan matriks 2x2 secara akurat.",
+                relevance: "Pencarian nilai eigen pada persamaan karakteristik sistem dinamik orde dua.",
+                questionText: "Hitunglah nilai determinan dari matriks $A$ berikut: $$A = \\begin{pmatrix} 4 & 2 \\\\ 1 & 3 \\end{pmatrix}$$",
+                correctAnswer: "10",
+                explanation: "Determinan dari matriks $2 \\times 2$ $\\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix}$ dirumuskan sebagai $ad - bc$.\\newline Untuk matriks $A$, determinannya adalah:\\newline $\\det(A) = (4 \\cdot 3) - (2 \\cdot 1) = 12 - 2 = 10$."
+            },
+            {
+                id: 17,
+                type: "NUM",
+                category: "Kalkulus",
+                subTopic: "Evaluasi Integral Definit",
+                bloomLevel: "C3 (Apply)",
+                competency: "Mampu menghitung nilai integral definit fungsi polinomial.",
+                relevance: "Perhitungan koefisien ekspansi deret Fourier atau integral respon waktu sistem.",
+                questionText: "Tentukan nilai numerik akhir dari integral definit berikut: $$\\int_{0}^{2} (3x^2 - 2x) dx$$",
+                correctAnswer: "4",
+                explanation: "Pertama, cari integral tak tentu dari fungsi tersebut:\\newline $$\\int (3x^2 - 2x) dx = x^3 - x^2$$\\newline Kemudian, evaluasi batas atas dan batas bawahnya:\\newline $$[x^3 - x^2]_0^2 = (2^3 - 2^2) - (0^3 - 0^2) = (8 - 4) - 0 = 4$$."
+            },
+            {
+                id: 18,
+                type: "NUM",
+                category: "Rangkaian Listrik",
+                subTopic: "Konstanta Waktu RC",
+                bloomLevel: "C3 (Apply)",
+                competency: "Mampu menghitung nilai konstanta waktu rangkaian RC.",
+                relevance: "Menentukan durasi peluruhan transien tegangan kapasitor pada rangkaian orde satu.",
+                questionText: "Sebuah rangkaian RC seri memiliki resistor $R = 5\\text{ k}\\Omega$ dan kapasitor $C = 200\\text{ }\\mu\\text{F}$. Hitunglah konstanta waktu ($\\tau$) rangkaian tersebut (dalam satuan detik):",
+                correctAnswer: "1",
+                explanation: "Konstanta waktu ($\\tau$) untuk rangkaian RC seri dirumuskan sebagai $\\tau = R \\cdot C$.\\newline Diketahui:\\newline $R = 5\\text{ k}\\Omega = 5 \\times 10^3\\text{ }\\Omega$\\newline $C = 200\\text{ }\\mu\\text{F} = 200 \\times 10^{-6}\\text{ F}$\\newline Maka:\\newline $\\tau = (5 \\times 10^3) \\cdot (200 \\times 10^{-6}) = 1000 \\times 10^{-3} = 1\\text{ detik}$."
+            },
+            {
+                id: 19,
+                type: "MS",
+                category: "Aljabar Linier",
+                subTopic: "Karakteristik Matriks Singular",
+                bloomLevel: "C2 (Understand)",
+                competency: "Mampu mengidentifikasi sifat-sifat matriks singular dari berbagai representasi.",
+                relevance: "Menganalisis dependensi linier persamaan ruang keadaan sebelum diselesaikan.",
+                questionText: "Pilihlah **semua** pernyataan yang benar mengenai matriks persegi $A$ yang merupakan matriks singular (memiliki determinan nol):",
+                options: [
+                    "Matriks $A$ tidak memiliki invers.",
+                    "Sistem persamaan linear homogen $A\\mathbf{x} = \\mathbf{0}$ hanya memiliki solusi trivial saja.",
+                    "Sistem persamaan linear homogen $A\\mathbf{x} = \\mathbf{0}$ memiliki solusi tak hingga banyak (solusi non-trivial).",
+                    "Baris-baris pada matriks $A$ saling bebas linear (independent)."
+                ],
+                correctIndices: [0, 2],
+                explanation: "Sebuah matriks singular ($\\det(A) = 0$) tidak memiliki invers. Hal ini berakibat pada sistem persamaan linear homogen $A\\mathbf{x} = \\mathbf{0}$ memiliki solusi non-trivial (solusi tak hingga banyak), serta baris-baris penyusun matriks tersebut saling bergantung linear (tidak bebas linear)."
+            },
+            {
+                id: 20,
+                type: "MS",
+                category: "Rangkaian Listrik",
+                subTopic: "Kontinuitas Arus-Tegangan",
+                bloomLevel: "C2 (Understand)",
+                competency: "Mampu menjelaskan batas fisis kontinuitas energi pada kapasitor dan induktor.",
+                relevance: "Menjamin kontinuitas variabel state pada pemodelan transient rangkaian listrik.",
+                questionText: "Pilihlah **semua** pernyataan yang benar mengenai hubungan tegangan dan arus pada induktor ($L$) dan kapasitor ($C$):",
+                options: [
+                    "Tegangan pada induktor sebanding dengan laju perubahan arus terhadap waktu ($v_L = L \\frac{di}{dt}$).",
+                    "Arus pada kapasitor sebanding dengan laju perubahan tegangan terhadap waktu ($i_C = C \\frac{dv}{dt}$).",
+                    "Arus yang mengalir pada induktor dapat berubah secara instan (seketika) tanpa jeda waktu.",
+                    "Tegangan pada kapasitor dapat berubah secara instan (seketika) tanpa jeda waktu."
+                ],
+                correctIndices: [0, 1],
+                explanation: "Hubungan tegangan-arus komponen reaktif adalah $v_L = L \\frac{di}{dt}$ dan $i_C = C \\frac{dv}{dt}$. Arus induktor dan tegangan kapasitor tidak dapat berubah secara instan karena membutuhkan penyimpanan/pelepasan energi yang kontinu (perubahan instan membutuhkan daya tak terhingga)."
             }
         ];
 
@@ -1153,7 +1300,7 @@
             }
 
             // Validasi Nama Lengkap: minimal 3 karakter, hanya huruf dan tanda baca nama
-            const nameRegex = /^[a-zA-Z\s'.,]{3,}$/;
+            const nameRegex = /^[a-zA-Z\s\'.,]{3,}$/;
             if (!nameRegex.test(nama)) {
                 alert("Nama Lengkap tidak valid! Harus minimal 3 karakter dan hanya mengandung huruf.");
                 document.getElementById('input-nama').focus();
@@ -1261,7 +1408,7 @@
             }
 
             // Validasi Nama Lengkap
-            const nameRegex = /^[a-zA-Z\s'.,]{3,}$/;
+            const nameRegex = /^[a-zA-Z\s\'.,]{3,}$/;
             if (!nameRegex.test(nama)) {
                 alert("Nama Lengkap tidak valid! Harus minimal 3 karakter dan hanya mengandung huruf.");
                 document.getElementById('input-nama').focus();
@@ -1322,18 +1469,25 @@
             // Clone original questions to avoid modifying reference data across sessions
             activeQuestions = JSON.parse(JSON.stringify(questions));
             
-            // Randomize options for each question and find the new correctIndex
+            // Randomize options for Multiple Choice and Multi-Select (do not randomize True/False)
             activeQuestions.forEach(q => {
-                const correctText = q.options[q.correctIndex];
-                shuffle(q.options);
-                q.correctIndex = q.options.indexOf(correctText);
+                if (q.type === "MC") {
+                    const correctText = q.options[q.correctIndex];
+                    shuffle(q.options);
+                    q.correctIndex = q.options.indexOf(correctText);
+                } else if (q.type === "MS") {
+                    const correctTexts = q.correctIndices.map(i => q.options[i]);
+                    shuffle(q.options);
+                    q.correctIndices = correctTexts.map(txt => q.options.indexOf(txt));
+                }
             });
             
-            // Randomize the order of questions
+            // Randomize the order of all questions and pick exactly 12
             shuffle(activeQuestions);
+            activeQuestions = activeQuestions.slice(0, 12);
             
-            // Initialize answers array
-            userAnswers = Array(activeQuestions.length).fill(null);
+            // Initialize answers array (for MS we use empty array, others use null)
+            userAnswers = activeQuestions.map(q => q.type === 'MS' ? [] : null);
 
             document.getElementById('welcome-screen').classList.remove('active');
             document.getElementById('test-screen').classList.add('active');
@@ -1346,7 +1500,6 @@
             
             // Render category & progress
             document.getElementById('question-category').innerText = q.category;
-            // Adjust category background accent
             const tag = document.getElementById('question-category');
             if (q.category === "Kalkulus") {
                 tag.style.background = "rgba(0, 210, 255, 0.1)";
@@ -1375,23 +1528,64 @@
             const container = document.getElementById('options-container');
             container.innerHTML = '';
             
-            const labels = ['A', 'B', 'C', 'D'];
-            q.options.forEach((opt, idx) => {
-                const optCard = document.createElement('div');
-                optCard.className = `option-card ${userAnswers[index] === idx ? 'selected' : ''}`;
-                optCard.onclick = () => selectOption(idx);
-                
-                optCard.innerHTML = `
-                    <div class="option-indicator">${labels[idx]}</div>
-                    <div class="option-content">${opt}</div>
+            if (q.type === 'MC' || q.type === 'TF') {
+                // Single Choice Questions (Multiple Choice & True/False)
+                const labels = ['A', 'B', 'C', 'D'];
+                q.options.forEach((opt, idx) => {
+                    const optCard = document.createElement('div');
+                    optCard.className = `option-card ${userAnswers[index] === idx ? 'selected' : ''}`;
+                    optCard.onclick = () => selectOption(idx);
+                    
+                    optCard.innerHTML = `
+                        <div class="option-indicator">${labels[idx]}</div>
+                        <div class="option-content">${opt}</div>
+                    `;
+                    container.appendChild(optCard);
+                });
+            } else if (q.type === 'MS') {
+                // Multi-Select Questions (Pilihan Ganda Kompleks)
+                const labels = ['A', 'B', 'C', 'D'];
+                const selectedList = userAnswers[index] || [];
+                q.options.forEach((opt, idx) => {
+                    const optCard = document.createElement('div');
+                    optCard.className = `option-card ${selectedList.includes(idx) ? 'selected' : ''}`;
+                    optCard.onclick = () => toggleMultiSelectOption(idx);
+                    
+                    optCard.innerHTML = `
+                        <div class="option-indicator" style="border-radius: 4px;">${labels[idx]}</div>
+                        <div class="option-content">${opt}</div>
+                    `;
+                    container.appendChild(optCard);
+                });
+            } else if (q.type === 'NUM') {
+                // Numerical Input Questions (Isian Singkat Numerik)
+                const typedVal = userAnswers[index] !== null ? userAnswers[index] : '';
+                container.innerHTML = `
+                    <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px; width: 100%;">
+                        <label style="font-size: 0.75rem; color: var(--text-secondary); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Jawaban Anda (Ketikkan Angka):</label>
+                        <input type="text" id="num-answer-input" placeholder="Contoh: 10 atau -2.5" 
+                               value="${typedVal}" 
+                               oninput="saveNumericalAnswer(this.value)"
+                               style="background: #ffffff; border: 1px solid var(--card-border); padding: 14px 18px; border-radius: 12px; color: var(--text-primary); font-family: 'Inter'; font-size: 1.15rem; font-weight: 700; max-width: 320px; outline: none; transition: 0.3s; box-shadow: 0 2px 8px rgba(0,0,0,0.02);">
+                    </div>
                 `;
-                container.appendChild(optCard);
-            });
+                // Add focus listener decoration
+                const inputEl = document.getElementById('num-answer-input');
+                inputEl.addEventListener('focus', () => {
+                    inputEl.style.borderColor = 'var(--accent-blue)';
+                    inputEl.style.boxShadow = '0 0 10px rgba(37, 99, 235, 0.1)';
+                });
+                inputEl.addEventListener('blur', () => {
+                    inputEl.style.borderColor = 'var(--card-border)';
+                    inputEl.style.boxShadow = '0 2px 8px rgba(0,0,0,0.02)';
+                });
+            }
 
             // Nav buttons
             document.getElementById('prev-btn').disabled = index === 0;
             const nextBtn = document.getElementById('next-btn');
             if (index === activeQuestions.length - 1) {
+                nextBtn.innerText = "Cetak Hasil" ? "Kirim Jawaban" : "Kirim Jawaban"; // Fix fallback name check
                 nextBtn.innerText = "Kirim Jawaban";
                 nextBtn.style.background = "linear-gradient(135deg, var(--accent-green), var(--accent-blue))";
             } else {
@@ -1413,7 +1607,6 @@
 
         function selectOption(optionIndex) {
             userAnswers[currentQuestionIndex] = optionIndex;
-            // Refresh options highlight
             const cards = document.querySelectorAll('.option-card');
             cards.forEach((card, idx) => {
                 if (idx === optionIndex) {
@@ -1424,6 +1617,34 @@
             });
         }
 
+        function toggleMultiSelectOption(optionIndex) {
+            let ans = userAnswers[currentQuestionIndex];
+            if (!Array.isArray(ans)) {
+                ans = [];
+            }
+            const pos = ans.indexOf(optionIndex);
+            if (pos > -1) {
+                ans.splice(pos, 1);
+            } else {
+                ans.push(optionIndex);
+            }
+            userAnswers[currentQuestionIndex] = ans;
+            
+            // Refresh checklist state in cards
+            const cards = document.querySelectorAll('.option-card');
+            cards.forEach((card, i) => {
+                if (ans.includes(i)) {
+                    card.classList.add('selected');
+                } else {
+                    card.classList.remove('selected');
+                }
+            });
+        }
+
+        function saveNumericalAnswer(val) {
+            userAnswers[currentQuestionIndex] = val.trim();
+        }
+
         function prevQuestion() {
             if (currentQuestionIndex > 0) {
                 showQuestion(currentQuestionIndex - 1);
@@ -1431,9 +1652,30 @@
         }
 
         function nextQuestion() {
-            if (userAnswers[currentQuestionIndex] === null) {
-                alert("Harap pilih salah satu jawaban sebelum melanjutkan!");
-                return;
+            const q = activeQuestions[currentQuestionIndex];
+            const ans = userAnswers[currentQuestionIndex];
+            
+            if (q.type === 'MS') {
+                if (!ans || ans.length === 0) {
+                    alert("Harap pilih minimal satu pilihan jawaban sebelum melanjutkan!");
+                    return;
+                }
+            } else if (q.type === 'NUM') {
+                if (ans === null || ans === '') {
+                    alert("Harap isi kolom jawaban berupa angka sebelum melanjutkan!");
+                    return;
+                }
+                const parsedNum = parseFloat(ans.replace(',', '.'));
+                if (isNaN(parsedNum)) {
+                    alert("Format angka tidak valid! Harap ketikkan angka numerik saja (contoh: 10 atau -2.5).");
+                    return;
+                }
+            } else {
+                // MC or TF
+                if (ans === null) {
+                    alert("Harap pilih salah satu jawaban sebelum melanjutkan!");
+                    return;
+                }
             }
 
             if (currentQuestionIndex < activeQuestions.length - 1) {
@@ -1450,12 +1692,29 @@
             // Calculate score
             let correctCount = 0;
             activeQuestions.forEach((q, idx) => {
-                if (userAnswers[idx] === q.correctIndex) {
+                const ans = userAnswers[idx];
+                let isCorrect = false;
+                
+                if (q.type === 'MC' || q.type === 'TF') {
+                    isCorrect = ans === q.correctIndex;
+                } else if (q.type === 'MS') {
+                    if (Array.isArray(ans) && ans.length === q.correctIndices.length) {
+                        isCorrect = ans.every(val => q.correctIndices.includes(val)) && q.correctIndices.every(val => ans.includes(val));
+                    }
+                } else if (q.type === 'NUM') {
+                    if (ans !== null && ans !== '') {
+                        const userVal = parseFloat(ans.replace(',', '.'));
+                        const correctVal = parseFloat(q.correctAnswer);
+                        isCorrect = Math.abs(userVal - correctVal) < 0.05;
+                    }
+                }
+                
+                if (isCorrect) {
                     correctCount++;
                 }
             });
 
-            const score = (correctCount / activeQuestions.length) * 100;
+            const score = Math.round((correctCount / activeQuestions.length) * 100);
 
             // Populate student metadata in the official evaluation sheet
             document.getElementById('sheet-nama').innerText = studentInfo.nama;
@@ -1485,7 +1744,6 @@
             const circumference = 2 * Math.PI * radius; // 439.6
             const offset = circumference - (score / 100) * circumference;
             
-            // Trigger animation delay
             setTimeout(() => {
                 circle.style.strokeDashoffset = offset;
             }, 200);
@@ -1528,7 +1786,21 @@
             };
             
             activeQuestions.forEach((q, idx) => {
-                const isCorrect = userAnswers[idx] === q.correctIndex;
+                const ans = userAnswers[idx];
+                let isCorrect = false;
+                
+                if (q.type === 'MC' || q.type === 'TF') {
+                    isCorrect = ans === q.correctIndex;
+                } else if (q.type === 'MS') {
+                    if (Array.isArray(ans) && ans.length === q.correctIndices.length) {
+                        isCorrect = ans.every(val => q.correctIndices.includes(val)) && q.correctIndices.every(val => ans.includes(val));
+                    }
+                } else if (q.type === 'NUM') {
+                    if (ans !== null && ans !== '') {
+                        isCorrect = Math.abs(parseFloat(ans.replace(',', '.')) - parseFloat(q.correctAnswer)) < 0.05;
+                    }
+                }
+                
                 catStats[q.category].total++;
                 if (isCorrect) {
                     catStats[q.category].correct++;
@@ -1558,7 +1830,7 @@
             
             Object.keys(catStats).forEach(cat => {
                 const stat = catStats[cat];
-                const pct = (stat.correct / stat.total) * 100;
+                const pct = stat.total > 0 ? (stat.correct / stat.total) * 100 : 0;
                 
                 let statusClass = "cpl-status-weak";
                 let statusText = "Perlu Penguatan";
@@ -1605,9 +1877,9 @@
                     email: studentInfo.email,
                     score: score,
                     statusSummary: score >= 80 ? "PRIMA" : (score >= 60 ? "SIAP DENGAN CATATAN" : "PERLU MATRIKULASI"),
-                    kalkulusPct: Math.round((catStats["Kalkulus"].correct / catStats["Kalkulus"].total) * 100),
-                    aljabarPct: Math.round((catStats["Aljabar Linier"].correct / catStats["Aljabar Linier"].total) * 100),
-                    listrikPct: Math.round((catStats["Rangkaian Listrik"].correct / catStats["Rangkaian Listrik"].total) * 100)
+                    kalkulusPct: Math.round(catStats["Kalkulus"].total > 0 ? (catStats["Kalkulus"].correct / catStats["Kalkulus"].total) * 100 : 0),
+                    aljabarPct: Math.round(catStats["Aljabar Linier"].total > 0 ? (catStats["Aljabar Linier"].correct / catStats["Aljabar Linier"].total) * 100 : 0),
+                    listrikPct: Math.round(catStats["Rangkaian Listrik"].total > 0 ? (catStats["Rangkaian Listrik"].correct / catStats["Rangkaian Listrik"].total) * 100 : 0)
                 };
 
                 fetch(BACKEND_URL, {
@@ -1642,15 +1914,37 @@
                 7: "Tinjau kembali syarat SPL memiliki solusi/tidak memiliki solusi.",
                 8: "Pelajari ulang sifat arus kapasitor terhadap tegangan.",
                 9: "Pelajari ulang sifat tegangan induktor terhadap arus.",
-                10: "Review hukum Kirchoff Tegangan (KVL) untuk loop tertutup."
+                10: "Review hukum Kirchoff Tegangan (KVL) untuk loop tertutup.",
+                11: "Pahami sifat linearitas pada integral dan turunan.",
+                12: "Pelajari ulang Teorema Dasar Kalkulus I mengenai turunan dari fungsi integral.",
+                13: "Pelajari ulang konsep matriks singular dan implikasinya terhadap jumlah solusi SPL.",
+                14: "Review kembali karakteristik beban induktif pada kondisi tunak DC.",
+                15: "Review kembali karakteristik beban kapasitif pada kondisi tunak DC.",
+                16: "Latih kembali perhitungan determinan matriks 2x2 secara presisi.",
+                17: "Tinjau kembali evaluasi integral definit menggunakan batas atas/bawah.",
+                18: "Review perhitungan konstanta waktu rangkaian RC (\\tau = RC).",
+                19: "Pahami syarat kebebasan linier baris matriks dan kaitannya dengan determinan.",
+                20: "Pelajari kembali kontinuitas arus pada induktor dan tegangan pada kapasitor."
             };
 
-            // Sort questions by their original ID (1-10) to display a structured report sheet
             const sortedQuestionsForTable = [...activeQuestions].sort((a, b) => a.id - b.id);
 
-            sortedQuestionsForTable.forEach((q) => {
+            sortedQuestionsForTable.forEach((q, tableIdx) => {
                 const originalIndexInSession = activeQuestions.findIndex(sessionQ => sessionQ.id === q.id);
-                const isCorrect = userAnswers[originalIndexInSession] === q.correctIndex;
+                const ans = userAnswers[originalIndexInSession];
+                let isCorrect = false;
+
+                if (q.type === 'MC' || q.type === 'TF') {
+                    isCorrect = ans === q.correctIndex;
+                } else if (q.type === 'MS') {
+                    if (Array.isArray(ans) && ans.length === q.correctIndices.length) {
+                        isCorrect = ans.every(val => q.correctIndices.includes(val)) && q.correctIndices.every(val => ans.includes(val));
+                    }
+                } else if (q.type === 'NUM') {
+                    if (ans !== null && ans !== '') {
+                        isCorrect = Math.abs(parseFloat(ans.replace(',', '.')) - parseFloat(q.correctAnswer)) < 0.05;
+                    }
+                }
                 
                 const tr = document.createElement('tr');
                 tr.style.borderBottom = '1px solid var(--card-border)';
@@ -1661,12 +1955,12 @@
                     : `<span class="status-badge status-incorrect" style="display:inline-block; text-align:center; width:100%; border-radius:12px;">Perlu Penguatan</span>`;
                 
                 tr.innerHTML = `
-                    <td style="padding: 10px 6px; font-weight: 500;">${q.id}</td>
+                    <td style="padding: 10px 6px; font-weight: 500;">${tableIdx + 1}</td>
                     <td style="padding: 10px 6px; font-weight: 600;">${q.subTopic}</td>
                     <td style="padding: 10px 6px; color: var(--text-secondary);">${q.bloomLevel}</td>
                     <td style="padding: 10px 6px; text-align: center;">${statusBadge}</td>
-                    <td style="padding: 10px 6px; font-size: 0.8rem; line-height: 1.4; color: #e5e7eb;">${q.competency}</td>
-                    <td style="padding: 10px 6px; font-size: 0.8rem; line-height: 1.4; color: ${isCorrect ? 'var(--text-secondary)' : '#ffccd5'};"><strong>${q.relevance}</strong><br><em style="font-size: 0.75rem; display: block; margin-top: 4px; color: #9ca3af;">Rekomendasi: ${recText}</em></td>
+                    <td style="padding: 10px 6px; font-size: 0.8rem; line-height: 1.4; color: var(--text-primary);">${q.competency}</td>
+                    <td style="padding: 10px 6px; font-size: 0.8rem; line-height: 1.4; color: ${isCorrect ? 'var(--text-secondary)' : '#ff5a5f'};"><strong>${q.relevance}</strong><br><em style="font-size: 0.75rem; display: block; margin-top: 4px; color: var(--text-secondary);">Rekomendasi: ${recText}</em></td>
                 `;
                 readinessTableBody.appendChild(tr);
             });
@@ -1677,10 +1971,101 @@
             const labels = ['A', 'B', 'C', 'D'];
 
             activeQuestions.forEach((q, idx) => {
-                const isCorrect = userAnswers[idx] === q.correctIndex;
+                const ans = userAnswers[idx];
+                let isCorrect = false;
+
+                if (q.type === 'MC' || q.type === 'TF') {
+                    isCorrect = ans === q.correctIndex;
+                } else if (q.type === 'MS') {
+                    if (Array.isArray(ans) && ans.length === q.correctIndices.length) {
+                        isCorrect = ans.every(val => q.correctIndices.includes(val)) && q.correctIndices.every(val => ans.includes(val));
+                    }
+                } else if (q.type === 'NUM') {
+                    if (ans !== null && ans !== '') {
+                        isCorrect = Math.abs(parseFloat(ans.replace(',', '.')) - parseFloat(q.correctAnswer)) < 0.05;
+                    }
+                }
+
                 const reviewItem = document.createElement('div');
                 reviewItem.className = 'review-item';
                 reviewItem.id = `review-item-${idx}`;
+
+                let answerHTML = '';
+                
+                if (q.type === 'MC' || q.type === 'TF') {
+                    answerHTML = isCorrect ? `
+                        <div class="answer-box correct-choice" style="border-left: 4px solid var(--accent-green); background: rgba(6, 214, 160, 0.03); padding: 15px; border-radius: 12px; margin-bottom: 20px; border-color: rgba(6, 214, 160, 0.3);">
+                            <span style="color: var(--accent-green); font-weight: 700; font-size: 0.8rem; text-transform: uppercase; display: block; margin-bottom: 6px;">🎉 Jawaban Anda Benar</span>
+                            <div style="font-size: 1rem; color: var(--text-primary); overflow-x: auto;">
+                                <strong>(${labels[q.correctIndex]})</strong> ${q.options[q.correctIndex]}
+                            </div>
+                        </div>
+                    ` : `
+                        <div class="answer-comparison" style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;">
+                            <div class="answer-box incorrect-choice" style="border-left: 4px solid var(--accent-red); background: rgba(255, 90, 95, 0.03); border-color: rgba(255, 90, 95, 0.3); padding: 15px; border-radius: 12px;">
+                                <span style="color: var(--accent-red); font-weight: 700; font-size: 0.8rem; text-transform: uppercase; display: block; margin-bottom: 6px;">❌ Jawaban Anda (Salah)</span>
+                                <div style="font-size: 1rem; color: var(--text-primary); overflow-x: auto;">
+                                    <strong>(${labels[ans]})</strong> ${q.options[ans]}
+                                </div>
+                            </div>
+                            <div class="answer-box correct-choice" style="border-left: 4px solid var(--accent-green); background: rgba(6, 214, 160, 0.03); border-color: rgba(6, 214, 160, 0.3); padding: 15px; border-radius: 12px;">
+                                <span style="color: var(--accent-green); font-weight: 700; font-size: 0.8rem; text-transform: uppercase; display: block; margin-bottom: 6px;">✅ Jawaban Benar</span>
+                                <div style="font-size: 1rem; color: var(--text-primary); overflow-x: auto;">
+                                    <strong>(${labels[q.correctIndex]})</strong> ${q.options[q.correctIndex]}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                } else if (q.type === 'NUM') {
+                    answerHTML = `
+                        <div class="answer-comparison" style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;">
+                            <div class="answer-box ${isCorrect ? 'correct-choice' : 'incorrect-choice'}" style="border-left: 4px solid ${isCorrect ? 'var(--accent-green)' : 'var(--accent-red)'}; background: ${isCorrect ? 'rgba(6, 214, 160, 0.03)' : 'rgba(255, 90, 95, 0.03)'}; border-color: ${isCorrect ? 'rgba(6, 214, 160, 0.3)' : 'rgba(255, 90, 95, 0.3)'}; padding: 15px; border-radius: 12px;">
+                                <span style="color: ${isCorrect ? 'var(--accent-green)' : 'var(--accent-red)'}; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; display: block; margin-bottom: 6px;">
+                                    ${isCorrect ? '🎉 Jawaban Anda (Benar)' : '❌ Jawaban Anda (Salah)'}
+                                </span>
+                                <div style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary);">
+                                    ${ans}
+                                </div>
+                            </div>
+                            ${!isCorrect ? `
+                            <div class="answer-box correct-choice" style="border-left: 4px solid var(--accent-green); background: rgba(6, 214, 160, 0.03); border-color: rgba(6, 214, 160, 0.3); padding: 15px; border-radius: 12px;">
+                                <span style="color: var(--accent-green); font-weight: 700; font-size: 0.8rem; text-transform: uppercase; display: block; margin-bottom: 6px;">✅ Jawaban Benar</span>
+                                <div style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary);">
+                                    ${q.correctAnswer}
+                                </div>
+                            </div>
+                            ` : ''}
+                        </div>
+                    `;
+                } else if (q.type === 'MS') {
+                    const userLabels = ans.map(i => labels[i]).join(', ');
+                    const correctLabels = q.correctIndices.map(i => labels[i]).join(', ');
+                    const userTexts = ans.map(i => q.options[i]).map(t => `<li>${t}</li>`).join('');
+                    const correctTexts = q.correctIndices.map(i => q.options[i]).map(t => `<li>${t}</li>`).join('');
+                    
+                    answerHTML = `
+                        <div class="answer-comparison" style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;">
+                            <div class="answer-box ${isCorrect ? 'correct-choice' : 'incorrect-choice'}" style="border-left: 4px solid ${isCorrect ? 'var(--accent-green)' : 'var(--accent-red)'}; background: ${isCorrect ? 'rgba(6, 214, 160, 0.03)' : 'rgba(255, 90, 95, 0.03)'}; border-color: ${isCorrect ? 'rgba(6, 214, 160, 0.3)' : 'rgba(255, 90, 95, 0.3)'}; padding: 15px; border-radius: 12px;">
+                                <span style="color: ${isCorrect ? 'var(--accent-green)' : 'var(--accent-red)'}; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; display: block; margin-bottom: 6px;">
+                                    ${isCorrect ? '🎉 Pilihan Anda (Benar)' : '❌ Pilihan Anda (Salah)'}
+                                </span>
+                                <div style="font-size: 0.95rem; color: var(--text-primary);">
+                                    <strong>Pilihan (${userLabels || '-'}):</strong>
+                                    <ul style="margin-left: 20px; margin-top: 5px; line-height:1.4;">${userTexts || '<li>Tidak ada yang dipilih</li>'}</ul>
+                                </div>
+                            </div>
+                            ${!isCorrect ? `
+                            <div class="answer-box correct-choice" style="border-left: 4px solid var(--accent-green); background: rgba(6, 214, 160, 0.03); border-color: rgba(6, 214, 160, 0.3); padding: 15px; border-radius: 12px;">
+                                <span style="color: var(--accent-green); font-weight: 700; font-size: 0.8rem; text-transform: uppercase; display: block; margin-bottom: 6px;">✅ Pilihan Benar</span>
+                                <div style="font-size: 0.95rem; color: var(--text-primary);">
+                                    <strong>Pilihan (${correctLabels}):</strong>
+                                    <ul style="margin-left: 20px; margin-top: 5px; line-height:1.4;">${correctTexts}</ul>
+                                </div>
+                            </div>
+                            ` : ''}
+                        </div>
+                    `;
+                }
 
                 reviewItem.innerHTML = `
                     <div class="review-header" onclick="toggleReviewItem(${idx})">
@@ -1696,36 +2081,15 @@
                     </div>
                     <div class="review-body">
                         <div style="margin: 15px 0 10px 0; font-size: 0.8rem; color: var(--text-secondary); display: flex; gap: 8px; flex-wrap: wrap;">
-                            <span style="background: #e5e7eb; padding: 3px 10px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05);"><strong>Sub-Topik:</strong> ${q.subTopic}</span>
-                            <span style="background: #e5e7eb; padding: 3px 10px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05);"><strong>Level:</strong> ${q.bloomLevel}</span>
+                            <span style="background: #e5e7eb; padding: 3px 10px; border-radius: 20px; border: 1px solid var(--card-border);"><strong>Sub-Topik:</strong> ${q.subTopic}</span>
+                            <span style="background: #e5e7eb; padding: 3px 10px; border-radius: 20px; border: 1px solid var(--card-border);"><strong>Level:</strong> ${q.bloomLevel}</span>
+                            <span style="background: #e5e7eb; padding: 3px 10px; border-radius: 20px; border: 1px solid var(--card-border);"><strong>Tipe Soal:</strong> ${q.type === 'MC' ? 'Pilihan Ganda' : (q.type === 'TF' ? 'Benar/Salah' : (q.type === 'NUM' ? 'Isian Numerik' : 'Pilihan Kompleks'))}</span>
                         </div>
-                        <div style="margin-bottom: 20px; font-size: 0.85rem; padding: 12px; background: rgba(0, 210, 255, 0.03); border-radius: 12px; border-left: 3px solid var(--accent-blue); line-height: 1.5; color: #d1d5db;">
+                        <div style="margin-bottom: 20px; font-size: 0.85rem; padding: 12px; background: rgba(37, 99, 235, 0.03); border-radius: 12px; border-left: 3px solid var(--accent-blue); line-height: 1.5; color: var(--text-primary);">
                             <strong>Urgensi ke PDB:</strong> ${q.relevance}
                         </div>
                         <div class="review-q-text">${q.questionText}</div>
-                        ${isCorrect ? `
-                            <div class="answer-box correct-choice" style="border-left: 4px solid var(--accent-green); background: rgba(6, 214, 160, 0.03); padding: 15px; border-radius: 12px; margin-bottom: 20px; border-color: rgba(6, 214, 160, 0.3);">
-                                <span style="color: var(--accent-green); font-weight: 700; font-size: 0.8rem; text-transform: uppercase; display: block; margin-bottom: 6px;">🎉 Jawaban Anda Benar</span>
-                                <div style="font-size: 1rem; color: #a7f3d0; overflow-x: auto;">
-                                    <strong>(${labels[q.correctIndex]})</strong> ${q.options[q.correctIndex]}
-                                </div>
-                            </div>
-                        ` : `
-                            <div class="answer-comparison" style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;">
-                                <div class="answer-box incorrect-choice" style="border-left: 4px solid var(--accent-red); background: rgba(255, 90, 95, 0.03); border-color: rgba(255, 90, 95, 0.3); padding: 15px; border-radius: 12px;">
-                                    <span style="color: var(--accent-red); font-weight: 700; font-size: 0.8rem; text-transform: uppercase; display: block; margin-bottom: 6px;">❌ Jawaban Anda (Salah)</span>
-                                    <div style="font-size: 1rem; color: #fca5a5; overflow-x: auto;">
-                                        <strong>(${labels[userAnswers[idx]]})</strong> ${q.options[userAnswers[idx]]}
-                                    </div>
-                                </div>
-                                <div class="answer-box correct-choice" style="border-left: 4px solid var(--accent-green); background: rgba(6, 214, 160, 0.03); border-color: rgba(6, 214, 160, 0.3); padding: 15px; border-radius: 12px;">
-                                    <span style="color: var(--accent-green); font-weight: 700; font-size: 0.8rem; text-transform: uppercase; display: block; margin-bottom: 6px;">✅ Jawaban Benar</span>
-                                    <div style="font-size: 1rem; color: #a7f3d0; overflow-x: auto;">
-                                        <strong>(${labels[q.correctIndex]})</strong> ${q.options[q.correctIndex]}
-                                    </div>
-                                </div>
-                            </div>
-                        `}
+                        ${answerHTML}
                         <div class="explanation-box">
                             <h5>Pembahasan:</h5>
                             <p>${q.explanation.replace(/\\newline/g, '<br>')}</p>
