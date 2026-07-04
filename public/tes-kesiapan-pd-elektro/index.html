@@ -681,15 +681,16 @@
             #print-sheet {
                 display: block !important;
                 margin: 0 !important;
-                padding: 0 !important;
+                padding: 15mm !important; /* Memberikan margin dalam agar teks tidak mepet ke tepi kertas */
                 width: 100% !important;
+                box-sizing: border-box !important;
             }
             .evaluation-print-container {
                 background: white !important;
                 color: black !important;
                 border: none !important;
                 box-shadow: none !important;
-                padding: 0 !important;
+                padding: 5mm !important;
             }
             .kop-surat h1, .kop-surat h2, .kop-surat h3, .kop-surat p,
             .kop-surat, .review-section h3, td, th, strong, span, p {
