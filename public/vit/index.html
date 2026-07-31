@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vision Transformer: Ringkasan Matematis untuk Peneliti</title>
+
+  <!-- Essential CDN Libraries -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: 'hsl(210, 75%, 95%)',
+              100: 'hsl(210, 75%, 85%)',
+              200: 'hsl(210, 75%, 75%)',
+              300: 'hsl(210, 75%, 65%)',
+              400: 'hsl(210, 75%, 55%)',
+              500: 'hsl(210, 75%, 40%)',
+              600: 'hsl(210, 75%, 35%)',
+              700: 'hsl(210, 75%, 25%)',
+              800: 'hsl(210, 75%, 15%)',
+              900: 'hsl(210, 75%, 10%)'
+            },
+            accent: {
+              50: 'hsl(240, 65%, 95%)',
+              100: 'hsl(240, 65%, 85%)',
+              200: 'hsl(240, 65%, 75%)',
+              300: 'hsl(240, 65%, 65%)',
+              400: 'hsl(240, 65%, 60%)',
+              500: 'hsl(240, 65%, 55%)',
+              600: 'hsl(240, 65%, 50%)',
+              700: 'hsl(240, 65%, 40%)',
+              800: 'hsl(240, 65%, 30%)',
+              900: 'hsl(240, 65%, 20%)'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0"></script>
+
+  <!-- Preline UI Components -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/preline@2.0.3/dist/preline.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/preline@2.0.3/dist/preline.js"></script>
+
+  <!-- Micro-interactions & Custom Styles -->
+  <style>
+    html { scroll-behavior: smooth; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      html { scroll-behavior: auto; }
+    }
+
+    .btn-interactive {
+      transition: all 0.2s ease-out;
+    }
+    
+    .btn-interactive:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+    
+    .btn-interactive:active {
+      transform: scale(0.95);
+    }
+
+    .card-interactive {
+      transition: all 0.3s ease-out;
+      border: 1px solid transparent;
+      --border-lightness: 40%;
+    }
+
+    .dark .card-interactive {
+      --border-lightness: 60%;
+    }
+
+    .card-interactive:hover {
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      filter: brightness(0.98);
+    }
+    
+    /* Primary colored cards */
+    .card-interactive[class*="primary"]:hover,
+    .card-interactive[class*="white"]:hover,
+    .card-interactive[class*="gray-"]:hover {
+      border-color: hsl(210, 75%, var(--border-lightness));
+    }
+    
+    /* Accent colored cards */
+    .card-interactive[class*="accent"]:hover {
+      border-color: hsl(240, 65%, var(--border-lightness));
+    }
+  </style>
+
+  <script>
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark');
+      const isDark = document.body.classList.contains('dark');
+      document.getElementById('sunIcon').style.display = isDark ? 'block' : 'none';
+      document.getElementById('moonIcon').style.display = isDark ? 'none' : 'block';
+    }
+  </script>
+</head>
+
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
+  <!-- Progress Bar -->
+  <div class="fixed top-0 left-0 h-1 bg-primary-500 dark:bg-primary-400 z-[60] transition-all duration-300 ease-out" id="progressBar"></div>
+
+  <!-- Floating Header -->
+  <header class="fixed top-0 left-0 right-0 z-50 backdrop-blur bg-gray-50/90 dark:bg-gray-900/90 border-b border-primary-500/20 dark:border-primary-600/20">
+    <nav class="max-w-7xl mx-auto px-6 py-4">
+      <div class="flex items-center justify-between">
+        <h1 class="text-xl font-bold text-primary-700 dark:text-primary-300">Vision Transformer</h1>
+        
+        <div class="flex items-center space-x-6">
+          <a href="#home" class="btn-interactive text-sm text-primary-600 dark:text-primary-300 hover:text-primary-800 dark:hover:text-primary-100">Beranda</a>
+          <a href="#patch-embedding" class="btn-interactive text-sm text-primary-600 dark:text-primary-300 hover:text-primary-800 dark:hover:text-primary-100">Patch</a>
+          <a href="#positional-encoding" class="btn-interactive text-sm text-primary-600 dark:text-primary-300 hover:text-primary-800 dark:hover:text-primary-100">Posisi</a>
+          <a href="#attention" class="btn-interactive text-sm text-primary-600 dark:text-primary-300 hover:text-primary-800 dark:hover:text-primary-100">Perhatian</a>
+          <a href="#cls-token" class="btn-interactive text-sm text-primary-600 dark:text-primary-300 hover:text-primary-800 dark:hover:text-primary-100">Token</a>
+          <a href="#architecture" class="btn-interactive text-sm text-primary-600 dark:text-primary-300 hover:text-primary-800 dark:hover:text-primary-100">Arsitektur</a>
+          <a href="#conclusion" class="btn-interactive text-sm text-primary-600 dark:text-primary-300 hover:text-primary-800 dark:hover:text-primary-100">Kesimpulan</a>
+          
+          <button onclick="toggleDarkMode()" class="btn-interactive p-2 rounded-lg bg-primary-100 dark:bg-primary-800 text-primary-600 dark:text-primary-300 hover:bg-primary-200 dark:hover:bg-primary-700">
+            <i data-lucide="sun" id="sunIcon" class="w-5 h-5" style="display: none;"></i>
+            <i data-lucide="moon" id="moonIcon" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main class="min-h-screen">
+    <!-- Hero Section -->
+    <section id="home" class="py-40 bg-primary-50/50 dark:bg-gray-900" data-aos="fade-up">
+      <div class="max-w-5xl mx-auto px-6">
+        <div class="text-center space-y-6">
+          <h2 class="text-5xl font-bold text-primary-700 dark:text-primary-300">
+            Vision Transformer: Ringkasan Matematis untuk Peneliti
+          </h2>
+          <p class="text-xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
+            Penelitian komprehensif tentang formulasi matematis Vision Transformer (ViT), mencakup patch embedding, positional encoding, self-attention, dan arsitektur transformasional yang mendasari sistem visi berbasis Transformer.
+          </p>
+          
+          <div class="grid md:grid-cols-3 gap-6 mt-12">
+            <div class="card-interactive p-6 bg-white/90 backdrop-blur-sm dark:bg-gray-800 rounded-xl shadow-md">
+              <div class="w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center mb-4">
+                <i data-lucide="layers" class="w-6 h-6 text-primary-600 dark:text-primary-400"></i>
+              </div>
+              <h3 class="text-lg font-semibold text-primary-700 dark:text-primary-300 mb-2">Patch Embedding</h3>
+              <p class="text-sm text-gray-600 dark:text-gray-400">Proyeksi linier dari potongan gambar menjadi vektor tersemat</p>
+            </div>
+            
+            <div class="card-interactive p-6 bg-white/90 backdrop-blur-sm dark:bg-gray-800 rounded-xl shadow-md">
+              <div class="w-12 h-12 bg-accent-100 dark:bg-accent-900/30 rounded-lg flex items-center justify-center mb-4">
+                <i data-lucide="activity" class="w-6 h-6 text-accent-600 dark:text-accent-400"></i>
+              </div>
+              <h3 class="text-lg font-semibold text-accent-700 dark:text-accent-300 mb-2">Self-Attention</h3>
+              <p class="text-sm text-gray-600 dark:text-gray-400">Mekanisme perhatian global untuk hubungan antar-patch</p>
+            </div>
+            
+            <div class="card-interactive p-6 bg-white/90 backdrop-blur-sm dark:bg-gray-800 rounded-xl shadow-md">
+              <div class="w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center mb-4">
+                <i data-lucide="cpu" class="w-6 h-6 text-primary-600 dark:text-primary-400"></i>
+              </div>
+              <h3 class="text-lg font-semibold text-primary-700 dark:text-primary-300 mb-2">Arsitektur</h3>
+              <p class="text-sm text-gray-600 dark:text-gray-400">Struktur enkoder Transformer untuk representasi global</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Patch Embedding Section -->
+    <section id="patch-embedding" class="py-20 bg-white/80 dark:bg-gray-900" data-aos="fade-up">
+      <div class="max-w-5xl mx-auto px-6">
+        <h2 class="text-4xl font-bold mb-8 text-primary-700 dark:text-primary-300">
+          Patch Embedding: Proyeksi Linier Gambar
+        </h2>
+
+        <div class="grid md:grid-cols-2 gap-8 items-start mb-12">
+          <div class="space-y-6">
+            <p class="text-gray-700 dark:text-gray-300 leading-relaxed" data-ref="https://apxml.com/courses/cnns-for-computer-vision/chapter-5-attention-transformers-vision/vit-architecture-details|17">
+              Vision Transformer (ViT) memproses gambar dengan memperlakukan mereka sebagai urutan potongan-potongan yang lebih kecil, analog dengan bagaimana kata-kata diproses dalam bahasa alami. Gambar ukuran
+              <span class="mx-1 px-1.5 py-0.5 rounded-md bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-300 font-semibold text-sm">224 × 224</span>
+              dibagi menjadi
+              <span class="mx-1 px-1.5 py-0.5 rounded-md bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-300 font-semibold text-sm">14 × 14 = 196</span>
+              potongan.
+            </p>
+
+            <p class="text-gray-700 dark:text-gray-300 leading-relaxed" data-ref="https://wenwenkong.github.io/blog/2025/ViT-notes/|16">
+              Setiap vektor potongan dikalikan dengan matriks proyeksi terpelajari. Untuk ukuran potongan
+              <span class="mx-1 px-1.5 py-0.5 rounded-md bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-300 font-semibold text-sm">16 × 16</span>,
+              dan dimensi sematan
+              <span class="mx-1 px-1.5 py-0.5 rounded-md bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-300 font-semibold text-sm">D = 768</span>.
+            </p>
+
+            <div class="pl-4 pr-3 py-3 border-l-4 border-primary-500 bg-primary-50/40 dark:bg-primary-900/30 rounded-r-lg">
+              <p class="text-sm font-medium text-primary-900 dark:text-primary-100 leading-relaxed" data-ref="https://medium.com/@oussamarchaki/vision-transformer-vit-from-absolute-scratch-34ed31186c28|1">
+                <i data-lucide="info" class="inline-block w-4 h-4 mr-1.5 -mt-0.5"></i>
+                Temuan kritis: Setelah proyeksi linier, kita memperoleh
+                <span class="mx-1 px-1.5 py-0.5 rounded-md bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-300 font-semibold text-sm">196</span>
+                sematan potongan, masing-masing direpresentasikan sebagai vektor 1D ukuran
+                <span class="mx-1 px-1.5 py-0.5 rounded-md bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-300 font-semibold text-sm">1024</span>.
+              </p>
+            </div>
+          </div>
+
+          <img
+            src="https://cdn.qwenlm.ai/c2b1d0d5-1706-4d8b-8fcb-1b08f0a359d7/08ab8bd2-732d-4745-8db8-b59954253c8f/b896950c-31fb-4162-8e42-b8c48ef4f318.png?key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXNvdXJjZV91c2VyX2lkIjoiYzJiMWQwZDUtMTcwNi00ZDhiLThmY2ItMWIwOGYwYTM1OWQ3IiwicmVzb3VyY2VfaWQiOiIwOGFiOGJkMi03MzJkLTQ3NDUtOGRiOC1iNTk5NTQyNTNjOGYiLCJyZXNvdXJjZV9jaGF0X2lkIjpudWxsfQ.UWqs2vKbzY8Pl17Y5_rKMKhepvcnff0vk6AhovwvAsg"
+            alt="Ilustrasi proses patch embedding dalam Vision Transformer dengan latar belakang putih bersih. Di sisi kiri, gambar kotak persegi panjang berwarna abu-abu terang dengan ukuran 224×224 piksel menampilkan kisi 14×14 garis hitam tipis membentuk 196 kotak kecil identik. Setiap kotak berukuran 16×16 piksel ditandai dengan angka indeks berwarna biru tua (nomor 1 hingga 196) di tengahnya. Di sisi kanan, terdapat 196 vektor vertikal berbentuk persegi panjang tinggi berwarna biru muda transparan dengan teks 'D=768' ditulis horizontal di tengah setiap vektor. Panah biru tebal menghubungkan setiap kotak potongan di sisi kiri ke vektor sematan di sisi kanan, menunjukkan proses proyeksi linier. Di bagian bawah, rumus matematika 'X_patch → W_proj × X_patch + b' ditulis dengan huruf biru gelap di atas latar belakang putih transparan. Teks judul 'Patch Embedding: Proyeksi Linier dari Potongan ke Vektor Sematan' berada di atas ilustrasi dengan huruf besar berwarna biru tua."
+            class="w-full rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300"
+          />
+        </div>
+
+        <div class="space-y-6">
+          <h3 class="text-2xl font-semibold text-primary-700 dark:text-primary-300">Proses Matematis</h3>
+          
+          <p class="text-gray-700 dark:text-gray-300 leading-relaxed" data-ref="https://www.pinecone.io/learn/series/image-search/vision-transformers/|2">
+            Setelah membangun potongan-potongan gambar, lapisan proyeksi linier digunakan untuk memetakan "array" potongan gambar ke "vektor" sematan potongan. Ini adalah transformasi linier umum yang diterapkan secara seragam ke setiap potongan, terlepas dari kontennya.
+          </p>
+
+          <p class="text-gray-700 dark:text-gray-300 leading-relaxed" data-ref="https://aman.ai/primers/ai/vit/|7">
+            Setiap potongan kemudian diratakan (diubah menjadi array 1D) dan dilewatkan melalui proyeksi linier untuk memperoleh vektor ukuran tetap. Proyeksi linier ini memungkinkan model mempelajari representasi tingkat tinggi dari potongan-potongan tersebut.
+          </p>
+
+          <div class="grid md:grid-cols-2 gap-6 mt-8">
+            <div class="card-interactive p-6 bg-primary-50/50 dark:bg-primary-900/20 rounded-xl shadow-md">
+              <h4 class="text-lg font-semibold text-primary-700 dark:text-primary-300 mb-3" data-ref="https://wenwenkong.com/blog/2025/ViT-notes/|115">Dimensi Potongan</h4>
+              <p class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
+                Potongan berukuran
+                <span class="mx-1 px-1.5 py-0.5 rounded-md bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-300 font-semibold text-sm">16 × 16 × 3</span>
+                diratakan menjadi vektor panjang
+                <span class="mx-1 px-1.5 py-0.5 rounded-md bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-300 font-semibold text-sm">768</span>
+                intensitas piksel mentah sebelum proyeksi.
+              </p>
+            </div>
+
+            <div class="card-interactive p-6 bg-accent-50/50 dark:bg-accent-900/20 rounded-xl shadow-md">
+              <h4 class="text-lg font-semibold text-accent-700 dark:text-accent-300 mb-3" data-ref="https://www.geeksforgeeks.org/deep-learning/vision-transformer-vit-architecture/|18">Sematan Terpelajari</h4>
+              <p class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
+                Setiap potongan yang diratakan dipetakan ke sematan D-dimensi terpelajari, memungkinkan model mempelajari representasi tingkat tinggi yang sensitif terhadap konten gambar.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Positional Encoding Section -->
+    <section id="positional-encoding" class="py-20 bg-primary-50/50 dark:bg-gray-800" data-aos="fade-up">
+      <div class="max-w-5xl mx-auto px-6">
+        <h2 class="text-4xl font-bold mb-8 text-primary-700 dark:text-primary-300">
+          Positional Encoding: Representasi Spasial 2D
+        </h2>
+
+        <div class="grid md:grid-cols-2 gap-8 items-start mb-12">
+          <img
+            src="https://cdn.qwenlm.ai/c2b1d0d5-1706-4d8b-8fcb-1b08f0a359d7/08ab8bd2-732d-4745-8db8-b59954253c8f/58721bcc-b887-455b-bc43-cb754c0c8851.png?key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXNvdXJjZV91c2VyX2lkIjoiYzJiMWQwZDUtMTcwNi00ZDhiLThmY2ItMWIwOGYwYTM1OWQ3IiwicmVzb3VyY2VfaWQiOiIwOGFiOGJkMi03MzJkLTQ3NDUtOGRiOC1iNTk5NTQyNTNjOGYiLCJyZXNvdXJjZV9jaGF0X2lkIjpudWxsfQ.UWqs2vKbzY8Pl17Y5_rKMKhepvcnff0vk6AhovwvAsg"
+            alt="Diagram posisi enkoding dalam Vision Transformer dengan latar belakang putih bersih. Di tengah, grid 2D berukuran 14×14 kotak kecil berwarna abu-abu muda dengan nomor indeks berwarna biru tua (1 hingga 196) di setiap kotak. Di atas grid, simbol sinusoida berwarna ungu gelap berbentuk gelombang sinus dengan label 'Sinusoidal PE' di sampingnya. Di bawah grid, simbol rotasi berbentuk lingkaran berwarna biru dengan panah melingkar dan label 'Rotary PE'. Di sisi kanan, dua vektor vertikal tinggi berwarna biru transparan dengan teks 'Position Vector' di sampingnya. Panah biru menghubungkan setiap kotak grid ke vektor posisi yang sesuai. Di bagian bawah, rumus matematika 'PE(pos, d) = sin(pos/10000^(2d/D))' ditulis dengan huruf ungu gelap di atas latar belakang putih transparan. Teks judul 'Positional Encoding: Representasi Spasial 2D untuk Perhatian Global' berada di atas diagram dengan huruf besar berwarna biru tua."
+            class="w-full rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300"
+          />
+
+          <div class="space-y-6">
+            <p class="text-gray-700 dark:text-gray-300 leading-relaxed" data-ref="https://iclr-blogposts.github.io/2025/blog/positional-embedding/|22">
+              Enkoding posisi merupakan teknik penting yang menekankan pentingnya mereka dalam transformer tradisional dan penggunaannya dengan enkoding posisi 2D dalam transformer visi.
+            </p>
+
+            <p class="text-gray-700 dark:text-gray-300 leading-relaxed" data-ref="https://arxiv.org/html/2504.14386v1|23">
+              Enkoding posisi (PE) sangat penting untuk transformer visi karena perhatian sendiri (self-attention) tidak memiliki kesadaran spasial inheren. Enkoding posisi absolut (absolute positional encodings) memberikan informasi lokasi relatif kepada model.
+            </p>
+
+            <div class="pl-4 pr-3 py-3 border-l-4 border-amber-500 bg-amber-50/40 dark:bg-amber-900/30 rounded-r-lg">
+              <p class="text-sm font-medium text-amber-900 dark:text-amber-100 leading-relaxed" data-ref="https://cameronrwolfe.substack.com/p/vision-transformers-from-idea-to|105">
+                <i data-lucide="alert-triangle" class="inline-block w-4 h-4 mr-1.5 -mt-0.5"></i>
+                Peringatan: Dalam bentuk aslinya, transformer menggunakan enkoding posisi global, yang bukan invarian translasi. Ini berarti bahwa posisi absolut potongan mempengaruhi representasi model.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="hs-accordion-group space-y-4">
+          <div class="hs-accordion card-interactive bg-white/80 backdrop-blur-sm dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+            <button class="hs-accordion-toggle w-full flex justify-between items-center p-4 text-left hover:bg-primary-50 dark:hover:bg-gray-700/50 transition-colors rounded-xl" id="hs-pos-1">
+              <div class="flex items-center space-x-4">
+                <div class="flex-shrink-0 w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
+                  <i data-lucide="waves" class="w-6 h-6 text-primary-600 dark:text-primary-400"></i>
+                </div>
+                <span class="font-semibold text-lg text-primary-700 dark:text-primary-300">Enkoding Sinusoidal</span>
+              </div>
+              <i data-lucide="chevron-down" class="hs-accordion-active:rotate-180 transition-transform duration-300 w-5 h-5 text-primary-600 dark:text-primary-400"></i>
+            </button>
+            <div id="hs-collapse-pos-1" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="hs-pos-1">
+              <div class="p-6 pt-0 space-y-4">
+                <p class="text-gray-700 dark:text-gray-300" data-ref="https://mbrenndoerfer.com/writing/sinusoidal-position-encoding-transformers-word-order|26">
+                  Enkoding posisi sinusoidal adalah metode deterministik yang memberikan kesadaran posisi kepada transformer. Ini memberikan informasi urutan kepada model transformer tanpa memerlukan pembelajaran parameter tambahan.
+                </p>
+                <p class="text-gray-700 dark:text-gray-300" data-ref="https://neurips.cc/media/neurips-2025/Slides/128797_UIlZCE0.pdf|24">
+                  Enkoding 'P' memiliki properti kunci berikut: ia dapat menangkap informasi posisi ABSOLUT DAN RELATIF. Transformer Visi (enkoding posisi 2D) menggunakan fungsi sinus dan kosinus untuk mengkodekan posisi spasial.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="hs-accordion card-interactive bg-white/80 backdrop-blur-sm dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+            <button class="hs-accordion-toggle w-full flex justify-between items-center p-4 text-left hover:bg-primary-50 dark:hover:bg-gray-700/50 transition-colors rounded-xl" id="hs-pos-2">
+              <div class="flex items-center space-x-4">
+                <div class="flex-shrink-0 w-12 h-12 bg-accent-100 dark:bg-accent-900/30 rounded-lg flex items-center justify-center">
+                  <i data-lucide="rotate-cw" class="w-6 h-6 text-accent-600 dark:text-accent-400"></i>
+                </div>
+                <span class="font-semibold text-lg text-accent-700 dark:text-accent-300">Rotary Position Embedding (RoPE)</span>
+              </div>
+              <i data-lucide="chevron-down" class="hs-accordion-active:rotate-180 transition-transform duration-300 w-5 h-5 text-accent-600 dark:text-accent-400"></i>
+            </button>
+            <div id="hs-collapse-pos-2" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="hs-pos-2">
+              <div class="p-6 pt-0 space-y-4">
+                <p class="text-gray-700 dark:text-gray-300" data-ref="https://arxiv.org/html/2403.13298v1|58">
+                  Tujuan makalah ini adalah meningkatkan enkoding posisi untuk transformer visi dengan menerapkan Rotary Position Embedding (RoPE) yang diperluas. RoPE 2D adalah solusi efektif untuk klasifikasi multi-resolusi baik untuk ViT maupun Swin Transformer, terutama untuk resolusi besar.
+                </p>
+                <p class="text-gray-700 dark:text-gray-300" data-ref="https://www.emergentmind.com/topics/2d-rotary-position-embedding-rope|64">
+                  RoPE 2D adalah skema enkoding posisi yang memperluas enkoding rotary 1D ke dua dimensi spasial menggunakan rotasi berbasis dimensi. Ini menyediakan representasi posisi yang lebih efisien dan skalabel.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="hs-accordion card-interactive bg-white/80 backdrop-blur-sm dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+            <button class="hs-accordion-toggle w-full flex justify-between items-center p-4 text-left hover:bg-primary-50 dark:hover:bg-gray-700/50 transition-colors rounded-xl" id="hs-pos-3">
+              <div class="flex items-center space-x-4">
+                <div class="flex-shrink-0 w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
+                  <i data-lucide="math" class="w-6 h-6 text-primary-600 dark:text-primary-400"></i>
+                </div>
+                <span class="font-semibold text-lg text-primary-700 dark:text-primary-300">Weierstrass Positional Encoding</span>
+              </div>
+              <i data-lucide="chevron-down" class="hs-accordion-active:rotate-180 transition-transform duration-300 w-5 h-5 text-primary-600 dark:text-primary-400"></i>
+            </button>
+            <div id="hs-collapse-pos-3" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="hs-pos-3">
+              <div class="p-6 pt-0 space-y-4">
+                <p class="text-gray-700 dark:text-gray-300" data-ref="https://openreview.net/forum?id=lVmnN8g6lW|28">
+                  Makalah ini mengusulkan Weierstrass Positional Encoding (WePE), enkoding posisi 2D yang didasarkan pada dasar matematis untuk Transformer Visi. Metode ini memetakan koordinat patch 2D dinormalisasi ke bidang kompleks dan membangun fitur posisi empat dimensi kompak berdasarkan fungsi eliptik Weierstrass.
+                </p>
+                <p class="text-gray-700 dark:text-gray-300" data-ref="https://arxiv.org/html/2605.23719v1|100">
+                  WePE adalah pendekatan matematis yang terprinsip untuk mengkodekan koordinat dua dimensi dalam domain kompleks, mempertahankan struktur spasial 2D gambar.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Attention Mechanism Section -->
+    <section id="attention" class="py-20 bg-white/80 dark:bg-gray-900" data-aos="fade-up">
+      <div class="max-w-5xl mx-auto px-6">
+        <h2 class="text-4xl font-bold mb-8 text-primary-700 dark:text-primary-300">
+          Self-Attention: Mekanisme Perhatian Global
+        </h2>
+
+        <div class="space-y-8">
+          <p class="text-gray-700 dark:text-gray-300 leading-relaxed text-lg" data-ref="https://openreview.net/forum?id=YicbFdNTTy|53">
+            Vision Transformer (ViT) mencapai hasil yang sangat baik dibandingkan jaringan konvolusi state-of-the-art dengan menggunakan perhatian global pada seluruh gambar. Ini memungkinkan model menangkap hubungan jarak jauh antar potongan.
+          </p>
+
+          <div class="grid md:grid-cols-2 gap-8">
+            <div class="card-interactive p-6 bg-primary-50/50 dark:bg-primary-900/20 rounded-xl shadow-md">
+              <h3 class="text-xl font-semibold text-primary-700 dark:text-primary-300 mb-4" data-ref="https://gstoica27.github.io/assets/pdf/BiSA_VTTA_Submission.pdf|43">Definisi Matematis</h3>
+              <p class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
+                Self-Attention (SA) memetakan sekumpulan pasangan kunci-nilai ke output dengan mengagregasi informasi dari setiap pasangan sesuai dengan kompatibilitasnya dengan sebuah query. Ini adalah bentuk kombinasi linier khusus dari token.
+              </p>
+            </div>
+
+            <div class="card-interactive p-6 bg-accent-50/50 dark:bg-accent-900/20 rounded-xl shadow-md">
+              <h3 class="text-xl font-semibold text-accent-700 dark:text-accent-300 mb-4" data-ref="https://community.deeplearning.ai/t/confusion-about-q-k-and-v-matrices/426146|6">Komponen QKV</h3>
+              <p class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
+                Q, K, V diperoleh dengan mengalikan sematan input dengan matriks bobot terpelajari spesifik untuk Query, Kunci, dan Nilai. Ini memungkinkan model mempelajari representasi yang berbeda untuk setiap peran.
+              </p>
+            </div>
+          </div>
+
+          <div class="card-interactive p-8 bg-white/90 backdrop-blur-sm dark:bg-gray-800 rounded-xl shadow-lg">
+            <h3 class="text-2xl font-semibold text-primary-700 dark:text-primary-300 mb-6">Scaled Dot-Product Attention</h3>
+            
+            <div class="space-y-4">
+              <p class="text-gray-700 dark:text-gray-300" data-ref="https://dsail.dkut.ac.ke/tutorials/transformer-architecture/4.%20Multi-Head%20Attention.html|12">
+                Output dihitung sebagai:
+                <span class="mx-1 px-1.5 py-0.5 rounded-md bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-300 font-semibold text-sm">Attention(Q, K, V) = softmax(QK^T/√d_k)V</span>
+                Operasi softmax menghasilkan matriks perhatian A di mana setiap baris berjumlah satu.
+              </p>
+
+              <p class="text-gray-700 dark:text-gray-300" data-ref="https://medium.com/data-science/the-math-behind-multi-head-attention-in-transformers-c26cba15f625|8">
+                Dengan membagi produk titik dengan √d_k, kita menormalkan input ke fungsi softmax, memastikan bahwa skor tetap dalam rentang yang wajar. Ini mencegah skor perhatian ekstrem dan membuat model lebih stabil.
+              </p>
+
+              <div class="pl-4 pr-3 py-3 border-l-4 border-primary-500 bg-primary-50/40 dark:bg-primary-900/30 rounded-r-lg">
+                <p class="text-sm font-medium text-primary-900 dark:text-primary-100 leading-relaxed" data-ref="https://www.abhik.ai/concepts/transformers/scaled-dot-product|51">
+                  <i data-lucide="circle-check" class="inline-block w-4 h-4 mr-1.5 -mt-0.5"></i>
+                  Penting: Untuk vektor acak dengan variansi satuan, produk titik memiliki variansi d_k. Membagi dengan √d_k membawa variansi kembali ke ~1, terlepas dari ukuran dimensi.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-3 gap-6 mt-8">
+            <div class="card-interactive p-6 bg-white/80 backdrop-blur-sm dark:bg-gray-800 rounded-xl shadow-md">
+              <div class="w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center mb-4">
+                <i data-lucide="search" class="w-6 h-6 text-primary-600 dark:text-primary-400"></i>
+              </div>
+              <h4 class="text-lg font-semibold text-primary-700 dark:text-primary-300 mb-2" data-ref="https://arpitbhayani.me/blogs/qkv-matrices/|78">Query (Q)</h4>
+              <p class="text-sm text-gray-600 dark:text-gray-400">
+                Matriks W_q memproyeksikan input ke ruang Query, menentukan bagian mana dari input yang akan dicocokkan dengan Kunci.
+              </p>
+            </div>
+
+            <div class="card-interactive p-6 bg-white/80 backdrop-blur-sm dark:bg-gray-800 rounded-xl shadow-md">
+              <div class="w-12 h-12 bg-accent-100 dark:bg-accent-900/30 rounded-lg flex items-center justify-center mb-4">
+                <i data-lucide="key" class="w-6 h-6 text-accent-600 dark:text-accent-400"></i>
+              </div>
+              <h4 class="text-lg font-semibold text-accent-700 dark:text-accent-300 mb-2" data-ref="https://arpitbhayani.me/blogs/qkv-matrices/|78">Key (K)</h4>
+              <p class="text-sm text-gray-600 dark:text-gray-400">
+                Matriks W_k memproyeksikan input ke ruang Kunci, menyediakan representasi untuk dicocokkan dengan Query.
+              </p>
+            </div>
+
+            <div class="card-interactive p-6 bg-white/80 backdrop-blur-sm dark:bg-gray-800 rounded-xl shadow-md">
+              <div class="w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center mb-4">
+                <i data-lucide="file-text" class="w-6 h-6 text-primary-600 dark:text-primary-400"></i>
+              </div>
+              <h4 class="text-lg font-semibold text-primary-700 dark:text-primary-300 mb-2" data-ref="https://arpitbhayani.me/blogs/qkv-matrices/|78">Value (V)</h4>
+              <p class="text-sm text-gray-600 dark:text-gray-400">
+                Matriks W_v memproyeksikan input ke ruang Nilai, menyediakan informasi aktual yang akan dikombinasikan berdasarkan bobot perhatian.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CLS Token Section -->
+    <section id="cls-token" class="py-20 bg-accent-50/50 dark:bg-gray-800" data-aos="fade-up">
+      <div class="max-w-5xl mx-auto px-6">
+        <h2 class="text-4xl font-bold mb-8 text-accent-700 dark:text-accent-300">
+          CLS Token: Representasi Global Gambar
+        </h2>
+
+        <div class="space-y-8">
+          <p class="text-gray-700 dark:text-gray-300 leading-relaxed text-lg" data-ref="https://www.abhik.ai/concepts/transformers/cls-token|76">
+            Token CLS (Classification) adalah komponen fondamental yang memungkinkan Vision Transformer melakukan tugas klasifikasi tingkat gambar. Ini adalah token khusus yang ditambahkan ke urutan potongan untuk agregasi informasi global.
+          </p>
+
+          <div class="grid md:grid-cols-2 gap-8 items-start">
+            <div class="space-y-6">
+              <div class="card-interactive p-6 bg-white/90 backdrop-blur-sm dark:bg-gray-800 rounded-xl shadow-md">
+                <h3 class="text-xl font-semibold text-accent-700 dark:text-accent-300 mb-4" data-ref="https://saadsohail5104.medium.com/understanding-the-role-of-the-class-token-in-vision-transformers-vit-d0f7750d7066|42">Fungsi Agregasi</h3>
+                <p class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
+                  Token "[class]" adalah token khusus yang digunakan dalam Transformer Visi (ViT) untuk tugas klasifikasi. Anggap itu sebagai "ringkasan" atau "intisari" dari seluruh gambar, mengumpulkan informasi dari semua potongan.
+                </p>
+              </div>
+
+              <div class="card-interactive p-6 bg-white/90 backdrop-blur-sm dark:bg-gray-800 rounded-xl shadow-md">
+                <h3 class="text-xl font-semibold text-accent-700 dark:text-accent-300 mb-4" data-ref="https://arxiv.org/html/2606.12036v1|41">Embedding Akhir</h3>
+                <p class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
+                  ViT melakukan klasifikasi gambar dengan memperkenalkan token kelas khusus (CLS), yang embedding akhirnya berfungsi sebagai representasi global gambar untuk klasifikasi.
+                </p>
+              </div>
+            </div>
+
+            <div class="card-interactive p-8 bg-white/90 backdrop-blur-sm dark:bg-gray-800 rounded-xl shadow-lg">
+              <h3 class="text-xl font-semibold text-accent-700 dark:text-accent-300 mb-6">Struktur Urutan Input</h3>
+              
+              <div class="space-y-4">
+                <div class="flex items-center space-x-4">
+                  <div class="w-10 h-10 bg-accent-100 dark:bg-accent-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <i data-lucide="star" class="w-5 h-5 text-accent-600 dark:text-accent-400"></i>
+                  </div>
+                  <div class="flex-1">
+                    <h4 class="font-semibold text-accent-700 dark:text-accent-300">[CLS] Token</h4>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Token khusus untuk agregasi informasi global</p>
+                  </div>
+                </div>
+
+                <div class="flex items-center space-x-4">
+                  <div class="w-10 h-10 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <i data-lucide="image" class="w-5 h-5 text-primary-600 dark:text-primary-400"></i>
+                  </div>
+                  <div class="flex-1">
+                    <h4 class="font-semibold text-primary-700 dark:text-primary-300">Potongan Gambar</h4>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Urutan potongan 16×16 (misalnya 196 potongan)</p>
+                  </div>
+                </div>
+
+                <div class="flex items-center space-x-4">
+                  <div class="w-10 h-10 bg-accent-100 dark:bg-accent-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <i data-lucide="hash" class="w-5 h-5 text-accent-600 dark:text-accent-400"></i>
+                  </div>
+                  <div class="flex-1">
+                    <h4 class="font-semibold text-accent-700 dark:text-accent-300">Embedding Posisi</h4>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Informasi posisi untuk mempertahankan struktur spasial</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-6 pl-4 pr-3 py-3 border-l-4 border-accent-500 bg-accent-50/40 dark:bg-accent-900/30 rounded-r-lg">
+                <p class="text-sm font-medium text-accent-900 dark:text-accent-100 leading-relaxed" data-ref="https://medium.com/correll-lab/paper-review-vision-transformers-need-registers-0edb16e05079|77">
+                  <i data-lucide="info" class="inline-block w-4 h-4 mr-1.5 -mt-0.5"></i>
+                  Proses: Token kelas terpelajari, dilambangkan [CLS], ditambahkan ke urutan ini, berfungsi sebagai titik agregasi untuk informasi gambar global yang dapat digunakan untuk klasifikasi.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Architecture Section -->
+    <section id="architecture" class="py-20 bg-white/80 dark:bg-gray-900" data-aos="fade-up">
+      <div class="max-w-5xl mx-auto px-6">
+        <h2 class="text-4xl font-bold mb-8 text-primary-700 dark:text-primary-300">
+          Arsitektur Transformer: Struktur Enkoder
+        </h2>
+
+        <div class="space-y-8">
+          <p class="text-gray-700 dark:text-gray-300 leading-relaxed text-lg" data-ref="https://arxiv.org/pdf/2010.11929|69">
+            Enkoder Transformer (Vaswani et al., 2017) terdiri dari lapisan-lapisan bergantian dari perhatian sendiri multi-kepala (MSA, lihat Lampiran A) dan blok MLP (Persamaan 2, 3). Ini menciptakan arsitektur hierarkis yang menangkap informasi pada berbagai skala.
+          </p>
+
+          <div class="grid md:grid-cols-2 gap-8">
+            <div class="card-interactive p-6 bg-primary-50/50 dark:bg-primary-900/20 rounded-xl shadow-md">
+              <div class="w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center mb-4">
+                <i data-lucide="git-branch" class="w-6 h-6 text-primary-600 dark:text-primary-400"></i>
+              </div>
+              <h3 class="text-xl font-semibold text-primary-700 dark:text-primary-300 mb-4" data-ref="https://medium.com/analytics-vidhya/understanding-the-vision-transformer-and-counting-its-parameters-988a4ea2b8f3|85">Multi-Headed Attention</h3>
+              <p class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
+                Komponen enkoder berisi mekanisme perhatian multi-kepala (MHA) dan MLP 2-lapisan, dengan normalisasi lapisan dan koneksi residu di antaranya. Ini memungkinkan model mempelajari representasi yang berbeda secara paralel.
+              </p>
+            </div>
+
+            <div class="card-interactive p-6 bg-accent-50/50 dark:bg-accent-900/20 rounded-xl shadow-md">
+              <div class="w-12 h-12 bg-accent-100 dark:bg-accent-900/30 rounded-lg flex items-center justify-center mb-4">
+                <i data-lucide="layers" class="w-6 h-6 text-accent-600 dark:text-accent-400"></i>
+              </div>
+              <h3 class="text-xl font-semibold text-accent-700 dark:text-accent-300 mb-4" data-ref="https://arxiv.org/html/2010.11929v1|89">Blok MLP</h3>
+              <p class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
+                Lapisan normalisasi (LN) diterapkan sebelum setiap blok. Arsitektur perhatian sendiri mandiri dalam visi menggunakan kombinasi lapisan perhatian dan MLP untuk menangkap pola kompleks.
+              </p>
+            </div>
+          </div>
+
+          <div class="card-interactive p-8 bg-white/90 backdrop-blur-sm dark:bg-gray-800 rounded-xl shadow-lg">
+            <h3 class="text-2xl font-semibold text-primary-700 dark:text-primary-300 mb-6">Residual Connections dan Normalisasi</h3>
+            
+            <div class="space-y-4">
+              <p class="text-gray-700 dark:text-gray-300" data-ref="https://sthalles.github.io/an-intuitive-introduction-to-the-vision-transformer/|54">
+                Mari jelajahi dua komponen yang hilang: koneksi residu dan normalisasi lapisan. Koneksi Residu membawa kita ke output residu (atau lewat) yang ditambahkan ke input lapisan, mencegah masalah gradien menghilang.
+              </p>
+
+              <p class="text-gray-700 dark:text-gray-300" data-ref="https://www.datacamp.com/tutorial/how-transformers-work|55">
+                Setiap sub-lapisan dalam lapisan enkoder diikuti oleh langkah normalisasi. Juga, output setiap sub-lapisan ditambahkan ke inputnya (koneksi residu), meningkatkan stabilitas pelatihan dan memungkinkan arsitektur yang lebih dalam.
+              </p>
+
+              <div class="pl-4 pr-3 py-3 border-l-4 border-primary-500 bg-primary-50/40 dark:bg-primary-900/30 rounded-r-lg">
+                <p class="text-sm font-medium text-primary-900 dark:text-primary-100 leading-relaxed" data-ref="https://arxiv.org/pdf/2311.17633|56">
+                  <i data-lucide="circle-check" class="inline-block w-4 h-4 mr-1.5 -mt-0.5"></i>
+                  Optimasi: Kemudian, koneksi residu dan unit normalisasi lapisan ditambahkan ke output sehingga model yang dihasilkan lebih mudah dioptimalkan.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-3 gap-6 mt-8">
+            <div class="card-interactive p-6 bg-white/80 backdrop-blur-sm dark:bg-gray-800 rounded-xl shadow-md">
+              <h4 class="text-lg font-semibold text-primary-700 dark:text-primary-300 mb-3" data-ref="https://medium.com/@pratik.vyas_10544/transformer-encoder-part-1-1d926707f74b|112">Dimensi per Kepala</h4>
+              <p class="text-sm text-gray-600 dark:text-gray-400">
+                Model membagi dimensi sematan total di antara kepala. Untuk ViT-B, d_k = d_v = d_model/h = 768/2 = 384, memungkinkan perhatian paralel yang efisien.
+              </p>
+            </div>
+
+            <div class="card-interactive p-6 bg-white/80 backdrop-blur-sm dark:bg-gray-800 rounded-xl shadow-md">
+              <h4 class="text-lg font-semibold text-accent-700 dark:text-accent-300 mb-3" data-ref="https://www.mdpi.com/2227-7080/13/1/32|72">Proses Enkoding</h4>
+              <p class="text-sm text-gray-600 dark:text-gray-400">
+                Urutan sematan potongan diterapkan ke enkoder transformer dengan normalisasi, pemrosesan perhatian sendiri, dan MLP. Output MLP head digunakan untuk klasifikasi.
+              </p>
+            </div>
+
+            <div class="card-interactive p-6 bg-white/80 backdrop-blur-sm dark:bg-gray-800 rounded-xl shadow-md">
+              <h4 class="text-lg font-semibold text-primary-700 dark:text-primary-300 mb-3" data-ref="https://medium.com/@dewasheesh.rana/the-most-intuitive-guide-to-transformers-self-attention-qkv-ffn-why-mistral-7b-has-7-billion-d7c91fcf439e|116">Langkah-langkah Proses</h4>
+              <p class="text-sm text-gray-600 dark:text-gray-400">
+                Hitung Q, K, V untuk setiap token. Langkah 1 — Normalisasi Lapisan, Langkah 2 — Buat Q, K, V menggunakan matriks, Langkah 3 — Perhatian multi-kepala.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Conclusion Section -->
+    <section id="conclusion" class="py-20 bg-primary-50/50 dark:bg-gray-800" data-aos="fade-up">
+      <div class="max-w-5xl mx-auto px-6">
+        <h2 class="text-4xl font-bold mb-8 text-primary-700 dark:text-primary-300">
+          Kesimpulan: Fondasi Matematis Vision Transformer
+        </h2>
+
+        <div class="space-y-6">
+          <p class="text-gray-700 dark:text-gray-300 leading-relaxed text-lg">
+            Vision Transformer (ViT) merepresentasikan paradigma transformasional dalam pengolahan gambar, mengadaptasi mekanisme perhatian global dari pemrosesan bahasa alami ke domain komputer visi. Formulasi matematis yang mendalam mencakup beberapa komponen inti yang saling terkait.
+          </p>
+
+          <div class="grid md:grid-cols-2 gap-8">
+            <div class="card-interactive p-6 bg-white/90 backdrop-blur-sm dark:bg-gray-800 rounded-xl shadow-md">
+              <div class="w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center mb-4">
+                <i data-lucide="zap" class="w-6 h-6 text-primary-600 dark:text-primary-400"></i>
+              </div>
+              <h3 class="text-xl font-semibold text-primary-700 dark:text-primary-300 mb-3">Inovasi Utama</h3>
+              <ul class="space-y-2 text-sm text-gray-700 dark:text-gray-300">
+                <li class="flex items-start">
+                  <i data-lucide="check" class="w-4 h-4 mr-2 mt-0.5 text-primary-600 dark:text-primary-400 flex-shrink-0"></i>
+                  <span>Pemrosesan gambar sebagai urutan potongan-potongan tetap, mirip dengan token kata dalam NLP</span>
+                </li>
+                <li class="flex items-start">
+                  <i data-lucide="check" class="w-4 h-4 mr-2 mt-0.5 text-primary-600 dark:text-primary-400 flex-shrink-0"></i>
+                  <span>Proyeksi linier untuk menghasilkan sematan potongan berdimensi tetap (biasanya 768)</span>
+                </li>
+                <li class="flex items-start">
+                  <i data-lucide="check" class="w-4 h-4 mr-2 mt-0.5 text-primary-600 dark:text-primary-400 flex-shrink-0"></i>
+                  <span>Mekanisme perhatian global untuk menangkap hubungan jarak jauh antar potongan</span>
+                </li>
+                <li class="flex items-start">
+                  <i data-lucide="check" class="w-4 h-4 mr-2 mt-0.5 text-primary-600 dark:text-primary-400 flex-shrink-0"></i>
+                  <span>Skema enkoding posisi 2D untuk mempertahankan informasi spasial</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="card-interactive p-6 bg-white/90 backdrop-blur-sm dark:bg-gray-800 rounded-xl shadow-md">
+              <div class="w-12 h-12 bg-accent-100 dark:bg-accent-900/30 rounded-lg flex items-center justify-center mb-4">
+                <i data-lucide="target" class="w-6 h-6 text-accent-600 dark:text-accent-400"></i>
+              </div>
+              <h3 class="text-xl font-semibold text-accent-700 dark:text-accent-300 mb-3">Kontribusi Matematis</h3>
+              <ul class="space-y-2 text-sm text-gray-700 dark:text-gray-300">
+                <li class="flex items-start">
+                  <i data-lucide="check" class="w-4 h-4 mr-2 mt-0.5 text-accent-600 dark:text-accent-400 flex-shrink-0"></i>
+                  <span>Scaled dot-product attention untuk stabilitas numerik dan konsistensi skor</span>
+                </li>
+                <li class="flex items-start">
+                  <i data-lucide="check" class="w-4 h-4 mr-2 mt-0.5 text-accent-600 dark:text-accent-400 flex-shrink-0"></i>
+                  <span>Koneksi residu dan normalisasi lapisan untuk pelatihan stabil</span>
+                </li>
+                <li class="flex items-start">
+                  <i data-lucide="check" class="w-4 h-4 mr-2 mt-0.5 text-accent-600 dark:text-accent-400 flex-shrink-0"></i>
+                  <span>Token klasifikasi ([CLS]) untuk agregasi informasi global</span>
+                </li>
+                <li class="flex items-start">
+                  <i data-lucide="check" class="w-4 h-4 mr-2 mt-0.5 text-accent-600 dark:text-accent-400 flex-shrink-0"></i>
+                  <span>Arsitektur enkoder berlapis untuk representasi hierarkis</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="card-interactive p-8 bg-white/90 backdrop-blur-sm dark:bg-gray-800 rounded-xl shadow-lg mt-8">
+            <h3 class="text-2xl font-semibold text-primary-700 dark:text-primary-300 mb-4">Implikasi Penelitian</h3>
+            <p class="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+              Pendekatan matematis Vision Transformer telah membuka jalur penelitian baru dalam komputer visi, termasuk pengembangan skema enkoding posisi yang lebih canggih seperti Weierstrass Positional Encoding dan Rotary Position Embedding, serta arsitektur hybrid yang menggabungkan kekuatan CNN dan Transformer.
+            </p>
+            <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+              Studi lanjutan terus mengeksplorasi optimasi arsitektur, efisiensi komputasi, dan aplikasi domain spesifik, menjadikan ViT sebagai fondasi yang kuat untuk generasi model visi berikutnya.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-primary-900 dark:bg-gray-950 text-primary-100 dark:text-gray-300 py-12">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="grid md:grid-cols-3 gap-8">
+        <div>
+          <h3 class="text-lg font-semibold mb-4 text-primary-50 dark:text-primary-300">Tentang</h3>
+          <p class="text-sm text-primary-200 dark:text-gray-400 leading-relaxed">
+            Ringkasan matematis komprehensif tentang Vision Transformer untuk komunitas peneliti komputer visi.
+          </p>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold mb-4 text-primary-50 dark:text-primary-300">Topik Utama</h3>
+          <ul class="space-y-2 text-sm text-primary-200 dark:text-gray-400">
+            <li class="flex items-center">
+              <i data-lucide="chevron-right" class="w-4 h-4 mr-2"></i>
+              <span>Patch Embedding</span>
+            </li>
+            <li class="flex items-center">
+              <i data-lucide="chevron-right" class="w-4 h-4 mr-2"></i>
+              <span>Self-Attention</span>
+            </li>
+            <li class="flex items-center">
+              <i data-lucide="chevron-right" class="w-4 h-4 mr-2"></i>
+              <span>Positional Encoding</span>
+            </li>
+            <li class="flex items-center">
+              <i data-lucide="chevron-right" class="w-4 h-4 mr-2"></i>
+              <span>CLS Token</span>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold mb-4 text-primary-50 dark:text-primary-300">Sumber</h3>
+          <p class="text-sm text-primary-200 dark:text-gray-400 leading-relaxed">
+            Informasi didasarkan pada publikasi penelitian peer-review dan dokumentasi teknis resmi Vision Transformer.
+          </p>
+        </div>
+      </div>
+      <div class="border-t border-primary-700 dark:border-gray-800 mt-8 pt-8 text-center">
+        <p class="text-sm text-primary-300 dark:text-gray-500">
+          © 2024 Vision Transformer Research Summary. Semua hak cipta dilindungi.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Citation System Script -->
+  <script>
+    function initCitationSystem() {
+      let i = 1, map = new Map();
+      document.querySelectorAll('[data-ref]').forEach(el => {
+        if (el.dataset.citationProcessed) return;
+        const raw = (el.getAttribute('data-ref')||'').trim();
+        if (!raw) return;
+
+        const parts = raw.split('|');
+        const url = parts[0].trim();
+        const idx = (parts[1]||'').trim() || map.get(raw) || (map.set(raw, String(i)), String(i++));
+
+        if (!el.textContent || !el.textContent.trim()) { el.dataset.citationProcessed = 'true'; return; }
+
+        const btn = document.createElement('sup'); btn.textContent = String(idx);
+        Object.assign(btn.style, { fontSize:'8px', color:'#fff', cursor:'pointer', top: '1px', fontWeight:'bold', backgroundColor:'#0284c7', borderRadius:'50%', transition:'all .15s', userSelect:'none', minWidth:'19px', height:'19px', marginLeft:'6px', display:'inline-flex', alignItems:'center', justifyContent:'center', boxShadow:'0 1px 3px rgba(0,0,0,.2)', lineHeight:'1'});
+        btn.addEventListener('mouseenter', ()=> Object.assign(btn.style, { backgroundColor:'#0369a1', transform:'scale(1.12)' }));
+        btn.addEventListener('mouseleave', ()=> Object.assign(btn.style, { backgroundColor:'#0284c7', transform:'scale(1)' }));
+        btn.addEventListener('click', e=>{ e.preventDefault(); e.stopPropagation(); window.open(url, '_blank'); });
+
+        el.appendChild(btn); el.dataset.citationProcessed = 'true';
+      });
+    }
+  </script>
+
+  <!-- Initialize Scripts -->
+  <script>
+    // Initialize AOS
+    AOS.init({
+      duration: 800,
+      once: true,
+      offset: 100
+    });
+
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    // Initialize Preline components after DOM load
+    document.addEventListener('DOMContentLoaded', function() {
+      setTimeout(() => {
+        window.HSStaticMethods.autoInit();
+        initCitationSystem();
+      }, 100);
+    });
+
+    // Progress bar functionality
+    window.addEventListener('scroll', () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById('progressBar').style.width = scrolled + '%';
+    });
+  </script>
+</body>
+</html>
+
