@@ -1,0 +1,958 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../11_modul_11/">
+      
+      
+        <link rel="next" href="../13_modul_13/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Modul 12: Persamaan Panas 1D (Difusi Termal pada Kabel) - Persamaan Diferensial UNIB</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#modul-12-persamaan-panas-1d-difusi-termal-pada-kabel" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Persamaan Diferensial UNIB" class="md-header__button md-logo" aria-label="Persamaan Diferensial UNIB" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Persamaan Diferensial UNIB
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Modul 12: Persamaan Panas 1D (Difusi Termal pada Kabel)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Persamaan Diferensial UNIB" class="md-nav__button md-logo" aria-label="Persamaan Diferensial UNIB" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Persamaan Diferensial UNIB
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📘 Selamat Datang di Mata Kuliah Persamaan Diferensial
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01_modul_1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modul 1: Pengantar Persamaan Diferensial
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02_modul_2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modul 2: Persamaan Diferensial Biasa Orde 1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03_modul_3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modul 3: Aplikasi Persamaan Diferensial Biasa Orde 1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04_modul_4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modul 4: Persamaan Diferensial Biasa Orde 2 Linier Homogen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05_modul_5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modul 5: PDB Orde 2 Non-Homogen (Metode Koefisien Tak Tentu) &amp; Aplikasi RLC Seri
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06_modul_6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modul 6: Transformasi Laplace Dasar
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07_modul_7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modul 7: Invers Laplace &amp; Solusi PDB dengan Laplace
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09_modul_9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modul 9: Pengantar PDP &amp; Deret Fourier
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10_modul_10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modul 10: Solusi PDP dengan Metode Pemisahan Variabel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11_modul_11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modul 11: Persamaan Gelombang 1D (Vibrasi &amp; Transmisi Sinyal)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modul 12: Persamaan Panas 1D (Difusi Termal pada Kabel)
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modul 12: Persamaan Panas 1D (Difusi Termal pada Kabel)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pendahuluan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pendahuluan
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#materi-utama" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Materi Utama
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#persamaan-panas-1-dimensi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Persamaan Panas 1 Dimensi
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#metode-pemisahan-variabel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Metode Pemisahan Variabel
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kondisi-batas-dan-awal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Kondisi Batas dan Awal
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ringkasan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ringkasan
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#referensi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Referensi
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13_modul_13/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modul 13: Persamaan Laplace 2D (Distribusi Potensial Elektrostatik)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14_modul_14/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modul 14: Fungsi Khusus 1 (Persamaan Bessel &amp; Aplikasi Gelombang Silinder)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15_modul_15/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modul 15: Kaitan PDP dengan Persamaan Maxwell
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pendahuluan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pendahuluan
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#materi-utama" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Materi Utama
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#persamaan-panas-1-dimensi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Persamaan Panas 1 Dimensi
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#metode-pemisahan-variabel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Metode Pemisahan Variabel
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kondisi-batas-dan-awal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Kondisi Batas dan Awal
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ringkasan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ringkasan
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#referensi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Referensi
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="modul-12-persamaan-panas-1d-difusi-termal-pada-kabel">Modul 12: Persamaan Panas 1D (Difusi Termal pada Kabel)</h1>
+<h2 id="pendahuluan">Pendahuluan</h2>
+<p>Dalam rekayasa teknik elektro, analisis distribusi panas sangat penting terutama pada perancangan saluran transmisi dan kabel listrik. Arus listrik yang mengalir pada kabel akan menghasilkan panas akibat resistansi material konduktor (efek Joule). Panas yang dihasilkan harus dapat didisipasikan ke lingkungan untuk mencegah pelelehan atau kerusakan pada insulasi kabel.</p>
+<p>Modul ini membahas Persamaan Panas (Heat Equation) satu dimensi, yaitu model matematika dari fenomena difusi termal. Kita akan memodelkan bagaimana suhu berubah seiring berjalannya waktu dan posisi di sepanjang kabel penghantar.</p>
+<h2 id="materi-utama">Materi Utama</h2>
+<h2 id="persamaan-panas-1-dimensi">Persamaan Panas 1 Dimensi</h2>
+<p>Persamaan panas satu dimensi merupakan persamaan diferensial parsial (PDP) parabolik yang menggambarkan distribusi panas pada suatu batang atau kabel seiring waktu. Persamaan ini dirumuskan sebagai:</p>
+<div class="arithmatex">\[
+\frac{\partial u}{\partial t} = \alpha^2 \frac{\partial^2 u}{\partial x^2}
+\]</div>
+<p>dimana:</p>
+<ul>
+<li><span class="arithmatex">\(u(x,t)\)</span> adalah temperatur pada posisi <span class="arithmatex">\(x\)</span> dan waktu <span class="arithmatex">\(t\)</span>.</li>
+<li><span class="arithmatex">\(\alpha^2 = \frac{k}{c \rho}\)</span> adalah difusivitas termal material, dengan <span class="arithmatex">\(k\)</span> konduktivitas termal, <span class="arithmatex">\(c\)</span> kalor jenis, dan <span class="arithmatex">\(\rho\)</span> massa jenis.</li>
+</ul>
+<h2 id="metode-pemisahan-variabel">Metode Pemisahan Variabel</h2>
+<p>Untuk menyelesaikan persamaan panas, kita menggunakan metode pemisahan variabel. Asumsikan solusi berbentuk:</p>
+<div class="arithmatex">\[
+u(x,t) = X(x)T(t)
+\]</div>
+<p>Substitusikan ke dalam persamaan panas:</p>
+<div class="arithmatex">\[
+X(x)T'(t) = \alpha^2 X''(x)T(t) \implies \frac{T'(t)}{\alpha^2 T(t)} = \frac{X''(x)}{X(x)} = -\lambda^2
+\]</div>
+<p>Hal ini menghasilkan dua persamaan diferensial biasa (PDB):</p>
+<div class="arithmatex">\[
+\begin{aligned}
+X''(x) + \lambda^2 X(x) &amp;= 0 \\
+T'(t) + \alpha^2 \lambda^2 T(t) &amp;= 0
+\end{aligned}
+\]</div>
+<h2 id="kondisi-batas-dan-awal">Kondisi Batas dan Awal</h2>
+<p>Misalkan kita memiliki kabel dengan panjang <span class="arithmatex">\(L\)</span>.
+<strong>Kondisi Batas (Dirichlet):</strong> Kabel dijaga pada suhu 0 di kedua ujungnya:
+<span class="arithmatex">\(u(0,t) = 0\)</span> dan <span class="arithmatex">\(u(L,t) = 0\)</span> untuk <span class="arithmatex">\(t &gt; 0\)</span>.</p>
+<p><strong>Kondisi Awal:</strong> Suhu awal kabel pada <span class="arithmatex">\(t=0\)</span> adalah <span class="arithmatex">\(f(x)\)</span>:
+<span class="arithmatex">\(u(x,0) = f(x)\)</span>.</p>
+<p>Dari kondisi batas pada <span class="arithmatex">\(X(x)\)</span>:
+<span class="arithmatex">\(X(0) = 0 \implies C_1 = 0\)</span>, di mana <span class="arithmatex">\(X(x) = C_1 \cos(\lambda x) + C_2 \sin(\lambda x)\)</span>.<br>
+<span class="arithmatex">\(X(L) = 0 \implies C_2 \sin(\lambda L) = 0 \implies \lambda L = n\pi \implies \lambda_n = \frac{n\pi}{L}\)</span>.</p>
+<p>Sehingga, <span class="arithmatex">\(X_n(x) = \sin\left(\frac{n\pi x}{L}\right)\)</span>.
+Solusi untuk <span class="arithmatex">\(T(t)\)</span> adalah <span class="arithmatex">\(T_n(t) = e^{-\alpha^2 \lambda_n^2 t}\)</span>.</p>
+<p>Solusi umum merupakan superposisi:</p>
+<div class="arithmatex">\[
+u(x,t) = \sum_{n=1}^{\infty} B_n \sin\left(\frac{n\pi x}{L}\right) e^{-\alpha^2 \left(\frac{n\pi}{L}\right)^2 t}
+\]</div>
+<p>Koefisien <span class="arithmatex">\(B_n\)</span> dicari menggunakan deret sinus Fourier dari kondisi awal <span class="arithmatex">\(f(x)\)</span>:</p>
+<div class="arithmatex">\[
+B_n = \frac{2}{L} \int_{0}^{L} f(x) \sin\left(\frac{n\pi x}{L}\right) dx
+\]</div>
+<h2 id="ringkasan">Ringkasan</h2>
+<p>Persamaan panas 1D adalah model penting untuk fenomena difusi. Dalam sistem elektro, persamaan ini digunakan untuk memprediksi perubahan suhu pada penghantar akibat aliran arus. Melalui metode pemisahan variabel dan deret Fourier, kita dapat menemukan solusi analitik dari persamaan panas dengan nilai awal dan batas tertentu. Solusi yang didapat menunjukkan peluruhan suhu secara eksponensial seiring waktu hingga mencapai keseimbangan (steady-state).</p>
+<h2 id="referensi">Referensi</h2>
+<ul>
+<li>Kreyszig, E. (2011). <em>Advanced Engineering Mathematics</em> (10th ed.). John Wiley &amp; Sons.</li>
+<li>Zill, D. G., &amp; Wright, W. S. (2012). <em>Advanced Engineering Mathematics</em> (5th ed.). Jones &amp; Bartlett Learning.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": [], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
