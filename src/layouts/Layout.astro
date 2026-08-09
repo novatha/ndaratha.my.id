@@ -1,23 +1,70 @@
 ---
+import { ClientRouter } from 'astro:transitions';
+
 interface Props {
 	title: string;
 }
 
 const { title } = Astro.props;
+const siteUrl = Astro.site ? Astro.site.href : 'https://www.ndaratha.my.id';
+const canonicalURL = new URL(Astro.url.pathname, siteUrl);
+const ogImage = new URL('/profile.jpg', siteUrl).href;
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="description" content="Novalio Daratha, Ph.D. - Associate Professor of Electrical Engineering" />
+		<meta name="description" content="Novalio Daratha, Ph.D. - Associate Professor of Electrical Engineering, Universitas Bengkulu. Expert in power system control, intelligent optimization algorithms, and renewable energy integration." />
 		<meta name="viewport" content="width=device-width" />
+		<link rel="canonical" href={canonicalURL} />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
+
+		<!-- Open Graph / Facebook / WhatsApp -->
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content={canonicalURL} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content="Novalio Daratha, Ph.D. - Associate Professor of Electrical Engineering, Universitas Bengkulu." />
+		<meta property="og:image" content={ogImage} />
+
+		<!-- Twitter -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:url" content={canonicalURL} />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content="Novalio Daratha, Ph.D. - Associate Professor of Electrical Engineering, Universitas Bengkulu." />
+		<meta name="twitter:image" content={ogImage} />
+
+		<!-- View Transitions -->
+		<ClientRouter />
+
+		<!-- Academic JSON-LD Structured Data -->
+		<script type="application/ld+json" is:inline>
+			{
+				"@context": "https://schema.org",
+				"@type": "Person",
+				"name": "Novalio Daratha",
+				"honorificSuffix": "Ph.D.",
+				"jobTitle": "Associate Professor of Electrical Engineering",
+				"worksFor": {
+					"@type": "CollegeOrUniversity",
+					"name": "Universitas Bengkulu"
+				},
+				"alumniOf": [
+					{ "@type": "CollegeOrUniversity", "name": "Indian Institute of Technology Roorkee" },
+					{ "@type": "CollegeOrUniversity", "name": "Institut Teknologi Bandung" },
+					{ "@type": "CollegeOrUniversity", "name": "Universitas Sriwijaya" }
+				],
+				"sameAs": [
+					"https://sinta.kemdiktisaintek.go.id/authors/profile/258463"
+				],
+				"url": "https://www.ndaratha.my.id"
+			}
+		</script>
 	</head>
 	<body>
 		<header>

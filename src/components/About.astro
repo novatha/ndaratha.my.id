@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+import profileImg from '../../public/profile.jpg';
 ---
 <section id="about" class="about-section">
 	<h2 class="section-title">Academic Profile</h2>
@@ -40,7 +42,7 @@
 		</div>
 		<div class="about-media">
 			<div class="profile-frame">
-				<img src="/profile.jpg" alt="Novalio Daratha, Ph.D." class="profile-image" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'profile-initials\'>ND</div>';" />
+				<Image src={profileImg} alt="Novalio Daratha, Ph.D." class="profile-image" width={600} height={760} format="webp" quality={85} />
 			</div>
 			<div class="education-timeline">
 				<div class="timeline-item">
