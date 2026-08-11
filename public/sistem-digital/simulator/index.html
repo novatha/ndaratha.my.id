@@ -1,0 +1,260 @@
+<!DOCTYPE html><!--html--><html lang="id"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><meta name="generator" content="Astro v5.18.2"><title>Simulasi Gerbang Live | Portal Sistem Digital UNIB</title><meta name="description" content="Portal Akademik &#38; Praktikum Mata Kuliah Sistem Digital (TIF-1106) - Program Studi S1 Teknik Informatika, Fakultas Teknik, Universitas Bengkulu."><meta name="astro-view-transitions-enabled" content="true"><meta name="astro-view-transitions-fallback" content="animate"><script type="module" src="/sistem-digital/_astro/ClientRouter.astro_astro_type_script_index_0_lang.C-Cw1uW6.js"></script><!-- Lucide Icons --><script type="module" src="/sistem-digital/_astro/Layout.astro_astro_type_script_index_0_lang.CN6pKSHs.js"></script><link rel="stylesheet" href="/sistem-digital/_astro/index.xUx75Xef.css">
+<style>.page-container[data-astro-cid-z5duo6xp]{max-width:1280px;margin:40px auto;padding:0 24px}.page-header[data-astro-cid-z5duo6xp]{text-align:center;margin-bottom:40px}.page-header[data-astro-cid-z5duo6xp] h1[data-astro-cid-z5duo6xp]{font-size:2.8rem;margin:16px 0 8px}.page-header[data-astro-cid-z5duo6xp] p[data-astro-cid-z5duo6xp]{color:var(--text-secondary);font-size:1.15rem}
+</style>
+<link rel="stylesheet" href="/sistem-digital/_astro/index.CDcaOIfu.css"><script type="module" src="/sistem-digital/_astro/page.Ca9VeHmW.js"></script></head> <body> <header class="navbar-wrapper" data-astro-cid-5blmo7yk> <nav class="navbar glass-panel" data-astro-cid-5blmo7yk> <a href="/sistem-digital/" class="nav-brand" data-astro-cid-5blmo7yk> <div class="brand-logo" data-astro-cid-5blmo7yk>TIF</div> <div class="brand-text" data-astro-cid-5blmo7yk> <span class="brand-title" data-astro-cid-5blmo7yk>SISTEM DIGITAL</span> <span class="brand-sub" data-astro-cid-5blmo7yk>TIF-1106 • S1 Teknik Informatika</span> </div> </a> <ul class="nav-links" data-astro-cid-5blmo7yk> <li data-astro-cid-5blmo7yk><a href="/sistem-digital/" class="nav-link" data-astro-cid-5blmo7yk>Beranda</a></li> <li data-astro-cid-5blmo7yk><a href="/sistem-digital/silabus" class="nav-link" data-astro-cid-5blmo7yk>Silabus & RPS</a></li> <li data-astro-cid-5blmo7yk><a href="/sistem-digital/praktikum" class="nav-link" data-astro-cid-5blmo7yk>Panduan Praktikum</a></li> <li data-astro-cid-5blmo7yk><a href="/sistem-digital/tugas-besar" class="nav-link" data-astro-cid-5blmo7yk>Tugas Besar</a></li> <li data-astro-cid-5blmo7yk><a href="/sistem-digital/simulator" class="nav-link highlight" data-astro-cid-5blmo7yk>Simulasi Gerbang Live</a></li> </ul> <div class="nav-actions" data-astro-cid-5blmo7yk> <a href="#materials" class="btn-primary btn-sm" data-astro-cid-5blmo7yk> <i data-lucide="download" data-astro-cid-5blmo7yk></i> Unduh Modul
+</a> </div> </nav> </header>   <main class="page-container" data-astro-cid-z5duo6xp> <div class="page-header" data-astro-cid-z5duo6xp> <span class="badge badge-tif" data-astro-cid-z5duo6xp>Logisim Web Interactive Engine</span> <h1 data-astro-cid-z5duo6xp>Simulasi Live Gerbang &amp; Rangkaian Digital</h1> <p data-astro-cid-z5duo6xp>Uji sakelar masukan <code data-astro-cid-z5duo6xp>HIGH (1)</code> / <code data-astro-cid-z5duo6xp>LOW (0)</code>, perhatikan visualisasi LED, dan amati sorotan baris Tabel Kebenaran secara real-time.</p> </div> <section class="simulator-section glass-panel" id="simulator" data-astro-cid-cqosfepn> <div class="sim-header" data-astro-cid-cqosfepn> <div class="sim-title-group" data-astro-cid-cqosfepn> <span class="badge badge-tif" data-astro-cid-cqosfepn>Interaktif</span> <h2 data-astro-cid-cqosfepn>Simulasi Live Logic Gate &amp; Rangkaian Digital</h2> <p data-astro-cid-cqosfepn>Uji perilaku gerbang logika, tabel kebenaran, dan status keluaran secara real-time.</p> </div> <div class="sim-status" data-astro-cid-cqosfepn> <span class="status-dot" data-astro-cid-cqosfepn></span> Logisim Web Engine Ready
+</div> </div> <div class="sim-grid" data-astro-cid-cqosfepn> <!-- Controls Panel --> <div class="controls-card glass-panel" data-astro-cid-cqosfepn> <h3 data-astro-cid-cqosfepn><i data-lucide="sliders" data-astro-cid-cqosfepn></i> Pilih Component &amp; Sakelar Input</h3> <div class="control-group" data-astro-cid-cqosfepn> <label for="componentSelect" data-astro-cid-cqosfepn>Pilih Komponen Digital:</label> <select id="componentSelect" class="sim-select" data-astro-cid-cqosfepn> <option value="AND" data-astro-cid-cqosfepn>AND Gate (Y = A • B)</option> <option value="OR" data-astro-cid-cqosfepn>OR Gate (Y = A + B)</option> <option value="NAND" data-astro-cid-cqosfepn>NAND Gate (Y = NOT(A • B))</option> <option value="NOR" data-astro-cid-cqosfepn>NOR Gate (Y = NOT(A + B))</option> <option value="XOR" data-astro-cid-cqosfepn>XOR Gate (Y = A ⊕ B)</option> <option value="XNOR" data-astro-cid-cqosfepn>XNOR Gate (Y = A ⊙ B)</option> <option value="HALF_ADDER" data-astro-cid-cqosfepn>Half Adder (Sum &amp; Carry)</option> <option value="FULL_ADDER" data-astro-cid-cqosfepn>Full Adder 1-Bit (Sum &amp; Carry Out)</option> <option value="MUX" data-astro-cid-cqosfepn>Multiplexer 2:1 (Y = S'A + SB)</option> <option value="D_FF" data-astro-cid-cqosfepn>D Flip-Flop (Edge Triggered State)</option> </select> </div> <div class="inputs-container" data-astro-cid-cqosfepn> <div class="toggle-switch" data-astro-cid-cqosfepn> <span class="switch-label" data-astro-cid-cqosfepn>Input A:</span> <button id="btnToggleA" class="toggle-btn off" data-astro-cid-cqosfepn>0 (LOW)</button> </div> <div class="toggle-switch" data-astro-cid-cqosfepn> <span class="switch-label" data-astro-cid-cqosfepn>Input B:</span> <button id="btnToggleB" class="toggle-btn off" data-astro-cid-cqosfepn>0 (LOW)</button> </div> <div class="toggle-switch" id="containerC" style="display: none;" data-astro-cid-cqosfepn> <span class="switch-label" id="labelC" data-astro-cid-cqosfepn>Input C (Cin / S):</span> <button id="btnToggleC" class="toggle-btn off" data-astro-cid-cqosfepn>0 (LOW)</button> </div> </div> <div class="formula-box" data-astro-cid-cqosfepn> <span class="formula-label" data-astro-cid-cqosfepn>Persamaan Logika Boolean:</span> <code id="boolFormula" data-astro-cid-cqosfepn>Y = A • B</code> </div> </div> <!-- Output & Truth Table Visualizer --> <div class="vis-card glass-panel" data-astro-cid-cqosfepn> <div class="output-display" data-astro-cid-cqosfepn> <div class="led-card" data-astro-cid-cqosfepn> <span class="led-label" id="outLabel1" data-astro-cid-cqosfepn>Keluaran Utama (Y / Sum)</span> <div class="led-indicator off" id="ledY" data-astro-cid-cqosfepn>LOW</div> <span class="led-val" id="valY" data-astro-cid-cqosfepn>0</span> </div> <div class="led-card" id="cardOut2" style="display: none;" data-astro-cid-cqosfepn> <span class="led-label" id="outLabel2" data-astro-cid-cqosfepn>Keluaran Tambahan (Carry)</span> <div class="led-indicator off" id="ledC" data-astro-cid-cqosfepn>LOW</div> <span class="led-val" id="valC" data-astro-cid-cqosfepn>0</span> </div> </div> <!-- Realtime Truth Table --> <div class="truth-table-container" data-astro-cid-cqosfepn> <h4 data-astro-cid-cqosfepn>Tabel Kebenaran (Real-Time Highlight)</h4> <table class="truth-table" id="truthTable" data-astro-cid-cqosfepn> <thead data-astro-cid-cqosfepn> <tr id="ttHeader" data-astro-cid-cqosfepn> <th data-astro-cid-cqosfepn>A</th> <th data-astro-cid-cqosfepn>B</th> <th data-astro-cid-cqosfepn>Y</th> </tr> </thead> <tbody id="ttBody" data-astro-cid-cqosfepn> <!-- Dynamic Table Rows --> </tbody> </table> </div> </div> </div> </section> <script type="module">
+  document.addEventListener('DOMContentLoaded', () => {
+    const compSelect = document.getElementById('componentSelect');
+    const btnA = document.getElementById('btnToggleA');
+    const btnB = document.getElementById('btnToggleB');
+    const btnC = document.getElementById('btnToggleC');
+    const containerC = document.getElementById('containerC');
+    const labelC = document.getElementById('labelC');
+    const boolFormula = document.getElementById('boolFormula');
+    
+    const ledY = document.getElementById('ledY');
+    const valY = document.getElementById('valY');
+    const ledC = document.getElementById('ledC');
+    const valC = document.getElementById('valC');
+    const cardOut2 = document.getElementById('cardOut2');
+    const outLabel1 = document.getElementById('outLabel1');
+    const outLabel2 = document.getElementById('outLabel2');
+    
+    const ttHeader = document.getElementById('ttHeader');
+    const ttBody = document.getElementById('ttBody');
+
+    let stateA = 0;
+    let stateB = 0;
+    let stateC = 0;
+    let qState = 0; // for D Flip-Flop
+
+    function updateToggleState(btn, val) {
+      if (val === 1) {
+        btn.textContent = '1 (HIGH)';
+        btn.classList.remove('off');
+        btn.classList.add('on');
+      } else {
+        btn.textContent = '0 (LOW)';
+        btn.classList.remove('on');
+        btn.classList.add('off');
+      }
+    }
+
+    btnA.addEventListener('click', () => {
+      stateA = stateA === 0 ? 1 : 0;
+      updateToggleState(btnA, stateA);
+      evaluateCircuit();
+    });
+
+    btnB.addEventListener('click', () => {
+      stateB = stateB === 0 ? 1 : 0;
+      updateToggleState(btnB, stateB);
+      evaluateCircuit();
+    });
+
+    btnC.addEventListener('click', () => {
+      stateC = stateC === 0 ? 1 : 0;
+      updateToggleState(btnC, stateC);
+      evaluateCircuit();
+    });
+
+    compSelect.addEventListener('change', () => {
+      renderTableStructure();
+      evaluateCircuit();
+    });
+
+    function evaluateCircuit() {
+      const type = compSelect.value;
+      let out1 = 0;
+      let out2 = 0;
+
+      if (type === 'AND') {
+        out1 = stateA & stateB;
+        boolFormula.textContent = 'Y = A • B';
+      } else if (type === 'OR') {
+        out1 = stateA | stateB;
+        boolFormula.textContent = 'Y = A + B';
+      } else if (type === 'NAND') {
+        out1 = (stateA & stateB) ? 0 : 1;
+        boolFormula.textContent = 'Y = NOT(A • B)';
+      } else if (type === 'NOR') {
+        out1 = (stateA | stateB) ? 0 : 1;
+        boolFormula.textContent = 'Y = NOT(A + B)';
+      } else if (type === 'XOR') {
+        out1 = stateA ^ stateB;
+        boolFormula.textContent = 'Y = A ⊕ B';
+      } else if (type === 'XNOR') {
+        out1 = (stateA ^ stateB) ? 0 : 1;
+        boolFormula.textContent = 'Y = NOT(A ⊕ B)';
+      } else if (type === 'HALF_ADDER') {
+        out1 = stateA ^ stateB; // Sum
+        out2 = stateA & stateB; // Carry
+        boolFormula.textContent = 'Sum = A ⊕ B  |  Carry = A • B';
+      } else if (type === 'FULL_ADDER') {
+        out1 = stateA ^ stateB ^ stateC; // Sum
+        out2 = (stateA & stateB) | (stateC & (stateA ^ stateB)); // Cout
+        boolFormula.textContent = 'Sum = A ⊕ B ⊕ Cin  |  Cout = AB + Cin(A ⊕ B)';
+      } else if (type === 'MUX') {
+        out1 = stateC === 0 ? stateA : stateB; // S = stateC
+        boolFormula.textContent = 'Y = S\'• A + S • B (Selecting ' + (stateC === 0 ? 'Input A' : 'Input B') + ')';
+      } else if (type === 'D_FF') {
+        // Clock trigger on B rising edge or level
+        if (stateB === 1) qState = stateA;
+        out1 = qState;
+        out2 = qState === 1 ? 0 : 1; // Q_bar
+        boolFormula.textContent = 'Q(next) = D (Triggered on Clock HIGH)';
+      }
+
+      // Update LED 1
+      valY.textContent = out1;
+      if (out1 === 1) {
+        ledY.textContent = 'HIGH (1)';
+        ledY.className = 'led-indicator on';
+      } else {
+        ledY.textContent = 'LOW (0)';
+        ledY.className = 'led-indicator off';
+      }
+
+      // Update LED 2
+      if (cardOut2.style.display !== 'none') {
+        valC.textContent = out2;
+        if (out2 === 1) {
+          ledC.textContent = 'HIGH (1)';
+          ledC.className = 'led-indicator on';
+        } else {
+          ledC.textContent = 'LOW (0)';
+          ledC.className = 'led-indicator off';
+        }
+      }
+
+      highlightActiveRow();
+    }
+
+    function renderTableStructure() {
+      const type = compSelect.value;
+      let rows = [];
+
+      if (['AND', 'OR', 'NAND', 'NOR', 'XOR', 'XNOR'].includes(type)) {
+        containerC.style.display = 'none';
+        cardOut2.style.display = 'none';
+        outLabel1.textContent = 'Keluaran Utama (Y)';
+        
+        ttHeader.innerHTML = '<th>A</th><th>B</th><th>Y</th>';
+        const fn = {
+          'AND': (a,b) => a&b,
+          'OR': (a,b) => a|b,
+          'NAND': (a,b) => (a&b)?0:1,
+          'NOR': (a,b) => (a|b)?0:1,
+          'XOR': (a,b) => a^b,
+          'XNOR': (a,b) => (a^b)?0:1
+        }[type];
+
+        rows = [
+          [0, 0, fn(0,0)],
+          [0, 1, fn(0,1)],
+          [1, 0, fn(1,0)],
+          [1, 1, fn(1,1)]
+        ];
+      } else if (type === 'HALF_ADDER') {
+        containerC.style.display = 'none';
+        cardOut2.style.display = 'block';
+        outLabel1.textContent = 'Sum (S)';
+        outLabel2.textContent = 'Carry Out (C)';
+        ttHeader.innerHTML = '<th>A</th><th>B</th><th>Sum</th><th>Carry</th>';
+        
+        rows = [
+          [0, 0, 0, 0],
+          [0, 1, 1, 0],
+          [1, 0, 1, 0],
+          [1, 1, 0, 1]
+        ];
+      } else if (type === 'FULL_ADDER') {
+        containerC.style.display = 'flex';
+        labelC.textContent = 'Carry In (Cin):';
+        cardOut2.style.display = 'block';
+        outLabel1.textContent = 'Sum (S)';
+        outLabel2.textContent = 'Carry Out (Cout)';
+        ttHeader.innerHTML = '<th>A</th><th>B</th><th>Cin</th><th>Sum</th><th>Cout</th>';
+
+        for (let a = 0; a <= 1; a++) {
+          for (let b = 0; b <= 1; b++) {
+            for (let c = 0; c <= 1; c++) {
+              let s = a ^ b ^ c;
+              let co = (a & b) | (c & (a ^ b));
+              rows.push([a, b, c, s, co]);
+            }
+          }
+        }
+      } else if (type === 'MUX') {
+        containerC.style.display = 'flex';
+        labelC.textContent = 'Select (S):';
+        cardOut2.style.display = 'none';
+        outLabel1.textContent = 'Keluaran MUX (Y)';
+        ttHeader.innerHTML = '<th>Input A</th><th>Input B</th><th>Select (S)</th><th>Y</th>';
+
+        for (let a = 0; a <= 1; a++) {
+          for (let b = 0; b <= 1; b++) {
+            for (let s = 0; s <= 1; s++) {
+              let y = s === 0 ? a : b;
+              rows.push([a, b, s, y]);
+            }
+          }
+        }
+      } else if (type === 'D_FF') {
+        containerC.style.display = 'none';
+        cardOut2.style.display = 'block';
+        outLabel1.textContent = 'State Q';
+        outLabel2.textContent = 'Inverted Q_bar';
+        ttHeader.innerHTML = '<th>Data (D)</th><th>Clock</th><th>Q(next)</th><th>Q_bar</th>';
+
+        rows = [
+          [0, 0, 0, 1],
+          [0, 1, 0, 1],
+          [1, 0, 0, 1],
+          [1, 1, 1, 0]
+        ];
+      }
+
+      ttBody.innerHTML = '';
+      rows.forEach((r, idx) => {
+        const tr = document.createElement('tr');
+        tr.dataset.row = idx;
+        tr.dataset.inputs = r.slice(0, r.length - (type==='HALF_ADDER'||type==='FULL_ADDER'||type==='D_FF'?2:1)).join('');
+        tr.innerHTML = r.map(cell => `<td>${cell}</td>`).join('');
+        ttBody.appendChild(tr);
+      });
+    }
+
+    function highlightActiveRow() {
+      const type = compSelect.value;
+      let currentInputKey = '';
+
+      if (['AND', 'OR', 'NAND', 'NOR', 'XOR', 'XNOR', 'HALF_ADDER'].includes(type)) {
+        currentInputKey = `${stateA}${stateB}`;
+      } else if (type === 'FULL_ADDER' || type === 'MUX') {
+        currentInputKey = `${stateA}${stateB}${stateC}`;
+      } else if (type === 'D_FF') {
+        currentInputKey = `${stateA}${stateB}`;
+      }
+
+      const rows = ttBody.querySelectorAll('tr');
+      rows.forEach(r => {
+        if (r.dataset.inputs === currentInputKey) {
+          r.classList.add('active-row');
+        } else {
+          r.classList.remove('active-row');
+        }
+      });
+    }
+
+    renderTableStructure();
+    evaluateCircuit();
+  });
+</script>  </main>  <footer class="footer-wrapper glass-panel" data-astro-cid-sz7xmlte> <div class="footer-content" data-astro-cid-sz7xmlte> <div class="footer-col brand-col" data-astro-cid-sz7xmlte> <div class="brand-logo lg" data-astro-cid-sz7xmlte>TIF</div> <h3 data-astro-cid-sz7xmlte>Mata Kuliah Sistem Digital (TIF-1106)</h3> <p data-astro-cid-sz7xmlte>Pengajaran Terpadu Teori Aljabar Boolean, Rangkaian Logika Kombinasional & Sekensial, FSM, dan Arsitektur Hardware Komputer.</p> <span class="badge badge-obe" data-astro-cid-sz7xmlte>Standard OBE Curriculum 2026</span> </div> <div class="footer-col" data-astro-cid-sz7xmlte> <h4 data-astro-cid-sz7xmlte>Peta Perkuliahan</h4> <ul data-astro-cid-sz7xmlte> <li data-astro-cid-sz7xmlte><a href="/sistem-digital/" data-astro-cid-sz7xmlte>Beranda Utama</a></li> <li data-astro-cid-sz7xmlte><a href="/sistem-digital/silabus" data-astro-cid-sz7xmlte>Silabus & RPS OBE</a></li> <li data-astro-cid-sz7xmlte><a href="/sistem-digital/praktikum" data-astro-cid-sz7xmlte>Buku Panduan Praktikum (Modul 1-15)</a></li> <li data-astro-cid-sz7xmlte><a href="/sistem-digital/tugas-besar" data-astro-cid-sz7xmlte>Panduan Tugas Besar (Tubas)</a></li> <li data-astro-cid-sz7xmlte><a href="/sistem-digital/simulator" data-astro-cid-sz7xmlte>Simulasi Gerbang Live</a></li> </ul> </div> <div class="footer-col" data-astro-cid-sz7xmlte> <h4 data-astro-cid-sz7xmlte>Dosen Pengampu & Pengelola</h4> <p class="instructor-name" data-astro-cid-sz7xmlte>Ir. Novalio Daratha S.T., M.Sc., Ph.D.</p> <p class="instructor-dept" data-astro-cid-sz7xmlte>Program Studi S1 Teknik Informatika</p> <p class="instructor-univ" data-astro-cid-sz7xmlte>Jurusan Teknik Elektro & Informatika • Fakultas Teknik — Universitas Bengkulu</p> </div> </div> <div class="footer-bottom" data-astro-cid-sz7xmlte> <p data-astro-cid-sz7xmlte>&copy; 2026 Universitas Bengkulu. All rights reserved.</p> </div> </footer> <script type="module">
+  document.addEventListener('DOMContentLoaded', () => {
+    if (window.lucide) {
+      window.lucide.createIcons();
+    }
+  });
+</script>  </body></html> 
