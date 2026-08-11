@@ -1,0 +1,179 @@
+\documentclass[11pt,a4paper]{article}
+
+% --- PACKAGES ---
+\usepackage[utf8]{inputenc}
+\usepackage[indonesian]{babel}
+\usepackage{amsmath, amssymb, amsfonts}
+\usepackage{geometry}
+\geometry{margin=1in, headheight=14pt}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+
+% --- STYLING & COLORS ---
+\definecolor{unibblue}{RGB}{0, 51, 102}
+\definecolor{unibgold}{RGB}{212, 175, 55}
+\definecolor{darkgreen}{RGB}{34, 139, 34}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=unibblue,
+    citecolor=darkgreen,
+    urlcolor=blue
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\textbf{TKE-41XX: Optimisasi untuk Teknik Elektro}}
+\lhead{Catatan Kuliah Minggu ke-1}
+\rfoot{Halaman \thepage}
+
+\lstset{
+  language=Python,
+  basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\color{unibblue}\bfseries,
+  commentstyle=\color{darkgreen}\itshape,
+  stringstyle=\color{red!70!black},
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  numbersep=5pt,
+  breaklines=true,
+  frame=single,
+  rulecolor=\color{unibblue!30},
+  tabsize=4
+}
+
+\newcommand{\R}{\mathbb{R}}
+
+\title{\textbf{Catatan Kuliah Minggu ke-1:}\\Pengantar Optimisasi dan Pemodelan Matematis dalam Teknik Elektro}
+\author{\textbf{Ir. Novalio Daratha S.T., M.Sc., Ph.D.}\\Program Studi S1 Teknik Elektro --- Universitas Bengkulu}
+\date{Semester Ganjil 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{tcolorbox}[colback=unibblue!5,colframe=unibblue,title=\textbf{Ringkasan Eksekutif Pertemuan ke-1}]
+Dokumen ini menyajikan materi perkuliahan awal untuk mata kuliah Optimisasi untuk Teknik Elektro (TKE-41XX). Lingkup bahasan meliputi definisi dasar optimisasi, tahapan penerjemahan masalah dunia nyata menjadi model matematis formal, klasifikasi jenis optimisasi (LP, NLP, MIP, Convex), serta contoh implementasi awal menggunakan SciPy (Python) dan JuMP (Julia).
+\end{tcolorbox}
+
+\tableofcontents
+\newpage
+
+\section{Pendahuluan: Urgensi Optimisasi dalam Teknik Elektro}
+Dalam disiplin rekayasa elektro modern, insinyur dituntut untuk merancang dan mengoperasikan sistem yang efisien, andal, dan ekonomis. Optimisasi matematika memberikan metodologi yang terstruktur untuk membuat keputusan terbaik dari sekian banyak kemungkinan solusi yang tersedia.
+
+Beberapa contoh domain aplikasi utama dalam Teknik Elektro meliputi:
+\begin{enumerate}
+    \item **Sistem Tenaga Listrik**: Pengalokasian beban generator (*Economic Dispatch*), aliran daya optimal (*Optimal Power Flow*), dan komitmen unit pembangkit (*Unit Commitment*).
+    \item **Sistem Telekomunikasi dan Jaringan**: Penempatan menara seluler BTS, alokasi bandwidth frekuensi, dan rrouting paket data dengan latensi minimum.
+    \item **Sistem Kontrol dan Robotika**: Penalaan parameter kontroler PID/MPC, serta pelacakan lintasan terpendek dengan konsumsi energi minimal.
+    \item **Pengolahan Sinyal dan Elektronika**: Desain filter digital FIR/IIR dengan magnitudo *ripple* minimum, serta optimisasi tata letak sirkuit terpadu (VLSI).
+\end{enumerate}
+
+\section{Anatomi dan Formulasi Standar Masalah Optimisasi}
+
+\subsection{Komponen Utama Model Optimisasi}
+Setiap model optimisasi terdiri dari tiga komponen mendasar:
+\begin{enumerate}
+    \item **Variabel Keputusan (Decision Variables)**: Vektor kuantitas yang dapat diatur nilainya oleh insinyur, dilambangkan sebagai $\mathbf{x} = [x_1, x_2, \dots, x_n]^T \in \R^n$.
+    \item **Fungsi Tujuan (Objective Function)**: Skalar kuantitatif yang menggambarkan kriteria keberhasilan yang ingin diminimalkan (misalnya biaya bahan bakar, rugi-rugi daya) atau dimaksimalkan (misalnya throughput, efisiensi), dilambangkan sebagai $f_0(\mathbf{x}): \R^n \to \R$.
+    \item **Kendala (Constraints)**: Serangkaian batasan fisik, teknis, atau operasional yang membatasi nilai variabel keputusan. Kendala dibedakan menjadi kendala pertidaksamaan $g_i(\mathbf{x}) \le 0$ dan kendala persamaan $h_j(\mathbf{x}) = 0$.
+\end{enumerate}
+
+\subsection{Formulasi Matematis Baku}
+Formulasi matematis standar minimisasi terkendala dinyatakan dalam bentuk:
+\begin{equation}
+    \begin{aligned}
+        \min_{\mathbf{x} \in \R^n} \quad & f_0(\mathbf{x}) \\
+        \text{s.t.} \quad & g_i(\mathbf{x}) \le 0, \quad i = 1, 2, \dots, m \\
+        & h_j(\mathbf{x}) = 0, \quad j = 1, 2, \dots, p \\
+        & \mathbf{x}_{\min} \le \mathbf{x} \le \mathbf{x}_{\max}
+    \end{aligned}
+\end{equation}
+
+Himpunan titik $\mathbf{x}$ yang memenuhi seluruh kendala disebut **Himpunan Feasibel (Feasible Set)** $\Omega$:
+\begin{equation}
+    \Omega = \{ \mathbf{x} \in \R^n \mid g_i(\mathbf{x}) \le 0 \; \forall i, \; h_j(\mathbf{x}) = 0 \; \forall j, \; \mathbf{x}_{\min} \le \mathbf{x} \le \mathbf{x}_{\max} \}
+\end{equation}
+
+\section{Klasifikasi Taksonomi Masalah Optimisasi}
+
+\subsection{1. Linear Programming (LP) vs Non-Linear Programming (NLP)}
+- **LP**: Fungsi tujuan $f_0(\mathbf{x})$ dan seluruh kendala $g_i(\mathbf{x}), h_j(\mathbf{x})$ bersifat linier murni.
+- **NLP**: Minimal terdapat satu fungsi tujuan atau kendala yang memuat suku non-linier ($x^2, \sin x, \exp(x)$).
+
+\subsection{2. Convex vs Non-Convex Optimization}
+- **Convex**: Himpunan $\Omega$ bersifat cembung dan fungsi $f_0(\mathbf{x})$ cembung. Setiap optimum lokal dijamin merupakan optimum global!
+- **Non-Convex**: Memiliki banyak titik optimum lokal (*local optima traps*). Membutuhkan algoritma metaheuristik (seperti PSO, GA) atau pemotongan cabang (*branch and bound*).
+
+\subsection{3. Continuous vs Mixed-Integer Programming (MIP)}
+- **Continuous**: Seluruh variabel keputusan bernilai real kontinu ($x_k \in \R$).
+- **MIP**: Sebagian atau seluruh variabel keputusan bernilai diskrit atau biner ($x_k \in \{0, 1\}$).
+
+\section{Studi Kasus Pembagian Beban 2 Pembangkit (Economic Dispatch)}
+
+Dua unit pembangkit termal harus memenuhi kebutuhan beban total $P_D = 400\text{ MW}$.
+Fungsi biaya operasi kedua generator adalah:
+\begin{align}
+    F_1(P_1) &= 0.002 P_1^2 + 8.0 P_1 + 100 \quad [\text{\$/jam}] \\
+    F_2(P_2) &= 0.003 P_2^2 + 7.5 P_2 + 150 \quad [\text{\$/jam}]
+\end{align}
+dengan batas kapasitas pembangkitan:
+\begin{equation}
+    50 \le P_1 \le 300\text{ MW}, \quad 50 \le P_2 \le 250\text{ MW}
+\end{equation}
+
+\subsection{Penyelesaian Analitis (Lagrange Multiplier)}
+Fungsi Lagrangian masalah ini:
+\begin{equation}
+    L(P_1, P_2, \lambda) = F_1(P_1) + F_2(P_2) + \lambda (400 - P_1 - P_2)
+\end{equation}
+Syarat optimalitas orde pertama (KKT condition):
+\begin{align}
+    \frac{\partial L}{\partial P_1} &= 0.004 P_1 + 8.0 - \lambda = 0 \implies P_1 = \frac{\lambda - 8.0}{0.004} \\
+    \frac{\partial L}{\partial P_2} &= 0.006 P_2 + 7.5 - \lambda = 0 \implies P_2 = \frac{\lambda - 7.5}{0.006}
+\end{align}
+Substitusi ke kendala $P_1 + P_2 = 400$:
+\begin{equation}
+    \frac{\lambda - 8.0}{0.004} + \frac{\lambda - 7.5}{0.006} = 400 \implies 250(\lambda - 8.0) + 166.67(\lambda - 7.5) = 400
+\end{equation}
+Diperoleh $\lambda^* = 8.76\text{ \$/MWh}$.
+Sehingga alokasi daya optimal:
+\begin{equation}
+    P_1^* = 190.0\text{ MW}, \quad P_2^* = 210.0\text{ MW}
+\end{equation}
+
+\section{Implementasi Perangkat Lunak}
+
+\begin{lstlisting}[caption={Skrip Python Pengantar Optimisasi SciPy}]
+import numpy as np
+from scipy.optimize import minimize
+
+def objective(P):
+    return (0.002 * P[0]**2 + 8.0 * P[0] + 100) + (0.003 * P[1]**2 + 7.5 * P[1] + 150)
+
+constraints = {'type': 'eq', 'fun': lambda P: P[0] + P[1] - 400}
+bounds = [(50, 300), (50, 250)]
+
+res = minimize(objective, [200, 200], method='SLSQP', bounds=bounds, constraints=constraints)
+
+print("="*45)
+print(" HASIL OPTIMISASI ECONOMIC DISPATCH 2 GENERATOR")
+print("="*45)
+print(f" Daya Generator 1 (P1) : {res.x[0]:.2f} MW")
+print(f" Daya Generator 2 (P2) : {res.x[1]:.2f} MW")
+print(f" Total Biaya Minimum   : ${res.fun:.2f} / jam")
+print("="*45)
+\end{lstlisting}
+
+\section{Kesimpulan}
+1. Pemodelan matematis presisi yang mencakup variabel keputusan, fungsi tujuan, dan kendala adalah dasar utama penyelesaian masalah rekayasa teknik elektro.
+2. Penentuan sifat masalah (LP, NLP, Convex, MIP) menentukan pemilihan solver analitis maupun komputasional yang efektif.
+
+\end{document}

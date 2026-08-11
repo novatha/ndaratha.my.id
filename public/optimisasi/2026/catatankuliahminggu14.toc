@@ -1,0 +1,15 @@
+\babel@toc {indonesian}{}\relax 
+\contentsline {section}{\numberline {1}Sintesis Konseptual: Teknik Elektro dan Rekayasa Mesin}{2}{section.1}%
+\contentsline {section}{\numberline {2}Teori Optimisasi Multi-Objektif (MOO)}{2}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Formulasi Umum}{2}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Dominasi Pareto dan Pareto Front}{2}{subsection.2.2}%
+\contentsline {section}{\numberline {3}Combined Economic dan Emission Dispatch (CEED)}{2}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Fungsi Tujuan 1: Biaya Bahan Bakar (\$/jam)}{2}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Fungsi Tujuan 2: Emisi Gas Polutan (kg/jam)}{2}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Kendala Keseimbangan Daya dan Batas Pembangkit}{3}{subsection.3.3}%
+\contentsline {section}{\numberline {4}Adopsi Metode Deterministik dari Rekayasa Mesin}{3}{section.4}%
+\contentsline {subsection}{\numberline {4.1}1. Quasi-Newton BFGS}{3}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}2. Augmented Lagrangian Method}{3}{subsection.4.2}%
+\contentsline {section}{\numberline {5}Penentuan Solusi Kompromi Terbaik (Fuzzy Logic)}{3}{section.5}%
+\contentsline {section}{\numberline {6}Implementasi Program Python}{3}{section.6}%
+\contentsline {section}{\numberline {7}Kesimpulan}{4}{section.7}%

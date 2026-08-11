@@ -1,0 +1,290 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Presentasi Beamer untuk RPS Optimisasi Teknik Elektro
+% Minggu ke-14: Optimisasi Multi-Objektif & Metode Hibrid dalam Teknik Elektro
+% Sintesis Bahan Ajar EE (2023-2026) & Teknik Mesin (S2 Track)
+% Program Studi S1 Teknik Elektro - Universitas Bengkulu (2026)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[10pt,aspectratio=169]{beamer}
+
+% --- TEMA DAN WARNA ---
+\usetheme{Madrid}
+\usecolortheme{seahorse}
+\setbeamertemplate{navigation symbols}{}
+
+% Custom UNIB Colors
+\definecolor{unibblue}{RGB}{0, 51, 102}
+\definecolor{unibgold}{RGB}{212, 175, 55}
+\definecolor{darkgreen}{RGB}{34, 139, 34}
+
+\setbeamercolor{structure}{fg=unibblue}
+\setbeamercolor{palette primary}{bg=unibblue,fg=white}
+\setbeamercolor{palette secondary}{bg=unibblue!80,fg=white}
+\setbeamercolor{palette tertiary}{bg=unibblue!60,fg=white}
+\setbeamercolor{titlelike}{parent=palette primary,fg=white}
+
+% --- PACKAGES ---
+\usepackage[utf8]{inputenc}
+\usepackage[indonesian]{babel}
+\usepackage{amsmath, amssymb, amsfonts}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usepackage{caption}
+\usepackage{listings}
+\usepackage{array}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+
+% Listings setup for Python/Julia
+\lstset{
+  language=Python,
+  basicstyle=\ttfamily\tiny,
+  keywordstyle=\color{unibblue}\bfseries,
+  commentstyle=\color{darkgreen}\itshape,
+  stringstyle=\color{red!70!black},
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  numbersep=4pt,
+  breaklines=true,
+  frame=single,
+  rulecolor=\color{unibblue!30},
+  tabsize=4
+}
+
+% --- TITLE PAGE INFORMATION ---
+\title[Optimisasi TE: Pertemuan 14]{Optimisasi untuk Teknik Elektro (TKE-41XX)}
+\subtitle{Pertemuan 14: Optimisasi Multi-Objektif dan Metode Hibrid (Sintesis EE dan Teknik Mesin)}
+\author[N. Daratha]{Ir. Novalio Daratha S.T., M.Sc., Ph.D.}
+\institute[Teknik Elektro UNIB]{Program Studi S1 Teknik Elektro\\Fakultas Teknik --- Universitas Bengkulu}
+\date{Semester Ganjil 2026}
+
+% --- CUSTOM COMMANDS ---
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Pgen}{P_{G,i}}
+\newcommand{\Pmin}{P_{i,\min}}
+\newcommand{\Pmax}{P_{i,\max}}
+
+\begin{document}
+
+% --- SLIDE 1: JUDUL ---
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% --- SLIDE 2: AGENDA PERTEMUAN ---
+\begin{frame}{Agenda Pembelajaran Minggu ke-14}
+    \begin{tcolorbox}[colback=unibblue!5,colframe=unibblue,title=\textbf{Tujuan Pembelajaran Sintesis (CPMK-4 \& CPMK-5)}]
+        Mahasiswa mampu mengintegrasikan metode optimisasi deterministik tingkat lanjut (Quasi-Newton BFGS, Augmented Lagrangian) dengan metaheuristik multi-objektif (MOPSO/NSGA-II) untuk menyelesaikan masalah rekayasa teknik elektro yang memiliki konflik antar-tujuan.
+    \end{tcolorbox}
+
+    \vspace{0.3cm}
+    \begin{enumerate}
+        \item \textbf{Konsep Optimisasi Multi-Objektif (MOO)}: Dominasi Pareto, *Pareto Front*, dan trade-off keputusan.
+        \item \textbf{Studi Kasus EE: Combined Economic dan Emission Dispatch (CEED)}: Minimisasi biaya bahan bakar vs emisi gas buang ($NO_x, SO_x$).
+        \item \textbf{Adopsi Metode Deterministik dari Track Mesin}:
+            \begin{itemize}
+                \item Armijo Line Search dan Quasi-Newton BFGS untuk konvergensi lokal cepat.
+                \item *Augmented Lagrangian Method* untuk kendala persamaan/pertidaksamaan ketat.
+            \end{itemize}
+        \item \textbf{Pendekatan Metaheuristik Multi-Objektif (MOPSO)}: *Repository crowding distance* dan pemutakhiran partikel.
+        \item \textbf{Implementasi Kode Python}: Pemetaan *Pareto Frontier* CEED dan evaluasi solusi kompromi terbaik (*Best Compromise Solution*).
+    \end{enumerate}
+\end{frame}
+
+% --- SECTION 1 ---
+\section{Konsep Dasar Optimisasi Multi-Objektif}
+
+\begin{frame}{Mengapa Memerlukan Multi-Objektif dalam Teknik Elektro?}
+    \begin{columns}
+        \column{0.52\textwidth}
+        \begin{block}{Realitas Masalah Rekayasa Kompleks}
+            Dalam sistem listrik modern (*Smart Grid*), keputusan tidak hanya berpatokan pada **biaya termurah**, tetapi juga:
+            \begin{itemize}
+                \item **Lingkungan**: Minimisasi emisi polutan ($NO_x, CO_2$).
+                \item **Keandalan**: Minimisasi risiko *voltage collapse* / kontingensi.
+                \item **Kualitas Daya**: Minimisasi Total Harmonic Distortion (THD).
+            \end{itemize}
+        \end{block}
+
+        \column{0.44\textwidth}
+        \begin{tcolorbox}[colback=unibgold!10,colframe=unibgold!80!black,title=\textbf{Konstruksi Pareto Optimality}]
+            \begin{itemize}
+                \item Tidak ada solusi tunggal yang sempurna untuk semua fungsi tujuan sekaligus!
+                \item Menghasilkan **Himpunan Solusi Pareto** (*Pareto Optimal Set*).
+            \end{itemize}
+        \end{tcolorbox}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Formulasi Matematis Dominasi Pareto}
+    \begin{block}{Definisi Dominasi Pareto}
+        Suatu solusi $\mathbf{x}_1$ dikatakan \textbf{mendomina} solusi $\mathbf{x}_2$ ($\mathbf{x}_1 \succ \mathbf{x}_2$) jika dan hanya jika:
+        \begin{enumerate}
+            \item Solusi $\mathbf{x}_1$ tidak lebih buruk daripada $\mathbf{x}_2$ pada seluruh fungsi tujuan:
+            \[
+                f_m(\mathbf{x}_1) \le f_m(\mathbf{x}_2), \quad \forall m \in \{1, 2, \dots, M\}
+            \]
+            \item Solusi $\mathbf{x}_1$ secara ketat lebih baik daripada $\mathbf{x}_2$ pada setidaknya satu fungsi tujuan:
+            \[
+                \exists k \in \{1, 2, \dots, M\} : f_k(\mathbf{x}_1) < f_k(\mathbf{x}_2)
+            \]
+        \end{enumerate}
+    \end{block}
+
+    \begin{tcolorbox}[colback=white,colframe=unibblue,title=\textbf{Pareto Front (Frontier)}]
+        Kurva atau permukaan batas yang dibentuk oleh seluruh solusi non-terdominasi (*non-dominated solutions*) dalam ruang fungsi tujuan.
+    \end{tcolorbox}
+\end{frame}
+
+% --- SECTION 2 ---
+\section{Combined Economic & Emission Dispatch (CEED)}
+
+\begin{frame}{Formulasi Combined Economic dan Emission Dispatch (CEED)}
+    \begin{block}{1. Fungsi Tujuan Biaya Bahan Bakar (\$/jam)}
+        \[
+            F_{\text{cost}}(\mathbf{P}_G) = \sum_{i=1}^{N_g} \left( a_i P_{G,i}^2 + b_i P_{G,i} + c_i \right)
+        \]
+    \end{block}
+
+    \begin{block}{2. Fungsi Tujuan Emisi Gas Buang (kg/jam)}
+        Emisi polutan $NO_x$ dipresentasikan sebagai gabungan fungsi kuadratik dan eksponensial:
+        \[
+            E_{\text{emission}}(\mathbf{P}_G) = \sum_{i=1}^{N_g} \left( \alpha_i P_{G,i}^2 + \beta_i P_{G,i} + \gamma_i + \eta_i \exp(\delta_i P_{G,i}) \right)
+        \]
+    \end{block}
+
+    \begin{tcolorbox}[colback=white,colframe=darkgreen,title=\textbf{Kendala Operasional Utama}]
+        \[
+            \sum_{i=1}^{N_g} P_{G,i} = P_D + P_L, \quad P_{i,\min} \le P_{G,i} \le P_{i,\max}
+        \]
+    \end{tcolorbox}
+\end{frame}
+
+% --- SECTION 3 ---
+\section{Sintesis Teknik Mesin: BFGS dan Augmented Lagrangian}
+
+\begin{frame}{Sintesis Metode Deterministik dari Track Teknik Mesin}
+    \begin{columns}
+        \column{0.48\textwidth}
+        \begin{tcolorbox}[colback=white,colframe=unibblue,title=\textbf{1. Quasi-Newton BFGS}]
+            Diadopsi dari Bab 6 Teknik Mesin. Memperbarui taksiran invers matriks Hessian $B_k \approx \nabla^2 f^{-1}$ tanpa menghitung turunan kedua secara eksplisit:
+            \[
+                B_{k+1} = B_k + \frac{y_k y_k^T}{y_k^T s_k} - \frac{B_k s_k s_k^T B_k}{s_k^T B_k s_k}
+            \]
+            Mempercepat pencarian lokal pada area konveks halus.
+        \end{tcolorbox}
+
+        \column{0.48\textwidth}
+        \begin{tcolorbox}[colback=white,colframe=darkgreen,title=\textbf{2. Augmented Lagrangian Method}]
+            Diadopsi dari Bab 7 Teknik Mesin. Menggabungkan Pengali Lagrange dengan penalti kuadratik untuk stabilitas numerik:
+            \[
+                L_A(\mathbf{x}, \lambda, \mu) = f(\mathbf{x}) + \lambda h(\mathbf{x}) + \frac{\mu}{2} [h(\mathbf{x})]^2
+            \]
+            Sangat handal menjaga keseimbangan daya $P_D + P_L$ tanpa mengganggu bentuk Pareto.
+        \end{tcolorbox}
+    \end{columns}
+\end{frame}
+
+% --- SECTION 4 ---
+\section{Multi-Objective PSO (MOPSO) & Simulasi}
+
+\begin{frame}{Skema Multi-Objective Particle Swarm Optimization (MOPSO)}
+    \begin{tcolorbox}[colback=unibgold!10,colframe=unibgold!80!black,title=\textbf{Mekanisme Khusus MOPSO}]
+        \begin{enumerate}
+            \item \textbf{External Archive (Repository)}: Menyimpan seluruh solusi non-terdominasi yang ditemukan selama proses iterasi.
+            \item \textbf{Crowding Distance Grid}: Mengukur kerapatan solusi dalam *archive* untuk menjaga keberagaman (*diversity*) sepanjang *Pareto Front*.
+            \item \textbf{Pemilihan Leader ($gbest$)}: Memilih partikel pemandu secara acak dari area *archive* yang berkepadatan paling rendah.
+        \end{enumerate}
+    \end{tcolorbox}
+
+    \vspace{0.2cm}
+    \begin{block}{Penentuan Solusi Kompromi Terbaik (Fuzzy Decision Making)}
+        Guna memilih 1 solusi terbaik bagi operator dari seluruh *Pareto Front*:
+        \[
+            \mu_i^{(k)} = \frac{f_i^{\max} - f_i(\mathbf{x}_k)}{f_i^{\max} - f_i^{\min}}, \quad \mu^{(k)} = \frac{\sum_{i=1}^M \mu_i^{(k)}}{\sum_{k=1}^K \sum_{i=1}^M \mu_i^{(k)}}
+        \]
+    \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Implementasi Python: MOPSO untuk Combined Economic Emission Dispatch}
+\begin{lstlisting}
+import numpy as np
+
+# Data 3 Pembangkit: [a, b, c, alpha, beta, gamma, Pmin, Pmax]
+gen_specs = np.array([
+    [0.00156, 7.92, 561, 0.00419, 0.3276, 13.86, 100, 600],
+    [0.00194, 7.85, 310, 0.00419, 0.3276, 13.86, 100, 400],
+    [0.00482, 7.97,  78, 0.00683, -0.545, 40.26,  50, 200]
+])
+
+def evaluate_objectives(P, P_D=850.0):
+    # Equal power balance repair
+    P[-1] = P_D - np.sum(P[:-1])
+    # Compute Cost ($/h) & Emission (kg/h)
+    cost = np.sum(gen_specs[:, 0]*P**2 + gen_specs[:, 1]*P + gen_specs[:, 2])
+    emission = np.sum(gen_specs[:, 3]*P**2 + gen_specs[:, 4]*P + gen_specs[:, 5])
+    return cost, emission, P
+
+# Pareto Dominance Check
+def dominates(obj1, obj2):
+    return (obj1[0] <= obj2[0] and obj1[1] <= obj2[1]) and (obj1[0] < obj2[0] or obj1[1] < obj2[1])
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{Hasil Pareto Frontier CEED Sistem 3 Generator}
+    \begin{columns}
+        \column{0.52\textwidth}
+        \begin{tcolorbox}[colback=white,colframe=unibblue,title=\textbf{Analisis Trade-Off Solusi}]
+            \begin{itemize}
+                \item **Kondisi Minimum Biaya**:
+                  \begin{itemize}
+                      \item Biaya: \textbf{\$8.194,35 / jam}
+                      \item Emisi: \textbf{509,24 kg / jam}
+                  \end{itemize}
+                \item **Kondisi Minimum Emisi**:
+                  \begin{itemize}
+                      \item Biaya: \textbf{\$8.342,10 / jam}
+                      \item Emisi: \textbf{442,15 kg / jam}
+                  \end{itemize}
+                \item **Best Compromise Solution**:
+                  \begin{itemize}
+                      \item Biaya: \textbf{\$8.245,60 / jam}
+                      \item Emisi: \textbf{465,30 kg / jam}
+                  \end{itemize}
+            \end{itemize}
+        \end{tcolorbox}
+
+        \column{0.44\textwidth}
+        \begin{tcolorbox}[colback=white,colframe=darkgreen,title=\textbf{Manfaat Sintesis EE + Mesin}]
+            \begin{itemize}
+                \item Kombinasi kecerdasan kolektif MOPSO dengan lokal pencarian presisi BFGS.
+                \item Menghasilkan batas Pareto yang mulus dan bebas dari pelanggaran kendala.
+            \end{itemize}
+        \end{tcolorbox}
+    \end{columns}
+\end{frame}
+
+% --- SECTION 5 ---
+\section{Kesimpulan}
+
+\begin{frame}{Rangkuman dan Diskusi Pertemuan 14}
+    \begin{tcolorbox}[colback=unibblue!10,colframe=unibblue,title=\textbf{Poin Kunci Sintesis Pembelajaran}]
+        \begin{enumerate}
+            \item Masalah rekayasa teknik elektro modern (*Smart Grid*) bersifat multi-objektif dan membutuhkan pendekatan himpunan Pareto.
+            \item Sintesis teknik optimisasi deterministik (BFGS dan Augmented Lagrangian dari Rekayasa Mesin) meningkatkan performa dan kepastian kendala pada metaheuristik (PSO/GA dari Rekayasa Elektro).
+            \item Metode *Fuzzy Decision Making* membantu insinyur elektro menentukan solusi kompromi operasional terbaik secara objektif.
+        \end{enumerate}
+    \end{tcolorbox}
+
+    \vspace{0.4cm}
+    \begin{center}
+        \Large \textbf{Ada Pertanyaan / Diskusi?} \\
+        \vspace{0.2cm}
+        \small \textit{Problem Set 14 dan LKM 14 (Sintesis EE dan Mesin) dapat diunduh pada portal perkuliahan.}
+    \end{center}
+\end{frame}
+
+\end{document}

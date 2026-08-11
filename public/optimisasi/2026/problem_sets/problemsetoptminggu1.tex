@@ -1,0 +1,75 @@
+\documentclass[11pt,a4paper]{article}
+
+% --- PACKAGES ---
+\usepackage[utf8]{inputenc}
+\usepackage[indonesian]{babel}
+\usepackage{amsmath, amssymb, amsfonts}
+\usepackage{geometry}
+\geometry{margin=1in, headheight=14pt}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+
+% --- STYLING & COLORS ---
+\definecolor{unibblue}{RGB}{0, 51, 102}
+\definecolor{unibgold}{RGB}{212, 175, 55}
+\definecolor{darkgreen}{RGB}{34, 139, 34}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\textbf{TKE-41XX: Optimisasi untuk Teknik Elektro}}
+\lhead{Tugas Rumah / Problem Set Minggu 1}
+\rfoot{Halaman \thepage}
+
+\title{\vspace{-1cm}\textbf{PROBLEM SET MINGGU KE-1:}\\Pengantar Optimisasi dan Pemodelan Matematis}
+\author{Program Studi S1 Teknik Elektro --- Universitas Bengkulu}
+\date{Semester Ganjil 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{tcolorbox}[colback=unibgold!10,colframe=unibgold!80!black,title=\textbf{Petunjuk Pengerjaan dan Tenggat Waktu}]
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Tenggat Pengumpulan}: 1 Minggu setelah pertemuan kelas.
+    \item \textbf{Format Pengumpulan}: Laporan tertulis (PDF) memuat analisis formal dan lampiran kode program (Python / Julia).
+    \item **Taksonomi Bloom**: Memuat soal tingkat kognitif **C1 hingga C6**.
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{0.3cm}
+
+\section*{Soal 1: Pemahaman Teoretis dan Taksonomi Optimisasi (C1--C2)}
+
+\begin{enumerate}[label=\textbf{1.\arabic*}, leftmargin=*]
+    \item \textbf{[C1 --- Mengingat]} Jelaskan 4 karakteristik utama yang membedakan masalah optimisasi cembung (*convex optimization*) dari masalah optimisasi tidak cembung (*non-convex*)!
+    
+    \item \textbf{[C2 --- Memahami]} Buktikan secara matematis bahwa memaksimalkan fungsi efisiensi $f(x)$ pada domain $\Omega$ setara secara persis dengan meminimalkan fungsi $-f(x)$ pada domain yang sama!
+\end{enumerate}
+
+\section*{Soal 2: Pemodelan Formulasi dan Perhitungan Analitis (C3--C4)}
+
+\begin{enumerate}[label=\textbf{2.\arabic*}, leftmargin=*]
+    \item \textbf{[C3 --- Mengaplikasikan]} Diberikan masalah alokasi daya 3 generator termal melayani total beban $P_D = 600\text{ MW}$:
+    \begin{align*}
+        F_1(P_1) &= 0.0015 P_1^2 + 7.9 P_1 + 100 \quad (100 \le P_1 \le 400) \\
+        F_2(P_2) &= 0.0020 P_2^2 + 7.5 P_2 + 120 \quad (100 \le P_2 \le 300) \\
+        F_3(P_3) &= 0.0040 P_3^2 + 7.8 P_3 + 80 \quad (50 \le P_3 \le 200)
+    \end{align*}
+    Hitunglah alokasi daya optimal $P_1^*, P_2^*, P_3^*$ secara analitis menggunakan metode pengali Lagrange tak terkendala batas!
+
+    \item \textbf{[C4 --- Menganalisis]} Periksa apakah solusi analitis pada Soal 2.1 memenuhi seluruh kendala batas kapasitas generator! Jika terdapat generator yang melanggar batas, analisis bagaimana solusi harus disesuaikan menggunakan kondisi Karush-Kuhn-Tucker (KKT).
+\end{enumerate}
+
+\section*{Soal 3: Simulasi Komputasi dan Desain Sistem Terintegrasi (C5--C6)}
+
+\begin{enumerate}[label=\textbf{3.\arabic*}, leftmargin=*]
+    \item \textbf{[C5 --- Mengevaluasi]} Tuliskan skrip Python (menggunakan `scipy.optimize.minimize`) untuk menyimulasikan Soal 2.1 dengan menambahkan kendala rugi-rugi daya saluran transmisi $P_L = 0.00003 P_1^2 + 0.00005 P_2^2 + 0.00004 P_3^2\text{ MW}$. Evaluasi dampak rugi-rugi terhadap total biaya operasi!
+
+    \item \textbf{[C6 --- Mencipta]} Buatlah model optimisasi *Linear Programming* (LP) untuk masalah pengalokasian aliran daya *DC Power Flow* pada sistem bus 3-node yang menghubungkan 2 generator dan 1 beban industri. Tuliskan seluruh matriks kendala $A \mathbf{x} \le \mathbf{b}$ serta skrip komputasi lengkapnya!
+\end{enumerate}
+
+\end{document}

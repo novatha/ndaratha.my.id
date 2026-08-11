@@ -1,0 +1,176 @@
+\documentclass[11pt,a4paper]{article}
+
+% --- PACKAGES ---
+\usepackage[utf8]{inputenc}
+\usepackage[indonesian]{babel}
+\usepackage{amsmath, amssymb, amsfonts}
+\usepackage{geometry}
+\geometry{margin=1in, headheight=14pt}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+
+% --- STYLING & COLORS ---
+\definecolor{unibblue}{RGB}{0, 51, 102}
+\definecolor{unibgold}{RGB}{212, 175, 55}
+\definecolor{darkgreen}{RGB}{34, 139, 34}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=unibblue,
+    citecolor=darkgreen,
+    urlcolor=blue
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\textbf{TKE-41XX: Optimisasi untuk Teknik Elektro}}
+\lhead{Catatan Kuliah Minggu ke-14}
+\rfoot{Halaman \thepage}
+
+\lstset{
+  language=Python,
+  basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\color{unibblue}\bfseries,
+  commentstyle=\color{darkgreen}\itshape,
+  stringstyle=\color{red!70!black},
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  numbersep=5pt,
+  breaklines=true,
+  frame=single,
+  rulecolor=\color{unibblue!30},
+  tabsize=4
+}
+
+\title{\textbf{Catatan Kuliah Minggu ke-14:}\\Optimisasi Multi-Objektif dan Metode Hibrid dalam Teknik Elektro\\(Sintesis Bahan Ajar EE 2023--2026 dan Rekayasa Mesin)}
+\author{\textbf{Ir. Novalio Daratha S.T., M.Sc., Ph.D.}\\Program Studi S1 Teknik Elektro --- Universitas Bengkulu}
+\date{Semester Ganjil 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{tcolorbox}[colback=unibblue!5,colframe=unibblue,title=\textbf{Ringkasan Eksekutif dan Integrasi Kurikulum}]
+Dokumen ini menyajikan materi pengajaran sintesis yang menghubungkan pengalaman optimisasi Teknik Elektro tahun-tahun sebelumnya (2023--2026: Economic Dispatch, Metaheuristik GA/PSO/SCA, Desain Filter Digital FIR) dengan metode optimisasi deterministik presisi tinggi dari kurikulum Teknik Mesin (*Armijo Line Search*, *Quasi-Newton BFGS*, dan *Augmented Lagrangian Method*). Mahasiswa mempelajari pembentukan *Pareto Frontier* pada masalah *Combined Economic dan Emission Dispatch* (CEED) dan penentuan solusi kompromi terbaik (*Best Compromise Solution*).
+\end{tcolorbox}
+
+\tableofcontents
+\newpage
+
+\section{Sintesis Konseptual: Teknik Elektro dan Rekayasa Mesin}
+Mata kuliah Optimisasi untuk Teknik Elektro bertujuan membekali mahasiswa S1 dengan dua pilar utama:
+\begin{enumerate}
+    \item **Pilar Metaheuristik (Tradisi EE)**: Fleksibilitas tinggi dalam menangani fungsi tujuan non-konveks, non-diferensiabel, dan *search space* yang luas (seperti pergerakan partikel PSO dan seleksi kromosom GA).
+    \item **Pilar Deterministik Presisi (Tradisi Teknik Mesin)**: Kecepatan konvergensi lokal superlinier dan kepatuhan kendala yang sangat ketat melalui *Quasi-Newton BFGS*, *Armijo Line Search*, dan *Augmented Lagrangian Method*.
+\end{enumerate}
+
+Dengan menggabungkan kedua pilar ini, insinyur elektro dapat menyelesaikan masalah kompleks pada *Smart Grid* secara cepat, akurat, dan serempak memenuhi beberapa fungsi tujuan yang saling bertentangan.
+
+\section{Teori Optimisasi Multi-Objektif (MOO)}
+
+\subsection{Formulasi Umum}
+Secara umum, masalah optimisasi multi-objektif dengan $M$ fungsi tujuan dan $K$ kendala dapat dituliskan sebagai:
+\begin{equation}
+    \min_{\mathbf{x} \in \Omega} \mathbf{F}(\mathbf{x}) = \left[ f_1(\mathbf{x}), f_2(\mathbf{x}), \dots, f_M(\mathbf{x}) \right]^T
+\end{equation}
+dengan kendala:
+\begin{equation}
+    g_j(\mathbf{x}) \le 0, \quad j=1,2,\dots,J; \quad h_k(\mathbf{x}) = 0, \quad k=1,2,\dots,K
+\end{equation}
+
+\subsection{Dominasi Pareto dan Pareto Front}
+\begin{tcolorbox}[colback=white,colframe=unibblue,title=\textbf{Konsep Dominasi Pareto}]
+Suatu solusi Vektor keputusan $\mathbf{x}_a$ dikatakan **mendomina** solusi $\mathbf{x}_b$ ($\mathbf{x}_a \succ \mathbf{x}_b$) jika:
+\begin{enumerate}
+    \item $f_m(\mathbf{x}_a) \le f_m(\mathbf{x}_b)$ untuk semua $m \in \{1, 2, \dots, M\}$.
+    \item Terdapat minimal satu fungsi tujuan $k$ di mana $f_k(\mathbf{x}_a) < f_k(\mathbf{x}_b)$.
+\end{enumerate}
+\end{tcolorbox}
+
+Kumpulan seluruh solusi dalam $\Omega$ yang tidak mendomina satu sama lain membentuk **Pareto Optimal Set**, dan proyeksinya pada ruang fungsi tujuan disebut **Pareto Front**.
+
+\section{Combined Economic dan Emission Dispatch (CEED)}
+
+\subsection{Fungsi Tujuan 1: Biaya Bahan Bakar (\$/jam)}
+\begin{equation}
+    F_{\text{cost}}(\mathbf{P}_G) = \sum_{i=1}^{N_g} \left( a_i P_{G,i}^2 + b_i P_{G,i} + c_i \right)
+\end{equation}
+
+\subsection{Fungsi Tujuan 2: Emisi Gas Polutan (kg/jam)}
+Emisi polutan $NO_x$ dari pembangkitan thermal dimodelkan sebagai:
+\begin{equation}
+    E_{\text{emission}}(\mathbf{P}_G) = \sum_{i=1}^{N_g} \left( \alpha_i P_{G,i}^2 + \beta_i P_{G,i} + \gamma_i \right)
+\end{equation}
+
+\subsection{Kendala Keseimbangan Daya dan Batas Pembangkit}
+\begin{equation}
+    \sum_{i=1}^{N_g} P_{G,i} - P_D - P_L = 0, \quad P_{i,\min} \le P_{G,i} \le P_{i,\max}
+\end{equation}
+
+\section{Adopsi Metode Deterministik dari Rekayasa Mesin}
+
+\subsection{1. Quasi-Newton BFGS}
+Metode BFGS (Broyden-Fletcher-Goldfarb-Shanno) memperbarui matriks taksiran Hessian $B_k \approx \nabla^2 f$ secara berulang tanpa membutuhkan komputasi turunan kedua:
+\begin{equation}
+    B_{k+1} = B_k + \frac{\mathbf{y}_k \mathbf{y}_k^T}{\mathbf{y}_k^T \mathbf{s}_k} - \frac{B_k \mathbf{s}_k \mathbf{s}_k^T B_k}{\mathbf{s}_k^T B_k \mathbf{s}_k}
+\end{equation}
+di mana $\mathbf{s}_k = \mathbf{x}_{k+1} - \mathbf{x}_k$ dan $\mathbf{y}_k = \nabla f(\mathbf{x}_{k+1}) - \nabla f(\mathbf{x}_k)$.
+
+\subsection{2. Augmented Lagrangian Method}
+Untuk menjamin kendala persamaan $h(\mathbf{x}) = 0$ terpenuhi secara presisi:
+\begin{equation}
+    L_A(\mathbf{x}, \lambda, \mu) = f(\mathbf{x}) + \lambda h(\mathbf{x}) + \frac{\mu}{2} [h(\mathbf{x})]^2
+\end{equation}
+Persamaan ini menggabungkan stabilitas penalti kuadratik dengan keakuratan pengali Lagrange $\lambda$.
+
+\section{Penentuan Solusi Kompromi Terbaik (Fuzzy Logic)}
+Untuk memilih 1 solusi operasional dari *Pareto Front*, digunakan fungsi keanggotaan linier *Fuzzy*:
+\begin{equation}
+    \mu_i^{(k)} = 
+    \begin{cases}
+        1, & f_i \le f_i^{\min} \\
+        \frac{f_i^{\max} - f_i^{(k)}}{f_i^{\max} - f_i^{\min}}, & f_i^{\min} < f_i < f_i^{\max} \\
+        0, & f_i \ge f_i^{\max}
+    \end{cases}
+\end{equation}
+Solusi dengan nilai bobot keanggotaan ternormalisasi terbesar $\mu^{(k)}$ dipilih sebagai **Best Compromise Solution**.
+
+\section{Implementasi Program Python}
+
+\begin{lstlisting}[caption={Skrip Python Multi-Objective CEED dan Pareto Frontier}]
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Specs 3 Generator: [a, b, c, alpha, beta, gamma, Pmin, Pmax]
+gen_specs = np.array([
+    [0.00156, 7.92, 561, 0.00419, 0.3276, 13.86, 100, 600],
+    [0.00194, 7.85, 310, 0.00419, 0.3276, 13.86, 100, 400],
+    [0.00482, 7.97,  78, 0.00683, -0.545, 40.26,  50, 200]
+])
+
+P_D = 850.0  # MW
+
+def calc_objectives(P1, P2):
+    P3 = P_D - P1 - P2
+    P = np.array([P1, P2, P3])
+    
+    # Cost ($/h)
+    cost = np.sum(gen_specs[:, 0]*P**2 + gen_specs[:, 1]*P + gen_specs[:, 2])
+    # Emission (kg/h)
+    emission = np.sum(gen_specs[:, 3]*P**2 + gen_specs[:, 4]*P + gen_specs[:, 5])
+    return cost, emission
+
+print("Skrip simulasi Multi-Objective CEED siap dieksekusi.")
+\end{lstlisting}
+
+\section{Kesimpulan}
+1. Pembelajaran hibrid yang mengawinkan kekuatan metaheuristik EE (PSO/GA) dan optimisasi deterministik Mesin (BFGS/Augmented Lagrangian) menghasilkan kemampuan analisis rekayasa tingkat tinggi.
+2. Penggunaan *Pareto Frontier* dan *Fuzzy Decision Making* memberikan dasar ilmiah objektif bagi insinyur listrik dalam mengambil keputusan operasional *Smart Grid*.
+
+\end{document}

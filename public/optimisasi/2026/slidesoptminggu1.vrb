@@ -1,0 +1,23 @@
+\frametitle{Implementasi Pertama dengan Python (SciPy)}
+\begin{lstlisting}
+import numpy as np
+from scipy.optimize import minimize
+
+# Fungsi Tujuan (Total Biaya)
+def objective(P):
+    P1, P2 = P[0], P[1]
+    cost1 = 0.002 * P1**2 + 8.0 * P1 + 100
+    cost2 = 0.003 * P2**2 + 7.5 * P2 + 150
+    return cost1 + cost2
+
+# Kendala Persamaan (P1 + P2 = 400)
+constraints = ({'type': 'eq', 'fun': lambda P: P[0] + P[1] - 400})
+
+# Batas Operasi (Bounds)
+bounds = [(50, 300), (50, 250)]
+
+# Eksekusi Minimisasi
+res = minimize(objective, [200, 200], method='SLSQP', bounds=bounds, constraints=constraints)
+print(f"P1 Optimal = {res.x[0]:.2f} MW, P2 Optimal = {res.x[1]:.2f} MW")
+print(f"Total Biaya Minimum = ${res.fun:.2f} / jam")
+\end{lstlisting}
