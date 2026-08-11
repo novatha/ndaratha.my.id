@@ -1,0 +1,15 @@
+\babel@toc {indonesian}{}\relax 
+\contentsline {section}{\numberline {1}Pendahuluan Economic Dispatch}{2}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Karakteristik Biaya Bahan Bakar Pembangkit Termal}{2}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Efek Valve-Point Loading (Non-Konveksitas)}{2}{subsection.1.2}%
+\contentsline {section}{\numberline {2}Formulasi Matematis Masalah ED}{2}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Fungsi Tujuan}{2}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Kendala-Kendala (Constraints)}{2}{subsection.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.1}1. Keseimbangan Daya (Power Balance Constraint)}{2}{subsubsection.2.2.1}%
+\contentsline {subsubsection}{\numberline {2.2.2}2. Batas Kapasitas Pembangkit (Generator Limits)}{3}{subsubsection.2.2.2}%
+\contentsline {section}{\numberline {3}Penyelesaian dengan Particle Swarm Optimization (PSO)}{3}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Representasi Partikel}{3}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Fungsi Fitness dan Penalti}{3}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Mekanisme Repair Generator (Slack Generator)}{3}{subsection.3.3}%
+\contentsline {section}{\numberline {4}Implementasi Program Python}{3}{section.4}%
+\contentsline {section}{\numberline {5}Kesimpulan dan Diskusi}{5}{section.5}%

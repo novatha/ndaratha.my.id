@@ -1,0 +1,6 @@
+\babel@toc {indonesian}{}\relax 
+\beamer@sectionintoc {1}{Pengantar Economic Dispatch}{3}{0}{1}
+\beamer@sectionintoc {2}{Formulasi Matematis ED}{4}{0}{2}
+\beamer@sectionintoc {3}{Pemetaan ED ke Algoritma PSO}{6}{0}{3}
+\beamer@sectionintoc {4}{Studi Kasus dan Implementasi Kode}{8}{0}{4}
+\beamer@sectionintoc {5}{Kesimpulan}{11}{0}{5}

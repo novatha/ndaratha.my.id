@@ -1,0 +1,324 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Presentasi Beamer untuk RPS Optimisasi Teknik Elektro
+% Minggu ke-13: Economic Dispatch Sistem Tenaga Listrik Berbasis PSO
+% Program Studi S1 Teknik Elektro - Universitas Bengkulu (2026)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[10pt,aspectratio=169]{beamer}
+
+% --- TEMA DAN WARNA ---
+\usetheme{Madrid}
+\usecolortheme{seahorse}
+\setbeamertemplate{navigation symbols}{}
+
+% Custom UNIB Colors
+\definecolor{unibblue}{RGB}{0, 51, 102}
+\definecolor{unibgold}{RGB}{212, 175, 55}
+\definecolor{darkgreen}{RGB}{34, 139, 34}
+
+\setbeamercolor{structure}{fg=unibblue}
+\setbeamercolor{palette primary}{bg=unibblue,fg=white}
+\setbeamercolor{palette secondary}{bg=unibblue!80,fg=white}
+\setbeamercolor{palette tertiary}{bg=unibblue!60,fg=white}
+\setbeamercolor{titlelike}{parent=palette primary,fg=white}
+
+% --- PACKAGES ---
+\usepackage[utf8]{inputenc}
+\usepackage[indonesian]{babel}
+\usepackage{amsmath, amssymb, amsfonts}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usepackage{caption}
+\usepackage{listings}
+\usepackage{array}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+
+% Listings setup for Python/Julia
+\lstset{
+  language=Python,
+  basicstyle=\ttfamily\tiny,
+  keywordstyle=\color{unibblue}\bfseries,
+  commentstyle=\color{darkgreen}\itshape,
+  stringstyle=\color{red!70!black},
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  numbersep=4pt,
+  breaklines=true,
+  frame=single,
+  rulecolor=\color{unibblue!30},
+  tabsize=4
+}
+
+% --- TITLE PAGE INFORMATION ---
+\title[Optimisasi TE: Pertemuan 13]{Optimisasi untuk Teknik Elektro (TKE-41XX)}
+\subtitle{Pertemuan 13: Economic Dispatch Sistem Tenaga Listrik Berbasis Particle Swarm Optimization (PSO)}
+\author[N. Daratha]{Ir. Novalio Daratha S.T., M.Sc., Ph.D.}
+\institute[Teknik Elektro UNIB]{Program Studi S1 Teknik Elektro\\Fakultas Teknik - Universitas Bengkulu}
+\date{Semester Ganjil 2026}
+
+% --- CUSTOM COMMANDS ---
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Pgen}{P_{G,i}}
+\newcommand{\Pmin}{P_{i,\min}}
+\newcommand{\Pmax}{P_{i,\max}}
+\newcommand{\Pload}{P_D}
+\newcommand{\Ploss}{P_L}
+
+\begin{document}
+
+% --- SLIDE 1: JUDUL ---
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% --- SLIDE 2: AGENDA PERTEMUAN ---
+\begin{frame}{Agenda Pembelajaran Minggu ke-13}
+    \begin{tcolorbox}[colback=unibblue!5,colframe=unibblue,title=\textbf{Tujuan Pembelajaran (CPMK-3 \& CPMK-5)}]
+        Mahasiswa mampu memformulasikan masalah \textit{Economic Dispatch} (ED) dalam sistem tenaga listrik dan menyelesaikannya menggunakan algoritma metaheuristik Particle Swarm Optimization (PSO).
+    \end{tcolorbox}
+
+    \vspace{0.3cm}
+    \begin{enumerate}
+        \item \textbf{Pengantar Economic Dispatch (ED)}: Tujuan, variabel keputusan, dan karakteristik biaya pembangkitan thermal.
+        \item \textbf{Formulasi Matematis ED}: Fungsi biaya kuadratik, efek \textit{valve-point loading}, kendala daya ($P_D, P_L$), dan batas generator.
+        \item \textbf{Pemetaan ED ke Algoritma PSO}: Vektor partikel, fungsi *fitness*, dan mekanisme perbaikan kendala (*penalty* dan *repair*).
+        \item \textbf{Studi Kasus Sistem 3-Generator}: Perhitungan manual vs simulasi komputasi.
+        \item \textbf{Implementasi Kode Python}: Pemrograman PSO untuk ED dan analisis profil konvergensi.
+    \end{enumerate}
+\end{frame}
+
+% --- SECTION 1 ---
+\section{Pengantar Economic Dispatch}
+
+\begin{frame}{Apa itu Economic Dispatch?}
+    \begin{columns}
+        \column{0.55\textwidth}
+        \begin{block}{Definisi}
+            \textbf{Economic Dispatch (ED)} adalah proses pengalokasian daya aktif ($P_{G,i}$) secara optimal di antara unit-unit pembangkit termal yang beroperasi untuk memenuhi total kebutuhan beban ($P_D$) dan rugi-rugi daya jaringan ($P_L$) dengan \textbf{biaya bahan bakar minimum}.
+        \end{block}
+        \vspace{0.2cm}
+        \begin{alertblock}{Mengapa Memerlukan Metaheuristik?}
+            \begin{itemize}
+                \item Karakteristik katup uap (*valve-point loading*) menyebabkan fungsi biaya bersifat non-konveks dan rippel tinggi.
+                \item Metode klasik (Pengali Lagrange, Lambda-Iteration) mudah terjebak di optimum lokal!
+            \end{itemize}
+        \end{alertblock}
+
+        \column{0.41\textwidth}
+        \begin{tcolorbox}[colback=unibgold!10,colframe=unibgold!80!black,title=\textbf{Komponen Utama ED}]
+            \begin{itemize}
+                \item \textbf{Input}: Karakteristik unit, kurva biaya, beban sistem $P_D$.
+                \item \textbf{Output}: Output daya optimal $[P_1, P_2, \dots, P_N]$.
+                \item \textbf{Kriteria}: Total biaya $F_T$ terendah (\$/jam).
+            \end{itemize}
+        \end{tcolorbox}
+    \end{columns}
+\end{frame}
+
+% --- SECTION 2 ---
+\section{Formulasi Matematis ED}
+
+\begin{frame}{Formulasi Matematis Economic Dispatch}
+    \begin{block}{1. Fungsi Tujuan: Minimisasi Biaya Total Pembangkitan}
+        \[
+            \min_{P_{G,i}} F_T = \sum_{i=1}^{N_g} F_i(P_{G,i})
+        \]
+        Di mana $F_i(P_{G,i})$ adalah fungsi biaya pembangkit unit ke-$i$.
+    \end{block}
+
+    \vspace{0.2cm}
+    \begin{columns}
+        \column{0.48\textwidth}
+        \begin{tcolorbox}[colback=white,colframe=unibblue,title=\textbf{Fungsi Biaya Kuadratik Standar}]
+            \[
+                F_i(P_{G,i}) = a_i P_{G,i}^2 + b_i P_{G,i} + c_i
+            \]
+            Di mana $a_i, b_i, c_i$ adalah koefisien biaya bahan bakar unit ke-$i$.
+        \end{tcolorbox}
+
+        \column{0.48\textwidth}
+        \begin{tcolorbox}[colback=white,colframe=red!80!black,title=\textbf{Fungsi Biaya dengan Valve-Point Effect}]
+            \[
+                F_i(P_{G,i}) = a_i P_{G,i}^2 + b_i P_{G,i} + c_i + |e_i \sin(f_i(P_{i,\min} - P_{G,i}))|
+            \]
+            Di mana $e_i, f_i$ adalah koefisien efek *valve-point loading*.
+        \end{tcolorbox}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Kendala-Kendala Operasional ED}
+    \begin{block}{1. Kendala Keseimbangan Daya (Equality Constraint)}
+        Total daya yang dibangkitkan harus persis sama dengan total beban ditambah rugi-rugi transmisi:
+        \[
+            \sum_{i=1}^{N_g} P_{G,i} = P_D + P_L
+        \]
+        Rugi-rugi transmisi $P_L$ disederhanakan dengan Formula Kron's Loss ($B$-coefficients):
+        \[
+            P_L = \sum_{i=1}^{N_g} \sum_{j=1}^{N_g} P_{G,i} B_{ij} P_{G,j} + \sum_{i=1}^{N_g} B_{0i} P_{G,i} + B_{00}
+        \]
+    \end{block}
+
+    \begin{block}{2. Kendala Batas Kapasitas Pembangkit (Inequality Constraints)}
+        Daya masing-masing generator dibatasi oleh kapasitas fisik minimum dan maksimum:
+        \[
+            P_{i,\min} \le P_{G,i} \le P_{i,\max}, \quad \forall i = 1, 2, \dots, N_g
+        \]
+    \end{block}
+\end{frame}
+
+% --- SECTION 3 ---
+\section{Pemetaan ED ke Algoritma PSO}
+
+\begin{frame}{Pemetaan Masalah ED ke Swarm / Partikel PSO}
+    \begin{table}
+        \centering
+        \small
+        \begin{tabular}{lp{5.5cm}p{5.5cm}}
+            \toprule
+            \textbf{Elemen PSO} & \textbf{Interpretasi Matematis} & \textbf{Fungsi pada Masalah ED} \\
+            \midrule
+            Partikel $\mathbf{x}_k$ & Vektor variabel keputusan $\mathbf{x}_k = [P_{1,k}, P_{2,k}, \dots, P_{N_g,k}]$ & Alokasi output daya $N_g$ generator pada partikel ke-$k$ \\
+            Kecepatan $\mathbf{v}_k$ & Vektor perubahan $\mathbf{v}_k = [v_{1,k}, v_{2,k}, \dots, v_{N_g,k}]$ & Perubahan daya aktif tiap iterasi \\
+            Fungsi Fitness & $f(\mathbf{x}_k) = F_T(\mathbf{x}_k) + \lambda_{\text{pen}} \left|\sum P_{G,i} - (P_D + P_L)\right|^2$ & Evaluasi total biaya + penalti kesalahan daya \\
+            Search Space & Box Constraints $[P_{i,\min}, P_{i,\max}]$ & Batas teknis operasi generator \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+
+    \vspace{0.2cm}
+    \begin{alertblock}{Updating Rule}
+        \[
+            v_{id}^{t+1} = \omega v_{id}^t + c_1 r_1 (pbest_{id}^t - x_{id}^t) + c_2 r_2 (gbest_d^t - x_{id}^t)
+        \]
+        \[
+            x_{id}^{t+1} = x_{id}^t + v_{id}^{t+1}
+        \]
+    \end{alertblock}
+\end{frame}
+
+\begin{frame}{Strategi Handling Kendala Daya dan Batas Generator}
+    \begin{columns}
+        \column{0.48\textwidth}
+        \begin{tcolorbox}[colback=white,colframe=unibblue,title=\textbf{1. Clamping Batas Daya}]
+            Jika partikel keluar batas operasi:
+            \[
+                P_{G,i} = 
+                \begin{cases}
+                    P_{i,\min}, & \text{jika } P_{G,i} < P_{i,\min} \\
+                    P_{i,\max}, & \text{jika } P_{G,i} > P_{i,\max}
+                \end{cases}
+            \]
+        \end{tcolorbox}
+
+        \column{0.48\textwidth}
+        \begin{tcolorbox}[colback=white,colframe=darkgreen,title=\textbf{2. Repair Mechanism (Slack Generator)}]
+            Atur generator terakhir $N_g$ untuk menutupi selisih daya:
+            \[
+                P_{G,N_g} = P_D + P_L - \sum_{i=1}^{N_g-1} P_{G,i}
+            \]
+            Lalu terapkan clamping pada $P_{G,N_g}$.
+        \end{tcolorbox}
+    \end{columns}
+\end{frame}
+
+% --- SECTION 4 ---
+\section{Studi Kasus dan Implementasi Kode}
+
+\begin{frame}{Studi Kasus: Sistem 3 Pembangkit Termal}
+    \begin{block}{Data Spesifikasi Pembangkit ($P_D = 850\text{ MW}$)}
+        \centering
+        \small
+        \begin{tabular}{ccccccc}
+            \toprule
+            \textbf{Unit} & \textbf{$a_i$ (\$/MW$^2$h)} & \textbf{$b_i$ (\$/MWh)} & \textbf{$c_i$ (\$/h)} & \textbf{$P_{i,\min}$ (MW)} & \textbf{$P_{i,\max}$ (MW)} \\
+            \midrule
+            Pembangkit 1 & 0.00156 & 7.92 & 561 & 100 & 600 \\
+            Pembangkit 2 & 0.00194 & 7.85 & 310 & 100 & 400 \\
+            Pembangkit 3 & 0.00482 & 7.97 & 78 & 50 & 200 \\
+            \bottomrule
+        \end{tabular}
+    \end{block}
+
+    \vspace{0.3cm}
+    \begin{tcolorbox}[colback=unibgold!10,colframe=unibgold!80!black,title=\textbf{Pertanyaan Optimisasi}]
+        \begin{itemize}
+            \item Berapa alokasi daya $[P_1, P_2, P_3]$ yang meminimalkan total biaya $F_T$?
+            \item Berapa total biaya bahan bakar (\$/jam) yang dihasilkan oleh PSO?
+        \end{itemize}
+    \end{tcolorbox}
+\end{frame}
+
+\begin{frame}[fragile]{Implementasi Python: PSO untuk Economic Dispatch}
+\begin{lstlisting}
+import numpy as np
+
+# Data Pembangkit: [a, b, c, Pmin, Pmax]
+gen_data = np.array([
+    [0.00156, 7.92, 561, 100, 600],
+    [0.00194, 7.85, 310, 100, 400],
+    [0.00482, 7.97, 78, 50, 200]
+])
+P_D = 850.0  # Beban total (MW)
+
+def fitness(x):
+    P = np.clip(x, gen_data[:, 3], gen_data[:, 4])
+    # Repair generator terakhir
+    P[-1] = P_D - np.sum(P[:-1])
+    if P[-1] < gen_data[-1, 3] or P[-1] > gen_data[-1, 4]:
+        penalty = 1e5 * (abs(P[-1] - np.clip(P[-1], gen_data[-1, 3], gen_data[-1, 4])))**2
+    else:
+        penalty = 0
+    cost = np.sum(gen_data[:, 0] * P**2 + gen_data[:, 1] * P + gen_data[:, 2])
+    return cost + penalty, P
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{Hasil Optimisasi dan Analisis Konvergensi}
+    \begin{columns}
+        \column{0.5\textwidth}
+        \begin{tcolorbox}[colback=white,colframe=unibblue,title=\textbf{Hasil Solusi PSO}]
+            \begin{itemize}
+                \item $P_{G,1}^* = 393.17\text{ MW}$
+                \item $P_{G,2}^* = 334.63\text{ MW}$
+                \item $P_{G,3}^* = 122.20\text{ MW}$
+                \item $\sum P_{G,i} = 850.00\text{ MW}$
+                \item \textbf{Total Biaya Minimum}: \textbf{\$8.194,35 / jam}
+            \end{itemize}
+        \end{tcolorbox}
+
+        \column{0.5\textwidth}
+        \begin{tcolorbox}[colback=white,colframe=darkgreen,title=\textbf{Keunggulan PSO dalam ED}]
+            \begin{itemize}
+                \item Konvergensi cepat ($< 50$ iterasi).
+                \item Robust terhadap inisialisasi acak.
+                \item Sangat mudah diperluas untuk memperhitungkan *valve-point effect* dan rugi-rugi jaringan.
+            \end{itemize}
+        \end{tcolorbox}
+    \end{columns}
+\end{frame}
+
+% --- SECTION 5 ---
+\section{Kesimpulan}
+
+\begin{frame}{Rangkuman dan Diskusi Pertemuan 13}
+    \begin{tcolorbox}[colback=unibblue!10,colframe=unibblue,title=\textbf{Poin Kunci}]
+        \begin{enumerate}
+            \item \textit{Economic Dispatch} adalah masalah optimisasi terkendala non-linier inti dalam pengoperasian sistem tenaga listrik.
+            \item Metaheuristik PSO mampu menyelesaikan ED baik dalam bentuk sederhana (kuadratik) maupun bentuk kompleks (valve-point loading dan loss).
+            \item Penggunaan *repair function* dan *penalty function* sangat penting untuk menjamin kendala keseimbangan daya dan batas kapasitas generator terpenuhi.
+        \end{enumerate}
+    \end{tcolorbox}
+
+    \vspace{0.4cm}
+    \begin{center}
+        \Large \textbf{Ada Pertanyaan / Diskusi?} \\
+        \vspace{0.2cm}
+        \small \textit{Tugas Rumah (Problem Set 13) dan Lembar Kerja Mahasiswa (LKM 13) tersedia pada portal perkuliahan.}
+    \end{center}
+\end{frame}
+
+\end{document}
