@@ -1,0 +1,59 @@
+\documentclass[11pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage[margin=1in]{geometry}
+\usepackage{tcolorbox}
+\usepackage{fancyhdr}
+
+\definecolor{UNIBBlue}{RGB}{0, 51, 102}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\textbf{Optimisasi untuk Teknik Elektro}}
+\lhead{Problem Set - Minggu 4}
+\cfoot{\thepage}
+
+\begin{document}
+
+\begin{center}
+    \Large\color{UNIBBlue}\textbf{PROBLEM SET}\\
+    \large\textbf{Minggu 4: Analisis Sensitivitas}
+\end{center}
+
+\vspace{0.5cm}
+
+\textbf{Instruksi:} Kerjakan soal-soal di bawah ini dengan menyertakan langkah-langkah analitis dan dasar teori analisis sensitivitas.
+
+\section*{Soal 1: Terminologi (C1 - C2)}
+1. (C1) Apakah perbedaan antara Range of Optimality dan Range of Feasibility? \\
+2. (C2) Mengapa analisis sensitivitas sangat penting bagi seorang insinyur perencana (\textit{planning engineer}) sistem telekomunikasi ketika memprediksi kebutuhan infrastruktur jaringan ke depan?
+
+\section*{Soal 2: Evaluasi Skenario (C4)}
+Diberikan laporan sensitivitas untuk maksimasi kinerja produksi panel surya Tipe A ($x_1$) dan Tipe B ($x_2$):
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\textbf{Produk} & \textbf{Final Value} & \textbf{Obj. Coef. (\$)} & \textbf{Allowable Increase (\$)} & \textbf{Allowable Decrease (\$)} \\ \hline
+Tipe A ($x_1$) & 120 & 40 & 10 & 25 \\ \hline
+Tipe B ($x_2$) & 80  & 30 & 50 & 6  \\ \hline
+\end{tabular}
+\end{table}
+
+(a) Tentukan rentang optimalitas untuk koefisien tujuan dari Tipe A ($c_1$) dan Tipe B ($c_2$). \\
+(b) Jika karena kelangkaan material tipe B, harga jual (objektif) tipe B turun menjadi \$25, apakah konfigurasi optimal produksi berubah?
+
+\section*{Soal 3: The 100\% Rule (C5)}
+Dengan menggunakan data dari Soal 2, asumsikan terjadi perubahan secara bersamaan: profit Tipe A meningkat sebesar \$5 (karena subsidi hijau pemerintah), dan profit Tipe B menurun sebesar \$4 (karena kalah saing). 
+
+Gunakan \textit{The 100\% Rule} untuk menentukan apakah solusi optimal saat ini terjamin tetap optimal, atau ada kemungkinan berubah. Tunjukkan perhitungan persentasenya secara lengkap.
+
+\section*{Soal 4: Sintesis Pengambilan Keputusan (C6)}
+Sebuah analisis alokasi spektrum frekuensi menghasilkan \textit{shadow price} sebesar 5.0 (Mb/s) per MHz untuk alokasi band 5GHz, dengan \textit{allowable increase} sebesar 20 MHz.
+Saat ini regulator menawarkan izin blok tambahan 15 MHz di band 5GHz dengan biaya sewa tahunan yang setara jika dikonversi menjadi denda performansi senilai kehilangan throughput total 60 Mb/s.
+
+(C6) Sebagai Chief Technology Officer (CTO), apakah Anda akan membeli blok 15 MHz tersebut? Sertakan argumen matematis berdasarkan perbandingan \textit{shadow price} dan biaya margin, serta nyatakan validitasnya melalui \textit{Range of Feasibility}.
+
+\end{document}

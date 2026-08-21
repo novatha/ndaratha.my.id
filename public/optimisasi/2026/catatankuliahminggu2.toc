@@ -1,0 +1,5 @@
+\babel@toc {indonesian}{}\relax 
+\contentsline {section}{\numberline {1}Asumsi dan Karakteristik Utama Linear Programming}{2}{section.1}%
+\contentsline {section}{\numberline {2}Geometri Ruang Solusi 2D dan Metode Grafis}{2}{section.2}%
+\contentsline {section}{\numberline {3}Implementasi Program Python}{2}{section.3}%
+\contentsline {section}{\numberline {4}Kesimpulan}{2}{section.4}%

@@ -1,0 +1,23 @@
+\frametitle{Implementasi LP dengan scipy.optimize.linprog}
+\begin{lstlisting}
+import numpy as np
+from scipy.optimize import linprog
+
+# Maksimalkan Z = 500 x1 + 800 x2  => Minimalkan -500 x1 - 800 x2
+c = [-500, -800]
+
+# Kendala Pertidaksamaan A_ub * x <= b_ub
+A_ub = [
+    [2, 1],  # 2 x1 + 1 x2 <= 40
+    [1, 3]   # 1 x1 + 3 x2 <= 90
+]
+b_ub = [40, 90]
+
+# Batas variabel x1 >= 0, x2 >= 0
+x_bounds = (0, None)
+
+res = linprog(c, A_ub=A_ub, b_ub=b_ub, bounds=[x_bounds, x_bounds], method='highs')
+
+print(f"x1 Optimal = {res.x[0]:.2f}, x2 Optimal = {res.x[1]:.2f}")
+print(f"Keuntungan Maksimum = Rp {-res.fun:.2f}")
+\end{lstlisting}

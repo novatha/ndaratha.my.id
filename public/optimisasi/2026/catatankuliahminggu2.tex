@@ -1,0 +1,106 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[indonesian]{babel}
+\usepackage{amsmath, amssymb, amsfonts}
+\usepackage{geometry}
+\geometry{margin=1in, headheight=14pt}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+
+\definecolor{unibblue}{RGB}{0, 51, 102}
+\definecolor{unibgold}{RGB}{212, 175, 55}
+\definecolor{darkgreen}{RGB}{34, 139, 34}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=unibblue,
+    citecolor=darkgreen,
+    urlcolor=blue
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\textbf{TKE-41XX: Optimisasi untuk Teknik Elektro}}
+\lhead{Catatan Kuliah Minggu ke-2}
+\rfoot{Halaman \thepage}
+
+\lstset{
+  language=Python,
+  basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\color{unibblue}\bfseries,
+  commentstyle=\color{darkgreen}\itshape,
+  stringstyle=\color{red!70!black},
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  numbersep=5pt,
+  breaklines=true,
+  frame=single,
+  rulecolor=\color{unibblue!30},
+  tabsize=4
+}
+
+\newcommand{\R}{\mathbb{R}}
+
+\title{\textbf{Catatan Kuliah Minggu ke-2:}\\Optimisasi Linier (LP) dan Metode Grafis 2D}
+\author{\textbf{Ir. Novalio Daratha S.T., M.Sc., Ph.D.}\\Program Studi S1 Teknik Elektro --- Universitas Bengkulu}
+\date{Semester Ganjil 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{tcolorbox}[colback=unibblue!5,colframe=unibblue,title=\textbf{Ringkasan Eksekutif Pertemuan ke-2}]
+Dokumen ini membahas dasar-dasar matematis dan geometris dari *Linear Programming* (LP). Mahasiswa mempelajari cara pembentukan ruang solusi poligon konveks feasibel, pencarian titik pojok (*corner point feasible solutions*), serta solusi komputasional menggunakan `scipy.optimize.linprog`.
+\end{tcolorbox}
+
+\tableofcontents
+\newpage
+
+\section{Asumsi dan Karakteristik Utama Linear Programming}
+Masalah *Linear Programming* (LP) memiliki empat asumsi utama:
+\begin{enumerate}
+    \item **Proposionalitas**: Kontribusi setiap variabel keputusan terhadap fungsi tujuan dan kendala bersifat sebanding secara linier.
+    \item **Aditivitas**: Total kontribusi fungsi tujuan dan kendala merupakan penjumlahan dari kontribusi masing-masing variabel secara terpisah.
+    \item **Divisibilitas**: Variabel keputusan dapat bernilai pecahan/kontinu ($x_j \in \R$).
+    \item **Kepastian (Deterministik)**: Seluruh koefisien $c_j, a_{ij}, b_i$ diketahui dengan pasti.
+\end{enumerate}
+
+\section{Geometri Ruang Solusi 2D dan Metode Grafis}
+Untuk masalah LP dua variabel keputusan ($x_1, x_2$), ruang feasibel dapat digambarkan secara 2D:
+\begin{enumerate}
+    \item Gambarkan garis batas untuk setiap kendala pertidaksamaan $a_{i1} x_1 + a_{i2} x_2 = b_i$.
+    \item Tentukan daerah feasibel yang memenuhi seluruh pertidaksamaan sekaligus ($A \mathbf{x} \le \mathbf{b}, \mathbf{x} \ge 0$).
+    \item Plot garis tingkat fungsi tujuan $Z = c_1 x_1 + c_2 x_2$ (garis isoprofit/isocost).
+    \item Geser garis $Z$ searah pertumbuhan nilai tujuan hingga menyentuh titik pojok (*corner point*) terakhir dari poligon feasibel.
+\end{enumerate}
+
+\section{Implementasi Program Python}
+
+\begin{lstlisting}[caption={Skrip Python Solusi LP scipy.optimize.linprog}]
+import numpy as np
+from scipy.optimize import linprog
+
+# Maksimalkan Z = 500 x1 + 800 x2 => minimalkan -500 x1 - 800 x2
+c = [-500, -800]
+A = [[2, 1], [1, 3]]
+b = [40, 90]
+
+res = linprog(c, A_ub=A, b_ub=b, bounds=(0, None), method='highs')
+
+print(f"x1 Optimal = {res.x[0]:.2f}")
+print(f"x2 Optimal = {res.x[1]:.2f}")
+print(f"Keuntungan Maksimum = Rp {-res.fun:.2f}")
+\end{lstlisting}
+
+\section{Kesimpulan}
+1. Metode grafis memberikan pemahaman intuisi geometris yang sangat kuat mengenai sifat titik pojok ekstrim (*corner point*) pada masalah LP.
+2. Pemrograman LP dengan SciPy HighS solver memberikan kecepatan komputasi yang sangat tinggi dan presisi presisi.
+
+\end{document}

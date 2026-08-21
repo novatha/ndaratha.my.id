@@ -1,0 +1,25 @@
+\documentclass[11pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amssymb}
+\usepackage[margin=1in]{geometry}
+\usepackage{fancyhdr}
+\usepackage{xcolor}
+\definecolor{UNIBBlue}{RGB}{0, 51, 102}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\textbf{Optimisasi untuk Teknik Elektro}}
+\lhead{Catatan Kuliah - Minggu 6}
+\cfoot{\thepage}
+\title{\vspace{-1cm}\color{UNIBBlue}\textbf{Konsep Konveksitas}\vspace{-0.5cm}}
+\author{Ir. Novalio Daratha S.T., M.Sc., Ph.D.}
+\date{Minggu 6}
+\begin{document}
+\maketitle
+\section{Pengantar Konveksitas}
+Dalam optimisasi, pemisahan yang paling penting bukan antara masalah Linier dan Non-Linier, melainkan antara masalah \textbf{Cembung (Convex)} dan \textbf{Tidak Cembung (Non-Convex)}. Optimisasi cembung menjamin bahwa setiap minimum lokal adalah minimum global.
+\section{Definisi Formal}
+\textbf{Himpunan Cembung:} Suatu himpunan $C$ disebut cembung jika untuk setiap $x, y \in C$ dan setiap $\theta$ dengan $0 \le \theta \le 1$, berlaku:
+$\theta x + (1 - \theta)y \in C$.
+\textbf{Fungsi Cembung:} Fungsi $f(x)$ disebut cembung jika:
+$f(\theta x + (1-\theta)y) \le \theta f(x) + (1-\theta)f(y)$.
+\end{document}

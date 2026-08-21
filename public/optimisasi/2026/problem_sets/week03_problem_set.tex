@@ -1,0 +1,58 @@
+\documentclass[11pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage[margin=1in]{geometry}
+\usepackage{tcolorbox}
+\usepackage{fancyhdr}
+
+\definecolor{UNIBBlue}{RGB}{0, 51, 102}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\textbf{Optimisasi untuk Teknik Elektro}}
+\lhead{Problem Set - Minggu 3}
+\cfoot{\thepage}
+
+\begin{document}
+
+\begin{center}
+    \Large\color{UNIBBlue}\textbf{PROBLEM SET}\\
+    \large\textbf{Minggu 3: Metode Simpleks dan Dualitas}
+\end{center}
+
+\vspace{0.5cm}
+
+\textbf{Instruksi:} Kerjakan soal-soal di bawah ini dengan menyertakan langkah-langkah analitis.
+
+\section*{Soal 1: Pemahaman Konsep (C1 - C2)}
+1. (C1) Apakah yang dimaksud dengan variabel slack dan variabel surplus dalam optimisasi linier? \\
+2. (C2) Jelaskan hubungan antara Solusi Optimal Primal dan Solusi Optimal Dual (Strong Duality Theorem).
+
+\section*{Soal 2: Formulasi Bentuk Standar (C3)}
+Diberikan masalah program linier untuk desain \textit{Microgrid} berikut: \\
+Minimumkan $C = 10P_g + 2P_w$ \\
+s.t. \\
+$P_g + P_w \ge 100$ (Pemenuhan Beban Minimum) \\
+$P_g \le 80$ (Kapasitas Grid) \\
+$2P_g + 5P_w \le 250$ (Batas Emisi dan Kebisingan Ekuivalen) \\
+$P_g, P_w \ge 0$
+
+Ubahlah model di atas ke dalam \textbf{Bentuk Standar} dengan menambahkan variabel slack dan surplus yang sesuai!
+
+\section*{Soal 3: Transformasi Primal-Dual (C4)}
+Berdasarkan model awal (Primal) pada Soal 2 di atas, formulasikan model \textbf{Dual}-nya secara lengkap (Tujuan, Variabel, dan Kendala)!
+
+\section*{Soal 4: Evaluasi Solusi dan Shadow Price (C5 - C6)}
+Sebuah pabrik produksi komponen elektronik memodelkan maksimasi profitnya. Hasil analisis optimisasi menggunakan \textit{software} JuMP menunjukkan bahwa \textit{shadow price} untuk:
+\begin{itemize}
+    \item Kendala Mesin Solder (Kapasitas 500 jam/minggu) = Rp 150.000 / jam
+    \item Kendala Mesin Testing (Kapasitas 300 jam/minggu) = Rp 0 / jam
+    \item Kendala Suplai Bahan Baku (Kapasitas 1000 unit/minggu) = Rp 25.000 / unit
+\end{itemize}
+
+Pabrik memiliki dana investasi terbatas untuk \textit{upgrade} peralatan.
+(C5) Berikan argumentasi mesin mana (Solder atau Testing) yang menguntungkan untuk di-upgrade kapasitasnya, atau apakah lebih baik mencari supplier bahan baku tambahan? 
+(C6) Berikan saran kebijakan strategis kepada manajer operasional terkait mesin yang nilai \textit{shadow price}-nya Rp 0.
+
+\end{document}

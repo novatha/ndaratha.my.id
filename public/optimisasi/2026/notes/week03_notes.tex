@@ -1,0 +1,71 @@
+\documentclass[11pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage[margin=1in]{geometry}
+\usepackage{tcolorbox}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+
+\definecolor{UNIBBlue}{RGB}{0, 51, 102}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\textbf{Optimisasi untuk Teknik Elektro}}
+\lhead{Catatan Kuliah - Minggu 3}
+\cfoot{\thepage}
+
+\title{\vspace{-1cm}\color{UNIBBlue}\textbf{Metode Simpleks \& Dualitas}\vspace{-0.5cm}}
+\author{Ir. Novalio Daratha S.T., M.Sc., Ph.D.}
+\date{Minggu 3}
+
+\begin{document}
+\maketitle
+
+\section{Pendahuluan}
+Setelah kita mempelajari metode grafis pada minggu lalu, kita menyadari batasan utamanya: metode grafis hanya praktis untuk masalah dengan 2 variabel (atau paling banyak 3). Di dunia teknik elektro nyata, masalah optimisasi bisa memiliki ribuan variabel dan kendala. Metode Simpleks (Simplex Method) adalah algoritma aljabar efisien yang dapat menangani masalah LP berskala besar.
+
+\section{Bentuk Standar Program Linier}
+Syarat utama algoritma Simpleks adalah masalah harus dalam \textbf{Bentuk Standar}:
+1. Semua kendala berupa persamaan ($=$).
+2. Sisi kanan persamaan harus bernilai non-negatif.
+3. Semua variabel harus non-negatif.
+
+\subsection{Variabel Slack dan Surplus}
+Untuk mengubah pertidaksamaan menjadi persamaan:
+\begin{itemize}
+    \item \textbf{Variabel Slack ($s \ge 0$)}: Ditambahkan pada kendala $\le$. Mewakili jumlah sisa atau kapasitas yang tidak terpakai dari sumber daya tertentu.
+    \item \textbf{Variabel Surplus ($e \ge 0$)}: Dikurangkan pada kendala $\ge$. Mewakili kelebihan output di atas syarat minimum.
+\end{itemize}
+
+\section{Metode Simpleks (Garis Besar)}
+Algoritma simpleks bekerja dengan cara berpindah dari satu titik sudut (extreme point) dasar yang feasible ke titik sudut berdekatan yang memperbaiki nilai fungsi objektif.
+\begin{enumerate}
+    \item \textbf{Inisialisasi}: Menentukan Basic Feasible Solution (BFS) awal, biasanya titik (0,0) di mana semua variabel Slack merupakan variabel basis, dan variabel asli bernilai nol (non-basis).
+    \item \textbf{Uji Optimalitas}: Menggunakan baris-$Z$, dicek apakah terdapat koefisien negatif (untuk masalah maksimasi). Jika tidak ada koefisien negatif di baris-$Z$, solusi telah optimal.
+    \item \textbf{Pivoting}:
+    \begin{itemize}
+        \item \textbf{Kolom Pivot (Variabel Masuk)}: Pilih variabel non-basis dengan koefisien negatif terbesar pada baris-$Z$.
+        \item \textbf{Baris Pivot (Variabel Keluar)}: Pilih baris dengan rasio minimum (Nilai Ruas Kanan / Koefisien di Kolom Pivot yang $>0$).
+        \item Lakukan operasi baris elementer untuk membentuk matriks identitas baru pada kolom pivot.
+    \end{itemize}
+\end{enumerate}
+
+\section{Dualitas}
+Setiap model Program Linier (Primal) berkorelasi dengan sebuah model lain yang disebut \textbf{Dual}.
+
+\begin{tcolorbox}[colback=blue!5,colframe=UNIBBlue,title=Aturan Primal-Dual Dasar]
+\begin{itemize}
+    \item Jika Primal adalah \textbf{Maksimisasi}, Dual adalah \textbf{Minimisasi}.
+    \item Jika Primal memiliki $n$ variabel dan $m$ kendala, Dual akan memiliki $m$ variabel dan $n$ kendala.
+    \item Nilai ruas kanan kendala Primal menjadi koefisien fungsi objektif Dual.
+    \item Koefisien fungsi objektif Primal menjadi ruas kanan kendala Dual.
+\end{itemize}
+\end{tcolorbox}
+
+\subsection{Shadow Price (Harga Bayangan) dalam Keteknikan}
+Nilai optimal dari variabel Dual (dinotasikan sebagai $y_i$) sering disebut \textbf{Shadow Price}. Shadow price merepresentasikan peningkatan/penurunan marjinal dari nilai fungsi tujuan optimal (Z) per unit kenaikan batasan kapasitas kendala (ruas kanan $b_i$).
+
+Dalam teknik elektro, misal pada masalah perutean jaringan komunikasi (minimasi delay): shadow price pada sebuah link transmisi yang jenuh (congestion) menunjukkan berapa banyak delay total akan berkurang jika kapasitas bandwidth link tersebut ditambah 1 Mbps. Informasi ini sangat berguna bagi insinyur dalam memprioritaskan mana infrastruktur yang harus di-upgrade.
+
+\end{document}

@@ -1,0 +1,6 @@
+\documentclass[11pt, a4paper]{article}\usepackage[utf8]{inputenc}\usepackage{amsmath}\usepackage[margin=1in]{geometry}\begin{document}\title{Catatan Kuliah 12: PSO}\maketitle
+\section{Persamaan PSO}
+Persamaan kecepatan: $v_{i}(t+1) = w \cdot v_{i}(t) + c_1 r_1 (pbest_i - x_i(t)) + c_2 r_2 (gbest - x_i(t))$ \\
+Persamaan posisi: $x_{i}(t+1) = x_{i}(t) + v_{i}(t+1)$. \\
+Berbeda dengan GA, PSO tidak membuang individu buruk, melainkan mengarahkan ulang seluruh partikel ke arah yang lebih baik secara matematis riil.
+\end{document}

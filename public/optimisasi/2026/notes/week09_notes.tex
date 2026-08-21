@@ -1,0 +1,6 @@
+\documentclass[11pt, a4paper]{article}\usepackage[utf8]{inputenc}\usepackage{amsmath}\usepackage[margin=1in]{geometry}\begin{document}\title{Catatan Kuliah 9: MILP}\maketitle
+\section{Formulasi Variabel Biner}
+Variabel biner $x \in \{0,1\}$ sangat kuat. Contoh: Kendala "Jika A aktif, B harus mati" dimodelkan sebagai $x_A + x_B \le 1$. "Biaya setup" atau \textit{fixed charge} dimodelkan dengan $C \cdot x + c \cdot y$, di mana $y$ adalah jumlah produksi.
+\section{Metode Branch-and-Bound}
+Algoritma utama solver MILP. Memecah masalah ke dalam sub-masalah dengan pembatasan nilai integer secara hierarkis (Tree).
+\end{document}

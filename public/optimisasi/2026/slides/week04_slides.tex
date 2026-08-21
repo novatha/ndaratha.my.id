@@ -1,0 +1,99 @@
+\documentclass[aspectratio=169]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tcolorbox}
+
+% Theme styling based on UNIB colors
+\definecolor{UNIBBlue}{RGB}{0, 51, 102}
+\definecolor{UNIBYellow}{RGB}{255, 204, 0}
+\setbeamercolor{palette primary}{bg=UNIBBlue,fg=white}
+\setbeamercolor{palette secondary}{bg=UNIBYellow,fg=black}
+\setbeamercolor{structure}{fg=UNIBBlue}
+\setbeamercolor{title}{fg=UNIBBlue}
+\setbeamercolor{frametitle}{bg=UNIBBlue,fg=white}
+
+\title{Optimisasi untuk Teknik Elektro}
+\subtitle{Minggu 4: Analisis Sensitivitas}
+\author{Ir. Novalio Daratha S.T., M.Sc., Ph.D.}
+\date{Semester Ganjil 2026}
+
+\begin{document}
+
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{frame}{Tujuan Pembelajaran (CPMK-1, CPMK-4)}
+    \begin{itemize}
+        \item Mampu menjelaskan konsep dan tujuan dari Analisis Sensitivitas (Sensitivity Analysis/Post-Optimality Analysis).
+        \item Mampu menentukan rentang optimalitas (Range of Optimality) untuk koefisien fungsi tujuan.
+        \item Mampu menentukan rentang kelayakan (Range of Feasibility) untuk nilai ruas kanan kendala.
+        \item Mampu menginterpretasikan laporan sensitivitas dari \textit{solver} komputasional untuk pengambilan keputusan di keteknikan.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Mengapa Analisis Sensitivitas?}
+    \textbf{Dunia nyata selalu berubah.} Model program linier didasarkan pada parameter yang diestimasi atau diprediksi, yang bisa saja tidak akurat atau berubah di masa depan.
+    \vspace{0.3cm}
+    \begin{itemize}
+        \item Bagaimana jika harga komponen pemancar radio naik? Apakah desain alokasi daya saat ini masih merupakan yang terbaik?
+        \item Bagaimana jika kapasitas bandwidth backhaul diturunkan oleh provider? Seberapa drastis performa jaringan akan turun?
+    \end{itemize}
+    \textbf{Analisis Sensitivitas} menjawab pertanyaan "Bagaimana jika..." (What-if analysis) \textbf{tanpa} harus menyelesaikan ulang model dari awal.
+\end{frame}
+
+\begin{frame}{Dua Jenis Analisis Utama}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \begin{tcolorbox}[colback=blue!5,colframe=UNIBBlue,title=Perubahan Koefisien Tujuan ($c_j$)]
+                \textbf{Rentang Optimalitas} \\
+                Mencari seberapa besar koefisien profit/biaya suatu variabel dapat berubah sebelum solusi basis (titik sudut optimal) \textit{berubah}. \\
+                (Nilai $Z$ akan berubah, tetapi strategi $X$ yang dipilih tetap sama).
+            \end{tcolorbox}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{tcolorbox}[colback=yellow!5,colframe=UNIBYellow,title=Perubahan Sisi Kanan ($b_i$)]
+                \textbf{Rentang Kelayakan} \\
+                Mencari seberapa besar kapasitas/batasan kendala dapat diubah dengan mempertahankan Shadow Price yang konstan. \\
+                (Titik optimal \textit{pasti berubah}, tetapi kombinasi variabel aktif dalam basis tetap sama).
+            \end{tcolorbox}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Membaca Laporan Sensitivitas (Contoh)}
+    \begin{table}[]
+    \centering
+    \begin{tabular}{@{}llccc@{}}
+    \toprule
+    \textbf{Variabel} & \textbf{Final Value} & \textbf{Obj. Coef.} & \textbf{Allowable Increase} & \textbf{Allowable Decrease} \\ \midrule
+    $x_1$ (Daya Gen 1) & 100 MW & \$10 & 2.5 & 4.0 \\
+    $x_2$ (Daya Gen 2) & 50 MW & \$15 & 1E+30 ($\infty$) & 2.5 \\ \bottomrule
+    \end{tabular}
+    \end{table}
+    \vspace{0.2cm}
+    \textbf{Interpretasi Rentang Optimalitas}: \\
+    Strategi alokasi daya (Gen 1 = 100 MW, Gen 2 = 50 MW) \textbf{akan tetap optimal} selama biaya operasional Gen 1 berada di rentang: \\
+    $\$10 - \$4.0 \le c_1 \le \$10 + \$2.5$ \\
+    $\mathbf{\$6.0 \le c_1 \le \$12.5}$
+\end{frame}
+
+\begin{frame}{Reduced Cost}
+    \textbf{Reduced Cost} berlaku untuk variabel non-basis (variabel yang nilainya 0 pada solusi optimal).
+    \vspace{0.3cm}
+    \begin{itemize}
+        \item Ini mengukur \textbf{seberapa banyak koefisien tujuan harus diperbaiki} (misal biaya diturunkan atau profit dinaikkan) agar variabel tersebut mulai masuk ke dalam solusi optimal ($> 0$).
+        \item Jika sebuah generator tidak dihidupkan (daya = 0) karena terlalu mahal, \textit{reduced cost} memberitahu kita: seberapa jauh kita harus memotong biaya operasionalnya agar layak dinyalakan.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Aplikasi di Teknik Elektro}
+    \begin{itemize}
+        \item \textbf{Perencanaan Investasi:} Evaluasi batasan jaringan listrik mana yang paling sensitif dan memberikan Return on Investment (ROI) tertinggi dari \textit{shadow price}-nya, asalkan penambahan kapasitas masih dalam \textit{allowable increase}.
+        \item \textbf{Penjadwalan Beban (Load Dispatch):} Mengetahui ketahanan strategi alokasi daya saat ini jika terjadi fluktuasi mendadak pada harga bahan bakar (analisis koefisien objektif).
+    \end{itemize}
+\end{frame}
+
+\end{document}

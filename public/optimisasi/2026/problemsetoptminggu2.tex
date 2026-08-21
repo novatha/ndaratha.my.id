@@ -1,0 +1,71 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[indonesian]{babel}
+\usepackage{amsmath, amssymb, amsfonts}
+\usepackage{geometry}
+\geometry{margin=1in, headheight=14pt}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+
+\definecolor{unibblue}{RGB}{0, 51, 102}
+\definecolor{unibgold}{RGB}{212, 175, 55}
+\definecolor{darkgreen}{RGB}{34, 139, 34}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\textbf{TKE-41XX: Optimisasi untuk Teknik Elektro}}
+\lhead{Tugas Rumah / Problem Set Minggu 2}
+\rfoot{Halaman \thepage}
+
+\title{\vspace{-1cm}\textbf{PROBLEM SET MINGGU KE-2:}\\Optimisasi Linier (LP) dan Metode Grafis 2D}
+\author{Program Studi S1 Teknik Elektro --- Universitas Bengkulu}
+\date{Semester Ganjil 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{tcolorbox}[colback=unibgold!10,colframe=unibgold!80!black,title=\textbf{Petunjuk Pengerjaan dan Tenggat Waktu}]
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Tenggat Pengumpulan}: 1 Minggu setelah pertemuan kelas.
+    \item \textbf{Format Pengumpulan}: Laporan tertulis (PDF) memuat plot grafis manual/komputasi dan skrip SciPy.
+    \item **Taksonomi Bloom**: Memuat soal tingkat kognitif **C1 hingga C6**.
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{0.3cm}
+
+\section*{Soal 1: Konsep Dasar Poligon Feasibel (C1--C2)}
+
+\begin{enumerate}[label=\textbf{1.\arabic*}, leftmargin=*]
+    \item \textbf{[C1 --- Mengingat]} Jelaskan definisi formal dari himpunan cembung (*convex set*) dan berikan pembuktian bahwa irisan dari dua himpunan cembung pasti menghasilkan himpunan cembung!
+    
+    \item \textbf{[C2 --- Memahami]} Jelaskan kondisi matematis yang menyebabkan suatu masalah LP memiliki: (a) Solusi optimal unik, (b) Solusi optimal jamak (*multiple optimal solutions*), dan (c) Tidak terbatas (*unbounded*).
+\end{enumerate}
+
+\section*{Soal 2: Solusi Grafis dan Pemrograman Komputasi (C3--C4)}
+
+\begin{enumerate}[label=\textbf{2.\arabic*}, leftmargin=*]
+    \item \textbf{[C3 --- Mengaplikasikan]} Diberikan masalah alokasi daya 2 generator linier:
+    \[
+        \min Z = 20 P_1 + 15 P_2 \quad \text{s.t.} \quad P_1 + P_2 \ge 200, \quad P_1 \le 150, \quad P_2 \le 120, \quad P_1, P_2 \ge 0
+    \]
+    Gambarkan daerah poligon feasibel secara grafis dan tentukan titik pojok optimal $P_1^*, P_2^*$!
+
+    \item \textbf{[C4 --- Menganalisis]} Tuliskan skrip Python dengan `scipy.optimize.linprog` untuk memverifikasi titik optimal pada Soal 2.1!
+\end{enumerate}
+
+\section*{Soal 3: Evaluasi Sensitivitas Grafis dan Desain Model (C5--C6)}
+
+\begin{enumerate}[label=\textbf{3.\arabic*}, leftmargin=*]
+    \item \textbf{[C5 --- Mengevaluasi]} Hitunglah rentang koefisien biaya $c_1$ (biaya Generator 1) sedemikian rupa sehingga titik pojok optimal pada Soal 2.1 tetap tidak berubah!
+
+    \item \textbf{[C6 --- Mencipta]} Rancanglah sebuah model LP 2D untuk meminimalkan rugi-rugi transmisi pada 2 saluran kabel sejajar dan selesaikan secara grafis serta komputasional!
+\end{enumerate}
+
+\end{document}
