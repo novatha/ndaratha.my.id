@@ -1,0 +1,106 @@
+\documentclass[aspectratio=169]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tcolorbox}
+
+% Theme styling based on UNIB colors
+\definecolor{UNIBBlue}{RGB}{0, 51, 102}
+\definecolor{UNIBYellow}{RGB}{255, 204, 0}
+\setbeamercolor{palette primary}{bg=UNIBBlue,fg=white}
+\setbeamercolor{palette secondary}{bg=UNIBYellow,fg=black}
+\setbeamercolor{structure}{fg=UNIBBlue}
+\setbeamercolor{title}{fg=UNIBBlue}
+\setbeamercolor{frametitle}{bg=UNIBBlue,fg=white}
+
+\title{Optimisasi untuk Teknik Elektro}
+\subtitle{Minggu 5: Optimisasi Non-Linier (NLP) Tak Terkendala}
+\author{Ir. Novalio Daratha S.T., M.Sc., Ph.D.}
+\date{Semester Ganjil 2026}
+
+\begin{document}
+
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{frame}{Tujuan Pembelajaran (CPMK-1, CPMK-3)}
+    \begin{itemize}
+        \item Mampu menjelaskan perbedaan mendasar antara optimisasi linier dan non-linier.
+        \item Mampu mengimplementasikan algoritma Metode Penurunan Tercuram (Steepest/Gradient Descent).
+        \item Mampu menjelaskan konsep dan mengimplementasikan Metode Newton untuk optimisasi tak terkendala.
+        \item Mampu mengevaluasi kelebihan dan kekurangan dari masing-masing metode berbasis gradien.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Mengapa Non-Linier?}
+    Banyak fenomena fisik di Teknik Elektro yang tidak linier:
+    \begin{itemize}
+        \item \textbf{Daya Aktif ($P$) dan Reaktif ($Q$)} pada aliran daya merupakan fungsi trigonometri non-linier dari sudut fase dan magnitudo tegangan.
+        \item \textbf{Kerugian daya (Losses)} sebanding dengan kuadrat arus ($I^2R$).
+        \item \textbf{Kapasitas Kanal Shannon} adalah fungsi logaritmik dari Signal-to-Noise Ratio (SNR).
+    \end{itemize}
+    \textbf{Fokus Minggu Ini:} Pencarian nilai minimum untuk fungsi non-linier \textit{tanpa} adanya batasan ruang (Tak Terkendala / Unconstrained).
+\end{frame}
+
+\begin{frame}{Gradient Descent (Penurunan Tercuram)}
+    \textbf{Ide Dasar:} Jika kita berada di sebuah pegunungan dalam keadaan buta, bagaimana cara tercepat untuk mencapai lembah terbawah?
+    \textit{Jawab: Selalu melangkah ke arah yang paling curam ke bawah.}
+    \vspace{0.3cm}
+    \begin{tcolorbox}[colback=blue!5,colframe=UNIBBlue,title=Aturan Pembaruan (Update Rule)]
+        $x_{k+1} = x_k - \alpha \nabla f(x_k)$
+    \end{tcolorbox}
+    \begin{itemize}
+        \item $\nabla f(x_k)$: Gradien (turunan pertama) dari fungsi evaluasi di titik saat ini. (Menunjukkan arah kenaikan paling terjal).
+        \item $\alpha$: \textit{Learning rate} atau ukuran langkah (step size). Menentukan seberapa jauh kita melangkah.
+        \item Tanda negatif $(-)$ mengarahkan kita \textit{berlawanan} dengan gradien (turun).
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Isu pada Gradient Descent}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \textbf{Pemilihan $\alpha$ sangat krusial:}
+            \begin{itemize}
+                \item Jika terlalu \textbf{kecil}: Konvergensi sangat lambat.
+                \item Jika terlalu \textbf{besar}: Dapat melompati minimum dan bahkan divergen (osilasi).
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \textbf{Sifat Bentang Alam (Landscape):}
+            \begin{itemize}
+                \item Sangat lambat saat berada di area yang relatif datar (plateau).
+                \item Rawan terjebak di Minimum Lokal (bukan Global) pada fungsi non-cembung.
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Metode Newton}
+    \textbf{Ide Dasar:} Menggunakan informasi turunan kedua untuk memprediksi kelengkungan fungsi, sehingga langkah pencarian bisa lebih akurat dan konvergensinya lebih cepat.
+    \vspace{0.3cm}
+    \begin{tcolorbox}[colback=yellow!5,colframe=UNIBYellow,title=Aturan Pembaruan Metode Newton]
+        $x_{k+1} = x_k - [H(x_k)]^{-1} \nabla f(x_k)$
+    \end{tcolorbox}
+    \begin{itemize}
+        \item $\nabla f(x_k)$: Gradien (vektor turunan pertama).
+        \item $H(x_k)$: Matriks Hessian (matriks dari turunan parsial kedua).
+        \item Tidak memerlukan parameter $\alpha$ (meskipun terkadang dimodifikasi dengan Damped Newton).
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Gradient Descent vs Metode Newton}
+    \begin{table}[]
+    \begin{tabular}{@{}p{3.5cm}p{4cm}p{4cm}@{}}
+    \toprule
+    \textbf{Karakteristik} & \textbf{Gradient Descent} & \textbf{Metode Newton} \\ \midrule
+    Informasi Turunan & Turunan ke-1 (Gradien) & Turunan ke-1 \& ke-2 (Hessian) \\ 
+    Kecepatan Konvergensi & Linier (Lambat di dekat optimum) & Kuadratik (Sangat cepat di dekat optimum) \\ 
+    Beban Komputasi per Iterasi & Rendah ($O(N)$) & Tinggi ($O(N^3)$ karena invers Hessian) \\ 
+    Kestabilan & Tergantung $\alpha$ & Rentan jika Hessian tidak \textit{Positive Definite} \\ \bottomrule
+    \end{tabular}
+    \end{table}
+\end{frame}
+
+\end{document}

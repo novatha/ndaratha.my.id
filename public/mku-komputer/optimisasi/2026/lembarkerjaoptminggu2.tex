@@ -1,0 +1,95 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[indonesian]{babel}
+\usepackage{amsmath, amssymb, amsfonts}
+\usepackage{geometry}
+\geometry{margin=1in, headheight=14pt}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+
+\definecolor{unibblue}{RGB}{0, 51, 102}
+\definecolor{unibgold}{RGB}{212, 175, 55}
+\definecolor{darkgreen}{RGB}{34, 139, 34}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\textbf{TKE-41XX: Optimisasi untuk Teknik Elektro}}
+\lhead{Lembar Kerja Mahasiswa (LKM) Minggu 2}
+\rfoot{Halaman \thepage}
+
+\title{\vspace{-1cm}\textbf{LEMBAR KERJA MAHASISWA (LKM) MINGGU KE-2:}\\Optimisasi Linier (LP) dan Metode Grafis 2D}
+\author{Program Studi S1 Teknik Elektro --- Universitas Bengkulu}
+\date{Semester Ganjil 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{tcolorbox}[colback=unibblue!5,colframe=unibblue,title=\textbf{Identitas Mahasiswa dan Instruksi}]
+\begin{tabular}{ll}
+\textbf{Nama Mahasiswa} : & \hrulefill\hspace{6cm} \\
+\textbf{NPM} : & \hrulefill\hspace{6cm} \\
+\textbf{Kelompok / Kelas} : & \hrulefill\hspace{6cm} \\
+\end{tabular}
+\vspace{0.2cm}
+\begin{itemize}[leftmargin=*]
+    \item Kerjakan LKM ini secara kolaboratif dalam kelompok (2--3 mahasiswa).
+    \item Jawablah setiap pertanyaan secara sistematis pada ruang yang disediakan.
+    \item Soal ini mencakup ranah kognitif Taksonomi Bloom tingkat **C1 hingga C6**.
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{0.3cm}
+
+\section*{Bagian 1: Asumsi Dasar LP dan Geometri Poligon (C1--C2)}
+
+\begin{enumerate}[label=\textbf{Soal \arabic*:}, leftmargin=*]
+    \item \textbf{[C1 --- Mengingat]} Jelaskan 4 asumsi mendasar dalam Linear Programming (Proposionalitas, Aditivitas, Divisibilitas, Kepastian)!
+    
+    \begin{tcolorbox}[colback=white,colframe=gray!50,height=3.5cm,title=Ruang Jawaban Soal 1]
+    \end{tcolorbox}
+
+    \item \textbf{[C2 --- Memahami]} Mengapa solusi optimal pada masalah LP terkendala poligon dijamin selalu berada pada titik pojok ekstrim (*Corner Point Feasible*)?
+    
+    \begin{tcolorbox}[colback=white,colframe=gray!50,height=3.5cm,title=Ruang Jawaban Soal 2]
+    \end{tcolorbox}
+\end{enumerate}
+
+\section*{Bagian 2: Solusi Grafis dan Pemrograman Python (C3--C4)}
+
+\begin{enumerate}[label=\textbf{Soal \arabic*:}, leftmargin=*, resume]
+    \item \textbf{[C3 --- Mengaplikasikan]} Diberikan model LP:
+    \[
+        \max Z = 3 x_1 + 5 x_2 \quad \text{s.t.} \quad x_1 + 2 x_2 \le 12, \quad 3 x_1 + 2 x_2 \le 18, \quad x_1, x_2 \ge 0
+    \]
+    Gambarkan daerah feasibel secara grafis dan tentukan nilai $Z$ pada seluruh titik pojok ekstrim!
+    
+    \begin{tcolorbox}[colback=white,colframe=gray!50,height=5cm,title=Ruang Jawaban Soal 3]
+    \end{tcolorbox}
+
+    \item \textbf{[C4 --- Menganalisis]} Tuliskan skrip Python menggunakan `scipy.optimize.linprog` untuk memverifikasi hasil titik pojok dari Soal 3!
+    
+    \begin{tcolorbox}[colback=white,colframe=gray!50,height=5.5cm,title=Ruang Jawaban Soal 4]
+    \end{tcolorbox}
+\end{enumerate}
+
+\section*{Bagian 3: Evaluasi Feasibilitas dan Perancangan Kasus (C5--C6)}
+
+\begin{enumerate}[label=\textbf{Soal \arabic*:}, leftmargin=*, resume]
+    \item \textbf{[C5 --- Mengevaluasi]} Jika kendala ketiga $x_1 + x_2 \ge 15$ ditambahkan pada Soal 3, evaluasi bagaimana perubahan ruang solusi poligon dan status feasibilitas masalah tersebut!
+    
+    \begin{tcolorbox}[colback=white,colframe=gray!50,height=4.5cm,title=Ruang Jawaban Soal 5]
+    \end{tcolorbox}
+
+    \item \textbf{[C6 --- Mencipta]} Buatlah sebuah masalah *Linear Programming* 2D riil dalam sistem jaringan distribusi listrik (alokasi beban trafo / pembangkit terdistribusi) lengkap dengan garis isoprofit dan titik pojok optimalnya!
+    
+    \begin{tcolorbox}[colback=white,colframe=gray!50,height=6.5cm,title=Ruang Jawaban Soal 6]
+    \end{tcolorbox}
+\end{enumerate}
+
+\end{document}

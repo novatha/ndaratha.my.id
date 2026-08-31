@@ -1,0 +1,51 @@
+\documentclass[11pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage[margin=1in]{geometry}
+\usepackage{tcolorbox}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+
+\definecolor{UNIBBlue}{RGB}{0, 51, 102}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\textbf{Optimisasi untuk Teknik Elektro}}
+\lhead{Catatan Kuliah - Minggu 4}
+\cfoot{\thepage}
+
+\title{\vspace{-1cm}\color{UNIBBlue}\textbf{Analisis Sensitivitas}\vspace{-0.5cm}}
+\author{Ir. Novalio Daratha S.T., M.Sc., Ph.D.}
+\date{Minggu 4}
+
+\begin{document}
+\maketitle
+
+\section{Pendahuluan}
+Analisis Sensitivitas (juga disebut analisis pasca-optimalitas) adalah studi tentang bagaimana perubahan parameter model (seperti koefisien fungsi tujuan dan batas kapasitas) berdampak pada solusi optimal. Dalam praktiknya, insinyur jarang berhadapan dengan data yang 100\% akurat; harga dapat berfluktuasi, dan ketersediaan bandwidth dapat bervariasi. Oleh karena itu, kita perlu mengetahui seberapa kuat (robust) solusi kita terhadap ketidakpastian ini.
+
+\section{Perubahan Koefisien Fungsi Tujuan ($c_j$)}
+Perubahan pada $c_j$ memengaruhi kemiringan dari fungsi tujuan pada grafik (untuk masalah 2D).
+\begin{itemize}
+    \item \textbf{Range of Optimality (Rentang Optimalitas)}: Batas-batas nilai (batas atas dan batas bawah) dari koefisien $c_j$ sedemikian rupa sehingga variabel dasar (kombinasi variabel yang nilainya tidak nol) tidak berubah.
+    \item Jika $c_j$ berubah dalam rentang ini, titik sudut optimal (misal $x_1=5, x_2=10$) \textbf{tetap optimal}. Namun, nilai akhir objek $Z$ tentu akan berubah mengikuti rumus $Z$.
+    \item Laporan \textit{solver} biasanya menyajikan nilai ini sebagai \textit{Allowable Increase} dan \textit{Allowable Decrease}. Rentangnya adalah: $[c_j - Decrease, \ c_j + Increase]$.
+\end{itemize}
+
+\section{Perubahan Nilai Ruas Kanan ($b_i$)}
+Perubahan pada $b_i$ secara geometris akan menggeser kendala sejajar dengan posisi aslinya, sehingga memperbesar atau memperkecil ruang feasibel.
+\begin{itemize}
+    \item \textbf{Range of Feasibility (Rentang Kelayakan)}: Batas perubahan pada kapasitas sumber daya ($b_i$) di mana \textit{shadow price} dari sumber daya tersebut tetap valid dan konstan.
+    \item Dalam rentang ini, titik optimal pasti akan bergeser (nilai variabel berubah), namun kombinasi status sumber daya (misalnya mana kendala yang 'binding/ketat' dan mana yang memiliki sisa) tetap sama.
+    \item Jika penambahan kapasitas melewati batas \textit{Allowable Increase}, maka kendala tersebut mungkin tidak lagi menjadi \textit{bottleneck}, dan \textit{shadow price} akan turun.
+\end{itemize}
+
+\section{Reduced Cost}
+Reduced Cost terkait erat dengan \textbf{variabel non-basis} (variabel yang bernilai 0 pada kondisi optimal). Ia menunjukkan penalti per unit terhadap fungsi objektif jika kita memaksa variabel non-basis tersebut masuk ke dalam solusi (bernilai $>0$). Secara ekonomi, ia menunjukkan margin yang perlu diatasi agar sebuah alternatif yang saat ini "terlalu mahal" (atau "kurang menguntungkan") menjadi opsi yang visibel.
+
+\section{Aturan 100\% (The 100\% Rule)}
+Bagaimana jika beberapa parameter berubah secara bersamaan? Aturan 100\% memberikan indikasi apakah solusi masih terjamin optimal.
+Caranya: Hitung persentase perubahan masing-masing koefisien terhadap \textit{allowable change}-nya. Jika jumlah persentase perubahannya $\le 100\%$, maka solusi basis terjamin tidak berubah (meskipun nilai numeriknya dapat bergeser). Jika $> 100\%$, belum tentu berubah, namun kita harus menyelesaikan ulang model untuk memastikannya.
+
+\end{document}

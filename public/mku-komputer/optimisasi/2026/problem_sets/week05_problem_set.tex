@@ -1,0 +1,49 @@
+\documentclass[11pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage[margin=1in]{geometry}
+\usepackage{tcolorbox}
+\usepackage{fancyhdr}
+
+\definecolor{UNIBBlue}{RGB}{0, 51, 102}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\textbf{Optimisasi untuk Teknik Elektro}}
+\lhead{Problem Set - Minggu 5}
+\cfoot{\thepage}
+
+\begin{document}
+
+\begin{center}
+    \Large\color{UNIBBlue}\textbf{PROBLEM SET}\\
+    \large\textbf{Minggu 5: Optimisasi Non-Linier (NLP) Tak Terkendala}
+\end{center}
+
+\vspace{0.5cm}
+
+\textbf{Instruksi:} Kerjakan soal-soal di bawah ini dengan lengkap.
+
+\section*{Soal 1: Metode Newton 1D (C3)}
+Diberikan fungsi $f(x) = x^4 - 3x^3 + 2$.
+Lakukan 2 iterasi Metode Newton secara manual dengan tebakan awal $x_0 = 3$. 
+Tunjukkan nilai $f'(x)$, $f''(x)$, dan $x_{k+1}$ pada setiap iterasi.
+
+\section*{Soal 2: Hessian Matriks (C4)}
+Diberikan fungsi biaya dengan dua variabel $f(x_1, x_2) = 2x_1^2 + x_2^2 - x_1 x_2 - 4x_1$. \\
+(a) Tentukan vektor gradien $\nabla f(x_1, x_2)$. \\
+(b) Tentukan Matriks Hessian $H(x_1, x_2)$. \\
+(c) Apakah Matriks Hessian tersebut \textit{Positive Definite}? Buktikan menggunakan nilai eigen (eigenvalues) atau determinan principal minor.
+
+\section*{Soal 3: Komparasi dan Evaluasi (C5)}
+Dalam aplikasi estimasi kanal (Channel Estimation) untuk telekomunikasi 5G, seorang insinyur ingin memperbarui bobot filter secara \textit{real-time} (setiap mikrodetik). Model error yang dioptimasi memiliki tingkat kelengkungan yang cukup konsisten, namun jumlah parameternya (variabel) mencapai $10^4$ (sepuluh ribu).
+
+(C5) Metode mana yang akan Anda rekomendasikan untuk di-deploy ke perangkat keras (FPGA): Gradient Descent murni, Metode Newton, atau varian Quasi-Newton? Evaluasi kelebihan dan kekurangan ketiganya dalam konteks kebutuhan real-time dan ukuran variabel!
+
+\section*{Soal 4: Sintesis Solusi Masalah Kegagalan (C6)}
+Algoritma Gradient Descent yang diimplementasikan pada kontroler cerdas sebuah robot penjejak garis ternyata berosilasi (bergetar maju mundur) secara tidak terkendali di sekitar garis target dan tidak mau diam (konvergen).
+
+(C6) Rancanglah dua buah modifikasi (strategi) secara matematis pada algoritma pembaruan (update rule) untuk memecahkan masalah osilasi ini. Jelaskan mekanisme kerja masing-masing strategi secara logis.
+
+\end{document}

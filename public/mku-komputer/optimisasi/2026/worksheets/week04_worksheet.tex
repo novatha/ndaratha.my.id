@@ -1,0 +1,110 @@
+\documentclass[11pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage[margin=1in]{geometry}
+\usepackage{tcolorbox}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{UNIBBlue}{RGB}{0, 51, 102}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+\lstset{style=mystyle}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\textbf{Optimisasi untuk Teknik Elektro}}
+\lhead{Lembar Kerja Mahasiswa (LKM) - Minggu 4}
+\cfoot{\thepage}
+
+\begin{document}
+
+\begin{center}
+    \Large\color{UNIBBlue}\textbf{LEMBAR KERJA MAHASISWA (LKM)}\\
+    \large\textbf{Minggu 4: Membuat dan Menginterpretasikan Laporan Sensitivitas}
+\end{center}
+
+\vspace{0.5cm}
+\textbf{Nama Praktikan :} \rule{6cm}{0.4pt} \\
+\textbf{NPM :} \rule{6.8cm}{0.4pt}
+
+\section*{Tujuan Praktikum}
+1. Mahasiswa mampu menghasilkan laporan rentang sensitivitas menggunakan Julia/JuMP atau \textit{solver} di Python. \\
+2. Mahasiswa mampu menerjemahkan keluaran komputasional ke dalam strategi operasi keteknikan.
+
+\section*{Kasus: Alokasi Produksi Baterai (Dimensi C3 - C4)}
+Sebuah pabrik memproduksi baterai Li-Ion untuk Drone ($x_1$) dan Baterai untuk Mobil Listrik EV ($x_2$). Profit untuk setiap batch baterai Drone adalah Rp 300 Juta, dan EV adalah Rp 500 Juta. Pabrik dibatasi oleh kapasitas mesin Assembly (A) dan mesin Testing (T).
+\begin{itemize}
+    \item Perakitan: 2 jam/$x_1$ dan 4 jam/$x_2$. Maksimal tersedia 160 jam. ($2x_1 + 4x_2 \le 160$)
+    \item Pengujian: 3 jam/$x_1$ dan 2 jam/$x_2$. Maksimal tersedia 120 jam. ($3x_1 + 2x_2 \le 120$)
+\end{itemize}
+
+\section*{Aktivitas 1: Ekstraksi Rentang Optimasi (C3)}
+Pada \textit{solver} LP modern (seperti Linprog pada SciPy atau opsi tertentu di HiGHS), kita dapat mengekstrak sensitivitas rentang objektif dan RHS.
+\textbf{Implementasi Python (SciPy):}
+\begin{lstlisting}[language=Python]
+from scipy.optimize import linprog
+
+# C = [-300, -500] untuk maksimasi
+c = [-300, -500]
+A = [[2, 4], [3, 2]]
+b = [160, 120]
+
+# Metode highs mendukung analisis margin
+res = linprog(c, A_ub=A, b_ub=b, method='highs')
+
+print("Solusi:", res.x)
+print("Profit Maksimal:", -res.fun)
+print("Shadow Prices (Inequalities):", -res.ineqlin.marginals)
+\end{lstlisting}
+\textit{Catatan: Di kelas, kita akan menggunakan \textit{package} tambahan atau perhitungan manual sederhana dari matriks basis optimal jika menggunakan bahasa Julia standar, namun konsepnya tetap sama.}
+
+\section*{Aktivitas 2: Analisis Skenario Berdasarkan Rentang (C4)}
+Anggap laporan analisis yang dihasilkan sistem menyatakan untuk Baterai Drone ($c_1 = 300$):
+\begin{itemize}
+    \item \textbf{Allowable Increase}: 50
+    \item \textbf{Allowable Decrease}: 112.5
+\end{itemize}
+Untuk Mesin Assembly ($b_1 = 160$):
+\begin{itemize}
+    \item \textbf{Shadow Price}: 112.5
+    \item \textbf{Allowable Increase}: 80
+    \item \textbf{Allowable Decrease}: 80
+\end{itemize}
+
+\textbf{Pertanyaan:}
+1. Jika terjadi persaingan pasar yang memaksa kita menurunkan profit Baterai Drone menjadi Rp 250 Juta/batch, apakah strategi alokasi produksi kita saat ini harus diubah? Jelaskan!
+2. Jika ada tawaran sewa mesin perakitan tambahan seharga Rp 100 Juta/jam dengan kuota 50 jam, apakah tawaran ini menguntungkan untuk diambil? Evaluasi menggunakan prinsip Range of Feasibility dan Shadow Price.
+
+\vspace{1cm}
+\textbf{Jawaban:} \\
+\rule{\textwidth}{0.4pt} \\
+\rule{\textwidth}{0.4pt} \\
+\rule{\textwidth}{0.4pt} \\
+\rule{\textwidth}{0.4pt}
+
+\end{document}

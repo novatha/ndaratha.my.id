@@ -1,0 +1,100 @@
+\documentclass[11pt,a4paper]{article}
+
+% --- PACKAGES ---
+\usepackage[utf8]{inputenc}
+\usepackage[indonesian]{babel}
+\usepackage{amsmath, amssymb, amsfonts}
+\usepackage{geometry}
+\geometry{margin=1in, headheight=14pt}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+
+% --- STYLING & COLORS ---
+\definecolor{unibblue}{RGB}{0, 51, 102}
+\definecolor{unibgold}{RGB}{212, 175, 55}
+\definecolor{darkgreen}{RGB}{34, 139, 34}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\textbf{TKE-41XX: Optimisasi untuk Teknik Elektro}}
+\lhead{Lembar Kerja Mahasiswa (LKM) Minggu 14}
+\rfoot{Halaman \thepage}
+
+\title{\vspace{-1cm}\textbf{LEMBAR KERJA MAHASISWA (LKM) MINGGU KE-14:}\\Optimisasi Multi-Objektif dan Metode Hibrid (Sintesis EE dan Mesin)}
+\author{Program Studi S1 Teknik Elektro --- Universitas Bengkulu}
+\date{Semester Ganjil 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{tcolorbox}[colback=unibblue!5,colframe=unibblue,title=\textbf{Identitas Mahasiswa dan Instruksi}]
+\begin{tabular}{ll}
+\textbf{Nama Mahasiswa} : & \hrulefill\hspace{6cm} \\
+\textbf{NPM} : & \hrulefill\hspace{6cm} \\
+\textbf{Kelompok / Kelas} : & \hrulefill\hspace{6cm} \\
+\end{tabular}
+\vspace{0.2cm}
+\begin{itemize}[leftmargin=*]
+    \item Kerjakan LKM ini secara kolaboratif dalam kelompok (2--3 mahasiswa).
+    \item Jawablah setiap pertanyaan secara sistematis pada ruang yang disediakan.
+    \item Soal ini mencakup ranah kognitif Taksonomi Bloom tingkat **C1 hingga C6**.
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{0.3cm}
+
+\section*{Bagian 1: Konsep Dasar Multi-Objektif dan Dominasi Pareto (C1--C2)}
+
+\begin{enumerate}[label=\textbf{Soal \arabic*:}, leftmargin=*]
+    \item \textbf{[C1 --- Mengingat]} Jelaskan perbedaan utama antara optimisasi *Single-Objective* dan *Multi-Objective* (MOO) dalam konteks pengoperasian sistem tenaga listrik modern (*Combined Economic dan Emission Dispatch*)!
+    
+    \begin{tcolorbox}[colback=white,colframe=gray!50,height=3cm,title=Ruang Jawaban Soal 1]
+    \end{tcolorbox}
+
+    \item \textbf{[C2 --- Memahami]} Berikan kriteria formal matematis agar suatu alokasi daya $\mathbf{P}_a$ dikatakan **mendomina secara Pareto** terhadap alokasi daya $\mathbf{P}_b$ ($\mathbf{P}_a \succ \mathbf{P}_b$) untuk dua fungsi tujuan (Biaya dan Emisi)!
+    
+    \begin{tcolorbox}[colback=white,colframe=gray!50,height=3.5cm,title=Ruang Jawaban Soal 2]
+    \end{tcolorbox}
+\end{enumerate}
+
+\section*{Bagian 2: Aplikasi Deterministik dan Sintesis Teknik Mesin (C3--C4)}
+
+\begin{enumerate}[label=\textbf{Soal \arabic*:}, leftmargin=*, resume]
+    \item \textbf{[C3 --- Mengaplikasikan]} Tiga buah solusi kandidat alokasi daya pada sistem generator menghasilkan nilai biaya $F_{\text{cost}}$ (\$/jam) dan emisi $E_{\text{emission}}$ (kg/jam) sebagai berikut:
+    \begin{itemize}
+        \item Solusi A: $(8200, 510)$
+        \item Solusi B: $(8350, 440)$
+        \item Solusi C: $(8280, 480)$
+        \item Solusi D: $(8400, 520)$
+    \end{itemize}
+    Tentukan manakah di antara keempat solusi tersebut yang merupakan **solusi non-terdominasi** (*Pareto Optimal Set*) dan gambarkan batas *Pareto Front* secara konseptual!
+    
+    \begin{tcolorbox}[colback=white,colframe=gray!50,height=5cm,title=Ruang Jawaban Soal 3]
+    \end{tcolorbox}
+
+    \item \textbf{[C4 --- Menganalisis]} Bandingkan peran algoritma *Quasi-Newton BFGS* (dari materi Teknik Mesin Bab 6) dengan algoritma *Augmented Lagrangian* (dari materi Teknik Mesin Bab 7) jika diintegrasikan dengan PSO pada penyelesaian masalah CEED! Mengapa pendekatan hibrid ini lebih unggul dibandingkan PSO murni?
+    
+    \begin{tcolorbox}[colback=white,colframe=gray!50,height=5.5cm,title=Ruang Jawaban Soal 4]
+    \end{tcolorbox}
+\end{enumerate}
+
+\section*{Bagian 3: Evaluasi dan Perancangan Algoritma Hibrid (C5--C6)}
+
+\begin{enumerate}[label=\textbf{Soal \arabic*:}, leftmargin=*, resume]
+    \item \textbf{[C5 --- Mengevaluasi]} Suatu *Pareto Front* CEED memiliki rentang biaya $F_{\text{cost}} \in [8194, 8342]$ dan emisi $E_{\text{emission}} \in [442, 509]$. Jika Solusi Kompromi C memiliki nilai $(8245, 465)$, hitunglah nilai derajat keanggotaan *Fuzzy* $\mu_{\text{cost}}$ dan $\mu_{\text{emission}}$ serta nilai kelayakan total $\mu^{(C)}$! Evaluasi apakah solusi ini layak dipilih sebagai *Best Compromise Solution*.
+    
+    \begin{tcolorbox}[colback=white,colframe=gray!50,height=4.5cm,title=Ruang Jawaban Soal 5]
+    \end{tcolorbox}
+
+    \item \textbf{[C6 --- Mencipta]} Rancanglah skema arsitektur algoritma optimisasi hibrid **BFGS-MOPSO** yang menggabungkan kemampuan eksplorasi global partikel MOPSO dengan kemampuan akselerasi lokal *Quasi-Newton BFGS*. Buatlah diagram alir (*flowchart*) atau *pseudocode* lengkapnya!
+    
+    \begin{tcolorbox}[colback=white,colframe=gray!50,height=6.5cm,title=Ruang Jawaban Soal 6]
+    \end{tcolorbox}
+\end{enumerate}
+
+\end{document}

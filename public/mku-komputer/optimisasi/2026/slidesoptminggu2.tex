@@ -1,0 +1,135 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Presentasi Beamer untuk RPS Optimisasi Teknik Elektro
+% Minggu ke-2: Optimisasi Linier (LP) & Metode Grafis
+% Program Studi S1 Teknik Elektro - Universitas Bengkulu (2026)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[10pt,aspectratio=169]{beamer}
+
+\usetheme{Madrid}
+\usecolortheme{seahorse}
+\setbeamertemplate{navigation symbols}{}
+
+\definecolor{unibblue}{RGB}{0, 51, 102}
+\definecolor{unibgold}{RGB}{212, 175, 55}
+\definecolor{darkgreen}{RGB}{34, 139, 34}
+
+\setbeamercolor{structure}{fg=unibblue}
+\setbeamercolor{palette primary}{bg=unibblue,fg=white}
+\setbeamercolor{palette secondary}{bg=unibblue!80,fg=white}
+\setbeamercolor{palette tertiary}{bg=unibblue!60,fg=white}
+\setbeamercolor{titlelike}{parent=palette primary,fg=white}
+
+\usepackage[utf8]{inputenc}
+\usepackage[indonesian]{babel}
+\usepackage{amsmath, amssymb, amsfonts}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+
+\lstset{
+  language=Python,
+  basicstyle=\ttfamily\tiny,
+  keywordstyle=\color{unibblue}\bfseries,
+  commentstyle=\color{darkgreen}\itshape,
+  stringstyle=\color{red!70!black},
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  numbersep=4pt,
+  breaklines=true,
+  frame=single,
+  rulecolor=\color{unibblue!30},
+  tabsize=4
+}
+
+\newcommand{\R}{\mathbb{R}}
+
+\title[Optimisasi TE: Pertemuan 2]{Optimisasi untuk Teknik Elektro (TKE-41XX)}
+\subtitle{Pertemuan 2: Optimisasi Linier (LP) dan Metode Grafis 2D}
+\author[N. Daratha]{Ir. Novalio Daratha S.T., M.Sc., Ph.D.}
+\institute[Teknik Elektro UNIB]{Program Studi S1 Teknik Elektro\\Fakultas Teknik --- Universitas Bengkulu}
+\date{Semester Ganjil 2026}
+
+\begin{document}
+
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{frame}{Agenda Pembelajaran Minggu ke-2}
+    \begin{tcolorbox}[colback=unibblue!5,colframe=unibblue,title=\textbf{Tujuan Pembelajaran (Sub-CPMK 2)}]
+        Mahasiswa mampu menyelesaikan masalah Linear Programming (LP) 2D secara grafis dan komputasional, serta menganalisis geometri ruang solusi poligon feasibel.
+    \end{tcolorbox}
+
+    \vspace{0.3cm}
+    \begin{enumerate}
+        \item \textbf{Karakteristik Masalah LP}: Sifat linieritas, proporsionalitas, dan aditivitas.
+        \item \textbf{Metode Grafis 2D}: Penggambaran kendala pertidaksamaan dan pembentukan poligon feasibel.
+        \item \textbf{Garis Isoprofit / Isocost}: Pencarian titik pojok ekstrim optimal (*Corner Point Feasible*).
+        \item \textbf{Studi Kasus Sederhana}: Alokasi beban transformator daya.
+        \item \textbf{Implementasi Komputasi}: Penggunaan `scipy.optimize.linprog`.
+    \end{enumerate}
+\end{frame}
+
+\section{Metode Grafis 2D}
+
+\begin{frame}{Geometri Ruang Solusi Linear Programming}
+    \begin{columns}
+        \column{0.5\textwidth}
+        \begin{block}{Sifat Poligon Feasibel}
+            \begin{itemize}
+                \item Setiap kendala linier membagi bidang $\R^2$ menjadi dua separuh bidang (*half-space*).
+                \item Irisan dari seluruh kendala membentuk **Poligon Konveks Feasibel**.
+                \item **Teorema Utama LP**: Solusi optimal selalu terletak pada minimal satu titik pojok ekstrim (*Corner Point Solution*).
+            \end{itemize}
+        \end{block}
+
+        \column{0.46\textwidth}
+        \begin{tcolorbox}[colback=unibgold!10,colframe=unibgold!80!black,title=\textbf{Formulasi Standar LP}]
+            \[
+                \min_{\mathbf{x}} \mathbf{c}^T \mathbf{x}
+            \]
+            \[
+                \text{s.t.} \quad A \mathbf{x} \le \mathbf{b}, \quad \mathbf{x} \ge 0
+            \]
+        \end{tcolorbox}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Implementasi LP dengan scipy.optimize.linprog}
+\begin{lstlisting}
+import numpy as np
+from scipy.optimize import linprog
+
+# Maksimalkan Z = 500 x1 + 800 x2  => Minimalkan -500 x1 - 800 x2
+c = [-500, -800]
+
+# Kendala Pertidaksamaan A_ub * x <= b_ub
+A_ub = [
+    [2, 1],  # 2 x1 + 1 x2 <= 40
+    [1, 3]   # 1 x1 + 3 x2 <= 90
+]
+b_ub = [40, 90]
+
+# Batas variabel x1 >= 0, x2 >= 0
+x_bounds = (0, None)
+
+res = linprog(c, A_ub=A_ub, b_ub=b_ub, bounds=[x_bounds, x_bounds], method='highs')
+
+print(f"x1 Optimal = {res.x[0]:.2f}, x2 Optimal = {res.x[1]:.2f}")
+print(f"Keuntungan Maksimum = Rp {-res.fun:.2f}")
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{Rangkuman Pertemuan 2}
+    \begin{tcolorbox}[colback=unibblue!10,colframe=unibblue,title=\textbf{Poin Kunci}]
+        \begin{itemize}
+            \item Solusi optimal masalah LP dijamin berada pada titik ekstrem (*corner point*) ruang feasibel.
+            \item Metode grafis sangat efektif untuk memahami geometri 2D sebelum beralih ke Algoritma Simpleks dimensi tinggi.
+        \end{itemize}
+    \end{tcolorbox}
+\end{frame}
+
+\end{document}

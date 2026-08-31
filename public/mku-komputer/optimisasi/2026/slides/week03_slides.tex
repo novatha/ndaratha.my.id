@@ -1,0 +1,110 @@
+\documentclass[aspectratio=169]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tcolorbox}
+
+% Theme styling based on UNIB colors
+\definecolor{UNIBBlue}{RGB}{0, 51, 102}
+\definecolor{UNIBYellow}{RGB}{255, 204, 0}
+\setbeamercolor{palette primary}{bg=UNIBBlue,fg=white}
+\setbeamercolor{palette secondary}{bg=UNIBYellow,fg=black}
+\setbeamercolor{structure}{fg=UNIBBlue}
+\setbeamercolor{title}{fg=UNIBBlue}
+\setbeamercolor{frametitle}{bg=UNIBBlue,fg=white}
+
+\title{Optimisasi untuk Teknik Elektro}
+\subtitle{Minggu 3: Metode Simpleks \& Dualitas}
+\author{Ir. Novalio Daratha S.T., M.Sc., Ph.D.}
+\date{Semester Ganjil 2026}
+
+\begin{document}
+
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{frame}{Tujuan Pembelajaran (CPMK-1, CPMK-3)}
+    \begin{itemize}
+        \item Mampu merubah bentuk standar program linier dengan variabel slack/surplus.
+        \item Mampu menjelaskan konsep dan iterasi Metode Simpleks secara konseptual.
+        \item Mampu mendefinisikan masalah dual dari masalah primal program linier.
+        \item Mampu menginterpretasikan nilai dual secara ekonomi dalam konteks keteknikan.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Bentuk Standar Program Linier}
+    \textbf{Semua kendala harus berupa persamaan ($=$) dengan ruas kanan non-negatif.}
+    \vspace{0.5cm}
+    \begin{itemize}
+        \item Kendala $\le$ (kurang dari atau sama dengan) ditambahkan \textbf{Variabel Slack} (waktu/sumber daya yang tersisa).
+        \item Kendala $\ge$ (lebih dari atau sama dengan) dikurangi \textbf{Variabel Surplus} (kelebihan di atas minimum).
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Contoh Bentuk Standar}
+    \textbf{Primal:}
+    Maksimumkan $Z = 3x_1 + 5x_2$ \\
+    s.t. \\
+    $x_1 \le 4$ \\
+    $2x_2 \le 12$ \\
+    $3x_1 + 2x_2 \le 18$ \\
+    $x_1, x_2 \ge 0$
+    
+    \vspace{0.5cm}
+    \textbf{Bentuk Standar:}
+    Maksimumkan $Z = 3x_1 + 5x_2 + 0s_1 + 0s_2 + 0s_3$ \\
+    s.t. \\
+    $x_1 + s_1 = 4$ \\
+    $2x_2 + s_2 = 12$ \\
+    $3x_1 + 2x_2 + s_3 = 18$ \\
+    $x_1, x_2, s_1, s_2, s_3 \ge 0$
+\end{frame}
+
+\begin{frame}{Metode Simpleks (Konseptual)}
+    \begin{itemize}
+        \item Pendekatan aljabar untuk mencari solusi optimal pada titik-titik sudut (extreme points) ruang solusi yang feasible.
+        \item Iterasi bergerak dari satu solusi dasar feasible (BFS) ke BFS tetangganya yang memberikan nilai fungsi tujuan yang lebih baik.
+        \item \textbf{Langkah Utama:}
+        \begin{enumerate}
+            \item Tentukan BFS awal (biasanya di titik asal).
+            \item Cek optimalitas (Apakah ada variabel non-basis yang jika dimasukkan ke basis akan memperbaiki Z?).
+            \item Tentukan variabel masuk (entering variable) dan variabel keluar (leaving variable).
+            \item Lakukan operasi baris dasar (pivoting) untuk mendapatkan matriks BFS baru.
+            \item Ulangi hingga kondisi optimal tercapai.
+        \end{enumerate}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Dualitas (Duality)}
+    \textbf{Setiap masalah program linier (Primal) memiliki masalah terkait yang disebut Dual.}
+    \vspace{0.3cm}
+    \begin{itemize}
+        \item Solusi optimal Primal dan Dual memiliki nilai fungsi tujuan yang sama (Strong Duality).
+        \item Memberikan perspektif ekonomi pada masalah.
+        \item Variabel Dual ($y_i$) merepresentasikan \textit{shadow price} atau nilai batas dari sumber daya (kendala $i$).
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Interpretasi Ekonomi Dualitas di Teknik Elektro}
+    Contoh: Optimisasi alokasi daya dari beberapa generator untuk memenuhi beban (Primal: Minimisasi Biaya).
+    \vspace{0.5cm}
+    \begin{tcolorbox}[colback=UNIBYellow!20,colframe=UNIBBlue,title=Makna Variabel Dual (Shadow Price)]
+        Berapa banyak \textbf{penghematan biaya} (atau pengurangan total objektif) yang bisa didapatkan jika batas kendala kapasitas daya diperlonggar sebesar 1 unit (1 MW)?
+    \end{tcolorbox}
+    \begin{itemize}
+        \item Jika generator A sudah pada kapasitas maksimum, shadow price-nya positif (ada manfaat ekonomi jika kapasitas ditambah).
+        \item Jika generator B belum mencapai batas, shadow price-nya nol (menambah batas kapasitas B tidak mengubah solusi optimal).
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Kesimpulan}
+    \begin{itemize}
+        \item Bentuk standar (slack/surplus) diperlukan untuk algoritma aljabar seperti Simpleks.
+        \item Metode Simpleks mencari solusi efisien di titik-titik sudut.
+        \item Dualitas memberikan nilai "harga bayangan" (shadow price) untuk setiap sumber daya atau batas operasional, sangat berharga dalam keputusan investasi keteknikan.
+    \end{itemize}
+\end{frame}
+
+\end{document}

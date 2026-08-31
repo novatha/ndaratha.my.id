@@ -1,0 +1,46 @@
+\documentclass[11pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage[margin=1in]{geometry}
+\usepackage{tcolorbox}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+
+\definecolor{UNIBBlue}{RGB}{0, 51, 102}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\textbf{Optimisasi untuk Teknik Elektro}}
+\lhead{Catatan Kuliah - Minggu 5}
+\cfoot{\thepage}
+
+\title{\vspace{-1cm}\color{UNIBBlue}\textbf{Optimisasi Non-Linier Tak Terkendala}\vspace{-0.5cm}}
+\author{Ir. Novalio Daratha S.T., M.Sc., Ph.D.}
+\date{Minggu 5}
+
+\begin{document}
+\maketitle
+
+\section{Pendahuluan}
+Banyak permasalahan keteknikan memiliki fungsi objektif yang kompleks dan non-linier. Jika kita melepaskan semua batasan operasional (unconstrained), kita hanya fokus pada pencarian titik dasar di mana fungsi bernilai minimum (atau maksimum). Syarat mutlak (Necessary Condition) untuk suatu titik optimal tak terkendala adalah nilai turunan pertamanya (Gradien) sama dengan nol: $\nabla f(x) = 0$.
+
+\section{Metode Gradient Descent}
+Metode ini adalah algoritma iteratif urutan pertama. Dari posisi tebakan awal $x_0$, metode ini melangkah berlawanan dengan arah gradien.
+\[ x_{k+1} = x_k - \alpha \nabla f(x_k) \]
+
+\subsection{Pemilihan Learning Rate ($\alpha$)}
+\begin{itemize}
+    \item \textbf{Konstan}: $\alpha$ ditetapkan di awal. Sederhana, namun bisa menyebabkan overshoot jika terlalu besar atau sangat lambat jika terlalu kecil.
+    \item \textbf{Line Search}: Mengubah algoritma pencarian menjadi pencarian 1-Dimensi di setiap iterasi. Kita mencari $\alpha$ yang meminimalkan $f(x_k - \alpha \nabla f(x_k))$. Jauh lebih stabil namun menambah beban komputasi per iterasi.
+\end{itemize}
+
+\section{Metode Newton}
+Metode Newton adalah metode urutan kedua yang mengeksploitasi matriks Hessian (kelengkungan). Metode ini mengasumsikan fungsi secara lokal berbentuk kuadratik.
+\[ x_{k+1} = x_k - H(x_k)^{-1} \nabla f(x_k) \]
+Syarat utama agar Metode Newton dapat mengarah ke \textbf{minimum} adalah Matriks Hessian $H(x_k)$ harus \textbf{Positive Definite} di sekitar titik tersebut. Jika Hessian tidak invertible (singular) atau tidak positive definite, metode ini dapat bergerak menjauhi minimum atau bahkan divergen.
+
+\subsection{Tantangan Komputasional Hessian}
+Untuk masalah dengan ribuan variabel (seperti pelatihan Jaringan Saraf Tiruan), menghitung dan membalikkan matriks Hessian $N \times N$ sangatlah mahal. Oleh karena itu, di ranah machine learning dan optimisasi skala besar, metode \textbf{Quasi-Newton} (seperti BFGS atau L-BFGS) lebih disukai karena mereka mengaproksimasi invers Hessian menggunakan pembaruan gradien dari iterasi sebelumnya tanpa perlu menghitung turunan kedua secara eksplist.
+
+\end{document}

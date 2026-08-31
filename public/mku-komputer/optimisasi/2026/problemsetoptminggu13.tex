@@ -1,0 +1,93 @@
+\documentclass[11pt,a4paper]{article}
+
+% --- PACKAGES ---
+\usepackage[utf8]{inputenc}
+\usepackage[indonesian]{babel}
+\usepackage{amsmath, amssymb, amsfonts}
+\usepackage{geometry}
+\geometry{margin=1in, headheight=14pt}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+
+% --- STYLING & COLORS ---
+\definecolor{unibblue}{RGB}{0, 51, 102}
+\definecolor{unibgold}{RGB}{212, 175, 55}
+\definecolor{darkgreen}{RGB}{34, 139, 34}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\textbf{TKE-41XX: Optimisasi untuk Teknik Elektro}}
+\lhead{Tugas Rumah / Problem Set Minggu 13}
+\rfoot{Halaman \thepage}
+
+\title{\vspace{-1cm}\textbf{PROBLEM SET MINGGU KE-13:}\\Economic Dispatch Sistem Tenaga Listrik Berbasis PSO}
+\author{Program Studi S1 Teknik Elektro --- Universitas Bengkulu}
+\date{Semester Ganjil 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{tcolorbox}[colback=unibgold!10,colframe=unibgold!80!black,title=\textbf{Petunjuk Pengerjaan dan Tenggat Waktu}]
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Tenggat Pengumpulan}: 1 Minggu setelah pertemuan kelas (Sesuai Jadwal Portal Perkuliahan).
+    \item \textbf{Format Pengumpulan}: Laporan tertulis (PDF) memuat perhitungan matematis analitis dan lampiran skrip komputasi (Python / Julia).
+    \item **Taksonomi Bloom**: Memuat soal tingkat kognitif **C1 hingga C6**. Kerjakan dengan jujur dan mandiri!
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{0.3cm}
+
+\section*{Soal 1: Pemahaman Konseptual (C1--C2)}
+
+\begin{enumerate}[label=\textbf{1.\arabic*}, leftmargin=*]
+    \item \textbf{[C1 --- Mengingat]} Jelaskan peran parameter inersia $\omega$ (*inertia weight*) serta koefisien kognitif $c_1$ dan sosial $c_2$ dalam algoritma PSO saat diterapkan untuk mencari solusi alokasi daya *Economic Dispatch*!
+    
+    \item \textbf{[C2 --- Memahami]} Mengapa pembatasan kecepatan maksimum partikel ($v_{\max}$) sangat krusial pada optimisasi *Economic Dispatch*? Jelaskan dampak fisik jika $v_{\max}$ diatur terlalu besar atau terlalu kecil terhadap eksplorasi daya generator!
+\end{enumerate}
+
+\section*{Soal 2: Solusi Analitis vs Metaheuristik (C3--C4)}
+
+\begin{enumerate}[label=\textbf{2.\arabic*}, leftmargin=*]
+    \item \textbf{[C3 --- Mengaplikasikan]} Diberikan sistem 3-pembangkit termal tanpa rugi-rugi transmisi ($P_L=0$) dengan data sebagai berikut:
+    \begin{table}[h]
+        \centering
+        \small
+        \begin{tabular}{cccccc}
+            \toprule
+            \textbf{Unit} & \textbf{$a_i$ (\$/MW$^2$h)} & \textbf{$b_i$ (\$/MWh)} & \textbf{$c_i$ (\$/h)} & \textbf{$P_{i,\min}$ (MW)} & \textbf{$P_{i,\max}$ (MW)} \\
+            \midrule
+            1 & 0.004 & 5.3 & 500 & 150 & 600 \\
+            2 & 0.006 & 5.5 & 400 & 100 & 400 \\
+            3 & 0.009 & 5.8 & 200 & 50 & 200 \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+    Hitunglah alokasi daya $[P_1^*, P_2^*, P_3^*]$ dan total biaya minimum $F_T^*$ untuk melayani kebutuhan beban total $P_D = 900\text{ MW}$ menggunakan metode kriteria biaya inkremental sama ($\lambda$-iteration)!
+
+    \item \textbf{[C4 --- Menganalisis]} Jika pada Pembangkit 1 terjadi efek *valve-point loading* sebesar $F_{1,\text{vp}}(P_1) = |100 \sin(0.04(150 - P_1))|$, tentukan apakah alokasi analitis dari Soal 2.1 masih merupakan solusi optimum? Hitung selisih biaya antara solusi tanpa efek *valve-point* dan solusi dengan efek *valve-point*!
+\end{enumerate}
+
+\section*{Soal 3: Simuasi Komputasi dan Desain Algoritma Lanjut (C5--C6)}
+
+\begin{enumerate}[label=\textbf{3.\arabic*}, leftmargin=*]
+    \item \textbf{[C5 --- Mengevaluasi]} Tuliskan skrip Python/Julia untuk menyelesaikan masukan data Soal 2.1 dan 2.2 menggunakan algoritma PSO. Lakukan uji coba dengan 3 variasi skema *inertia weight*:
+    \begin{enumerate}[label=(\alph*)]
+        \item Inersia Konstan: $\omega = 0.73$.
+        \item Linearly Decreasing Inertia Weight (LDIW): $\omega_t = \omega_{\max} - \frac{\omega_{\max} - \omega_{\min}}{\text{MaxIter}} \cdot t$ (dengan $\omega_{\max}=0.9, \omega_{\min}=0.4$).
+        \item Random Inertia Weight: $\omega = 0.5 + \frac{\text{rand}()}{2}$.
+    \end{enumerate}
+    Evaluasi skema mana yang memberikan konvergensi biaya terendah dan paling stabil dari 20 kali *independent runs*! Sertakan grafik kurva konversensinya.
+
+    \item \textbf{[C6 --- Mencipta]} Rancanglah perluasan formulasi matematis dan modul kode PSO untuk memodelkan masalah *Economic Dispatch* yang memperhitungkan **Rugi-rugi Transmisi Line** menggunakan Kron's Loss Formula ($B$-matrix):
+    \[
+        B = \begin{bmatrix} 0.00003 & 0.00001 & -0.00001 \\ 0.00001 & 0.00009 & 0.00002 \\ -0.00001 & 0.00002 & 0.00012 \end{bmatrix} \text{ MW}^{-1}
+    \]
+    Tunjukkan bagaimana pembaruan iteratif $P_L$ dilakukan dalam loop fitness PSO untuk mencapai kondisi $\sum P_i = P_D + P_L$ secara presisi!
+\end{enumerate}
+
+\end{document}

@@ -1,0 +1,23 @@
+\frametitle{Implementasi Python: MOPSO untuk Combined Economic Emission Dispatch}
+\begin{lstlisting}
+import numpy as np
+
+# Data 3 Pembangkit: [a, b, c, alpha, beta, gamma, Pmin, Pmax]
+gen_specs = np.array([
+    [0.00156, 7.92, 561, 0.00419, 0.3276, 13.86, 100, 600],
+    [0.00194, 7.85, 310, 0.00419, 0.3276, 13.86, 100, 400],
+    [0.00482, 7.97,  78, 0.00683, -0.545, 40.26,  50, 200]
+])
+
+def evaluate_objectives(P, P_D=850.0):
+    # Equal power balance repair
+    P[-1] = P_D - np.sum(P[:-1])
+    # Compute Cost ($/h) & Emission (kg/h)
+    cost = np.sum(gen_specs[:, 0]*P**2 + gen_specs[:, 1]*P + gen_specs[:, 2])
+    emission = np.sum(gen_specs[:, 3]*P**2 + gen_specs[:, 4]*P + gen_specs[:, 5])
+    return cost, emission, P
+
+# Pareto Dominance Check
+def dominates(obj1, obj2):
+    return (obj1[0] <= obj2[0] and obj1[1] <= obj2[1]) and (obj1[0] < obj2[0] or obj1[1] < obj2[1])
+\end{lstlisting}

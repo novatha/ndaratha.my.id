@@ -1,0 +1,15 @@
+\documentclass[aspectratio=169]{beamer}
+\usepackage[utf8]{inputenc}\usepackage{amsmath}\usepackage{tcolorbox}
+\definecolor{UNIBBlue}{RGB}{0, 51, 102}\setbeamercolor{frametitle}{bg=UNIBBlue,fg=white}
+\title{Optimisasi untuk Teknik Elektro}\subtitle{Minggu 7: Optimisasi Cembung Terkendala (KKT)}
+\date{Semester Ganjil 2026}\begin{document}\begin{frame}\titlepage\end{frame}
+\begin{frame}{Kondisi Karush-Kuhn-Tucker (KKT)}
+Generalisasi dari metode Pengali Lagrange untuk menangani kendala pertidaksamaan.
+Syarat perlu (dan cukup untuk masalah konveks) agar suatu solusi menjadi optimal.
+\begin{itemize}
+\item Stationarity: Gradien Lagrangia bernilai 0.
+\item Primal Feasibility: Memenuhi batasan asli.
+\item Dual Feasibility: Pengali Lagrange $\ge 0$ untuk pertidaksamaan.
+\item Complementary Slackness: $\lambda_i \cdot g_i(x) = 0$.
+\end{itemize}
+\end{frame}\end{document}

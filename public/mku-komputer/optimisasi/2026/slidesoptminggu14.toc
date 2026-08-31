@@ -1,0 +1,6 @@
+\babel@toc {indonesian}{}\relax 
+\beamer@sectionintoc {1}{Konsep Dasar Optimisasi Multi-Objektif}{3}{0}{1}
+\beamer@sectionintoc {2}{Combined Economic & Emission Dispatch (CEED)}{5}{0}{2}
+\beamer@sectionintoc {3}{Sintesis Teknik Mesin: BFGS dan Augmented Lagrangian}{6}{0}{3}
+\beamer@sectionintoc {4}{Multi-Objective PSO (MOPSO) & Simulasi}{7}{0}{4}
+\beamer@sectionintoc {5}{Kesimpulan}{10}{0}{5}

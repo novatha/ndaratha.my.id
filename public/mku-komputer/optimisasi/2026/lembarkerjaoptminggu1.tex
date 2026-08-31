@@ -1,0 +1,94 @@
+\documentclass[11pt,a4paper]{article}
+
+% --- PACKAGES ---
+\usepackage[utf8]{inputenc}
+\usepackage[indonesian]{babel}
+\usepackage{amsmath, amssymb, amsfonts}
+\usepackage{geometry}
+\geometry{margin=1in, headheight=14pt}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+
+% --- STYLING & COLORS ---
+\definecolor{unibblue}{RGB}{0, 51, 102}
+\definecolor{unibgold}{RGB}{212, 175, 55}
+\definecolor{darkgreen}{RGB}{34, 139, 34}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\textbf{TKE-41XX: Optimisasi untuk Teknik Elektro}}
+\lhead{Lembar Kerja Mahasiswa (LKM) Minggu 1}
+\rfoot{Halaman \thepage}
+
+\title{\vspace{-1cm}\textbf{LEMBAR KERJA MAHASISWA (LKM) MINGGU KE-1:}\\Pengantar Optimisasi dan Pemodelan Matematis}
+\author{Program Studi S1 Teknik Elektro --- Universitas Bengkulu}
+\date{Semester Ganjil 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{tcolorbox}[colback=unibblue!5,colframe=unibblue,title=\textbf{Identitas Mahasiswa dan Instruksi}]
+\begin{tabular}{ll}
+\textbf{Nama Mahasiswa} : & \hrulefill\hspace{6cm} \\
+\textbf{NPM} : & \hrulefill\hspace{6cm} \\
+\textbf{Kelompok / Kelas} : & \hrulefill\hspace{6cm} \\
+\end{tabular}
+\vspace{0.2cm}
+\begin{itemize}[leftmargin=*]
+    \item Kerjakan LKM ini secara kolaboratif dalam kelompok (2--3 mahasiswa).
+    \item Jawablah setiap pertanyaan secara sistematis pada ruang yang disediakan.
+    \item Soal ini mencakup ranah kognitif Taksonomi Bloom tingkat **C1 hingga C6**.
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{0.3cm}
+
+\section*{Bagian 1: Konsep Dasar dan Anatomi Optimisasi (C1--C2)}
+
+\begin{enumerate}[label=\textbf{Soal \arabic*:}, leftmargin=*]
+    \item \textbf{[C1 --- Mengingat]} Definikan apa yang dimaksud dengan variabel keputusan, fungsi tujuan, dan kendala dalam suatu masalah optimisasi! Berikan masing-masing 1 contoh sederhana pada bidang Teknik Elektro!
+    
+    \begin{tcolorbox}[colback=white,colframe=gray!50,height=3.5cm,title=Ruang Jawaban Soal 1]
+    \end{tcolorbox}
+
+    \item \textbf{[C2 --- Memahami]} Jelaskan perbedaan mendasar antara optimisasi *Linear Programming* (LP) dan *Non-Linear Programming* (NLP)! Mengapa masalah *Convex Optimization* sangat disukai oleh insinyur elektro?
+    
+    \begin{tcolorbox}[colback=white,colframe=gray!50,height=3.5cm,title=Ruang Jawaban Soal 2]
+    \end{tcolorbox}
+\end{enumerate}
+
+\section*{Bagian 2: Formulasi Matematis dan Analisis Feasibilitas (C3--C4)}
+
+\begin{enumerate}[label=\textbf{Soal \arabic*:}, leftmargin=*, resume]
+    \item \textbf{[C3 --- Mengaplikasikan]} Sebuah pabrik perakitan panel surya memproduksi dua jenis inverter (Inverter A dan Inverter B). Inverter A membutuhkan 2 jam pengujian dan 1 unit komponen X, menghasilkan keuntungan Rp 500.000. Inverter B membutuhkan 1 jam pengujian dan 3 unit komponen X, menghasilkan keuntungan Rp 800.000. Total waktu pengujian maksimum adalah 40 jam/minggu dan persediaan komponen X maksimum 90 unit/minggu.
+    Formulasikan masalah ini ke dalam bentuk matematika baku *Linear Programming*!
+    
+    \begin{tcolorbox}[colback=white,colframe=gray!50,height=5cm,title=Ruang Jawaban Soal 3]
+    \end{tcolorbox}
+
+    \item \textbf{[C4 --- Menganalisis]} Diberikan fungsi biaya dua generator $F_1(P_1) = 0.004 P_1^2 + 10 P_1 + 200$ dan $F_2(P_2) = 0.006 P_2^2 + 8 P_2 + 150$. Jika total beban $P_D = 300\text{ MW}$, analisis dengan metode pengali Lagrange apakah alokasi $P_1 = 150\text{ MW}$ dan $P_2 = 150\text{ MW}$ sudah optimal!
+    
+    \begin{tcolorbox}[colback=white,colframe=gray!50,height=5.5cm,title=Ruang Jawaban Soal 4]
+    \end{tcolorbox}
+\end{enumerate}
+
+\section*{Bagian 3: Evaluasi dan Perancangan Model Terintegrasi (C5--C6)}
+
+\begin{enumerate}[label=\textbf{Soal \arabic*:}, leftmargin=*, resume]
+    \item \textbf{[C5 --- Mengevaluasi]} Evaluasi apakah penambahan kendala batas kapasitas transmisi kawat ($P_1 \le 120\text{ MW}$) pada soal nomor 4 akan mengubah solusi optimum global secara signifikan! Hitunglah nilai biaya total yang baru.
+    
+    \begin{tcolorbox}[colback=white,colframe=gray!50,height=4.5cm,title=Ruang Jawaban Soal 5]
+    \end{tcolorbox}
+
+    \item \textbf{[C6 --- Mencipta]} Rancanglah sebuah pemodelan matematika optimisasi untuk menentukan lokasi dan kapasitas baterai (*Energy Storage System* / ESS) pada jaringan mikrogrid tenaga surya yang meminimalkan rugi-rugi daya dan biaya investasi baterai! Buatlah sketsa diagram dan formulasi persamaannya!
+    
+    \begin{tcolorbox}[colback=white,colframe=gray!50,height=6.5cm,title=Ruang Jawaban Soal 6]
+    \end{tcolorbox}
+\end{enumerate}
+
+\end{document}

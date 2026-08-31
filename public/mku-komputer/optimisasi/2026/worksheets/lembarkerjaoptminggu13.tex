@@ -1,0 +1,104 @@
+\documentclass[11pt,a4paper]{article}
+
+% --- PACKAGES ---
+\usepackage[utf8]{inputenc}
+\usepackage[indonesian]{babel}
+\usepackage{amsmath, amssymb, amsfonts}
+\usepackage{geometry}
+\geometry{margin=1in, headheight=14pt}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+
+% --- STYLING & COLORS ---
+\definecolor{unibblue}{RGB}{0, 51, 102}
+\definecolor{unibgold}{RGB}{212, 175, 55}
+\definecolor{darkgreen}{RGB}{34, 139, 34}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\textbf{TKE-41XX: Optimisasi untuk Teknik Elektro}}
+\lhead{Lembar Kerja Mahasiswa (LKM) Minggu 13}
+\rfoot{Halaman \thepage}
+
+\title{\vspace{-1cm}\textbf{LEMBAR KERJA MAHASISWA (LKM) MINGGU KE-13:}\\Economic Dispatch Sistem Tenaga Listrik Berbasis PSO}
+\author{Program Studi S1 Teknik Elektro --- Universitas Bengkulu}
+\date{Semester Ganjil 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{tcolorbox}[colback=unibblue!5,colframe=unibblue,title=\textbf{Identitas Mahasiswa dan Instruksi}]
+\begin{tabular}{ll}
+\textbf{Nama Mahasiswa} : & \hrulefill\hspace{6cm} \\
+\textbf{NPM} : & \hrulefill\hspace{6cm} \\
+\textbf{Kelompok / Kelas} : & \hrulefill\hspace{6cm} \\
+\end{tabular}
+\vspace{0.2cm}
+\begin{itemize}[leftmargin=*]
+    \item Kerjakan LKM ini secara kolaboratif dalam kelompok (2--3 mahasiswa).
+    \item Jawablah setiap pertanyaan secara sistematis pada ruang yang disediakan.
+    \item Soal ini mencakup ranah kognitif Taksonomi Bloom tingkat **C1 hingga C6**.
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{0.3cm}
+
+\section*{Bagian 1: Konsep Dasar dan Pemodelan Matematis (C1--C2)}
+
+\begin{enumerate}[label=\textbf{Soal \arabic*:}, leftmargin=*]
+    \item \textbf{[C1 --- Mengingat]} Jelaskan definisi dari *Economic Dispatch* (ED) dalam sistem tenaga listrik dan sebutkan 3 komponen utama yang membentuk fungsi biaya bahan bakar pembangkit termal kuadratik $F_i(P_{G,i}) = a_i P_{G,i}^2 + b_i P_{G,i} + c_i$!
+    
+    \begin{tcolorbox}[colback=white,colframe=gray!50,height=3cm,title=Ruang Jawaban Soal 1]
+    \end{tcolorbox}
+
+    \item \textbf{[C2 --- Memahami]} Jelaskan dampak fisik dari fenomena *valve-point loading* terhadap kurva biaya pembangkit termal, serta mengapa fenomena ini menyebabkan metode optimisasi konvensional (seperti Pengali Lagrange) tidak dapat menjamin solusi optimum global!
+    
+    \begin{tcolorbox}[colback=white,colframe=gray!50,height=3.5cm,title=Ruang Jawaban Soal 2]
+    \end{tcolorbox}
+\end{enumerate}
+
+\section*{Bagian 2: Aplikasi dan Analisis Komputasi (C3--C4)}
+
+\begin{enumerate}[label=\textbf{Soal \arabic*:}, leftmargin=*, resume]
+    \item \textbf{[C3 --- Mengaplikasikan]} Suatu sistem tenaga listrik terdiri dari 2 generator termal dengan fungsi biaya:
+    \[
+        F_1(P_1) = 0.002 P_1^2 + 8.0 P_1 + 400 \quad [\text{\$/jam}], \quad 100 \le P_1 \le 500\text{ MW}
+    \]
+    \[
+        F_2(P_2) = 0.003 P_2^2 + 7.5 P_2 + 300 \quad [\text{\$/jam}], \quad 100 \le P_2 \le 400\text{ MW}
+    \]
+    Jika total beban sistem adalah $P_D = 600\text{ MW}$ (abaikan rugi-rugi transmisi $P_L=0$), hitunglah alokasi daya optimal $[P_1^*, P_2^*]$ secara analitis menggunakan metode kriteria biaya inkremental sama (*Equal Incremental Cost Criteria*: $\frac{dF_1}{dP_1} = \frac{dF_2}{dP_2} = \lambda$)!
+    
+    \begin{tcolorbox}[colback=white,colframe=gray!50,height=5cm,title=Ruang Jawaban Soal 3]
+    \end{tcolorbox}
+
+    \item \textbf{[C4 --- Menganalisis]} Suatu partikel PSO berada pada posisi alokasi daya $\mathbf{x}_k = [400, 300, 200]\text{ MW}$ untuk sistem 3-generator dengan kebutuhan beban $P_D = 850\text{ MW}$. 
+    \begin{enumerate}[label=(\alph*)]
+        \item Apakah partikel tersebut memenuhi kendala kesetaraan daya? Hitunglah nilai error daya $\Delta P = \sum P_i - P_D$.
+        \item Jika generator ke-3 ditetapkan sebagai *slack generator* untuk memperbaiki kendala, tentukan nilai alokasi baru $P_3'$ dan hitung penalti biaya jika $P_{3,\max} = 180\text{ MW}$.
+    \end{enumerate}
+    
+    \begin{tcolorbox}[colback=white,colframe=gray!50,height=5.5cm,title=Ruang Jawaban Soal 4]
+    \end{tcolorbox}
+\end{enumerate}
+
+\section*{Bagian 3: Evaluasi dan Perancangan Algoritma (C5--C6)}
+
+\begin{enumerate}[label=\textbf{Soal \arabic*:}, leftmargin=*, resume]
+    \item \textbf{[C5 --- Mengevaluasi]} Bandingkan performa antara strategi *Penalty Function* langsung vs strategi *Slack Generator Repair Mechanism* dalam menangani kendala kesetaraan daya pada PSO. Analisis dari sudut pandang kecepatan konvergensi dan tingkat eksploitasi ruang pencarian!
+    
+    \begin{tcolorbox}[colback=white,colframe=gray!50,height=4cm,title=Ruang Jawaban Soal 5]
+    \end{tcolorbox}
+
+    \item \textbf{[C6 --- Mencipta]} Rancanglah sebuah skema pseudo-code algoritma PSO yang dimodifikasi (*Hybrid PSO*) dengan menambahkan operator mutasi Cauchy untuk mencegah konvergensi dini (*premature convergence*) pada masalah Economic Dispatch dengan *valve-point loading effect*. Jelaskan bagaimana alur kerja mutasi tersebut diintegrasikan ke dalam pembaruan posisi partikel!
+    
+    \begin{tcolorbox}[colback=white,colframe=gray!50,height=6.5cm,title=Ruang Jawaban Soal 6]
+    \end{tcolorbox}
+\end{enumerate}
+
+\end{document}

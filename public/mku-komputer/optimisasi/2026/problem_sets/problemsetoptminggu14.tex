@@ -1,0 +1,85 @@
+\documentclass[11pt,a4paper]{article}
+
+% --- PACKAGES ---
+\usepackage[utf8]{inputenc}
+\usepackage[indonesian]{babel}
+\usepackage{amsmath, amssymb, amsfonts}
+\usepackage{geometry}
+\geometry{margin=1in, headheight=14pt}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+
+% --- STYLING & COLORS ---
+\definecolor{unibblue}{RGB}{0, 51, 102}
+\definecolor{unibgold}{RGB}{212, 175, 55}
+\definecolor{darkgreen}{RGB}{34, 139, 34}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\textbf{TKE-41XX: Optimisasi untuk Teknik Elektro}}
+\lhead{Tugas Rumah / Problem Set Minggu 14}
+\rfoot{Halaman \thepage}
+
+\title{\vspace{-1cm}\textbf{PROBLEM SET MINGGU KE-14:}\\Optimisasi Multi-Objektif dan Metode Hibrid (Sintesis EE dan Mesin)}
+\author{Program Studi S1 Teknik Elektro --- Universitas Bengkulu}
+\date{Semester Ganjil 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{tcolorbox}[colback=unibgold!10,colframe=unibgold!80!black,title=\textbf{Petunjuk Pengerjaan dan Tenggat Waktu}]
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Tenggat Pengumpulan}: 1 Minggu setelah pertemuan kelas.
+    \item \textbf{Format Pengumpulan}: Laporan tertulis (PDF) memuat perhitungan matematis analitis dan lampiran skrip komputasi (Python / Julia).
+    \item **Taksonomi Bloom**: Memuat soal tingkat kognitif **C1 hingga C6**. Sintesis Kurikulum EE dan Mesin!
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{0.3cm}
+
+\section*{Soal 1: Pemahaman Konseptual dan Dominasi Pareto (C1--C2)}
+
+\begin{enumerate}[label=\textbf{1.\arabic*}, leftmargin=*]
+    \item \textbf{[C1 --- Mengingat]} Sebutkan dan jelaskan 3 alasan mendasar mengapa penyelesaian masalah *Combined Economic dan Emission Dispatch* (CEED) lebih tepat diselesaikan dengan pendekatan kurva *Pareto Frontier* dibandingkan mengkonversi seluruh tujuan menjadi nilai tunggal!
+    
+    \item \textbf{[C2 --- Memahami]} Jelaskan peranan *Augmented Lagrangian Method* (dari kurikulum Teknik Mesin Bab 7) saat diterapkan untuk menjamin kendala kesetaraan daya $P_D + P_L - \sum P_i = 0$ pada optimisasi multi-objektif MOPSO!
+\end{enumerate}
+
+\section*{Soal 2: Solusi Analitis dan Perhitungan Fuzzy Decision (C3--C4)}
+
+\begin{enumerate}[label=\textbf{2.\arabic*}, leftmargin=*]
+    \item \textbf{[C3 --- Mengaplikasikan]} Diberikan lima titik solusi non-terdominasi pada Pareto Front masalah CEED sistem pembangkitan:
+    \begin{table}[h]
+        \centering
+        \small
+        \begin{tabular}{ccc}
+            \toprule
+            \textbf{Titik Solusi} & \textbf{Biaya Bahan Bakar ($F_{\text{cost}}$ [\$/jam])} & \textbf{Emisi Polutan ($E_{\text{emission}}$ [kg/jam])} \\
+            \midrule
+            S1 & 8194.0 & 509.0 \\
+            S2 & 8210.0 & 490.0 \\
+            S3 & 8245.0 & 465.0 \\
+            S4 & 8290.0 & 450.0 \\
+            S5 & 8342.0 & 442.0 \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+    Gunakan metode fungsi keanggotaan linier *Fuzzy Decision Making* untuk menentukan titik solusi manakah yang merupakan **Best Compromise Solution**!
+
+    \item \textbf{[C4 --- Menganalisis]} Suatu optimisasi pembebanan generator menggunakan algoritma *Quasi-Newton BFGS* (dari kurikulum Teknik Mesin Bab 6). Diberikan gradien awal $\mathbf{g}_0 = [-12.4, 8.2]^T$ dan langkah perubahan daya $\mathbf{s}_0 = [15.0, -10.0]^T$. Analisis bagaimana pembaruan taksiran invers Hessian $B_1$ mempengaruhi kecepatan konvergensi dibanding metode *Steepest Descent* standar!
+\end{enumerate}
+
+\section*{Soal 3: Simuasi Komputasi dan Desain Algoritma Hibrid (C5--C6)}
+
+\begin{enumerate}[label=\textbf{3.\arabic*}, leftmargin=*]
+    \item \textbf{[C5 --- Mengevaluasi]} Tuliskan skrip Python/Julia untuk menyimulasikan pembentukan *Pareto Frontier* CEED 3-generator. Uji coba dua strategi pembaruan *repository*: (a) *Crowding Distance Grid*, dan (b) *Adaptive Grid Algorithm*. Evaluasi strategi mana yang memberikan sebaran titik solusi Pareto yang paling merata!
+
+    \item \textbf{[C6 --- Mencipta]} Rancanglah sebuah program hibrid **BFGS-MOPSO** untuk memodelkan optimisasi multi-objektif sistem mikrogrid (*Microgrid Smart Dispatch*) yang meminimalkan biaya operasi, emisi karbon, dan kerugian penuaan baterai (*battery degradation*). Tuliskan formulasi fungsi tujuannya serta skrip Python lengkapnya!
+\end{enumerate}
+
+\end{document}

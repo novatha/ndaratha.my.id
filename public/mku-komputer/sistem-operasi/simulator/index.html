@@ -1,0 +1,236 @@
+<!DOCTYPE html><html lang="id" data-astro-cid-sckkx6r4> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><meta name="generator" content="Astro v5.18.2"><title>Simulasi Live CPU &amp; Memori | Sistem Operasi UNIB 2026</title><meta name="description" content="Portal Akademik &#38; Praktikum Mata Kuliah Sistem Operasi (INF-201) - Program Studi S1 Informatika, Fakultas Teknik, Universitas Bengkulu."><!-- Lucide Icons --><script type="module">document.addEventListener("DOMContentLoaded",()=>{typeof lucide<"u"&&lucide.createIcons()});</script><!-- MathJax for LaTeX Equations rendering --><script type="module">window.MathJax={tex:{inlineMath:[["$","$"],["\\(","\\)"]],displayMath:[["$$","$$"],["\\[","\\]"]]},svg:{fontCache:"global"}};</script><script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script><link rel="stylesheet" href="/sistem-operasi/_astro/bacaan.DihBTWtu.css">
+<link rel="stylesheet" href="/sistem-operasi/_astro/index.DYge5G1A.css">
+<style>.page-container[data-astro-cid-z5duo6xp]{max-width:1280px;margin:40px auto;padding:0 24px}.page-header[data-astro-cid-z5duo6xp]{text-align:center;margin-bottom:40px}.page-header[data-astro-cid-z5duo6xp] h1[data-astro-cid-z5duo6xp]{font-size:2.8rem;margin:16px 0 8px}.page-header[data-astro-cid-z5duo6xp] p[data-astro-cid-z5duo6xp]{color:var(--text-secondary);font-size:1.15rem}
+</style><script type="module" src="/mku-komputer/sistem-operasi/_astro/page.DGRhADao.js"></script></head> <body data-astro-cid-sckkx6r4> <header class="navbar-wrapper" data-astro-cid-5blmo7yk> <nav class="navbar glass-panel" data-astro-cid-5blmo7yk> <a href="/sistem-operasi/" class="nav-brand" data-astro-cid-5blmo7yk> <div class="brand-badge" data-astro-cid-5blmo7yk> <span class="brand-icon" data-astro-cid-5blmo7yk>&gt;_</span> </div> <div class="brand-info" data-astro-cid-5blmo7yk> <span class="brand-title" data-astro-cid-5blmo7yk>SISTEM OPERASI</span> <span class="brand-subtitle" data-astro-cid-5blmo7yk>Kernel Architecture &amp; C POSIX • S1 Informatika UNIB</span> </div> </a> <ul class="nav-menu" data-astro-cid-5blmo7yk> <li data-astro-cid-5blmo7yk><a href="/sistem-operasi/" class="nav-link" data-astro-cid-5blmo7yk>Beranda</a></li> <li data-astro-cid-5blmo7yk><a href="/sistem-operasi/silabus" class="nav-link" data-astro-cid-5blmo7yk>Silabus &amp; RPS</a></li> <li data-astro-cid-5blmo7yk><a href="/sistem-operasi/materi" class="nav-link" data-astro-cid-5blmo7yk>16 Modul Ajar</a></li> <li data-astro-cid-5blmo7yk><a href="/sistem-operasi/praktikum" class="nav-link" data-astro-cid-5blmo7yk>10 Praktikum &amp; Tugas</a></li> <li data-astro-cid-5blmo7yk><a href="/sistem-operasi/bacaan" class="nav-link" data-astro-cid-5blmo7yk>Buku Teks &amp; OSTEP</a></li> <li data-astro-cid-5blmo7yk> <a href="/sistem-operasi/#simulator" class="nav-link nav-btn-studio" data-astro-cid-5blmo7yk> <span class="pulse-dot" data-astro-cid-5blmo7yk></span> Kernel Simulator
+</a> </li> </ul> <div class="nav-actions" data-astro-cid-5blmo7yk> <a href="https://www.ndaratha.my.id" class="btn btn-sm btn-outline" data-astro-cid-5blmo7yk> <i data-lucide="globe" data-astro-cid-5blmo7yk></i> ndaratha.my.id
+</a> </div> </nav> </header>  <main class="page-content-wrapper" data-astro-cid-sckkx6r4>  <main class="page-container" data-astro-cid-z5duo6xp> <div class="page-header" data-astro-cid-z5duo6xp> <span class="badge badge-os" data-astro-cid-z5duo6xp>Interactive OS Kernel Simulator</span> <h1 data-astro-cid-z5duo6xp>Simulasi Live Penjadwalan CPU &amp; Virtual Memory</h1> <p data-astro-cid-z5duo6xp>Visualisasikan Gantt Chart algoritma CPU (FCFS, SJF, RR, MLFQ) serta simulasi Page Faults (FIFO, LRU, OPT).</p> </div> <section class="simulator-section glass-panel" id="simulator" data-astro-cid-cqosfepn> <div class="sim-header" data-astro-cid-cqosfepn> <div class="sim-title-group" data-astro-cid-cqosfepn> <span class="badge badge-os" data-astro-cid-cqosfepn>Interactive Kernel Engine</span> <h2 data-astro-cid-cqosfepn>Simulasi Live Penjadwalan CPU &amp; Virtual Memory</h2> <p data-astro-cid-cqosfepn>Visualisasikan alokasi CPU (Gantt Chart) dan pergantian halaman memori (Page Fault) secara real-time.</p> </div> <div class="sim-status" data-astro-cid-cqosfepn> <span class="status-dot" data-astro-cid-cqosfepn></span> Kernel Simulator Active
+</div> </div> <!-- Tab Navigation --> <div class="sim-tabs" data-astro-cid-cqosfepn> <button class="tab-btn active" data-sim="cpu" data-astro-cid-cqosfepn><i data-lucide="cpu" data-astro-cid-cqosfepn></i> CPU Scheduler (Gantt Chart)</button> <button class="tab-btn" data-sim="memory" data-astro-cid-cqosfepn><i data-lucide="database" data-astro-cid-cqosfepn></i> Page Replacement (Virtual Memory)</button> </div> <!-- CPU Scheduler Simulator --> <div class="sim-pane active" id="paneCpu" data-astro-cid-cqosfepn> <div class="sim-grid" data-astro-cid-cqosfepn> <div class="controls-card glass-panel" data-astro-cid-cqosfepn> <h3 data-astro-cid-cqosfepn><i data-lucide="sliders" data-astro-cid-cqosfepn></i> Parameter Penjadwalan CPU</h3> <div class="control-group" data-astro-cid-cqosfepn> <label for="cpuAlgSelect" data-astro-cid-cqosfepn>Algoritma Penjadwalan:</label> <select id="cpuAlgSelect" class="sim-select" data-astro-cid-cqosfepn> <option value="FCFS" data-astro-cid-cqosfepn>First-Come First-Served (FCFS)</option> <option value="SJF" data-astro-cid-cqosfepn>Shortest Job First (SJF Non-Preemptive)</option> <option value="RR" data-astro-cid-cqosfepn>Round Robin (Time Quantum)</option> <option value="MLFQ" data-astro-cid-cqosfepn>Multilevel Feedback Queue (MLFQ 3-Level)</option> </select> </div> <div class="control-group" id="quantumGroup" style="display: none;" data-astro-cid-cqosfepn> <label for="timeQuantum" data-astro-cid-cqosfepn>Time Quantum ($q$): <span id="quantumVal" data-astro-cid-cqosfepn>3</span> ms</label> <input type="range" id="timeQuantum" min="1" max="8" value="3" class="sim-slider" data-astro-cid-cqosfepn> </div> <div class="process-inputs" data-astro-cid-cqosfepn> <h4 data-astro-cid-cqosfepn>Waktu Eksekusi (Burst Time):</h4> <div class="proc-row" data-astro-cid-cqosfepn><span data-astro-cid-cqosfepn>P1:</span> <input type="number" id="p1Burst" value="8" min="1" max="20" class="num-inp" data-astro-cid-cqosfepn> ms</div> <div class="proc-row" data-astro-cid-cqosfepn><span data-astro-cid-cqosfepn>P2:</span> <input type="number" id="p2Burst" value="4" min="1" max="20" class="num-inp" data-astro-cid-cqosfepn> ms</div> <div class="proc-row" data-astro-cid-cqosfepn><span data-astro-cid-cqosfepn>P3:</span> <input type="number" id="p3Burst" value="9" min="1" max="20" class="num-inp" data-astro-cid-cqosfepn> ms</div> <div class="proc-row" data-astro-cid-cqosfepn><span data-astro-cid-cqosfepn>P4:</span> <input type="number" id="p4Burst" value="5" min="1" max="20" class="num-inp" data-astro-cid-cqosfepn> ms</div> </div> <button id="btnRunCpu" class="btn-glow" style="width: 100%; margin-top: 16px;" data-astro-cid-cqosfepn> <i data-lucide="play" data-astro-cid-cqosfepn></i> Simulasikan CPU Schedule
+</button> </div> <div class="vis-card glass-panel" data-astro-cid-cqosfepn> <h3 data-astro-cid-cqosfepn>Visualisasi Gantt Chart CPU</h3> <div class="gantt-chart" id="ganttChart" data-astro-cid-cqosfepn> <!-- Dynamic Gantt Bars --> </div> <div class="metrics-grid" data-astro-cid-cqosfepn> <div class="metric-item" data-astro-cid-cqosfepn> <span class="m-label" data-astro-cid-cqosfepn>Rata-Rata Waktu Tunggu (AWT):</span> <span class="m-val" id="awtVal" data-astro-cid-cqosfepn>6.75 ms</span> </div> <div class="metric-item" data-astro-cid-cqosfepn> <span class="m-label" data-astro-cid-cqosfepn>Rata-Rata Turnaround (TAT):</span> <span class="m-val gold" id="tatVal" data-astro-cid-cqosfepn>13.25 ms</span> </div> </div> </div> </div> </div> <!-- Memory Page Replacement Simulator --> <div class="sim-pane" id="paneMemory" data-astro-cid-cqosfepn> <div class="sim-grid" data-astro-cid-cqosfepn> <div class="controls-card glass-panel" data-astro-cid-cqosfepn> <h3 data-astro-cid-cqosfepn><i data-lucide="sliders" data-astro-cid-cqosfepn></i> Parameter Page Replacement</h3> <div class="control-group" data-astro-cid-cqosfepn> <label for="memAlgSelect" data-astro-cid-cqosfepn>Algoritma Replacement:</label> <select id="memAlgSelect" class="sim-select" data-astro-cid-cqosfepn> <option value="FIFO" data-astro-cid-cqosfepn>First In First Out (FIFO)</option> <option value="LRU" data-astro-cid-cqosfepn>Least Recently Used (LRU)</option> <option value="OPT" data-astro-cid-cqosfepn>Optimal (OPT)</option> </select> </div> <div class="control-group" data-astro-cid-cqosfepn> <label for="frameCount" data-astro-cid-cqosfepn>Jumlah Frame Memori Fisik: <span id="frameVal" data-astro-cid-cqosfepn>3</span> Frame</label> <input type="range" id="frameCount" min="3" max="5" value="3" class="sim-slider" data-astro-cid-cqosfepn> </div> <div class="control-group" data-astro-cid-cqosfepn> <label for="pageTrace" data-astro-cid-cqosfepn>Memory Page Reference Trace:</label> <input type="text" id="pageTrace" value="7,0,1,2,0,3,0,4,2,3" class="sim-inp" data-astro-cid-cqosfepn> </div> <button id="btnRunMem" class="btn-glow" style="width: 100%; margin-top: 16px;" data-astro-cid-cqosfepn> <i data-lucide="play" data-astro-cid-cqosfepn></i> Simulasikan Page Faults
+</button> </div> <div class="vis-card glass-panel" data-astro-cid-cqosfepn> <h3 data-astro-cid-cqosfepn>Tabel Frame Memori Fisik</h3> <div class="frame-table-wrapper" id="frameTableWrapper" data-astro-cid-cqosfepn> <!-- Dynamic Frame Execution Table --> </div> <div class="metrics-grid" data-astro-cid-cqosfepn> <div class="metric-item" data-astro-cid-cqosfepn> <span class="m-label" data-astro-cid-cqosfepn>Total Page Faults:</span> <span class="m-val rose" id="faultVal" data-astro-cid-cqosfepn>7 Faults</span> </div> <div class="metric-item" data-astro-cid-cqosfepn> <span class="m-label" data-astro-cid-cqosfepn>Rasio Keberhasilan (Hit Rate):</span> <span class="m-val emerald" id="hitVal" data-astro-cid-cqosfepn>30.0%</span> </div> </div> </div> </div> </div> </section> <script type="module">
+  document.addEventListener('DOMContentLoaded', () => {
+    // Tab switching
+    const tabBtns = document.querySelectorAll('.sim-tabs .tab-btn');
+    const paneCpu = document.getElementById('paneCpu');
+    const paneMemory = document.getElementById('paneMemory');
+
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tabBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const target = btn.dataset.sim;
+        if (target === 'cpu') {
+          paneCpu.classList.add('active');
+          paneMemory.classList.remove('active');
+        } else {
+          paneMemory.classList.add('active');
+          paneCpu.classList.remove('active');
+        }
+      });
+    });
+
+    // CPU Logic
+    const cpuAlgSelect = document.getElementById('cpuAlgSelect');
+    const quantumGroup = document.getElementById('quantumGroup');
+    const timeQuantum = document.getElementById('timeQuantum');
+    const quantumVal = document.getElementById('quantumVal');
+    const btnRunCpu = document.getElementById('btnRunCpu');
+    const ganttChart = document.getElementById('ganttChart');
+    const awtVal = document.getElementById('awtVal');
+    const tatVal = document.getElementById('tatVal');
+
+    timeQuantum?.addEventListener('input', () => {
+      quantumVal.textContent = timeQuantum.value;
+    });
+
+    cpuAlgSelect?.addEventListener('change', () => {
+      if (cpuAlgSelect.value === 'RR' || cpuAlgSelect.value === 'MLFQ') {
+        quantumGroup.style.display = 'block';
+      } else {
+        quantumGroup.style.display = 'none';
+      }
+      runCpuSimulation();
+    });
+
+    function runCpuSimulation() {
+      const alg = cpuAlgSelect.value;
+      const p1 = parseInt(document.getElementById('p1Burst').value) || 8;
+      const p2 = parseInt(document.getElementById('p2Burst').value) || 4;
+      const p3 = parseInt(document.getElementById('p3Burst').value) || 9;
+      const p4 = parseInt(document.getElementById('p4Burst').value) || 5;
+
+      let procs = [
+        { id: 'P1', burst: p1, color: '#10b981' },
+        { id: 'P2', burst: p2, color: '#00f2fe' },
+        { id: 'P3', burst: p3, color: '#9d4edd' },
+        { id: 'P4', burst: p4, color: '#d4af37' }
+      ];
+
+      let schedule = [];
+
+      if (alg === 'FCFS') {
+        let t = 0;
+        procs.forEach(p => {
+          schedule.push({ id: p.id, start: t, end: t + p.burst, color: p.color });
+          t += p.burst;
+        });
+      } else if (alg === 'SJF') {
+        let sorted = [...procs].sort((a, b) => a.burst - b.burst);
+        let t = 0;
+        sorted.forEach(p => {
+          schedule.push({ id: p.id, start: t, end: t + p.burst, color: p.color });
+          t += p.burst;
+        });
+      } else if (alg === 'RR' || alg === 'MLFQ') {
+        let q = parseInt(timeQuantum.value) || 3;
+        let rem = procs.map(p => ({ ...p, remBurst: p.burst }));
+        let t = 0;
+        let done = false;
+
+        while (!done) {
+          done = true;
+          for (let p of rem) {
+            if (p.remBurst > 0) {
+              done = false;
+              let slice = Math.min(p.remBurst, q);
+              schedule.push({ id: p.id, start: t, end: t + slice, color: p.color });
+              t += slice;
+              p.remBurst -= slice;
+            }
+          }
+        }
+      }
+
+      // Render Gantt
+      const totalTime = schedule[schedule.length - 1].end;
+      ganttChart.innerHTML = '';
+      schedule.forEach(block => {
+        const widthPct = ((block.end - block.start) / totalTime) * 100;
+        const el = document.createElement('div');
+        el.className = 'gantt-block';
+        el.style.width = `${widthPct}%`;
+        el.style.background = block.color;
+        el.innerHTML = `<span class="g-id">${block.id}</span><span class="g-time">${block.start}-${block.end}ms</span>`;
+        ganttChart.appendChild(el);
+      });
+
+      // Calculate AWT & TAT
+      let wtTotal = 0;
+      let tatTotal = 0;
+      procs.forEach(p => {
+        let lastEnd = schedule.filter(s => s.id === p.id).pop().end;
+        let tat = lastEnd;
+        let wt = tat - p.burst;
+        wtTotal += wt;
+        tatTotal += tat;
+      });
+
+      awtVal.textContent = `${(wtTotal / procs.length).toFixed(2)} ms`;
+      tatVal.textContent = `${(tatTotal / procs.length).toFixed(2)} ms`;
+    }
+
+    btnRunCpu?.addEventListener('click', runCpuSimulation);
+
+    // Memory Logic
+    const memAlgSelect = document.getElementById('memAlgSelect');
+    const frameCount = document.getElementById('frameCount');
+    const frameVal = document.getElementById('frameVal');
+    const pageTrace = document.getElementById('pageTrace');
+    const btnRunMem = document.getElementById('btnRunMem');
+    const frameTableWrapper = document.getElementById('frameTableWrapper');
+    const faultVal = document.getElementById('faultVal');
+    const hitVal = document.getElementById('hitVal');
+
+    frameCount?.addEventListener('input', () => {
+      frameVal.textContent = frameCount.value;
+    });
+
+    function runMemSimulation() {
+      const alg = memAlgSelect.value;
+      const numFrames = parseInt(frameCount.value) || 3;
+      const pages = pageTrace.value.split(',').map(s => parseInt(s.trim())).filter(n => !isNaN(n));
+
+      let frames = [];
+      let history = [];
+      let faults = 0;
+      let statusList = [];
+
+      pages.forEach((page, idx) => {
+        let isHit = frames.includes(page);
+
+        if (!isHit) {
+          faults++;
+          statusList.push('FAULT');
+          if (frames.length < numFrames) {
+            frames.push(page);
+          } else {
+            if (alg === 'FIFO') {
+              frames.shift();
+              frames.push(page);
+            } else if (alg === 'LRU') {
+              // find least recently used
+              let lastUsed = frames.map(f => {
+                let lastIdx = pages.slice(0, idx).lastIndexOf(f);
+                return { page: f, lastIdx };
+              });
+              lastUsed.sort((a, b) => a.lastIdx - b.lastIdx);
+              let victim = lastUsed[0].page;
+              let vIdx = frames.indexOf(victim);
+              frames[vIdx] = page;
+            } else if (alg === 'OPT') {
+              // find page used furthest in future
+              let nextUse = frames.map(f => {
+                let nxt = pages.slice(idx + 1).indexOf(f);
+                return { page: f, nxt: nxt === -1 ? 999 : nxt };
+              });
+              nextUse.sort((a, b) => b.nxt - a.nxt);
+              let victim = nextUse[0].page;
+              let vIdx = frames.indexOf(victim);
+              frames[vIdx] = page;
+            }
+          }
+        } else {
+          statusList.push('HIT');
+        }
+
+        let currentFrameCol = [...frames];
+        while (currentFrameCol.length < numFrames) currentFrameCol.push('-');
+        history.push(currentFrameCol);
+      });
+
+      // Render Frame Table
+      let tableHtml = '<table class="mem-table"><thead><tr><th>Trace</th>';
+      pages.forEach(p => tableHtml += `<th>${p}</th>`);
+      tableHtml += '</tr></thead><tbody>';
+
+      for (let f = 0; f < numFrames; f++) {
+        tableHtml += `<tr><td>Frame ${f+1}</td>`;
+        history.forEach(col => {
+          tableHtml += `<td>${col[f]}</td>`;
+        });
+        tableHtml += '</tr>';
+      }
+
+      tableHtml += '<tr class="status-row"><td>Status</td>';
+      statusList.forEach(st => {
+        tableHtml += `<td class="${st === 'HIT' ? 'st-hit' : 'st-fault'}">${st}</td>`;
+      });
+      tableHtml += '</tr></tbody></table>';
+
+      frameTableWrapper.innerHTML = tableHtml;
+
+      faultVal.textContent = `${faults} Faults`;
+      let hitPct = (((pages.length - faults) / pages.length) * 100).toFixed(1);
+      hitVal.textContent = `${hitPct}%`;
+    }
+
+    btnRunMem?.addEventListener('click', runMemSimulation);
+    memAlgSelect?.addEventListener('change', runMemSimulation);
+
+    runCpuSimulation();
+    runMemSimulation();
+  });
+</script>  </main>  </main> <footer class="footer-wrapper" data-astro-cid-sz7xmlte> <div class="container" data-astro-cid-sz7xmlte> <div class="footer-grid" data-astro-cid-sz7xmlte> <div class="footer-col-main" data-astro-cid-sz7xmlte> <div class="footer-brand" data-astro-cid-sz7xmlte> <div class="brand-badge-sm" data-astro-cid-sz7xmlte>&gt;_</div> <div data-astro-cid-sz7xmlte> <h4 class="brand-title-sm" data-astro-cid-sz7xmlte>SISTEM OPERASI (INF-201)</h4> <p class="brand-sub-sm" data-astro-cid-sz7xmlte>Kernel Architecture, Concurrency, &amp; System Programming</p> </div> </div> <p class="footer-desc" data-astro-cid-sz7xmlte>
+Portal pembelajaran sistem operasi modern berbasis Outcomes-Based Education (OBE) untuk mahasiswa Program Studi S1 Informatika, Fakultas Teknik, Universitas Bengkulu.
+</p> <div class="lecturer-tag" data-astro-cid-sz7xmlte> <i data-lucide="user-check" data-astro-cid-sz7xmlte></i> <span data-astro-cid-sz7xmlte>Dosen Pengampu: <strong data-astro-cid-sz7xmlte>Ir. Novalio Daratha, S.T., M.Sc., Ph.D.</strong></span> </div> </div> <div class="footer-col" data-astro-cid-sz7xmlte> <h5 class="col-title" data-astro-cid-sz7xmlte>Navigasi Perkuliahan</h5> <ul class="col-links" data-astro-cid-sz7xmlte> <li data-astro-cid-sz7xmlte><a href="/sistem-operasi/" data-astro-cid-sz7xmlte>Beranda Utama</a></li> <li data-astro-cid-sz7xmlte><a href="/sistem-operasi/silabus" data-astro-cid-sz7xmlte>Silabus &amp; Rencana Pembelajaran (RPS)</a></li> <li data-astro-cid-sz7xmlte><a href="/sistem-operasi/materi" data-astro-cid-sz7xmlte>16 Modul Slide &amp; Problem Sets</a></li> <li data-astro-cid-sz7xmlte><a href="/sistem-operasi/praktikum" data-astro-cid-sz7xmlte>10 Modul Praktikum &amp; Koding C</a></li> <li data-astro-cid-sz7xmlte><a href="/sistem-operasi/bacaan" data-astro-cid-sz7xmlte>Panduan Tugas Membaca Buku Teks</a></li> <li data-astro-cid-sz7xmlte><a href="/sistem-operasi/#simulator" data-astro-cid-sz7xmlte>Kernel Scheduling Simulator</a></li> </ul> </div> <div class="footer-col" data-astro-cid-sz7xmlte> <h5 class="col-title" data-astro-cid-sz7xmlte>Buku Teks &amp; Repositori</h5> <ul class="col-links" data-astro-cid-sz7xmlte> <li data-astro-cid-sz7xmlte><a href="/sistem-operasi/books/OSTEP_Operating_Systems_Three_Easy_Pieces.pdf" target="_blank" data-astro-cid-sz7xmlte>📘 OSTEP Arpaci-Dusseau (PDF)</a></li> <li data-astro-cid-sz7xmlte><a href="/sistem-operasi/books/The_Linux_Command_Line_Shotts.pdf" target="_blank" data-astro-cid-sz7xmlte>🐧 The Linux Command Line (PDF)</a></li> <li data-astro-cid-sz7xmlte><a href="/sistem-operasi/books/Think_OS_Allen_Downey.pdf" target="_blank" data-astro-cid-sz7xmlte>📗 Think OS - Allen Downey (PDF)</a></li> <li data-astro-cid-sz7xmlte><a href="/sistem-operasi/books/xv6_Book_RISCV_MIT.pdf" target="_blank" data-astro-cid-sz7xmlte>⚙️ MIT xv6 RISC-V Kernel Book</a></li> <li data-astro-cid-sz7xmlte><a href="/sistem-operasi/pdf/notes_matematika_so.pdf" target="_blank" data-astro-cid-sz7xmlte>📐 Catatan Formulasi Matematika SO</a></li> </ul> </div> </div> <div class="footer-bottom" data-astro-cid-sz7xmlte> <div class="copyright" data-astro-cid-sz7xmlte>
+&copy; 2026 Program Studi S1 Informatika • Fakultas Teknik Universitas Bengkulu.
+</div> <div class="site-link" data-astro-cid-sz7xmlte> <a href="https://www.ndaratha.my.id" data-astro-cid-sz7xmlte>ndaratha.my.id</a> </div> </div> </div> </footer>  <script type="module" src="/mku-komputer/sistem-operasi/_astro/Layout.astro_astro_type_script_index_2_lang.CN6pKSHs.js"></script> </body> </html>  

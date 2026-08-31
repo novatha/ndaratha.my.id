@@ -1,0 +1,2166 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tes Diagnostik Kesiapan - Persamaan Diferensial</title>
+    <!-- Google Fonts: Outfit & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- KaTeX CSS for LaTeX equations -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #f3f4f6;
+            --card-bg: #ffffff;
+            --card-border: #e5e7eb;
+            --text-primary: #111827;
+            --text-secondary: #4b5563;
+            --accent-blue: #2563eb;
+            --accent-purple: #7c3aed;
+            --accent-green: #059669;
+            --accent-red: #dc2626;
+            --neon-glow: 0 4px 20px rgba(37, 99, 235, 0.08);
+            --transition-speed: 0.3s;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(at 10% 20%, rgba(124, 58, 237, 0.04) 0px, transparent 50%),
+                radial-gradient(at 90% 80%, rgba(37, 99, 235, 0.04) 0px, transparent 50%);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            perspective: 1000px;
+        }
+
+        /* Glassmorphism Card Style */
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
+            transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+        }
+
+        /* Screens states */
+        .screen {
+            display: none;
+            animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Welcome Screen styling */
+        .welcome-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            margin-bottom: 10px;
+            line-height: 1.2;
+        }
+
+        .welcome-subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            margin-bottom: 35px;
+        }
+
+        .meta-item {
+            background: #f9fafb;
+            border: 1px solid var(--card-border);
+            padding: 20px;
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .meta-item span {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .meta-item h4 {
+            font-size: 1.2rem;
+            color: var(--accent-blue);
+        }
+
+        .instruction-box {
+            background: rgba(124, 58, 237, 0.04);
+            border-left: 4px solid var(--accent-purple);
+            padding: 20px;
+            border-radius: 0 16px 16px 0;
+            margin-bottom: 35px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .instruction-box ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        .btn {
+            display: inline-block;
+            width: 100%;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            color: #ffffff;
+            border: none;
+            padding: 16px 32px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 14px;
+            cursor: pointer;
+            text-align: center;
+            transition: var(--transition-speed);
+            box-shadow: 0 4px 15px rgba(157, 78, 221, 0.3);
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 210, 255, 0.5);
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+        }
+
+        /* Test Screen Header / Progress */
+        .test-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .category-tag {
+            background: rgba(0, 210, 255, 0.1);
+            border: 1px solid rgba(0, 210, 255, 0.2);
+            color: var(--accent-blue);
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .progress-text {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 6px;
+            background: #e5e7eb;
+            border-radius: 10px;
+            margin-bottom: 35px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(to right, var(--accent-blue), var(--accent-purple));
+            border-radius: 10px;
+            transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Question Box */
+        .question-box {
+            margin-bottom: 30px;
+        }
+
+        .question-text {
+            font-size: 1.25rem;
+            font-weight: 600;
+            line-height: 1.5;
+            margin-bottom: 25px;
+        }
+
+        /* Options Grid */
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+            margin-bottom: 35px;
+        }
+
+        .option-card {
+            background: #f9fafb;
+            border: 1px solid var(--card-border);
+            padding: 20px;
+            border-radius: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: var(--transition-speed);
+        }
+
+        .option-card:hover {
+            background: #e5e7eb;
+            border-color: rgba(0, 210, 255, 0.3);
+            transform: translateX(5px);
+        }
+
+        .option-card.selected {
+            background: rgba(37, 99, 235, 0.04);
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.15);
+        }
+
+        .option-indicator {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid var(--text-secondary);
+            margin-right: 18px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: var(--transition-speed);
+        }
+
+        .option-card.selected .option-indicator {
+            border-color: var(--accent-blue);
+            background: var(--accent-blue);
+            color: #ffffff;
+        }
+
+        .option-content {
+            font-size: 1.05rem;
+            overflow-x: auto;
+        }
+
+        /* Navigation Buttons */
+        .nav-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--text-secondary);
+            color: var(--text-primary);
+            box-shadow: none;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.03);
+            box-shadow: none;
+        }
+
+        /* Results Screen */
+        .results-grid {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .score-circle-container {
+            position: relative;
+            width: 160px;
+            height: 160px;
+            margin-bottom: 25px;
+        }
+
+        .score-svg {
+            transform: rotate(-90deg);
+            width: 100%;
+            height: 100%;
+        }
+
+        .score-track {
+            fill: none;
+            stroke: #e5e7eb;
+            stroke-width: 12px;
+        }
+
+        .score-fill {
+            fill: none;
+            stroke: url(#score-gradient);
+            stroke-width: 12px;
+            stroke-dasharray: 439.6;
+            stroke-dashoffset: 439.6;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .score-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .score-number {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            line-height: 1;
+        }
+
+        .score-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 4px;
+        }
+
+        .result-level-tag {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .result-level-tag.level-prima {
+            color: var(--accent-green);
+        }
+        .result-level-tag.level-siap {
+            color: var(--accent-blue);
+        }
+        .result-level-tag.level-remedial {
+            color: var(--accent-red);
+        }
+
+        .recommendation-card {
+            background: #f9fafb;
+            border: 1px solid var(--card-border);
+            padding: 25px;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            text-align: left;
+            margin-bottom: 35px;
+            width: 100%;
+        }
+
+        .recommendation-card h4 {
+            color: var(--text-primary);
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        /* CPL Breakdown Styling */
+        .cpl-item {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            width: 100%;
+        }
+
+        .cpl-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .cpl-bar-bg {
+            width: 100%;
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .cpl-bar-fill {
+            height: 100%;
+            border-radius: 4px;
+            width: 0%;
+            transition: width 1s ease-out;
+        }
+
+        .cpl-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .cpl-status {
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.75rem;
+        }
+        
+        .cpl-status-strong {
+            background: rgba(6, 214, 160, 0.1);
+            color: var(--accent-green);
+        }
+        
+        .cpl-status-moderate {
+            background: rgba(0, 210, 255, 0.1);
+            color: var(--accent-blue);
+        }
+        
+        .cpl-status-weak {
+            background: rgba(255, 90, 95, 0.1);
+            color: var(--accent-red);
+        }
+
+        /* Question Review Details */
+        .review-section {
+            width: 100%;
+            text-align: left;
+            margin-bottom: 35px;
+        }
+
+        .review-section h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 10px;
+        }
+
+        .review-item {
+            background: #f9fafb;
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            margin-bottom: 16px;
+            overflow: hidden;
+            transition: var(--transition-speed);
+        }
+
+        .review-header {
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+
+        .review-header:hover {
+            background: #f9fafb;
+        }
+
+        .review-title-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .status-badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .status-correct {
+            background: rgba(6, 214, 160, 0.1);
+            border: 1px solid rgba(6, 214, 160, 0.2);
+            color: var(--accent-green);
+        }
+
+        .status-incorrect {
+            background: rgba(255, 90, 95, 0.1);
+            border: 1px solid rgba(255, 90, 95, 0.2);
+            color: var(--accent-red);
+        }
+
+        .chevron-icon {
+            width: 20px;
+            height: 20px;
+            fill: none;
+            stroke: var(--text-secondary);
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: transform var(--transition-speed);
+        }
+
+        .review-item.open .chevron-icon {
+            transform: rotate(180deg);
+        }
+
+        .review-body {
+            display: none;
+            padding: 0 20px 20px 20px;
+            border-top: 1px solid var(--card-border);
+            background: #ffffff;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .review-item.open .review-body {
+            display: block;
+        }
+
+        .review-q-text {
+            margin: 15px 0;
+            font-weight: 500;
+        }
+
+        .answer-comparison {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .answer-box {
+            padding: 12px 16px;
+            border-radius: 10px;
+            background: #f9fafb;
+            border: 1px solid var(--card-border);
+            font-size: 0.9rem;
+        }
+
+        .answer-box > span {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+            text-transform: uppercase;
+        }
+
+        .answer-box.correct-choice {
+            border-color: var(--accent-green);
+            background: rgba(6, 214, 160, 0.02);
+        }
+
+        .explanation-box {
+            background: rgba(124, 58, 237, 0.03);
+            border-left: 3px solid var(--accent-purple);
+            padding: 16px;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .explanation-box h5 {
+            color: var(--accent-purple);
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        /* Latex auto scroll config */
+        .katex-display {
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 10px 0;
+        }
+
+        @media(max-width: 600px) {
+            .card {
+                padding: 24px;
+            }
+            .answer-comparison {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Email Notification Toast Styling */
+        .email-toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #1f2937;
+            border: 1px solid var(--accent-blue);
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.3);
+            border-radius: 12px;
+            padding: 16px 20px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 9999;
+            transform: translateX(120%);
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            max-width: 360px;
+            backdrop-filter: blur(10px);
+        }
+        .email-toast.show {
+            transform: translateX(0);
+        }
+
+        /* Styles for printing the official certificate */
+        @page {
+            size: A4 portrait;
+            margin: 15mm 15mm 15mm 15mm;
+        }
+        @media print {
+            body {
+                background: white !important;
+                color: black !important;
+                background-image: none !important;
+                padding: 0 !important;
+            }
+            .container {
+                max-width: 100% !important;
+                width: 100% !important;
+                perspective: none !important;
+            }
+            .card {
+                background: transparent !important;
+                border: none !important;
+                box-shadow: none !important;
+                padding: 0 !important;
+                backdrop-filter: none !important;
+            }
+            /* Hide web elements */
+            #welcome-screen, #test-screen, .results-grid > *:not(#print-sheet) {
+                display: none !important;
+            }
+            .review-section:not(#print-sheet), .btn, #result-level, .score-circle-container {
+                display: none !important;
+            }
+            #print-sheet {
+                display: block !important;
+                margin: 0 !important;
+                padding: 15mm !important; /* Memberikan margin dalam agar teks tidak mepet ke tepi kertas */
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+            .evaluation-print-container {
+                background: white !important;
+                color: black !important;
+                border: none !important;
+                box-shadow: none !important;
+                padding: 5mm !important;
+            }
+            .kop-surat h1, .kop-surat h2, .kop-surat h3, .kop-surat p,
+            .kop-surat, .review-section h3, td, th, strong, span, p {
+                color: black !important;
+            }
+            .kop-surat {
+                border-bottom: 2px solid black !important;
+            }
+            table {
+                color: black !important;
+                width: 100% !important;
+            }
+            tr {
+                border-bottom: 1px solid #000 !important;
+            }
+            th {
+                border-bottom: 2px solid black !important;
+            }
+            .status-badge {
+                border: 1px solid black !important;
+                background: transparent !important;
+                padding: 2px 8px !important;
+            }
+            .status-correct {
+                color: #008000 !important; /* Green */
+            }
+            .status-incorrect {
+                color: #cc0000 !important; /* Red */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="email-toast" class="email-toast"></div>
+
+    <div class="container">
+        <!-- 1. WELCOME SCREEN -->
+        <div id="welcome-screen" class="card screen active">
+            <h1 class="welcome-title">Tes Kesiapan Mahasiswa</h1>
+            <p class="welcome-subtitle">Persamaan Diferensial untuk Teknik Elektro</p>
+            
+            <div class="meta-grid">
+                <div class="meta-item">
+                    <span>Jumlah Soal</span>
+                    <h4>10 Butir</h4>
+                </div>
+                <div class="meta-item">
+                    <span>Estimasi Waktu</span>
+                    <h4>45 Menit</h4>
+                </div>
+                <div class="meta-item">
+                    <span>Format</span>
+                    <h4>Pilihan Ganda</h4>
+                </div>
+            </div>
+
+            <div class="instruction-box">
+                <strong>Instruksi Ujian:</strong>
+                <ul>
+                    <li>Soal dirancang untuk menilai pemahaman prasyarat Kalkulus, Aljabar Linier, dan Rangkaian Listrik Dasar.</li>
+                    <li>Gunakan kertas buram untuk coret-coret menghitung.</li>
+                    <li>Setelah selesai, Anda akan menerima evaluasi instan beserta pembobotan dan rekomendasi tindakan remedial jika diperlukan.</li>
+                </ul>
+            </div>
+
+            <!-- Formulir Identitas Mahasiswa -->
+            <div style="background: #f9fafb; border: 1px solid var(--card-border); padding: 25px; border-radius: 20px; margin-bottom: 30px; text-align: left;">
+                <h3 style="margin-bottom: 15px; color: var(--accent-blue); font-size: 1.1rem; font-family: 'Outfit';">Identitas Mahasiswa</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 15px;">
+                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                        <label style="font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; font-weight: 600;">Nama Lengkap</label>
+                        <input type="text" id="input-nama" required placeholder="Masukkan Nama Lengkap" style="background: rgba(255,255,255,0.04); border: 1px solid var(--card-border); padding: 12px; border-radius: 10px; color: var(--text-primary); font-family: 'Inter'; font-size: 0.9rem;">
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                        <label style="font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; font-weight: 600;">NPM</label>
+                        <input type="text" id="input-npm" required placeholder="Contoh: G1A024xxx" style="background: rgba(255,255,255,0.04); border: 1px solid var(--card-border); padding: 12px; border-radius: 10px; color: var(--text-primary); font-family: 'Inter'; font-size: 0.9rem;">
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                        <label style="font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; font-weight: 600;">No. HP / WhatsApp</label>
+                        <input type="tel" id="input-nohp" required placeholder="Contoh: 08xxxxxxxxxx" style="background: rgba(255,255,255,0.04); border: 1px solid var(--card-border); padding: 12px; border-radius: 10px; color: var(--text-primary); font-family: 'Inter'; font-size: 0.9rem;">
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                        <label style="font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; font-weight: 600;">Email Mahasiswa</label>
+                        <div style="display: flex; gap: 8px;">
+                            <input type="email" id="input-email" required placeholder="mahasiswa@unib.ac.id" style="flex: 1; background: rgba(255,255,255,0.04); border: 1px solid var(--card-border); padding: 12px; border-radius: 10px; color: var(--text-primary); font-family: 'Inter'; font-size: 0.9rem; min-width: 120px;">
+                            <button id="btn-send-pin" onclick="sendPin()" style="background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple)); color: var(--text-primary); border: none; padding: 0 16px; font-size: 0.85rem; font-weight: 600; border-radius: 10px; cursor: pointer; transition: 0.3s; white-space: nowrap;">Kirim PIN</button>
+                        </div>
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                        <label style="font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; font-weight: 600;">PIN Verifikasi (Cek Email)</label>
+                        <input type="text" id="input-pin" maxlength="4" required placeholder="4 Digit PIN" style="background: rgba(255,255,255,0.04); border: 1px solid var(--card-border); padding: 12px; border-radius: 10px; color: var(--text-primary); font-family: 'Inter'; font-size: 0.9rem; font-weight: 700; letter-spacing: 4px; text-align: center;">
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn" onclick="startTest()">Mulai Tes Diagnostik</button>
+        </div>
+
+        <!-- 2. TEST SCREEN -->
+        <div id="test-screen" class="card screen">
+            <div class="test-header">
+                <div id="question-category" class="category-tag">Kalkulus</div>
+                <div id="question-number" class="progress-text">Pertanyaan 1 dari 10</div>
+            </div>
+            
+            <div class="progress-bar-container">
+                <div id="progress-bar" class="progress-bar"></div>
+            </div>
+
+            <div class="question-box">
+                <div id="question-text" class="question-text">
+                    Loading question...
+                </div>
+                
+                <div id="options-container" class="options-grid">
+                    <!-- Dynamic rendering of options -->
+                </div>
+            </div>
+
+            <div class="nav-buttons">
+                <button id="prev-btn" class="btn btn-outline" onclick="prevQuestion()" disabled>Sebelumnya</button>
+                <button id="next-btn" class="btn" onclick="nextQuestion()">Selanjutnya</button>
+            </div>
+        </div>
+
+        <!-- 3. RESULTS SCREEN -->
+        <div id="results-screen" class="card screen">
+            <div class="results-grid">
+                <h1 class="welcome-title" style="margin-bottom: 25px;">Hasil Tes Diagnostik</h1>
+                
+                <!-- SVG circular loader -->
+                <div class="score-circle-container">
+                    <svg class="score-svg" viewBox="0 0 160 160">
+                        <defs>
+                            <linearGradient id="score-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#00d2ff" />
+                                <stop offset="100%" stop-color="#9d4edd" />
+                            </linearGradient>
+                        </defs>
+                        <circle class="score-track" cx="80" cy="80" r="70"></circle>
+                        <circle id="score-fill-circle" class="score-fill" cx="80" cy="80" r="70"></circle>
+                    </svg>
+                    <div class="score-text">
+                        <div id="score-val" class="score-number">0</div>
+                        <div class="score-label">Skor</div>
+                    </div>
+                </div>
+
+                <div id="result-level" class="result-level-tag">LEVEL</div>
+                
+                <div id="recommendation-box" class="recommendation-card">
+                    <!-- Dynamic recommendation based on score -->
+                </div>
+
+                <!-- Rubrik Evaluasi Capaian Pembelajaran -->
+                <div class="review-section" style="margin-top: 10px;">
+                    <h3>Hasil Evaluasi Capaian Pembelajaran Prasyarat</h3>
+                    <div id="cpl-breakdown" class="recommendation-card" style="background: #f9fafb; display: flex; flex-direction: column; gap: 24px; margin-bottom: 35px;">
+                        <!-- Dynamic breakdown cards will render here -->
+                    </div>
+                </div>
+
+                <!-- Lembar Evaluasi Kesiapan Mahasiswa (Official Print Sheet) -->
+                <div class="review-section" id="print-sheet" style="margin-top: 10px; width: 100%;">
+                    <h3>Lembar Sertifikasi Evaluasi Kesiapan</h3>
+                    <div class="recommendation-card evaluation-print-container" style="background: #f9fafb; padding: 30px; border-radius: 24px; position: relative;">
+                        
+                        <!-- Kop Program Studi -->
+                        <div class="kop-surat" style="display: flex; align-items: center; justify-content: center; border-bottom: 3px double var(--card-border); padding-bottom: 15px; margin-bottom: 20px; gap: 20px;">
+                            <img src="/mku-komputer/unib-logo.png" alt="Logo UNIB" style="height: 80px; width: auto;">
+                            <div style="text-align: center; flex: 1;">
+                                <h2 style="font-family: 'Outfit'; font-size: 0.95rem; font-weight: 700; color: var(--text-primary); margin-bottom: 2px; text-transform: uppercase; letter-spacing: 0.5px; line-height: 1.2;">KEMENTERIAN PENDIDIKAN, KEBUDAYAAN, RISET, DAN TEKNOLOGI</h2>
+                                <h1 style="font-family: 'Outfit'; font-size: 1.25rem; font-weight: 800; color: var(--accent-blue); margin-bottom: 2px; text-transform: uppercase; line-height: 1.2;">UNIVERSITAS BENGKULU - FAKULTAS TEKNIK</h1>
+                                <h3 style="font-family: 'Inter'; font-size: 0.9rem; font-weight: 600; color: var(--text-primary); margin-bottom: 2px; text-transform: uppercase;">PROGRAM STUDI TEKNIK ELEKTRO</h3>
+                                <p style="font-family: 'Inter'; font-size: 0.75rem; color: var(--text-secondary); margin-top: 4px;">Jalan W.R. Supratman, Kandang Limun, Bengkulu 38371A | Email: elektro@unib.ac.id</p>
+                            </div>
+                        </div>
+
+                        <!-- Judul Lembar Evaluasi -->
+                        <div style="text-align: center; margin-bottom: 25px;">
+                            <h4 style="font-family: 'Outfit'; font-size: 1.1rem; font-weight: 700; text-transform: uppercase; text-decoration: underline; color: var(--text-primary);">LEMBAR EVALUASI KESIAPAN MAHASISWA</h4>
+                            <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px;">Mata Kuliah: Persamaan Diferensial (3 SKS) - Semester Ganjil 2026/2027</p>
+                        </div>
+
+                        <!-- Data Identitas Mahasiswa -->
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; background: rgba(255,255,255,0.01); border: 1px solid var(--card-border); padding: 15px 20px; border-radius: 12px; margin-bottom: 25px; font-size: 0.85rem;">
+                            <div style="display: flex; flex-direction: column; gap: 8px;">
+                                <div><span style="color: var(--text-secondary); width: 130px; display: inline-block;">Nama Mahasiswa</span>: <strong id="sheet-nama" style="color: var(--text-primary);">-</strong></div>
+                                <div><span style="color: var(--text-secondary); width: 130px; display: inline-block;">NPM</span>: <strong id="sheet-npm" style="color: var(--text-primary);">-</strong></div>
+                                <div><span style="color: var(--text-secondary); width: 130px; display: inline-block;">Tanggal Evaluasi</span>: <span id="sheet-tanggal" style="color: var(--text-primary);">-</span></div>
+                            </div>
+                            <div style="display: flex; flex-direction: column; gap: 8px;">
+                                <div><span style="color: var(--text-secondary); width: 100px; display: inline-block;">No. HP</span>: <span id="sheet-nohp" style="color: var(--text-primary);">-</span></div>
+                                <div><span style="color: var(--text-secondary); width: 100px; display: inline-block;">Email</span>: <span id="sheet-email" style="color: var(--text-primary);">-</span></div>
+                                <div><span style="color: var(--text-secondary); width: 100px; display: inline-block;">Hasil Kesiapan</span>: <span id="sheet-status-summary" style="font-weight: 700;">-</span></div>
+                            </div>
+                        </div>
+
+                        <!-- Tabel Capaian -->
+                        <div style="overflow-x: auto; margin-bottom: 30px;">
+                            <table style="width: 100%; border-collapse: collapse; min-width: 600px; font-size: 0.85rem; color: var(--text-primary);">
+                                <thead>
+                                    <tr style="border-bottom: 2px solid var(--card-border); text-align: left;">
+                                        <th style="padding: 10px 6px; width: 30px;">No</th>
+                                        <th style="padding: 10px 6px; width: 140px;">Sub-Topik</th>
+                                        <th style="padding: 10px 6px; width: 70px;">Level</th>
+                                        <th style="padding: 10px 6px; width: 95px; text-align: center;">Hasil</th>
+                                        <th style="padding: 10px 6px; width: 180px;">Deskripsi Kompetensi</th>
+                                        <th style="padding: 10px 6px;">Hubungan ke Persamaan Diferensial & Tindak Lanjut</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="readiness-table-body">
+                                    <!-- Dynamic rows will render here -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Tanda Tangan Dual Columns -->
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; margin-top: 30px; font-size: 0.85rem; width: 100%;">
+                            <!-- Kolom Kiri: Mahasiswa -->
+                            <div style="text-align: center; width: 220px;">
+                                <p style="color: var(--text-secondary); margin-bottom: 65px;">Mengetahui,<br>Mahasiswa Yang Bersangkutan,</p>
+                                <strong id="signature-nama-mahasiswa" style="color: var(--text-primary); text-decoration: underline; display: block; font-size: 0.9rem;">-</strong>
+                                <span id="signature-npm-mahasiswa" style="font-size: 0.75rem; color: var(--text-secondary); display: block; margin-top: 2px;">NPM. -</span>
+                            </div>
+                            
+                            <!-- Kolom Kanan: Dosen -->
+                            <div style="text-align: center; width: 260px; justify-self: end;">
+                                <p style="color: var(--text-secondary); margin-bottom: 65px;">Bengkulu, <span id="signature-date">-</span><br>Dosen Pengampu,</p>
+                                <strong style="color: var(--text-primary); text-decoration: underline; display: block; font-size: 0.9rem;">Novalio Daratha, S.T., M.Sc., Ph.D.</strong>
+                                <span style="font-size: 0.75rem; color: var(--text-secondary); display: block; margin-top: 2px;">NIP. 1979111320031210002</span>
+                            </div>
+                        </div>
+
+                    </div>
+                    
+                    <button class="btn btn-outline" onclick="printEvaluation()" style="margin-top: 15px; background: rgba(0, 210, 255, 0.1); border-color: var(--accent-blue); color: var(--accent-blue); display: flex; align-items: center; justify-content: center; gap: 8px;">
+                        <span>🖨️ Cetak Lembar Kesiapan Resmi</span>
+                    </button>
+                </div>
+
+                <!-- Review Section -->
+                <div class="review-section">
+                    <h3>Pembahasan Soal</h3>
+                    <div id="review-list">
+                        <!-- Dynamic items -->
+                    </div>
+                </div>
+
+                <button class="btn" onclick="resetTest()">Uji Kembali (Reset)</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- KaTeX library for mathematical rendering -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
+    <script>
+        const questions = [
+            {
+                id: 1,
+                type: "MC",
+                category: "Kalkulus",
+                subTopic: "Turunan Berantai (Chain Rule)",
+                bloomLevel: "C3 (Apply)",
+                competency: "Mampu menurunkan fungsi komposisi eksponensial-trigonometri.",
+                relevance: "Memverifikasi solusi analitis dan menghitung respon transien sistem orde 2.",
+                questionText: "Tentukan turunan pertama dari fungsi $y(t) = e^{-3t} \\cos(2t)$ terhadap $t$ ($\\frac{dy}{dt}$):",
+                options: [
+                    "$-3e^{-3t}\\cos(2t) - 2e^{-3t}\\sin(2t)$",
+                    "$-3e^{-3t}\\sin(2t)$",
+                    "$6e^{-3t}\\sin(2t)$",
+                    "$-3e^{-3t}\\cos(2t) + 2e^{-3t}\\sin(2t)$"
+                ],
+                correctIndex: 0,
+                explanation: "Menggunakan aturan perkalian $(uv)' = u'v + uv'$:\\newline Misalkan $u = e^{-3t} \\Rightarrow u' = -3e^{-3t}$, dan $v = \\cos(2t) \\Rightarrow v' = -2\\sin(2t)$.\\newline Maka:\\newline $y'(t) = (-3e^{-3t})(\\cos(2t)) + (e^{-3t})(-2\\sin(2t)) = -3e^{-3t}\\cos(2t) - 2e^{-3t}\\sin(2t)$."
+            },
+            {
+                id: 2,
+                type: "MC",
+                category: "Kalkulus",
+                subTopic: "Integral Substitusi",
+                bloomLevel: "C3 (Apply)",
+                competency: "Mampu mengintegrasikan fungsi dengan variabel baru ($u$-substitution).",
+                relevance: "Menyelesaikan PDB Orde 1 dengan metode pemisahan variabel.",
+                questionText: "Selesaikan integral substitusi berikut: $$\\int t \\cdot e^{-t^2} dt$$",
+                options: [
+                    "$-\\frac{1}{2} e^{-t^2} + C$",
+                    "$-2e^{-t^2} + C$",
+                    "$e^{-t^2} + C$",
+                    "$\\frac{1}{2} t^2 e^{-t^2} + C$"
+                ],
+                correctIndex: 0,
+                explanation: "Gunakan substitusi variabel:\\newline Misalkan $u = -t^2 \\Rightarrow du = -2t \\, dt \\Rightarrow t \\, dt = -\\frac{1}{2} du$.\\newline Maka integral dapat ditulis menjadi:\\newline $$\\int e^u \\left(-\\frac{1}{2}\\right) du = -\\frac{1}{2} \\int e^u du = -\\frac{1}{2} e^u + C = -\\frac{1}{2} e^{-t^2} + C$$"
+            },
+            {
+                id: 3,
+                type: "MC",
+                category: "Kalkulus",
+                subTopic: "Integral Parsial",
+                bloomLevel: "C3 (Apply)",
+                competency: "Mampu mengintegrasikan perkalian fungsi aljabar dan eksponensial.",
+                relevance: "Fondasi utama menurunkan rumus Transformasi Laplace dari definisi integral.",
+                questionText: "Selesaikan integral parsial berikut: $$\\int t \\cdot e^{-2t} dt$$",
+                options: [
+                    "$-\\frac{1}{2}t e^{-2t} - \\frac{1}{4} e^{-2t} + C$",
+                    "$-\\frac{1}{2}t e^{-2t} + \\frac{1}{2} e^{-2t} + C$",
+                    "$t e^{-2t} - e^{-2t} + C$",
+                    "$-\\frac{1}{2}t^2 e^{-2t} + C$"
+                ],
+                correctIndex: 0,
+                explanation: "Gunakan rumus integral parsial $\\int u \\, dv = uv - \\int v \\, du$:\\newline Misalkan $u = t \\Rightarrow du = dt$, dan $dv = e^{-2t} dt \\Rightarrow v = -\\frac{1}{2} e^{-2t}$.\\newline Maka:\\newline $$\\int t e^{-2t} dt = t \\left(-\\frac{1}{2} e^{-2t}\\right) - \\int \\left(-\\frac{1}{2} e^{-2t}\\right) dt$$ $$\\Rightarrow -\\frac{1}{2}t e^{-2t} + \\frac{1}{2} \\int e^{-2t} dt = -\\frac{1}{2}t e^{-2t} - \\frac{1}{4} e^{-2t} + C$$"
+            },
+            {
+                id: 4,
+                type: "MC",
+                category: "Kalkulus",
+                subTopic: "Integral Fungsi Rasional",
+                bloomLevel: "C2 (Understand)",
+                competency: "Mampu mengintegrasikan pecahan menjadi fungsi logaritma ($\\ln$).",
+                relevance: "Hasil akhir PDB Orde 1 umumnya berbentuk $\\ln|y|$, yang disederhanakan ke eksponensial.",
+                questionText: "Tentukan solusi dari integral berikut: $$\\int \\frac{1}{2x + 3} dx$$",
+                options: [
+                    "$\\frac{1}{2} \\ln|2x + 3| + C$",
+                    "$\\ln|2x + 3| + C$",
+                    "$2\\ln|2x + 3| + C$",
+                    "$-\\frac{1}{(2x+3)^2} + C$"
+                ],
+                correctIndex: 0,
+                explanation: "Gunakan aturan dasar integral logaritma natural:\\newline Misalkan $u = 2x + 3 \\Rightarrow du = 2 \\, dx \\Rightarrow dx = \\frac{1}{2} du$.\\newline Maka:\\newline $$\\int \\frac{1}{u} \\left(\\frac{1}{2}\\right) du = \\frac{1}{2} \\ln|u| + C = \\frac{1}{2} \\ln|2x + 3| + C$$"
+            },
+            {
+                id: 5,
+                type: "MC",
+                category: "Aljabar Linier",
+                subTopic: "Perkalian Matriks-Vektor",
+                bloomLevel: "C3 (Apply)",
+                competency: "Mampu mengalikan matriks 2x2 dengan vektor kolom 2x1.",
+                relevance: "Representasi ruang keadaan (state-space) sistem PDB linier simultan.",
+                questionText: "Hitung perkalian matriks berikut: $$\\begin{pmatrix} -3 & 1 \\\\ 2 & -4 \\end{pmatrix} \\begin{pmatrix} x_1(t) \\\\ x_2(t) \\end{pmatrix}$$",
+                options: [
+                    "$$\\begin{pmatrix} -3x_1(t) + x_2(t) \\\\ 2x_1(t) - 4x_2(t) \\end{pmatrix}$$",
+                    "$$\\begin{pmatrix} -3x_1(t) - 4x_2(t) \\\\ 2x_1(t) + x_2(t) \\end{pmatrix}$$",
+                    "$$\\begin{pmatrix} -3x_1(t)x_2(t) \\\\ -8x_1(t)x_2(t) \\end{pmatrix}$$",
+                    "$$\\begin{pmatrix} -3x_1(t) \\\\ -4x_2(t) \\end{pmatrix}$$"
+                ],
+                correctIndex: 0,
+                explanation: "Gunakan aturan perkalian baris kali kolom:\\newline Baris 1: $(-3 \\cdot x_1) + (1 \\cdot x_2) = -3x_1 + x_2$\\newline Baris 2: $(2 \\cdot x_1) + (-4 \\cdot x_2) = 2x_1 - 4x_2$\\newline Sehingga hasilnya berbentuk vektor kolom:\\newline $$\\begin{pmatrix} -3x_1(t) + x_2(t) \\\\ 2x_1(t) - 4x_2(t) \\end{pmatrix}$$"
+            },
+            {
+                id: 6,
+                type: "MC",
+                category: "Aljabar Linier",
+                subTopic: "Determinan Matriks 2x2",
+                bloomLevel: "C2 (Understand)",
+                competency: "Mampu menghitung nilai determinan dari matriks 2x2 dengan lambang.",
+                relevance: "Menghitung persamaan karakteristik sistem orde 2 dan kestabilan titik equilibrium.",
+                questionText: "Diberikan matriks koefisien sistem berikut: $$A = \\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix}$$ Tentukan persamaan determinan dari $\\det(A - \\lambda I)$ di mana $I$ adalah matriks identitas:",
+                options: [
+                    "$\\lambda^2 - (a + d)\\lambda + (ad - bc) = 0$",
+                    "$\\lambda^2 - (ad - bc)\\lambda + (a + d) = 0$",
+                    "$\\lambda^2 + (a + d)\\lambda - (ad - bc) = 0$",
+                    "$(a - \\lambda)(d - \\lambda) + bc = 0$"
+                ],
+                correctIndex: 0,
+                explanation: "Matriks $(A - \\lambda I)$ adalah:\\newline $$\\begin{pmatrix} a - \\lambda & b \\\\ c & d - \\lambda \\end{pmatrix}$$\\newline Determinannya adalah:\\newline $$\\det(A - \\lambda I) = (a - \\lambda)(d - \\lambda) - bc = 0$$ $$\\Rightarrow \\lambda^2 - a\\lambda - d\\lambda + ad - bc = 0$$ $$\\Rightarrow \\lambda^2 - (a + d)\\lambda + (ad - bc) = 0$$"
+            },
+            {
+                id: 7,
+                type: "MC",
+                category: "Aljabar Linier",
+                subTopic: "Keterbalikan Matriks (Invertibility)",
+                bloomLevel: "C2 (Understand)",
+                competency: "Mampu menganalisis keberadaan invers matriks berdasarkan determinannya.",
+                relevance: "Menentukan kestabilan dan keunikan solusi kondisi batas PDB linier.",
+                questionText: "Manakah pernyataan yang benar mengenai matriks $A$ yang memiliki determinan bernilai nol ($\\det(A) = 0$)?",
+                options: [
+                    "Matriks $A$ tidak memiliki invers (singular).",
+                    "Sistem persamaan linear $A\\mathbf{x} = \\mathbf{b}$ selalu memiliki solusi unik tunggal.",
+                    "Matriks $A$ pasti merupakan matriks identitas.",
+                    "Invers matriks $A$ dapat dihitung dengan rumus $\\frac{1}{\\det(A)} \\cdot \\text{adj}(A)$."
+                ],
+                correctIndex: 0,
+                explanation: "Sebuah matriks dikatakan singular jika determinannya nol. Matriks singular tidak memiliki invers karena rumus invers melibatkan pembagian dengan determinan ($\\frac{1}{0}$ tidak terdefinisi)."
+            },
+            {
+                id: 8,
+                type: "MC",
+                category: "Rangkaian Listrik",
+                subTopic: "Karakteristik Kapasitor",
+                bloomLevel: "C2 (Understand)",
+                competency: "Mampu menerapkan relasi diferensial arus-tegangan pada kapasitor.",
+                relevance: "Menyusun PDB pemodelan tegangan kapasitor pada rangkaian transient RC.",
+                questionText: "Tuliskan persamaan diferensial hubungan tegangan-arus pada sebuah kapasitor $C$:",
+                options: [
+                    "$i(t) = C \\frac{dv(t)}{dt}$",
+                    "$v(t) = C \\frac{di(t)}{dt}$",
+                    "$i(t) = \\frac{1}{C} \\frac{dv(t)}{dt}$",
+                    "$v(t) = R \\cdot i(t) + C$"
+                ],
+                correctIndex: 0,
+                explanation: "Hubungan arus dan tegangan pada kapasitor berbanding lurus dengan laju perubahan tegangan terhadap waktu, yang secara matematis dirumuskan sebagai: $i(t) = C \\frac{dv(t)}{dt}$."
+            },
+            {
+                id: 9,
+                type: "MC",
+                category: "Rangkaian Listrik",
+                subTopic: "Karakteristik Induktor",
+                bloomLevel: "C2 (Understand)",
+                competency: "Mampu menerapkan relasi diferensial arus-tegangan pada induktor.",
+                relevance: "Menyusun PDB pemodelan arus induktor pada rangkaian transient RL.",
+                questionText: "Tuliskan persamaan diferensial hubungan tegangan-arus pada sebuah induktor $L$:",
+                options: [
+                    "$v(t) = L \\frac{di(t)}{dt}$",
+                    "$i(t) = L \\frac{dv(t)}{dt}$",
+                    "$v(t) = \\frac{1}{L} \\frac{di(t)}{dt}$",
+                    "$v(t) = \\int i(t) dt$"
+                ],
+                correctIndex: 0,
+                explanation: "Tegangan pada induktor berbanding lurus dengan laju perubahan arus terhadap waktu, yang secara matematis dirumuskan sebagai: $v(t) = L \\frac{di(t)}{dt}$."
+            },
+            {
+                id: 10,
+                type: "MC",
+                category: "Rangkaian Listrik",
+                subTopic: "Hukum Kirchoff Tegangan (KVL)",
+                bloomLevel: "C3 (Apply)",
+                competency: "Mampu menyusun persamaan loop tertutup menggunakan KVL.",
+                relevance: "Langkah pertama merumuskan PDB Orde 1 / Orde 2 dari sirkuit RLC nyata.",
+                questionText: "Tuliskan persamaan KVL dari loop tertutup seri yang terdiri dari sumber tegangan $V_s(t)$, resistor $R$, dan induktor $L$:",
+                options: [
+                    "$V_s(t) = R \\cdot i(t) + L \\frac{di(t)}{dt}$",
+                    "$V_s(t) = R \\cdot i(t) + \\frac{1}{L} \\int i(t) dt$",
+                    "$V_s(t) = i(t) (R + L)$",
+                    "$V_s(t) + R \\cdot i(t) + L \\frac{di(t)}{dt} = 0$"
+                ],
+                correctIndex: 0,
+                explanation: "Berdasarkan Hukum Tegangan Kirchoff (KVL): $\\sum V = 0$.\\newline $V_s(t) - v_R(t) - v_L(t) = 0 \\Rightarrow V_s(t) = v_R(t) + v_L(t)$.\\newline Karena $v_R(t) = R \\cdot i(t)$ dan $v_L(t) = L \\frac{di(t)}{dt}$, persamaannya menjadi:\\newline $V_s(t) = R \\cdot i(t) + L \\frac{di(t)}{dt}$."
+            },
+            {
+                id: 11,
+                type: "TF",
+                category: "Kalkulus",
+                subTopic: "Linearitas Integral",
+                bloomLevel: "C2 (Understand)",
+                competency: "Mampu menganalisis kebenaran sifat perkalian pada operasi integrasi.",
+                relevance: "Mencegah kesalahan fatal dalam memecahkan variabel integral PDB.",
+                questionText: "Apakah benar pernyataan matematika berikut untuk integral perkalian dua fungsi: $$\\int [f(t) \\cdot g(t)] dt = \\int f(t) dt \\cdot \\int g(t) dt$$",
+                options: ["Benar", "Salah"],
+                correctIndex: 1,
+                explanation: "Integrasi tidak memenuhi sifat perkalian secara distributif. Perkalian dua fungsi harus diselesaikan menggunakan teknik khusus seperti integral parsial atau substitusi, bukan mengalikan hasil integral masing-masing fungsi."
+            },
+            {
+                id: 12,
+                type: "TF",
+                category: "Kalkulus",
+                subTopic: "Teorema Dasar Kalkulus",
+                bloomLevel: "C2 (Understand)",
+                competency: "Mampu menerapkan hubungan turunan dan integral fungsi batas variabel.",
+                relevance: "Menghitung turunan dari fungsi integral akumulator dalam sistem kontrol transient.",
+                questionText: "Berdasarkan Teorema Dasar Kalkulus I, tentukan kebenaran pernyataan turunan fungsi integral berikut: $$\\frac{d}{dt} \\left[ \\int_{0}^{t} \\sin(x^2) dx \\right] = \\sin(t^2)$$",
+                options: ["Benar", "Salah"],
+                correctIndex: 0,
+                explanation: "Berdasarkan Teorema Dasar Kalkulus I (Fundamental Theorem of Calculus): $\\frac{d}{dt} \\left[ \\int_{a}^{t} f(x) dx \\right] = f(t)$. Maka turunan dari integral tersebut langsung menghasilkan fungsi asalnya dengan batas atas variabel $t$."
+            },
+            {
+                id: 13,
+                type: "TF",
+                category: "Aljabar Linier",
+                subTopic: "Solusi SPL Singular",
+                bloomLevel: "C2 (Understand)",
+                competency: "Mampu menganalisis jumlah solusi sistem linear berdasarkan determinannya.",
+                relevance: "Analisis eksistensi dan keunikan solusi titik kesetimbangan dinamik sistem.",
+                questionText: "Jika determinan dari matriks koefisien $A$ dalam sistem persamaan linear $A \\mathbf{x} = \\mathbf{b}$ bernilai nol ($\\det(A) = 0$), maka sistem tersebut dipastikan memiliki solusi tunggal.",
+                options: ["Benar", "Salah"],
+                correctIndex: 1,
+                explanation: "Jika $\\det(A) = 0$, matriks tersebut tidak memiliki invers (singular). Artinya, sistem persamaan linear tersebut mungkin memiliki tak hingga banyak solusi (tergantung vektor $\\mathbf{b}$) atau tidak memiliki solusi sama sekali, bukan solusi tunggal."
+            },
+            {
+                id: 14,
+                type: "TF",
+                category: "Rangkaian Listrik",
+                subTopic: "Induktor DC Steady-State",
+                bloomLevel: "C2 (Understand)",
+                competency: "Mampu menganalisis perilaku induktor pada kondisi tunak DC.",
+                relevance: "Menentukan kondisi batas arus induktor awal ($i_L(0^-)$) pada pemodelan transient rangkaian.",
+                questionText: "Pada kondisi tunak DC (DC steady-state), sebuah induktor bertindak sebagai hubungan terbuka (open circuit) karena tidak ada perubahan arus terhadap waktu.",
+                options: ["Benar", "Salah"],
+                correctIndex: 1,
+                explanation: "Pada keadaan DC tunak, arus bernilai konstan sehingga laju perubahan arus terhadap waktu $\\frac{di}{dt} = 0$. Karena tegangan induktor adalah $v_L = L \\frac{di}{dt}$, maka diperoleh $v_L = 0$ (beda potensial nol). Induktor yang tegangannya nol bertindak sebagai **hubungan singkat (short circuit)**, bukan hubungan terbuka."
+            },
+            {
+                id: 15,
+                type: "TF",
+                category: "Rangkaian Listrik",
+                subTopic: "Kapasitor DC Steady-State",
+                bloomLevel: "C2 (Understand)",
+                competency: "Mampu menganalisis perilaku kapasitor pada kondisi tunak DC.",
+                relevance: "Menentukan kondisi batas tegangan kapasitor awal ($v_c(0^-)$) pada pemodelan transient rangkaian.",
+                questionText: "Pada kondisi tunak DC (DC steady-state), kapasitor bertindak sebagai hubungan terbuka (open circuit) karena arus yang melaluinya bernilai nol.",
+                options: ["Benar", "Salah"],
+                correctIndex: 0,
+                explanation: "Arus kapasitor dirumuskan sebagai $i_C = C \\frac{dv}{dt}$. Pada keadaan DC tunak, tegangan kapasitor bernilai konstan sehingga $\\frac{dv}{dt} = 0$, yang menghasilkan arus $i_C = 0$. Arus nol berarti kapasitor bertindak sebagai **hubungan terbuka (open circuit)**."
+            },
+            {
+                id: 16,
+                type: "NUM",
+                category: "Aljabar Linier",
+                subTopic: "Perhitungan Determinan 2x2",
+                bloomLevel: "C3 (Apply)",
+                competency: "Mampu melakukan perhitungan numerik determinan matriks 2x2 secara akurat.",
+                relevance: "Pencarian nilai eigen pada persamaan karakteristik sistem dinamik orde dua.",
+                questionText: "Hitunglah nilai determinan dari matriks $A$ berikut: $$A = \\begin{pmatrix} 4 & 2 \\\\ 1 & 3 \\end{pmatrix}$$",
+                correctAnswer: "10",
+                explanation: "Determinan dari matriks $2 \\times 2$ $\\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix}$ dirumuskan sebagai $ad - bc$.\\newline Untuk matriks $A$, determinannya adalah:\\newline $\\det(A) = (4 \\cdot 3) - (2 \\cdot 1) = 12 - 2 = 10$."
+            },
+            {
+                id: 17,
+                type: "NUM",
+                category: "Kalkulus",
+                subTopic: "Evaluasi Integral Definit",
+                bloomLevel: "C3 (Apply)",
+                competency: "Mampu menghitung nilai integral definit fungsi polinomial.",
+                relevance: "Perhitungan koefisien ekspansi deret Fourier atau integral respon waktu sistem.",
+                questionText: "Tentukan nilai numerik akhir dari integral definit berikut: $$\\int_{0}^{2} (3x^2 - 2x) dx$$",
+                correctAnswer: "4",
+                explanation: "Pertama, cari integral tak tentu dari fungsi tersebut:\\newline $$\\int (3x^2 - 2x) dx = x^3 - x^2$$\\newline Kemudian, evaluasi batas atas dan batas bawahnya:\\newline $$[x^3 - x^2]_0^2 = (2^3 - 2^2) - (0^3 - 0^2) = (8 - 4) - 0 = 4$$."
+            },
+            {
+                id: 18,
+                type: "NUM",
+                category: "Rangkaian Listrik",
+                subTopic: "Konstanta Waktu RC",
+                bloomLevel: "C3 (Apply)",
+                competency: "Mampu menghitung nilai konstanta waktu rangkaian RC.",
+                relevance: "Menentukan durasi peluruhan transien tegangan kapasitor pada rangkaian orde satu.",
+                questionText: "Sebuah rangkaian RC seri memiliki resistor $R = 5\\text{ k}\\Omega$ dan kapasitor $C = 200\\text{ }\\mu\\text{F}$. Hitunglah konstanta waktu ($\\tau$) rangkaian tersebut (dalam satuan detik):",
+                correctAnswer: "1",
+                explanation: "Konstanta waktu ($\\tau$) untuk rangkaian RC seri dirumuskan sebagai $\\tau = R \\cdot C$.\\newline Diketahui:\\newline $R = 5\\text{ k}\\Omega = 5 \\times 10^3\\text{ }\\Omega$\\newline $C = 200\\text{ }\\mu\\text{F} = 200 \\times 10^{-6}\\text{ F}$\\newline Maka:\\newline $\\tau = (5 \\times 10^3) \\cdot (200 \\times 10^{-6}) = 1000 \\times 10^{-3} = 1\\text{ detik}$."
+            },
+            {
+                id: 19,
+                type: "MS",
+                category: "Aljabar Linier",
+                subTopic: "Karakteristik Matriks Singular",
+                bloomLevel: "C2 (Understand)",
+                competency: "Mampu mengidentifikasi sifat-sifat matriks singular dari berbagai representasi.",
+                relevance: "Menganalisis dependensi linier persamaan ruang keadaan sebelum diselesaikan.",
+                questionText: "Pilihlah **semua** pernyataan yang benar mengenai matriks persegi $A$ yang merupakan matriks singular (memiliki determinan nol):",
+                options: [
+                    "Matriks $A$ tidak memiliki invers.",
+                    "Sistem persamaan linear homogen $A\\mathbf{x} = \\mathbf{0}$ hanya memiliki solusi trivial saja.",
+                    "Sistem persamaan linear homogen $A\\mathbf{x} = \\mathbf{0}$ memiliki solusi tak hingga banyak (solusi non-trivial).",
+                    "Baris-baris pada matriks $A$ saling bebas linear (independent)."
+                ],
+                correctIndices: [0, 2],
+                explanation: "Sebuah matriks singular ($\\det(A) = 0$) tidak memiliki invers. Hal ini berakibat pada sistem persamaan linear homogen $A\\mathbf{x} = \\mathbf{0}$ memiliki solusi non-trivial (solusi tak hingga banyak), serta baris-baris penyusun matriks tersebut saling bergantung linear (tidak bebas linear)."
+            },
+            {
+                id: 20,
+                type: "MS",
+                category: "Rangkaian Listrik",
+                subTopic: "Kontinuitas Arus-Tegangan",
+                bloomLevel: "C2 (Understand)",
+                competency: "Mampu menjelaskan batas fisis kontinuitas energi pada kapasitor dan induktor.",
+                relevance: "Menjamin kontinuitas variabel state pada pemodelan transient rangkaian listrik.",
+                questionText: "Pilihlah **semua** pernyataan yang benar mengenai hubungan tegangan dan arus pada induktor ($L$) dan kapasitor ($C$):",
+                options: [
+                    "Tegangan pada induktor sebanding dengan laju perubahan arus terhadap waktu ($v_L = L \\frac{di}{dt}$).",
+                    "Arus pada kapasitor sebanding dengan laju perubahan tegangan terhadap waktu ($i_C = C \\frac{dv}{dt}$).",
+                    "Arus yang mengalir pada induktor dapat berubah secara instan (seketika) tanpa jeda waktu.",
+                    "Tegangan pada kapasitor dapat berubah secara instan (seketika) tanpa jeda waktu."
+                ],
+                correctIndices: [0, 1],
+                explanation: "Hubungan tegangan-arus komponen reaktif adalah $v_L = L \\frac{di}{dt}$ dan $i_C = C \\frac{dv}{dt}$. Arus induktor dan tegangan kapasitor tidak dapat berubah secara instan karena membutuhkan penyimpanan/pelepasan energi yang kontinu (perubahan instan membutuhkan daya tak terhingga)."
+            }
+        ];
+
+        const BACKEND_URL = "https://script.google.com/macros/s/AKfycbx2JOUtxvL3ZEFxEO9wF0eDwj9rcvYMkL-SZaiQwAiCci7VtV4sk31mxV3t6nBA0yI0fQ/exec"; // Masukkan URL Google Apps Script Web App Anda untuk mengaktifkan email & database GDrive nyata
+        let studentInfo = {};
+        let activeQuestions = [];
+        let userAnswers = [];
+        let currentQuestionIndex = 0;
+        let generatedPin = null;
+        let pinTimer = null;
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function sendPin() {
+            const nama = document.getElementById('input-nama').value.trim();
+            const npm = document.getElementById('input-npm').value.trim();
+            const nohp = document.getElementById('input-nohp').value.trim();
+            const emailInput = document.getElementById('input-email');
+            const email = emailInput.value.trim();
+
+            if (!nama || !npm || !nohp || !email) {
+                alert("Harap isi Nama Lengkap, NPM, No. HP, dan Email terlebih dahulu sebelum meminta PIN verifikasi!");
+                return;
+            }
+
+            // Validasi Nama Lengkap: minimal 3 karakter, hanya huruf dan tanda baca nama
+            const nameRegex = /^[a-zA-Z\s\'.,]{3,}$/;
+            if (!nameRegex.test(nama)) {
+                alert("Nama Lengkap tidak valid! Harus minimal 3 karakter dan hanya mengandung huruf.");
+                document.getElementById('input-nama').focus();
+                return;
+            }
+
+            // Validasi NPM: berawalan huruf diikuti angka/huruf (7 sampai 10 karakter)
+            const npmRegex = /^[a-zA-Z][0-9a-zA-Z]{7,9}$/;
+            if (!npmRegex.test(npm)) {
+                alert("Format NPM tidak valid! Masukkan NPM resmi Anda (contoh: G1A024001).");
+                document.getElementById('input-npm').focus();
+                return;
+            }
+
+            // Validasi No HP: format telepon Indonesia diawali 08, 628, atau +628
+            const phoneRegex = /^(08|628|\+628)[0-9]{8,12}$/;
+            if (!phoneRegex.test(nohp)) {
+                alert("Nomor HP/WhatsApp tidak valid! Masukkan nomor telepon Indonesia yang valid (contoh: 081234567890).");
+                document.getElementById('input-nohp').focus();
+                return;
+            }
+
+            // Validasi format email standard
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (!emailRegex.test(email)) {
+                alert("Email tidak valid! Harap masukkan alamat email yang benar.");
+                emailInput.focus();
+                return;
+            }
+
+            // Start button cooldown
+            const btn = document.getElementById('btn-send-pin');
+            btn.disabled = true;
+            let seconds = 60;
+            btn.innerText = `${seconds}s`;
+            
+            pinTimer = setInterval(() => {
+                seconds--;
+                if (seconds <= 0) {
+                    clearInterval(pinTimer);
+                    btn.disabled = false;
+                    btn.innerText = "Kirim PIN";
+                } else {
+                    btn.innerText = `${seconds}s`;
+                }
+            }, 1000);
+
+            if (BACKEND_URL) {
+                // Cloud Mode: Send real email using Google Apps Script
+                fetch(BACKEND_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain' },
+                    body: JSON.stringify({ action: 'sendPin', email: email })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        generatedPin = data.pin;
+                        alert("PIN verifikasi telah dikirim ke email Anda!");
+                    } else {
+                        alert("Gagal mengirim PIN: " + data.message + "\nMenggunakan simulasi lokal.");
+                        runLocalPinSimulation(email);
+                    }
+                })
+                .catch(err => {
+                    console.warn("Koneksi backend gagal, beralih ke simulasi lokal:", err);
+                    runLocalPinSimulation(email);
+                });
+            } else {
+                // Local Simulation Mode
+                runLocalPinSimulation(email);
+            }
+        }
+
+        function runLocalPinSimulation(email) {
+            generatedPin = Math.floor(1000 + Math.random() * 9000).toString();
+            
+            // Trigger floating simulated email notification
+            const toast = document.getElementById('email-toast');
+            toast.innerHTML = `
+                <div style="font-size: 1.5rem;">✉️</div>
+                <div>
+                    <strong style="color: var(--accent-blue); display: block; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px;">[Simulasi Email Masuk]</strong>
+                    <span style="color: var(--text-secondary); font-size: 0.75rem; display: block; margin-bottom: 4px;">Kepada: ${email}</span>
+                    PIN Ujian Kesiapan Anda: <strong style="color: var(--text-primary); font-size: 1.15rem; font-family: monospace; letter-spacing: 1px; text-shadow: var(--neon-glow);">${generatedPin}</strong>
+                </div>
+            `;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 10000);
+        }
+
+        function startTest() {
+            const nama = document.getElementById('input-nama').value.trim();
+            const npm = document.getElementById('input-npm').value.trim();
+            const nohp = document.getElementById('input-nohp').value.trim();
+            const email = document.getElementById('input-email').value.trim();
+            const pin = document.getElementById('input-pin').value.trim();
+
+            if (!nama || !npm || !nohp || !email || !pin) {
+                alert("Harap lengkapi semua data identitas dan masukkan PIN verifikasi!");
+                return;
+            }
+
+            // Validasi Nama Lengkap
+            const nameRegex = /^[a-zA-Z\s\'.,]{3,}$/;
+            if (!nameRegex.test(nama)) {
+                alert("Nama Lengkap tidak valid! Harus minimal 3 karakter dan hanya mengandung huruf.");
+                document.getElementById('input-nama').focus();
+                return;
+            }
+
+            // Validasi NPM
+            const npmRegex = /^[a-zA-Z][0-9a-zA-Z]{7,9}$/;
+            if (!npmRegex.test(npm)) {
+                alert("Format NPM tidak valid! Masukkan NPM resmi Anda (contoh: G1A024001).");
+                document.getElementById('input-npm').focus();
+                return;
+            }
+
+            // Validasi No HP
+            const phoneRegex = /^(08|628|\+628)[0-9]{8,12}$/;
+            if (!phoneRegex.test(nohp)) {
+                alert("Nomor HP/WhatsApp tidak valid! Masukkan nomor telepon Indonesia yang valid (contoh: 081234567890).");
+                document.getElementById('input-nohp').focus();
+                return;
+            }
+
+            // Validasi Email
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (!emailRegex.test(email)) {
+                alert("Email tidak valid! Harap masukkan alamat email yang benar.");
+                document.getElementById('input-email').focus();
+                return;
+            }
+
+            if (!generatedPin) {
+                alert("Harap klik 'Kirim PIN' terlebih dahulu!");
+                return;
+            }
+
+            // PIN validation
+            if (pin !== generatedPin) {
+                alert("PIN verifikasi salah! Silakan periksa kembali.");
+                return;
+            }
+
+            studentInfo = {
+                nama,
+                npm,
+                nohp,
+                email,
+                tanggal: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })
+            };
+
+            // Clear timer cooldown
+            if (pinTimer) {
+                clearInterval(pinTimer);
+                const btn = document.getElementById('btn-send-pin');
+                btn.disabled = false;
+                btn.innerText = "Kirim PIN";
+            }
+
+            // Clone original questions to avoid modifying reference data across sessions
+            activeQuestions = JSON.parse(JSON.stringify(questions));
+            
+            // Randomize options for Multiple Choice and Multi-Select (do not randomize True/False)
+            activeQuestions.forEach(q => {
+                if (q.type === "MC") {
+                    const correctText = q.options[q.correctIndex];
+                    shuffle(q.options);
+                    q.correctIndex = q.options.indexOf(correctText);
+                } else if (q.type === "MS") {
+                    const correctTexts = q.correctIndices.map(i => q.options[i]);
+                    shuffle(q.options);
+                    q.correctIndices = correctTexts.map(txt => q.options.indexOf(txt));
+                }
+            });
+            
+            // Randomize the order of all questions and pick exactly 12
+            shuffle(activeQuestions);
+            activeQuestions = activeQuestions.slice(0, 12);
+            
+            // Initialize answers array (for MS we use empty array, others use null)
+            userAnswers = activeQuestions.map(q => q.type === 'MS' ? [] : null);
+
+            document.getElementById('welcome-screen').classList.remove('active');
+            document.getElementById('test-screen').classList.add('active');
+            showQuestion(0);
+        }
+
+        function showQuestion(index) {
+            currentQuestionIndex = index;
+            const q = activeQuestions[index];
+            
+            // Render category & progress
+            document.getElementById('question-category').innerText = q.category;
+            const tag = document.getElementById('question-category');
+            if (q.category === "Kalkulus") {
+                tag.style.background = "rgba(0, 210, 255, 0.1)";
+                tag.style.color = "var(--accent-blue)";
+                tag.style.borderColor = "rgba(0, 210, 255, 0.2)";
+            } else if (q.category === "Aljabar Linier") {
+                tag.style.background = "rgba(157, 78, 221, 0.1)";
+                tag.style.color = "var(--accent-purple)";
+                tag.style.borderColor = "rgba(157, 78, 221, 0.2)";
+            } else {
+                tag.style.background = "rgba(6, 214, 160, 0.1)";
+                tag.style.color = "var(--accent-green)";
+                tag.style.borderColor = "rgba(6, 214, 160, 0.2)";
+            }
+            
+            document.getElementById('question-number').innerText = `Pertanyaan ${index + 1} dari ${activeQuestions.length}`;
+            
+            // Progress bar
+            const percent = ((index + 1) / activeQuestions.length) * 100;
+            document.getElementById('progress-bar').style.width = `${percent}%`;
+
+            // Question Text
+            document.getElementById('question-text').innerHTML = q.questionText;
+
+            // Options container
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+            
+            if (q.type === 'MC' || q.type === 'TF') {
+                // Single Choice Questions (Multiple Choice & True/False)
+                const labels = ['A', 'B', 'C', 'D'];
+                q.options.forEach((opt, idx) => {
+                    const optCard = document.createElement('div');
+                    optCard.className = `option-card ${userAnswers[index] === idx ? 'selected' : ''}`;
+                    optCard.onclick = () => selectOption(idx);
+                    
+                    optCard.innerHTML = `
+                        <div class="option-indicator">${labels[idx]}</div>
+                        <div class="option-content">${opt}</div>
+                    `;
+                    container.appendChild(optCard);
+                });
+            } else if (q.type === 'MS') {
+                // Multi-Select Questions (Pilihan Ganda Kompleks)
+                const labels = ['A', 'B', 'C', 'D'];
+                const selectedList = userAnswers[index] || [];
+                q.options.forEach((opt, idx) => {
+                    const optCard = document.createElement('div');
+                    optCard.className = `option-card ${selectedList.includes(idx) ? 'selected' : ''}`;
+                    optCard.onclick = () => toggleMultiSelectOption(idx);
+                    
+                    optCard.innerHTML = `
+                        <div class="option-indicator" style="border-radius: 4px;">${labels[idx]}</div>
+                        <div class="option-content">${opt}</div>
+                    `;
+                    container.appendChild(optCard);
+                });
+            } else if (q.type === 'NUM') {
+                // Numerical Input Questions (Isian Singkat Numerik)
+                const typedVal = userAnswers[index] !== null ? userAnswers[index] : '';
+                container.innerHTML = `
+                    <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px; width: 100%;">
+                        <label style="font-size: 0.75rem; color: var(--text-secondary); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Jawaban Anda (Ketikkan Angka):</label>
+                        <input type="text" id="num-answer-input" placeholder="Contoh: 10 atau -2.5" 
+                               value="${typedVal}" 
+                               oninput="saveNumericalAnswer(this.value)"
+                               style="background: #ffffff; border: 1px solid var(--card-border); padding: 14px 18px; border-radius: 12px; color: var(--text-primary); font-family: 'Inter'; font-size: 1.15rem; font-weight: 700; max-width: 320px; outline: none; transition: 0.3s; box-shadow: 0 2px 8px rgba(0,0,0,0.02);">
+                    </div>
+                `;
+                // Add focus listener decoration
+                const inputEl = document.getElementById('num-answer-input');
+                inputEl.addEventListener('focus', () => {
+                    inputEl.style.borderColor = 'var(--accent-blue)';
+                    inputEl.style.boxShadow = '0 0 10px rgba(37, 99, 235, 0.1)';
+                });
+                inputEl.addEventListener('blur', () => {
+                    inputEl.style.borderColor = 'var(--card-border)';
+                    inputEl.style.boxShadow = '0 2px 8px rgba(0,0,0,0.02)';
+                });
+            }
+
+            // Nav buttons
+            document.getElementById('prev-btn').disabled = index === 0;
+            const nextBtn = document.getElementById('next-btn');
+            if (index === activeQuestions.length - 1) {
+                nextBtn.innerText = "Cetak Hasil" ? "Kirim Jawaban" : "Kirim Jawaban"; // Fix fallback name check
+                nextBtn.innerText = "Kirim Jawaban";
+                nextBtn.style.background = "linear-gradient(135deg, var(--accent-green), var(--accent-blue))";
+            } else {
+                nextBtn.innerText = "Selanjutnya";
+                nextBtn.style.background = "linear-gradient(135deg, var(--accent-blue), var(--accent-purple))";
+            }
+
+            // Trigger math rendering
+            if (window.renderMathInElement) {
+                renderMathInElement(document.getElementById('test-screen'), {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false}
+                    ],
+                    throwOnError: false
+                });
+            }
+        }
+
+        function selectOption(optionIndex) {
+            userAnswers[currentQuestionIndex] = optionIndex;
+            const cards = document.querySelectorAll('.option-card');
+            cards.forEach((card, idx) => {
+                if (idx === optionIndex) {
+                    card.classList.add('selected');
+                } else {
+                    card.classList.remove('selected');
+                }
+            });
+        }
+
+        function toggleMultiSelectOption(optionIndex) {
+            let ans = userAnswers[currentQuestionIndex];
+            if (!Array.isArray(ans)) {
+                ans = [];
+            }
+            const pos = ans.indexOf(optionIndex);
+            if (pos > -1) {
+                ans.splice(pos, 1);
+            } else {
+                ans.push(optionIndex);
+            }
+            userAnswers[currentQuestionIndex] = ans;
+            
+            // Refresh checklist state in cards
+            const cards = document.querySelectorAll('.option-card');
+            cards.forEach((card, i) => {
+                if (ans.includes(i)) {
+                    card.classList.add('selected');
+                } else {
+                    card.classList.remove('selected');
+                }
+            });
+        }
+
+        function saveNumericalAnswer(val) {
+            userAnswers[currentQuestionIndex] = val.trim();
+        }
+
+        function prevQuestion() {
+            if (currentQuestionIndex > 0) {
+                showQuestion(currentQuestionIndex - 1);
+            }
+        }
+
+        function nextQuestion() {
+            const q = activeQuestions[currentQuestionIndex];
+            const ans = userAnswers[currentQuestionIndex];
+            
+            if (q.type === 'MS') {
+                if (!ans || ans.length === 0) {
+                    alert("Harap pilih minimal satu pilihan jawaban sebelum melanjutkan!");
+                    return;
+                }
+            } else if (q.type === 'NUM') {
+                if (ans === null || ans === '') {
+                    alert("Harap isi kolom jawaban berupa angka sebelum melanjutkan!");
+                    return;
+                }
+                const parsedNum = parseFloat(ans.replace(',', '.'));
+                if (isNaN(parsedNum)) {
+                    alert("Format angka tidak valid! Harap ketikkan angka numerik saja (contoh: 10 atau -2.5).");
+                    return;
+                }
+            } else {
+                // MC or TF
+                if (ans === null) {
+                    alert("Harap pilih salah satu jawaban sebelum melanjutkan!");
+                    return;
+                }
+            }
+
+            if (currentQuestionIndex < activeQuestions.length - 1) {
+                showQuestion(currentQuestionIndex + 1);
+            } else {
+                submitTest();
+            }
+        }
+
+        function submitTest() {
+            document.getElementById('test-screen').classList.remove('active');
+            document.getElementById('results-screen').classList.add('active');
+
+            // Calculate score
+            let correctCount = 0;
+            activeQuestions.forEach((q, idx) => {
+                const ans = userAnswers[idx];
+                let isCorrect = false;
+                
+                if (q.type === 'MC' || q.type === 'TF') {
+                    isCorrect = ans === q.correctIndex;
+                } else if (q.type === 'MS') {
+                    if (Array.isArray(ans) && ans.length === q.correctIndices.length) {
+                        isCorrect = ans.every(val => q.correctIndices.includes(val)) && q.correctIndices.every(val => ans.includes(val));
+                    }
+                } else if (q.type === 'NUM') {
+                    if (ans !== null && ans !== '') {
+                        const userVal = parseFloat(ans.replace(',', '.'));
+                        const correctVal = parseFloat(q.correctAnswer);
+                        isCorrect = Math.abs(userVal - correctVal) < 0.05;
+                    }
+                }
+                
+                if (isCorrect) {
+                    correctCount++;
+                }
+            });
+
+            const score = Math.round((correctCount / activeQuestions.length) * 100);
+
+            // Populate student metadata in the official evaluation sheet
+            document.getElementById('sheet-nama').innerText = studentInfo.nama;
+            document.getElementById('sheet-npm').innerText = studentInfo.npm;
+            document.getElementById('sheet-nohp').innerText = studentInfo.nohp;
+            document.getElementById('sheet-email').innerText = studentInfo.email;
+            document.getElementById('sheet-tanggal').innerText = studentInfo.tanggal;
+            document.getElementById('signature-date').innerText = studentInfo.tanggal;
+            document.getElementById('signature-nama-mahasiswa').innerText = studentInfo.nama;
+            document.getElementById('signature-npm-mahasiswa').innerText = "NPM. " + studentInfo.npm;
+
+            const statusSummary = document.getElementById('sheet-status-summary');
+            if (score >= 80) {
+                statusSummary.innerText = "PRIMA (SANGAT SIAP)";
+                statusSummary.style.color = "var(--accent-green)";
+            } else if (score >= 60) {
+                statusSummary.innerText = "SIAP DENGAN CATATAN";
+                statusSummary.style.color = "var(--accent-blue)";
+            } else {
+                statusSummary.innerText = "PERLU REMEDIAL / MATRIKULASI";
+                statusSummary.style.color = "var(--accent-red)";
+            }
+            
+            // Circle animation
+            const circle = document.getElementById('score-fill-circle');
+            const radius = 70;
+            const circumference = 2 * Math.PI * radius; // 439.6
+            const offset = circumference - (score / 100) * circumference;
+            
+            setTimeout(() => {
+                circle.style.strokeDashoffset = offset;
+            }, 200);
+
+            // Counter animation
+            animateValue("score-val", 0, score, 1000);
+
+            // Level and Recommendation
+            const levelTag = document.getElementById('result-level');
+            const recBox = document.getElementById('recommendation-box');
+            
+            if (score >= 80) {
+                levelTag.innerText = "PRIMA (SANGAT SIAP)";
+                levelTag.className = "result-level-tag level-prima";
+                recBox.innerHTML = `
+                    <h4>💡 Rekomendasi Anda:</h4>
+                    <p>Selamat! Anda memiliki fondasi matematika (Kalkulus & Aljabar Linier) dan fisika dasar yang sangat kokoh. Anda siap untuk langsung mengikuti seluruh materi pemodelan Persamaan Diferensial Orde 1 dan sistem dinamik mekatronik di kelas.</p>
+                `;
+            } else if (score >= 60) {
+                levelTag.innerText = "SIAP DENGAN CATATAN";
+                levelTag.className = "result-level-tag level-siap";
+                recBox.innerHTML = `
+                    <h4>💡 Rekomendasi Anda:</h4>
+                    <p>Anda sudah siap mengikuti perkuliahan, namun disarankan untuk membaca kembali beberapa konsep Kalkulus (terutama <strong>Turunan berantai</strong> dan <strong>Integral parsial</strong>) serta meninjau ulang hubungan tegangan-arus pada komponen induktor/kapasitor agar tidak menemui hambatan saat materi pemodelan rangkaian transient.</p>
+                `;
+            } else {
+                levelTag.innerText = "PERLU REMEDIAL / MATRIKULASI";
+                levelTag.className = "result-level-tag level-remedial";
+                recBox.innerHTML = `
+                    <h4>💡 Rekomendasi Anda:</h4>
+                    <p>Skor Anda menunjukkan adanya kesenjangan pemahaman yang cukup besar pada materi prasyarat. <strong>Sangat direkomendasikan</strong> untuk mengikuti tutorial review Kalkulus (diferensial & integral) serta konsep hukum Kirchoff dasar sebelum memasuki minggu pertama perkuliahan Persamaan Diferensial agar dapat mengikuti perkuliahan dengan baik.</p>
+                `;
+            }
+
+            // Calculate CPL Breakdown (Kalkulus, Aljabar Linier, Rangkaian Listrik)
+            let catStats = {
+                "Kalkulus": { correct: 0, total: 0 },
+                "Aljabar Linier": { correct: 0, total: 0 },
+                "Rangkaian Listrik": { correct: 0, total: 0 }
+            };
+            
+            activeQuestions.forEach((q, idx) => {
+                const ans = userAnswers[idx];
+                let isCorrect = false;
+                
+                if (q.type === 'MC' || q.type === 'TF') {
+                    isCorrect = ans === q.correctIndex;
+                } else if (q.type === 'MS') {
+                    if (Array.isArray(ans) && ans.length === q.correctIndices.length) {
+                        isCorrect = ans.every(val => q.correctIndices.includes(val)) && q.correctIndices.every(val => ans.includes(val));
+                    }
+                } else if (q.type === 'NUM') {
+                    if (ans !== null && ans !== '') {
+                        isCorrect = Math.abs(parseFloat(ans.replace(',', '.')) - parseFloat(q.correctAnswer)) < 0.05;
+                    }
+                }
+                
+                catStats[q.category].total++;
+                if (isCorrect) {
+                    catStats[q.category].correct++;
+                }
+            });
+
+            const cplBox = document.getElementById('cpl-breakdown');
+            cplBox.innerHTML = '';
+            
+            const catRecs = {
+                "Kalkulus": {
+                    strong: "Pemahaman turunan dan integral sangat baik. Anda sangat siap untuk materi PDB Orde 1 dan Laplace.",
+                    moderate: "Kuasai kembali teknik integral parsial dan aturan rantai turunan untuk kelancaran pengerjaan soal Laplace.",
+                    weak: "Perlu belajar ulang konsep dasar turunan dan integral (terutama integral parsial/substitusi) sesegera mungkin."
+                },
+                "Aljabar Linier": {
+                    strong: "Menguasai operasi matriks dan determinan. Siap untuk pemodelan PDB Linier orde tinggi dan sistem PDB.",
+                    moderate: "Tinjau kembali cara menghitung determinan matriks 2x2 dan pencarian nilai eigen untuk sistem persamaan linier.",
+                    weak: "Perlu mempelajari kembali dasar-dasar matriks, determinan, dan metode eliminasi Gauss dasar."
+                },
+                "Rangkaian Listrik": {
+                    strong: "Pemahaman KVL/KCL dan karakteristik komponen reaktif (L & C) sangat kuat.",
+                    moderate: "Tinjau kembali hubungan tegangan-arus pada kapasitor dan induktor ($v_L = L \\frac{di}{dt}$ dan $i_c = C \\frac{dv}{dt}$).",
+                    weak: "Perlu mempelajari kembali hukum Kirchoff dasar dan karakteristik komponen induktor/kapasitor."
+                }
+            };
+            
+            Object.keys(catStats).forEach(cat => {
+                const stat = catStats[cat];
+                const pct = stat.total > 0 ? (stat.correct / stat.total) * 100 : 0;
+                
+                let statusClass = "cpl-status-weak";
+                let statusText = "Perlu Penguatan";
+                let recText = catRecs[cat].weak;
+                let barColor = "var(--accent-red)";
+                
+                if (pct >= 80) {
+                    statusClass = "cpl-status-strong";
+                    statusText = "Kuat (Kuasai)";
+                    recText = catRecs[cat].strong;
+                    barColor = "var(--accent-green)";
+                } else if (pct >= 60) {
+                    statusClass = "cpl-status-moderate";
+                    statusText = "Cukup (Perlu Review)";
+                    recText = catRecs[cat].moderate;
+                    barColor = "var(--accent-blue)";
+                }
+                
+                const cplItem = document.createElement('div');
+                cplItem.className = 'cpl-item';
+                cplItem.innerHTML = `
+                    <div class="cpl-info">
+                        <span>${cat}</span>
+                        <span>${Math.round(pct)}% (${stat.correct}/${stat.total})</span>
+                    </div>
+                    <div class="cpl-bar-bg">
+                        <div class="cpl-bar-fill" style="width: ${pct}%; background: ${barColor};"></div>
+                    </div>
+                    <div class="cpl-details">
+                        <span class="cpl-status ${statusClass}">${statusText}</span>
+                        <span style="font-size: 0.85rem; margin-top: 4px; display: block; line-height: 1.4; color: var(--text-secondary);">${recText}</span>
+                    </div>
+                `;
+                cplBox.appendChild(cplItem);
+            });
+
+            // Save results to Google Sheet if BACKEND_URL is defined
+            if (BACKEND_URL) {
+                const resultsData = {
+                    action: 'saveResults',
+                    nama: studentInfo.nama,
+                    npm: studentInfo.npm,
+                    nohp: studentInfo.nohp,
+                    email: studentInfo.email,
+                    score: score,
+                    statusSummary: score >= 80 ? "PRIMA" : (score >= 60 ? "SIAP DENGAN CATATAN" : "PERLU MATRIKULASI"),
+                    kalkulusPct: Math.round(catStats["Kalkulus"].total > 0 ? (catStats["Kalkulus"].correct / catStats["Kalkulus"].total) * 100 : 0),
+                    aljabarPct: Math.round(catStats["Aljabar Linier"].total > 0 ? (catStats["Aljabar Linier"].correct / catStats["Aljabar Linier"].total) * 100 : 0),
+                    listrikPct: Math.round(catStats["Rangkaian Listrik"].total > 0 ? (catStats["Rangkaian Listrik"].correct / catStats["Rangkaian Listrik"].total) * 100 : 0)
+                };
+
+                fetch(BACKEND_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain' },
+                    body: JSON.stringify(resultsData)
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        console.log("Hasil pretest sukses disimpan ke Google Sheets.");
+                    } else {
+                        console.warn("Gagal menyimpan ke Google Sheets: " + data.message);
+                    }
+                })
+                .catch(err => {
+                    console.error("Kesalahan koneksi menyimpan hasil ke Google Sheets:", err);
+                });
+            }
+
+            // Render Lembar Evaluasi Kesiapan Sub-Topik Table
+            const readinessTableBody = document.getElementById('readiness-table-body');
+            readinessTableBody.innerHTML = '';
+            
+            const subtopicRecs = {
+                1: "Pelajari kembali aturan turunan berantai di Kalkulus I.",
+                2: "Review teknik integrasi substitusi aljabar.",
+                3: "Wajib mempelajari ulang teknik integral parsial (\\int u \\, dv).",
+                4: "Tinjau ulang sifat logaritma natural pada hasil integral.",
+                5: "Pelajari kembali perkalian matriks 2x2 dengan vektor.",
+                6: "Review rumus determinan matriks 2x2 (ad - bc).",
+                7: "Tinjau kembali syarat SPL memiliki solusi/tidak memiliki solusi.",
+                8: "Pelajari ulang sifat arus kapasitor terhadap tegangan.",
+                9: "Pelajari ulang sifat tegangan induktor terhadap arus.",
+                10: "Review hukum Kirchoff Tegangan (KVL) untuk loop tertutup.",
+                11: "Pahami sifat linearitas pada integral dan turunan.",
+                12: "Pelajari ulang Teorema Dasar Kalkulus I mengenai turunan dari fungsi integral.",
+                13: "Pelajari ulang konsep matriks singular dan implikasinya terhadap jumlah solusi SPL.",
+                14: "Review kembali karakteristik beban induktif pada kondisi tunak DC.",
+                15: "Review kembali karakteristik beban kapasitif pada kondisi tunak DC.",
+                16: "Latih kembali perhitungan determinan matriks 2x2 secara presisi.",
+                17: "Tinjau kembali evaluasi integral definit menggunakan batas atas/bawah.",
+                18: "Review perhitungan konstanta waktu rangkaian RC (\\tau = RC).",
+                19: "Pahami syarat kebebasan linier baris matriks dan kaitannya dengan determinan.",
+                20: "Pelajari kembali kontinuitas arus pada induktor dan tegangan pada kapasitor."
+            };
+
+            const sortedQuestionsForTable = [...activeQuestions].sort((a, b) => a.id - b.id);
+
+            sortedQuestionsForTable.forEach((q, tableIdx) => {
+                const originalIndexInSession = activeQuestions.findIndex(sessionQ => sessionQ.id === q.id);
+                const ans = userAnswers[originalIndexInSession];
+                let isCorrect = false;
+
+                if (q.type === 'MC' || q.type === 'TF') {
+                    isCorrect = ans === q.correctIndex;
+                } else if (q.type === 'MS') {
+                    if (Array.isArray(ans) && ans.length === q.correctIndices.length) {
+                        isCorrect = ans.every(val => q.correctIndices.includes(val)) && q.correctIndices.every(val => ans.includes(val));
+                    }
+                } else if (q.type === 'NUM') {
+                    if (ans !== null && ans !== '') {
+                        isCorrect = Math.abs(parseFloat(ans.replace(',', '.')) - parseFloat(q.correctAnswer)) < 0.05;
+                    }
+                }
+                
+                const tr = document.createElement('tr');
+                tr.style.borderBottom = '1px solid var(--card-border)';
+                
+                const recText = isCorrect ? "Siap untuk materi terkait." : subtopicRecs[q.id];
+                const statusBadge = isCorrect 
+                    ? `<span class="status-badge status-correct" style="display:inline-block; text-align:center; width:100%; border-radius:12px;">Menguasai</span>`
+                    : `<span class="status-badge status-incorrect" style="display:inline-block; text-align:center; width:100%; border-radius:12px;">Perlu Penguatan</span>`;
+                
+                tr.innerHTML = `
+                    <td style="padding: 10px 6px; font-weight: 500;">${tableIdx + 1}</td>
+                    <td style="padding: 10px 6px; font-weight: 600;">${q.subTopic}</td>
+                    <td style="padding: 10px 6px; color: var(--text-secondary);">${q.bloomLevel}</td>
+                    <td style="padding: 10px 6px; text-align: center;">${statusBadge}</td>
+                    <td style="padding: 10px 6px; font-size: 0.8rem; line-height: 1.4; color: var(--text-primary);">${q.competency}</td>
+                    <td style="padding: 10px 6px; font-size: 0.8rem; line-height: 1.4; color: ${isCorrect ? 'var(--text-secondary)' : '#ff5a5f'};"><strong>${q.relevance}</strong><br><em style="font-size: 0.75rem; display: block; margin-top: 4px; color: var(--text-secondary);">Rekomendasi: ${recText}</em></td>
+                `;
+                readinessTableBody.appendChild(tr);
+            });
+
+            // Render detailed review list
+            const reviewList = document.getElementById('review-list');
+            reviewList.innerHTML = '';
+            const labels = ['A', 'B', 'C', 'D'];
+
+            activeQuestions.forEach((q, idx) => {
+                const ans = userAnswers[idx];
+                let isCorrect = false;
+
+                if (q.type === 'MC' || q.type === 'TF') {
+                    isCorrect = ans === q.correctIndex;
+                } else if (q.type === 'MS') {
+                    if (Array.isArray(ans) && ans.length === q.correctIndices.length) {
+                        isCorrect = ans.every(val => q.correctIndices.includes(val)) && q.correctIndices.every(val => ans.includes(val));
+                    }
+                } else if (q.type === 'NUM') {
+                    if (ans !== null && ans !== '') {
+                        isCorrect = Math.abs(parseFloat(ans.replace(',', '.')) - parseFloat(q.correctAnswer)) < 0.05;
+                    }
+                }
+
+                const reviewItem = document.createElement('div');
+                reviewItem.className = 'review-item';
+                reviewItem.id = `review-item-${idx}`;
+
+                let answerHTML = '';
+                
+                if (q.type === 'MC' || q.type === 'TF') {
+                    answerHTML = isCorrect ? `
+                        <div class="answer-box correct-choice" style="border-left: 4px solid var(--accent-green); background: rgba(6, 214, 160, 0.03); padding: 15px; border-radius: 12px; margin-bottom: 20px; border-color: rgba(6, 214, 160, 0.3);">
+                            <span style="color: var(--accent-green); font-weight: 700; font-size: 0.8rem; text-transform: uppercase; display: block; margin-bottom: 6px;">🎉 Jawaban Anda Benar</span>
+                            <div style="font-size: 1rem; color: var(--text-primary); overflow-x: auto;">
+                                <strong>(${labels[q.correctIndex]})</strong> ${q.options[q.correctIndex]}
+                            </div>
+                        </div>
+                    ` : `
+                        <div class="answer-comparison" style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;">
+                            <div class="answer-box incorrect-choice" style="border-left: 4px solid var(--accent-red); background: rgba(255, 90, 95, 0.03); border-color: rgba(255, 90, 95, 0.3); padding: 15px; border-radius: 12px;">
+                                <span style="color: var(--accent-red); font-weight: 700; font-size: 0.8rem; text-transform: uppercase; display: block; margin-bottom: 6px;">❌ Jawaban Anda (Salah)</span>
+                                <div style="font-size: 1rem; color: var(--text-primary); overflow-x: auto;">
+                                    <strong>(${labels[ans]})</strong> ${q.options[ans]}
+                                </div>
+                            </div>
+                            <div class="answer-box correct-choice" style="border-left: 4px solid var(--accent-green); background: rgba(6, 214, 160, 0.03); border-color: rgba(6, 214, 160, 0.3); padding: 15px; border-radius: 12px;">
+                                <span style="color: var(--accent-green); font-weight: 700; font-size: 0.8rem; text-transform: uppercase; display: block; margin-bottom: 6px;">✅ Jawaban Benar</span>
+                                <div style="font-size: 1rem; color: var(--text-primary); overflow-x: auto;">
+                                    <strong>(${labels[q.correctIndex]})</strong> ${q.options[q.correctIndex]}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                } else if (q.type === 'NUM') {
+                    answerHTML = `
+                        <div class="answer-comparison" style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;">
+                            <div class="answer-box ${isCorrect ? 'correct-choice' : 'incorrect-choice'}" style="border-left: 4px solid ${isCorrect ? 'var(--accent-green)' : 'var(--accent-red)'}; background: ${isCorrect ? 'rgba(6, 214, 160, 0.03)' : 'rgba(255, 90, 95, 0.03)'}; border-color: ${isCorrect ? 'rgba(6, 214, 160, 0.3)' : 'rgba(255, 90, 95, 0.3)'}; padding: 15px; border-radius: 12px;">
+                                <span style="color: ${isCorrect ? 'var(--accent-green)' : 'var(--accent-red)'}; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; display: block; margin-bottom: 6px;">
+                                    ${isCorrect ? '🎉 Jawaban Anda (Benar)' : '❌ Jawaban Anda (Salah)'}
+                                </span>
+                                <div style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary);">
+                                    ${ans}
+                                </div>
+                            </div>
+                            ${!isCorrect ? `
+                            <div class="answer-box correct-choice" style="border-left: 4px solid var(--accent-green); background: rgba(6, 214, 160, 0.03); border-color: rgba(6, 214, 160, 0.3); padding: 15px; border-radius: 12px;">
+                                <span style="color: var(--accent-green); font-weight: 700; font-size: 0.8rem; text-transform: uppercase; display: block; margin-bottom: 6px;">✅ Jawaban Benar</span>
+                                <div style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary);">
+                                    ${q.correctAnswer}
+                                </div>
+                            </div>
+                            ` : ''}
+                        </div>
+                    `;
+                } else if (q.type === 'MS') {
+                    const userLabels = ans.map(i => labels[i]).join(', ');
+                    const correctLabels = q.correctIndices.map(i => labels[i]).join(', ');
+                    const userTexts = ans.map(i => q.options[i]).map(t => `<li>${t}</li>`).join('');
+                    const correctTexts = q.correctIndices.map(i => q.options[i]).map(t => `<li>${t}</li>`).join('');
+                    
+                    answerHTML = `
+                        <div class="answer-comparison" style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;">
+                            <div class="answer-box ${isCorrect ? 'correct-choice' : 'incorrect-choice'}" style="border-left: 4px solid ${isCorrect ? 'var(--accent-green)' : 'var(--accent-red)'}; background: ${isCorrect ? 'rgba(6, 214, 160, 0.03)' : 'rgba(255, 90, 95, 0.03)'}; border-color: ${isCorrect ? 'rgba(6, 214, 160, 0.3)' : 'rgba(255, 90, 95, 0.3)'}; padding: 15px; border-radius: 12px;">
+                                <span style="color: ${isCorrect ? 'var(--accent-green)' : 'var(--accent-red)'}; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; display: block; margin-bottom: 6px;">
+                                    ${isCorrect ? '🎉 Pilihan Anda (Benar)' : '❌ Pilihan Anda (Salah)'}
+                                </span>
+                                <div style="font-size: 0.95rem; color: var(--text-primary);">
+                                    <strong>Pilihan (${userLabels || '-'}):</strong>
+                                    <ul style="margin-left: 20px; margin-top: 5px; line-height:1.4;">${userTexts || '<li>Tidak ada yang dipilih</li>'}</ul>
+                                </div>
+                            </div>
+                            ${!isCorrect ? `
+                            <div class="answer-box correct-choice" style="border-left: 4px solid var(--accent-green); background: rgba(6, 214, 160, 0.03); border-color: rgba(6, 214, 160, 0.3); padding: 15px; border-radius: 12px;">
+                                <span style="color: var(--accent-green); font-weight: 700; font-size: 0.8rem; text-transform: uppercase; display: block; margin-bottom: 6px;">✅ Pilihan Benar</span>
+                                <div style="font-size: 0.95rem; color: var(--text-primary);">
+                                    <strong>Pilihan (${correctLabels}):</strong>
+                                    <ul style="margin-left: 20px; margin-top: 5px; line-height:1.4;">${correctTexts}</ul>
+                                </div>
+                            </div>
+                            ` : ''}
+                        </div>
+                    `;
+                }
+
+                reviewItem.innerHTML = `
+                    <div class="review-header" onclick="toggleReviewItem(${idx})">
+                        <div class="review-title-group">
+                            <span class="status-badge ${isCorrect ? 'status-correct' : 'status-incorrect'}">
+                                ${isCorrect ? 'Benar' : 'Salah'}
+                            </span>
+                            <strong>Soal ${idx + 1} (${q.category})</strong>
+                        </div>
+                        <svg class="chevron-icon" viewBox="0 0 24 24">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </div>
+                    <div class="review-body">
+                        <div style="margin: 15px 0 10px 0; font-size: 0.8rem; color: var(--text-secondary); display: flex; gap: 8px; flex-wrap: wrap;">
+                            <span style="background: #e5e7eb; padding: 3px 10px; border-radius: 20px; border: 1px solid var(--card-border);"><strong>Sub-Topik:</strong> ${q.subTopic}</span>
+                            <span style="background: #e5e7eb; padding: 3px 10px; border-radius: 20px; border: 1px solid var(--card-border);"><strong>Level:</strong> ${q.bloomLevel}</span>
+                            <span style="background: #e5e7eb; padding: 3px 10px; border-radius: 20px; border: 1px solid var(--card-border);"><strong>Tipe Soal:</strong> ${q.type === 'MC' ? 'Pilihan Ganda' : (q.type === 'TF' ? 'Benar/Salah' : (q.type === 'NUM' ? 'Isian Numerik' : 'Pilihan Kompleks'))}</span>
+                        </div>
+                        <div style="margin-bottom: 20px; font-size: 0.85rem; padding: 12px; background: rgba(37, 99, 235, 0.03); border-radius: 12px; border-left: 3px solid var(--accent-blue); line-height: 1.5; color: var(--text-primary);">
+                            <strong>Urgensi ke PDB:</strong> ${q.relevance}
+                        </div>
+                        <div class="review-q-text">${q.questionText}</div>
+                        ${answerHTML}
+                        <div class="explanation-box">
+                            <h5>Pembahasan:</h5>
+                            <p>${q.explanation.replace(/\\newline/g, '<br>')}</p>
+                        </div>
+                    </div>
+                `;
+                reviewList.appendChild(reviewItem);
+            });
+
+            // Trigger math rendering on results
+            if (window.renderMathInElement) {
+                renderMathInElement(reviewList, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false}
+                    ],
+                    throwOnError: false
+                });
+            }
+        }
+
+        function toggleReviewItem(idx) {
+            const item = document.getElementById(`review-item-${idx}`);
+            const isOpen = item.classList.toggle('open');
+            if (isOpen && window.renderMathInElement) {
+                renderMathInElement(item.querySelector('.review-body'), {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false}
+                    ],
+                    throwOnError: false
+                });
+            }
+        }
+
+        function animateValue(id, start, end, duration) {
+            const obj = document.getElementById(id);
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                obj.innerHTML = Math.floor(progress * (end - start) + start);
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        function resetTest() {
+            userAnswers = [];
+            document.getElementById('results-screen').classList.remove('active');
+            document.getElementById('welcome-screen').classList.add('active');
+            
+            // Reset circular progress bar
+            const circle = document.getElementById('score-fill-circle');
+            circle.style.strokeDashoffset = 439.6;
+
+            // Reset input values
+            document.getElementById('input-nama').value = '';
+            document.getElementById('input-npm').value = '';
+            document.getElementById('input-nohp').value = '';
+            document.getElementById('input-email').value = '';
+            document.getElementById('input-pin').value = '';
+            
+            generatedPin = null;
+        }
+
+        function printEvaluation() {
+            window.print();
+        }
+    </script>
+</body>
+</html>
