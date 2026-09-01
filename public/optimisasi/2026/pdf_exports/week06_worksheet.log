@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026/Homebrew) (preloaded format=pdflatex 2026.3.4)  18 AUG 2026 10:50
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026/Homebrew) (preloaded format=pdflatex 2026.3.4)  1 SEP 2026 10:14
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -239,8 +239,7 @@ Package: listings 2025/11/14 1.11b (Carsten Heinz)
 ackend-pdftex.def
 File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count306
-)
-No file week06_worksheet.aux.
+) (../pdf_exports/week06_worksheet.aux)
 \openout1 = `week06_worksheet.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 15.
@@ -257,6 +256,7 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 15.
 LaTeX Font Info:    ... okay on input line 15.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 15.
 LaTeX Font Info:    ... okay on input line 15.
+
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -346,10 +346,10 @@ L3 programming layer <2026-01-19>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 4967 strings out of 467525
- 73825 string characters out of 5408440
- 488419 words of memory out of 5000000
- 33861 multiletter control sequences out of 15000+600000
+ 4970 strings out of 467525
+ 73928 string characters out of 5408440
+ 488410 words of memory out of 5000000
+ 33862 multiletter control sequences out of 15000+600000
  633282 words of font info for 61 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  57i,11n,65p,245b,330s stack positions out of 10000i,1000n,20000p,200000b,200000s

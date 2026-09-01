@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026/Homebrew) (preloaded format=pdflatex 2026.3.4)  18 AUG 2026 10:50
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026/Homebrew) (preloaded format=pdflatex 2026.3.4)  1 SEP 2026 10:14
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -141,8 +141,7 @@ Package: iftex 2024/12/12 v1.0g TeX engine tests
 ackend-pdftex.def
 File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count298
-)
-No file week13_problem_set.aux.
+) (../pdf_exports/week13_problem_set.aux)
 \openout1 = `week13_problem_set.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 1.
@@ -159,6 +158,7 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 1.
 LaTeX Font Info:    ... okay on input line 1.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 1.
 LaTeX Font Info:    ... okay on input line 1.
+
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -206,10 +206,10 @@ L3 programming layer <2026-01-19>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 1798 strings out of 467525
- 28201 string characters out of 5408440
- 438745 words of memory out of 5000000
- 30744 multiletter control sequences out of 15000+600000
+ 1801 strings out of 467525
+ 28310 string characters out of 5408440
+ 438736 words of memory out of 5000000
+ 30745 multiletter control sequences out of 15000+600000
  632335 words of font info for 56 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  57i,6n,65p,393b,204s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -218,7 +218,7 @@ sfonts/cm/cmbx12.pfb></opt/homebrew/Cellar/texlive/20260301/share/texmf-dist/fo
 nts/type1/public/amsfonts/cm/cmr10.pfb></opt/homebrew/Cellar/texlive/20260301/s
 hare/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></opt/homebrew/Cellar/
 texlive/20260301/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb>
-Output written on ../pdf_exports/week13_problem_set.pdf (1 page, 49992 bytes).
+Output written on ../pdf_exports/week13_problem_set.pdf (1 page, 50158 bytes).
 PDF statistics:
  28 PDF objects out of 1000 (max. 8388607)
  16 compressed objects within 1 object stream
