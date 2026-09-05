@@ -1,220 +1,1381 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Metode Eksperimen Teknik | TIN-213</title>
+    <title>Metode Eksperimen Teknik (TIN-213) | S2 Teknik Mesin UNIB</title>
+    <meta name="description" content="Portal Pembelajaran Resmi TIN-213 Metode Eksperimen Teknik & Analisis Berbasis Komputer - Program Magister Teknik Mesin Universitas Bengkulu.">
+    
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-        .bg-pattern {
-            background-color: #ffffff;
-            background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
-            background-size: 20px 20px;
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        unib: {
+                            50: '#f0f7ff',
+                            100: '#e0effe',
+                            600: '#184c78',
+                            700: '#12395b',
+                            800: '#0e2b44',
+                            900: '#091c2d',
+                        }
+                    }
+                }
+            }
         }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05);
+    </script>
+    
+    <!-- Google Fonts & FontAwesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        code, pre, .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .bg-grid-pattern {
+            background-color: #ffffff;
+            background-image: radial-gradient(#d1d5db 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(229, 231, 235, 0.8);
+        }
+        dialog::backdrop {
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(4px);
+        }
+        .pipe-visual {
+            background: linear-gradient(180deg, #94a3b8 0%, #cbd5e1 50%, #64748b 100%);
         }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800 antialiased">
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-blue-600 selection:text-white">
 
-    <!-- Navbar -->
-    <nav class="bg-white shadow-sm sticky top-0 z-50">
+    <!-- Top Announcement Bar -->
+    <aside aria-label="Pengumuman Perkuliahan" class="bg-unib-900 text-slate-200 text-xs py-2 px-4 border-b border-unib-800">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
+            <div class="flex items-center gap-2">
+                <span class="bg-blue-500 text-white font-bold px-2 py-0.5 rounded text-[10px] uppercase tracking-wider">TIN-213</span>
+                <span>Semester Ganjil 2026/2027 • Program Magister (S2) Teknik Mesin UNIB</span>
+            </div>
+            <div class="flex items-center gap-4 text-slate-300">
+                <a href="https://www.ndaratha.my.id" class="hover:text-white transition flex items-center gap-1.5 text-blue-300 font-medium">
+                    <i class="fa-solid fa-arrow-left text-[10px]"></i> ndaratha.my.id
+                </a>
+                <span>•</span>
+                <span><i class="fa-solid fa-code-branch text-blue-400 mr-1"></i> Rujukan Terverifikasi v1.2</span>
+                <span class="hidden md:inline">•</span>
+                <span class="hidden md:inline"><i class="fa-solid fa-check-circle text-emerald-400 mr-1"></i> 100% Active DOI</span>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Navigation Header -->
+    <header class="sticky top-0 z-40 glass-panel border-b border-slate-200/80 shadow-sm transition-all duration-300" id="navbar">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex items-center">
-                    <i class="fa-solid fa-microscope text-blue-600 text-2xl mr-3"></i>
-                    <span class="font-bold text-xl tracking-tight text-gray-900">TIN-213</span>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <a href="#tentang" class="text-gray-600 hover:text-blue-600 font-medium text-sm transition">Tentang</a>
-                    <a href="#pengampu" class="text-gray-600 hover:text-blue-600 font-medium text-sm transition">Tim Dosen</a>
-                    <a href="#materi" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition shadow-sm">Akses Materi</a>
-                </div>
-            </div>
-        </div>
-    </nav>
+            <div class="flex justify-between h-20 items-center">
+                <!-- Brand -->
+                <a href="#beranda" class="flex items-center gap-3 group" aria-label="Halaman Beranda TIN-213">
+                    <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-blue-700 to-indigo-600 flex items-center justify-center text-white shadow-md shadow-blue-500/20 group-hover:scale-105 transition">
+                        <i class="fa-solid fa-microscope text-xl"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="font-extrabold text-xl tracking-tight text-slate-900 group-hover:text-blue-600 transition">TIN-213</span>
+                            <span class="text-xs font-bold text-blue-600 bg-blue-50 border border-blue-200 px-1.5 py-0.5 rounded">DEEF</span>
+                        </div>
+                        <p class="text-xs text-slate-500 font-medium hidden sm:block">Metode Eksperimen Teknik Mesin</p>
+                    </div>
+                </a>
 
-    <!-- Hero Section -->
-    <header class="bg-pattern relative overflow-hidden py-20 lg:py-32 border-b border-gray-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="text-center max-w-3xl mx-auto">
-                <span class="inline-block py-1 px-3 rounded-full bg-blue-100 text-blue-700 font-semibold text-xs mb-6 uppercase tracking-wider">Magister Teknik Mesin • Universitas Bengkulu</span>
-                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 tracking-tight mb-6">
-                    Metode Eksperimen & <br>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Analisis Berbasis Komputer</span>
-                </h1>
-                <p class="text-lg sm:text-xl text-gray-600 mb-10 leading-relaxed">
-                    Digital Experimental Engineering Framework (DEEF). Mentransformasi objek rekayasa fisik menjadi keputusan cerdas berbasis data melalui simulasi numerik dan kecerdasan buatan.
-                </p>
-                <div class="flex justify-center gap-4">
-                    <a href="#materi" class="px-8 py-3.5 bg-blue-600 text-white font-medium rounded-xl hover:bg-blue-700 transition shadow-lg shadow-blue-200 flex items-center">
-                        <i class="fa-solid fa-book-open mr-2"></i> Mulai Belajar
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden lg:flex items-center space-x-1 font-medium text-sm text-slate-600">
+                    <a href="#beranda" class="px-3 py-2 rounded-lg hover:text-blue-600 hover:bg-slate-100/60 transition">Beranda</a>
+                    <a href="#framework" class="px-3 py-2 rounded-lg hover:text-blue-600 hover:bg-slate-100/60 transition">Pilar DEEF</a>
+                    <a href="#silabus" class="px-3 py-2 rounded-lg hover:text-blue-600 hover:bg-slate-100/60 transition">Silabus 16 Pekan</a>
+                    <a href="#lab-virtual" class="px-3 py-2 rounded-lg hover:text-blue-600 hover:bg-slate-100/60 transition text-indigo-600 font-semibold flex items-center gap-1.5">
+                        <i class="fa-solid fa-flask-vial"></i> Virtual Lab
                     </a>
-                    <a href="#tentang" class="px-8 py-3.5 bg-white text-gray-700 font-medium rounded-xl border border-gray-200 hover:bg-gray-50 transition shadow-sm flex items-center">
-                        <i class="fa-solid fa-info-circle mr-2"></i> Silabus
+                    <a href="#materi" class="px-3 py-2 rounded-lg hover:text-blue-600 hover:bg-slate-100/60 transition">Unduh Modul</a>
+                    <a href="#pustaka" class="px-3 py-2 rounded-lg hover:text-blue-600 hover:bg-slate-100/60 transition">Pustaka Terverifikasi</a>
+                    <a href="#pengampu" class="px-3 py-2 rounded-lg hover:text-blue-600 hover:bg-slate-100/60 transition">Dosen</a>
+                </nav>
+
+                <!-- Action CTA & Mobile Toggle -->
+                <div class="flex items-center gap-3">
+                    <a href="#materi" class="hidden sm:inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-xl transition shadow-sm hover:shadow shadow-blue-500/20">
+                        <i class="fa-solid fa-download mr-2 text-xs"></i> Download Center
                     </a>
+                    <!-- Mobile Hamburger Button -->
+                    <button type="button" id="mobile-menu-btn" class="lg:hidden p-2.5 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 focus:outline-none" aria-expanded="false" aria-label="Buka Menu Navigasi">
+                        <i class="fa-solid fa-bars text-xl" id="menu-icon"></i>
+                    </button>
                 </div>
             </div>
         </div>
+
+        <!-- Mobile Menu Container -->
+        <nav id="mobile-menu" class="hidden lg:hidden border-t border-slate-200 bg-white/95 px-4 pt-3 pb-6 space-y-1 shadow-xl">
+            <a href="#beranda" class="block px-3 py-2 rounded-lg text-slate-700 font-medium hover:bg-blue-50 hover:text-blue-600 transition">Beranda</a>
+            <a href="#framework" class="block px-3 py-2 rounded-lg text-slate-700 font-medium hover:bg-blue-50 hover:text-blue-600 transition">Pilar DEEF</a>
+            <a href="#silabus" class="block px-3 py-2 rounded-lg text-slate-700 font-medium hover:bg-blue-50 hover:text-blue-600 transition">Silabus 16 Pekan</a>
+            <a href="#lab-virtual" class="block px-3 py-2 rounded-lg text-indigo-600 font-semibold hover:bg-indigo-50 transition">Virtual Lab (Kalkulator)</a>
+            <a href="#materi" class="block px-3 py-2 rounded-lg text-slate-700 font-medium hover:bg-blue-50 hover:text-blue-600 transition">Pusat Unduhan Modul</a>
+            <a href="#pustaka" class="block px-3 py-2 rounded-lg text-slate-700 font-medium hover:bg-blue-50 hover:text-blue-600 transition">Daftar Pustaka DOI</a>
+            <a href="#pengampu" class="block px-3 py-2 rounded-lg text-slate-700 font-medium hover:bg-blue-50 hover:text-blue-600 transition">Tim Dosen</a>
+        </nav>
     </header>
 
-    <!-- Instructors Section -->
-    <section id="pengampu" class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold text-gray-900 mb-4">Tim Pengampu</h2>
-                <div class="w-24 h-1 bg-blue-600 mx-auto rounded-full"></div>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <!-- Lecturer 1 -->
-                <div class="glass-card rounded-2xl p-8 text-center border border-gray-100 hover:shadow-xl transition duration-300">
-                    <div class="w-20 h-20 bg-gray-100 rounded-full mx-auto mb-6 flex items-center justify-center text-gray-400 text-3xl">
-                        <i class="fa-solid fa-user-tie"></i>
-                    </div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-1">Ir. A Sofwan FA</h3>
-                    <p class="text-sm text-blue-600 font-medium mb-3">M.Tech., Ph.D., IPM.</p>
-                    <p class="text-sm text-gray-500">Engineering Thinking & Framework Design</p>
+    <!-- Hero Section -->
+    <main>
+    <section id="beranda" class="relative bg-grid-pattern overflow-hidden py-16 sm:py-24 lg:py-28 border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-4xl mx-auto">
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 border border-blue-200/80 text-blue-700 text-xs font-bold mb-6">
+                    <span class="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span>
+                    Digital Experimental Engineering Framework (DEEF)
                 </div>
-                <!-- Lecturer 2 -->
-                <div class="glass-card rounded-2xl p-8 text-center border border-gray-100 hover:shadow-xl transition duration-300 relative overflow-hidden">
-                    <div class="absolute top-0 right-0 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">Koordinator Digital</div>
-                    <div class="w-20 h-20 bg-blue-50 rounded-full mx-auto mb-6 flex items-center justify-center text-blue-500 text-3xl">
-                        <i class="fa-solid fa-laptop-code"></i>
-                    </div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-1">Ir. Novalio Daratha</h3>
-                    <p class="text-sm text-blue-600 font-medium mb-3">S.T., M.Sc., Ph.D.</p>
-                    <p class="text-sm text-gray-500">Digital Model, Simulation & Optimization</p>
+                <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-tight mb-6">
+                    Metode Eksperimen & <br class="hidden sm:inline">
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-700 via-indigo-600 to-blue-500">Analisis Berbasis Komputer</span>
+                </h1>
+                <p class="text-base sm:text-lg lg:text-xl text-slate-600 leading-relaxed mb-10 max-w-3xl mx-auto">
+                    Transformasi objek rekayasa fisik menjadi keputusan cerdas berbasis data empiris. Mengintegrasikan instrumen sensor, pemodelan matematis, simulasi numerik, dan kecerdasan buatan untuk mahasiswa Magister Teknik Mesin Universitas Bengkulu.
+                </p>
+
+                <!-- Quick Action Buttons -->
+                <div class="flex flex-wrap justify-center items-center gap-4 mb-14">
+                    <a href="#materi" class="px-7 py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition shadow-lg shadow-blue-500/25 flex items-center gap-2">
+                        <i class="fa-solid fa-book-open"></i> Akses Modul & LKM
+                    </a>
+                    <a href="#lab-virtual" class="px-7 py-3.5 bg-white text-indigo-600 border border-indigo-200 hover:bg-indigo-50/70 font-bold rounded-xl transition shadow-sm flex items-center gap-2">
+                        <i class="fa-solid fa-calculator"></i> Buka Virtual Lab
+                    </a>
+                    <a href="#silabus" class="px-7 py-3.5 bg-white text-slate-700 border border-slate-300 hover:bg-slate-50 font-bold rounded-xl transition shadow-sm flex items-center gap-2">
+                        <i class="fa-solid fa-list-check"></i> Silabus 16 Pekan
+                    </a>
                 </div>
-                <!-- Lecturer 3 -->
-                <div class="glass-card rounded-2xl p-8 text-center border border-gray-100 hover:shadow-xl transition duration-300">
-                    <div class="w-20 h-20 bg-gray-100 rounded-full mx-auto mb-6 flex items-center justify-center text-gray-400 text-3xl">
-                        <i class="fa-solid fa-microchip"></i>
+
+                <!-- Metrics Grid -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto border-t border-slate-200/80 pt-8">
+                    <div class="p-4 rounded-2xl bg-white border border-slate-100 shadow-sm">
+                        <p class="text-3xl font-extrabold text-blue-600">16</p>
+                        <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider mt-1">Pekan Kuliah</p>
                     </div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-1">Ir. Arie Vatresia</h3>
-                    <p class="text-sm text-blue-600 font-medium mb-3">S.T., M.T.I., Ph.D.</p>
-                    <p class="text-sm text-gray-500">Data Acquisition & Artificial Intelligence</p>
-                </div>
-                <!-- Lecturer 4 -->
-                <div class="glass-card rounded-2xl p-8 text-center border border-gray-100 hover:shadow-xl transition duration-300">
-                    <div class="w-20 h-20 bg-gray-100 rounded-full mx-auto mb-6 flex items-center justify-center text-gray-400 text-3xl">
-                        <i class="fa-solid fa-chalkboard-user"></i>
+                    <div class="p-4 rounded-2xl bg-white border border-slate-100 shadow-sm">
+                        <p class="text-3xl font-extrabold text-indigo-600">3</p>
+                        <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider mt-1">Pilar DEEF</p>
                     </div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-1">Prof. Dr. Lindung Zalbuin Mase</h3>
-                    <p class="text-sm text-blue-600 font-medium mb-3">Guru Besar</p>
-                    <p class="text-sm text-gray-500">Advanced Analytics & Research Methodology</p>
+                    <div class="p-4 rounded-2xl bg-white border border-slate-100 shadow-sm">
+                        <p class="text-3xl font-extrabold text-emerald-600">C1-C6</p>
+                        <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider mt-1">Bloom's Taxonomy</p>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-white border border-slate-100 shadow-sm">
+                        <p class="text-3xl font-extrabold text-amber-600">v1.2</p>
+                        <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider mt-1">Valid DOI Verified</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Materials Section -->
-    <section id="materi" class="py-20 bg-gray-50 border-t border-gray-200">
+    <!-- Master Case Study Banner -->
+    <section class="py-10 bg-slate-100/70 border-b border-slate-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="mb-12 flex flex-col md:flex-row justify-between items-center">
-                <div>
-                    <h2 class="text-3xl font-bold text-gray-900 mb-2">Modul Pembelajaran</h2>
-                    <p class="text-gray-600">Unduh bahan ajar, slide presentasi, dan lembar kerja mahasiswa.</p>
+            <div class="bg-gradient-to-r from-slate-900 via-unib-900 to-indigo-950 rounded-3xl p-8 sm:p-10 text-white shadow-xl relative overflow-hidden">
+                <div class="absolute -right-10 -bottom-10 opacity-10 text-slate-100 pointer-events-none">
+                    <i class="fa-solid fa-fire-burner text-9xl"></i>
                 </div>
-                <div class="mt-4 md:mt-0">
-                    <span class="bg-indigo-100 text-indigo-800 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide">Semester Ganjil 2026</span>
+                <div class="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+                    <div class="max-w-2xl">
+                        <div class="inline-flex items-center gap-2 bg-blue-500/20 border border-blue-400/30 text-blue-200 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-4">
+                            <i class="fa-solid fa-star text-amber-400"></i> Master Research Object
+                        </div>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight mb-3 text-white">
+                            Rancang Bangun Alat Ukur Panas Bumi (Geothermal Logging Tool)
+                        </h2>
+                        <p class="text-slate-300 text-sm sm:text-base leading-relaxed mb-6">
+                            Menghadapi temperatur fluida ekstrem ($>250^\circ\text{C}$), tekanan hidrostatik sumur ($>15\text{ MPa}$), dan asam korosif. Digunakan sebagai role-model utama bagi mahasiswa S2 dalam menyusun <em>Digital Engineering Portfolio</em> (DEP).
+                        </p>
+                        <div class="flex flex-wrap items-center gap-3">
+                            <a href="assets/Geothermal_Case_Study_Presentation.pdf" target="_blank" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold rounded-xl transition shadow-sm flex items-center gap-2">
+                                <i class="fa-regular fa-file-pdf text-red-300"></i> Unduh Slide Geothermal (v1.2)
+                            </a>
+                            <button type="button" onclick="openModal('modal-geothermal')" class="px-5 py-2.5 bg-white/10 hover:bg-white/20 text-white text-sm font-bold rounded-xl border border-white/20 transition flex items-center gap-2">
+                                <i class="fa-solid fa-circle-info"></i> Bedah Kasus & Fenomena
+                            </button>
+                        </div>
+                    </div>
+                    <div class="lg:w-80 bg-white/5 border border-white/10 p-5 rounded-2xl backdrop-blur-sm">
+                        <h3 class="text-sm font-bold uppercase tracking-wider text-blue-300 mb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-crosshairs text-amber-400"></i> Tantangan Rekayasa
+                        </h3>
+                        <ul class="space-y-2 text-xs text-slate-300">
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-check text-emerald-400 mt-0.5"></i>
+                                <span><strong>Termal:</strong> Menjaga elektronika $\le 85^\circ\text{C}$ selama 4 jam operasi.</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-check text-emerald-400 mt-0.5"></i>
+                                <span><strong>Mekanik:</strong> Menghindari tekuk lokal (*buckling*) selubung Titanium Gr. 5.</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-check text-emerald-400 mt-0.5"></i>
+                                <span><strong>Sensorik:</strong> Respons termal cepat dengan jeda (*thermal lag*) minimal.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3 Pillars of DEEF Section -->
+    <section id="framework" class="py-20 bg-white border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-blue-600 font-bold text-xs uppercase tracking-widest bg-blue-50 px-3 py-1 rounded-full border border-blue-200">Konsep Inti</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mt-3 mb-4">Tiga Pilar Kerangka Kerja DEEF</h2>
+                <p class="text-slate-600 text-base">
+                    Siklus komprehensif dari penyiapan fisik sensor hingga ekstraksi informasi dan inferensi keputusan rekayasa.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Pilar 1 -->
+                <div class="p-8 rounded-3xl bg-slate-50 border border-slate-200/80 hover:border-blue-400 hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
+                    <div>
+                        <div class="w-14 h-14 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center text-2xl mb-6 font-extrabold">
+                            01
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-3">Penyiapan Sensor (Sensor Preparation)</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-6">
+                            Pemilihan tipe transduser, analisis karakteristik impedansi, pemilihan lapisan perekat (*shear-lag* epoksi), media penghubung akustik (*couplant*), dan kalibrasi standar reproduktibilitas.
+                        </p>
+                        <ul class="space-y-2.5 text-xs text-slate-700 font-medium">
+                            <li class="flex items-center gap-2">
+                                <i class="fa-solid fa-circle-check text-blue-500"></i> PZT Piezoelectric Transducers (PZT-5H/PZT-5A)
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <i class="fa-solid fa-circle-check text-blue-500"></i> Shear-lag epoksi tipis (&lt;50 &mu;m)
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <i class="fa-solid fa-circle-check text-blue-500"></i> Kalibrasi patah pensil (ASTM E976)
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="mt-8 pt-4 border-t border-slate-200 text-xs font-semibold text-blue-600 flex items-center gap-1">
+                        <span>Fokus Fisik & Perangkat Keras</span> <i class="fa-solid fa-arrow-right ml-auto"></i>
+                    </div>
+                </div>
+
+                <!-- Pilar 2 -->
+                <div class="p-8 rounded-3xl bg-slate-50 border border-slate-200/80 hover:border-indigo-400 hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
+                    <div>
+                        <div class="w-14 h-14 rounded-2xl bg-indigo-100 text-indigo-600 flex items-center justify-center text-2xl mb-6 font-extrabold">
+                            02
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-3">Pengolahan Data (Data Processing)</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-6">
+                            Penyondokan frekuensi (*frequency sweep*), pengkondisian sinyal (*preamplifier* 40 dB), penapisan derau industri (*bandpass* 100–400 kHz), dan digitalisasi berkecepatan tinggi tanpa aliasing.
+                        </p>
+                        <ul class="space-y-2.5 text-xs text-slate-700 font-medium">
+                            <li class="flex items-center gap-2">
+                                <i class="fa-solid fa-circle-check text-indigo-500"></i> High-speed ADC (2–5 MS/s sampling)
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <i class="fa-solid fa-circle-check text-indigo-500"></i> Eliminasi pergeseran termal (EFS Algorithm)
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <i class="fa-solid fa-circle-check text-indigo-500"></i> Spektrum daya FFT & Wavelet Transform
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="mt-8 pt-4 border-t border-slate-200 text-xs font-semibold text-indigo-600 flex items-center gap-1">
+                        <span>Fokus Sinyal & Instrumentasi</span> <i class="fa-solid fa-arrow-right ml-auto"></i>
+                    </div>
+                </div>
+
+                <!-- Pilar 3 -->
+                <div class="p-8 rounded-3xl bg-slate-50 border border-slate-200/80 hover:border-emerald-400 hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
+                    <div>
+                        <div class="w-14 h-14 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-2xl mb-6 font-extrabold">
+                            03
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-3">Pengolahan Informasi (Information Extraction)</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-6">
+                            Penetapan indeks keparahan kerusakan mekanis (RMSD/MAPD), lokalisasi koordinat kebocoran kontinu dengan TDOA gelombang Lamb $S_0$, serta pengambilan keputusan berambang batas bertingkat.
+                        </p>
+                        <ul class="space-y-2.5 text-xs text-slate-700 font-medium">
+                            <li class="flex items-center gap-2">
+                                <i class="fa-solid fa-circle-check text-emerald-500"></i> Root Mean Square Deviation (RMSD)
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <i class="fa-solid fa-circle-check text-emerald-500"></i> Lokalisasi TDOA dengan koreksi dispersi
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <i class="fa-solid fa-circle-check text-emerald-500"></i> Multi-level Decision Support Matrix
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="mt-8 pt-4 border-t border-slate-200 text-xs font-semibold text-emerald-600 flex items-center gap-1">
+                        <span>Fokus Keputusan & Rekayasa</span> <i class="fa-solid fa-arrow-right ml-auto"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Virtual Lab Tools Section (Calculators) -->
+    <section id="lab-virtual" class="py-20 bg-slate-50 border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-14">
+                <span class="text-indigo-600 font-bold text-xs uppercase tracking-widest bg-indigo-50 px-3 py-1 rounded-full border border-indigo-200">Simulasi Interaktif</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mt-3 mb-3">Virtual Laboratory & Engineering Tools</h2>
+                <p class="text-slate-600 text-sm sm:text-base">
+                    Eksplorasi kalkulasi analitik mandiri secara langsung melalui peramban web tanpa memerlukan instalasi perangkat lunak tambahan.
+                </p>
+            </div>
+
+            <!-- Tool Selector Tabs -->
+            <div class="flex justify-center mb-8">
+                <div class="inline-flex p-1.5 rounded-2xl bg-white border border-slate-200 shadow-sm" role="tablist">
+                    <button type="button" id="tab-btn-tdoa" onclick="switchToolTab('tdoa')" class="px-5 py-2.5 rounded-xl text-sm font-bold bg-blue-600 text-white shadow-sm transition">
+                        <i class="fa-solid fa-location-crosshairs mr-1.5"></i> TDOA Leak Locator
+                    </button>
+                    <button type="button" id="tab-btn-rmsd" onclick="switchToolTab('rmsd')" class="px-5 py-2.5 rounded-xl text-sm font-bold text-slate-600 hover:text-slate-900 transition">
+                        <i class="fa-solid fa-chart-line mr-1.5"></i> Impedansi RMSD Index
+                    </button>
+                    <button type="button" id="tab-btn-nearfield" onclick="switchToolTab('nearfield')" class="px-5 py-2.5 rounded-xl text-sm font-bold text-slate-600 hover:text-slate-900 transition">
+                        <i class="fa-solid fa-bullseye mr-1.5"></i> UT Near-Field Zone
+                    </button>
                 </div>
             </div>
 
-            <!-- Case Study Highlight -->
-            <div class="bg-gradient-to-br from-gray-900 to-blue-900 rounded-3xl p-8 md:p-10 text-white mb-10 shadow-2xl relative overflow-hidden">
-                <div class="absolute top-0 right-0 opacity-10">
-                    <i class="fa-solid fa-temperature-arrow-up text-9xl -mt-10 -mr-10"></i>
+            <!-- Tab 1: TDOA Calculator -->
+            <div id="tool-tdoa" class="glass-panel p-6 sm:p-10 rounded-3xl border border-slate-200 max-w-4xl mx-auto shadow-md">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 border-b border-slate-200 pb-4">
+                    <div>
+                        <h3 class="text-xl font-bold text-slate-900">Kalkulator Lokalisasi Kebocoran Pipa (TDOA)</h3>
+                        <p class="text-xs sm:text-sm text-slate-500">Persamaan waktu tiba gelombang Lamb simetris: $x = \frac{1}{2} (L - v_g \cdot \Delta t)$</p>
+                    </div>
+                    <span class="bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-bold px-3 py-1 rounded-full">Pekan Akustik</span>
                 </div>
-                <div class="relative z-10 max-w-2xl">
-                    <span class="bg-blue-600/30 border border-blue-400/30 text-blue-200 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-4 inline-block">Master Case Study</span>
-                    <h3 class="text-2xl md:text-3xl font-bold mb-4">Rancang Bangun Alat Ukur Geothermal</h3>
-                    <p class="text-blue-100/80 mb-8 leading-relaxed">
-                        Modul ini menggunakan proyek nyata pengembangan instrumen ukur panas bumi yang tahan suhu ekstrem ($>250^\circ\text{C}$) sebagai role-model dalam menyusun Digital Engineering Portfolio (DEP).
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div>
+                        <label for="tdoa-length" class="block text-xs font-bold text-slate-700 uppercase mb-2">Jarak Antar Sensor $L$ (meter)</label>
+                        <input type="number" id="tdoa-length" value="4.0" step="0.1" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none font-mono text-sm">
+                    </div>
+                    <div>
+                        <label for="tdoa-speed" class="block text-xs font-bold text-slate-700 uppercase mb-2">Kecepatan Grup $v_g$ (m/s)</label>
+                        <input type="number" id="tdoa-speed" value="5200" step="50" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none font-mono text-sm">
+                        <span class="text-[11px] text-slate-400">Mode $S_0$ pipa baja $\approx 5000 - 5400\text{ m/s}$</span>
+                    </div>
+                    <div>
+                        <label for="tdoa-deltat" class="block text-xs font-bold text-slate-700 uppercase mb-2">Beda Waktu $\Delta t$ (&mu;s)</label>
+                        <input type="number" id="tdoa-deltat" value="140" step="5" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none font-mono text-sm">
+                        <span class="text-[11px] text-slate-400">$\Delta t = t_2 - t_1$ (dalam mikrodetik)</span>
+                    </div>
+                </div>
+
+                <div class="text-center mb-8">
+                    <button type="button" onclick="calculateTDOA()" class="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-md shadow-blue-500/20 transition">
+                        <i class="fa-solid fa-calculator mr-2"></i> Hitung Lokasi Kebocoran
+                    </button>
+                </div>
+
+                <!-- Interactive Pipe Graphic Visualization -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200">
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-4">Visualisasi Posisi Sensor & Titik Bocor pada Pipa</h4>
+                    <div class="relative w-full h-14 rounded-xl pipe-visual shadow-inner flex items-center px-4 overflow-hidden mb-3">
+                        <div class="absolute left-4 top-2 text-xs font-bold bg-slate-900 text-white px-2 py-0.5 rounded shadow">Sensor 1 (0 m)</div>
+                        <div class="absolute right-4 top-2 text-xs font-bold bg-slate-900 text-white px-2 py-0.5 rounded shadow">Sensor 2 (L)</div>
+                        <!-- Leak Indicator Pin -->
+                        <div id="pipe-leak-indicator" class="absolute top-1 -ml-3 flex flex-col items-center transition-all duration-500" style="left: 40.9%;">
+                            <i class="fa-solid fa-location-dot text-red-500 text-xl animate-bounce"></i>
+                            <span class="text-[10px] font-bold bg-red-600 text-white px-1.5 rounded shadow">Leak</span>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4 text-center">
+                        <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200">
+                            <span class="text-xs text-slate-500 block">Jarak dari Sensor 1 ($x$)</span>
+                            <span id="res-x1" class="text-2xl font-extrabold text-blue-700 font-mono">1.636 meter</span>
+                        </div>
+                        <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200">
+                            <span class="text-xs text-slate-500 block">Jarak dari Sensor 2 ($L - x$)</span>
+                            <span id="res-x2" class="text-2xl font-extrabold text-indigo-700 font-mono">2.364 meter</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 2: RMSD Calculator -->
+            <div id="tool-rmsd" class="hidden glass-panel p-6 sm:p-10 rounded-3xl border border-slate-200 max-w-4xl mx-auto shadow-md">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 border-b border-slate-200 pb-4">
+                    <div>
+                        <h3 class="text-xl font-bold text-slate-900">Kalkulator Kerusakan Baut / Coating (RMSD)</h3>
+                        <p class="text-xs sm:text-sm text-slate-500">Metrik Root Mean Square Deviation: $\text{RMSD} = \sqrt{\frac{\sum (G_i - G_i^0)^2}{\sum (G_i^0)^2}} \times 100\%$</p>
+                    </div>
+                    <span class="bg-blue-50 text-blue-700 border border-blue-200 text-xs font-bold px-3 py-1 rounded-full">Pekan Impedansi</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label for="rmsd-g0" class="block text-xs font-bold text-slate-700 uppercase mb-2">Konduktansi Baseline $G^0$ (mS, pisahkan koma)</label>
+                        <input type="text" id="rmsd-g0" value="1.20, 2.50, 0.80" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none font-mono text-sm">
+                        <span class="text-[11px] text-slate-400">Kondisi baut kencang 50 Nm atau coating sempurna</span>
+                    </div>
+                    <div>
+                        <label for="rmsd-g" class="block text-xs font-bold text-slate-700 uppercase mb-2">Konduktansi Kondisi Uji $G$ (mS, pisahkan koma)</label>
+                        <input type="text" id="rmsd-g" value="1.10, 2.10, 0.95" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none font-mono text-sm">
+                        <span class="text-[11px] text-slate-400">Kondisi baut saat ini atau coating berongga</span>
+                    </div>
+                </div>
+
+                <div class="text-center mb-8">
+                    <button type="button" onclick="calculateRMSD()" class="px-8 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-md shadow-indigo-500/20 transition">
+                        <i class="fa-solid fa-chart-line mr-2"></i> Hitung Indeks RMSD
+                    </button>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 text-center">
+                    <span class="text-xs text-slate-500 uppercase tracking-wider font-semibold block mb-1">Hasil Indeks Kerusakan Relatif</span>
+                    <span id="res-rmsd" class="text-4xl font-extrabold text-indigo-700 font-mono block mb-2">15.02%</span>
+                    <div id="rmsd-badge" class="inline-block px-4 py-1.5 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-300">
+                        Status: Baut Mengalami Pengenduran Parsial (Waspada)
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 3: Near-field Calculator -->
+            <div id="tool-nearfield" class="hidden glass-panel p-6 sm:p-10 rounded-3xl border border-slate-200 max-w-4xl mx-auto shadow-md">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 border-b border-slate-200 pb-4">
+                    <div>
+                        <h3 class="text-xl font-bold text-slate-900">Kalkulator Zona Medan Dekat (Near-Field Zone)</h3>
+                        <p class="text-xs sm:text-sm text-slate-500">Transduser Ultrasonik Piston Datar: $N = \frac{D^2}{4\lambda} = \frac{D^2 \cdot f}{4 v}$</p>
+                    </div>
+                    <span class="bg-teal-50 text-teal-700 border border-teal-200 text-xs font-bold px-3 py-1 rounded-full">Pekan Ultrasonik</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                    <div>
+                        <label for="nf-diam" class="block text-xs font-bold text-slate-700 uppercase mb-2">Diameter Kristal $D$ (mm)</label>
+                        <input type="number" id="nf-diam" value="12" step="1" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none font-mono text-sm">
+                    </div>
+                    <div>
+                        <label for="nf-freq" class="block text-xs font-bold text-slate-700 uppercase mb-2">Frekuensi Kerja $f$ (MHz)</label>
+                        <input type="number" id="nf-freq" value="4.0" step="0.5" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none font-mono text-sm">
+                    </div>
+                    <div>
+                        <label for="nf-vel" class="block text-xs font-bold text-slate-700 uppercase mb-2">Kecepatan Suara Material $v$ (m/s)</label>
+                        <input type="number" id="nf-vel" value="5900" step="100" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none font-mono text-sm">
+                        <span class="text-[11px] text-slate-400">Baja $\approx 5900\text{ m/s}$, Titanium $\approx 6100\text{ m/s}$</span>
+                    </div>
+                </div>
+
+                <div class="text-center mb-8">
+                    <button type="button" onclick="calculateNearField()" class="px-8 py-3 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-xl shadow-md shadow-teal-500/20 transition">
+                        <i class="fa-solid fa-bullseye mr-2"></i> Hitung Panjang Zona $N$
+                    </button>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 text-center">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-3">
+                        <div class="p-3 bg-slate-50 rounded-xl">
+                            <span class="text-xs text-slate-500 block">Panjang Gelombang ($\lambda$)</span>
+                            <span id="res-lambda" class="text-xl font-bold text-slate-800 font-mono">1.475 mm</span>
+                        </div>
+                        <div class="p-3 bg-slate-50 rounded-xl">
+                            <span class="text-xs text-slate-500 block">Zona Medan Dekat ($N$)</span>
+                            <span id="res-nearfield" class="text-xl font-bold text-teal-700 font-mono">24.41 mm</span>
+                        </div>
+                    </div>
+                    <p id="nearfield-advice" class="text-xs text-slate-600">
+                        Rekomendasi: Jika cacat berada pada kedalaman $8\text{ mm}$ (di bawah $N = 24.4\text{ mm}$), pengukuran berada pada zona fluktuasi interferensi. Gunakan transduser berdiameter lebih kecil atau frekuensi lebih rendah untuk memendekkan $N$.
                     </p>
-                    <a href="/metode-eksperimen/assets/Geothermal_Case_Study_Presentation.pdf" target="_blank" class="inline-flex items-center px-5 py-2.5 bg-white text-gray-900 font-semibold rounded-lg hover:bg-gray-100 transition shadow-lg">
-                        <i class="fa-regular fa-file-pdf text-red-500 mr-2 text-lg"></i> Slide Lengkap Kasus Geothermal
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 16-Week Syllabus Accordion Section -->
+    <section id="silabus" class="py-20 bg-white border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-blue-600 font-bold text-xs uppercase tracking-widest bg-blue-50 px-3 py-1 rounded-full border border-blue-200">Kurikulum & RPS</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mt-3 mb-4">Roadmap Silabus 16 Pekan Perkuliahan</h2>
+                <p class="text-slate-600 text-sm sm:text-base">
+                    Rencana Pembelajaran Semester (RPS) terstruktur untuk membimbing mahasiswa S2 menghasilkan Digital Engineering Portfolio (DEP) dan manuskrip ilmiah standar internasional.
+                </p>
+            </div>
+
+            <!-- 4 Phases of Course -->
+            <div class="space-y-4 max-w-5xl mx-auto">
+                <!-- Phase 1 -->
+                <details class="group rounded-2xl bg-slate-50 border border-slate-200 overflow-hidden" open>
+                    <summary class="flex justify-between items-center p-6 cursor-pointer font-bold text-slate-900 select-none hover:bg-slate-100 transition">
+                        <div class="flex items-center gap-4">
+                            <span class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center text-sm font-extrabold shadow-sm">I</span>
+                            <div>
+                                <h3 class="text-base sm:text-lg font-bold text-slate-900">Fase 1: Formulasi Masalah & Sistem Pengukuran (Pekan 1–4)</h3>
+                                <p class="text-xs text-slate-500 font-normal">Mencakup Chapter 1–4: Research Object, Physical Variables, & Instrumentation (CPMK-1 & 2)</p>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-chevron-down text-slate-400 group-open:rotate-180 transition-transform duration-300"></i>
+                    </summary>
+                    <div class="p-6 pt-2 border-t border-slate-200/80 bg-white">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+                                <strong class="text-blue-700 block mb-1">Pekan 1: Engineering Problem to Research Object</strong>
+                                Mentransformasi masalah empiris industri menjadi objek uji laboratorium terkontrol. Studi Kasus Geothermal.
+                            </div>
+                            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+                                <strong class="text-blue-700 block mb-1">Pekan 2: Physical Variables & Phenomena Map</strong>
+                                Hukum kesetimbangan Fourier, tegangan tabung, dan pemetaan variabel dependen, independen, dan kontrol.
+                            </div>
+                            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+                                <strong class="text-blue-700 block mb-1">Pekan 3: Measurement Systems & Dynamic Characteristics</strong>
+                                Sistem pengukuran orde nol, satu, dan dua. Respons transien termokopel dan galat dinamik.
+                            </div>
+                            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+                                <strong class="text-blue-700 block mb-1">Pekan 4: Transducer Selection & Calibration</strong>
+                                Pemilihan transduser berdasarkan rentang ukur, sensitivitas, linearitas, dan kalibrasi standar nasional.
+                            </div>
+                        </div>
+                    </div>
+                </details>
+
+                <!-- Phase 2 -->
+                <details class="group rounded-2xl bg-slate-50 border border-slate-200 overflow-hidden">
+                    <summary class="flex justify-between items-center p-6 cursor-pointer font-bold text-slate-900 select-none hover:bg-slate-100 transition">
+                        <div class="flex items-center gap-4">
+                            <span class="w-10 h-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center text-sm font-extrabold shadow-sm">II</span>
+                            <div>
+                                <h3 class="text-base sm:text-lg font-bold text-slate-900">Fase 2: Akuisisi Data, Simulasi Digital, & UTS (Pekan 5–8)</h3>
+                                <p class="text-xs text-slate-500 font-normal">Mencakup Chapter 5–7: Sinyal, Model Empiris, Eksperimen Virtual, & Evaluasi Proposal (CPMK-2 & 3)</p>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-chevron-down text-slate-400 group-open:rotate-180 transition-transform duration-300"></i>
+                    </summary>
+                    <div class="p-6 pt-2 border-t border-slate-200/80 bg-white">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+                                <strong class="text-indigo-700 block mb-1">Pekan 5: Signal Conditioning & High-Speed DAQ</strong>
+                                Digitalisasi ADC, sampling rate Nyquist, penapisan filter analog/digital, dan eliminasi derau frekuensi tinggi.
+                            </div>
+                            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+                                <strong class="text-indigo-700 block mb-1">Pekan 6: Empirical Curve Fitting & Digital Models</strong>
+                                Pemodelan matematis regresi linear/non-linear dari data sensor untuk merepresentasikan karakteristik fisik objek.
+                            </div>
+                            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+                                <strong class="text-indigo-700 block mb-1">Pekan 7: Virtual Experiment & Numerical Simulation</strong>
+                                Eksperimen virtual dengan simulasi komputasi numerik untuk menguji skenario ekstrem tanpa merusak benda uji.
+                            </div>
+                            <div class="p-3 rounded-xl bg-indigo-50 border border-indigo-200">
+                                <strong class="text-indigo-900 block mb-1">Pekan 8: Ujian Tengah Semester (UTS) — Bobot 20%</strong>
+                                Presentasi komprehensif rancangan eksperimen dan portofolio digital Chapter 1–7 di hadapan tim pengampu.
+                            </div>
+                        </div>
+                    </div>
+                </details>
+
+                <!-- Phase 3 -->
+                <details class="group rounded-2xl bg-slate-50 border border-slate-200 overflow-hidden">
+                    <summary class="flex justify-between items-center p-6 cursor-pointer font-bold text-slate-900 select-none hover:bg-slate-100 transition">
+                        <div class="flex items-center gap-4">
+                            <span class="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center text-sm font-extrabold shadow-sm">III</span>
+                            <div>
+                                <h3 class="text-base sm:text-lg font-bold text-slate-900">Fase 3: Analisis Ketidakpastian, AI, & Optimasi RSM (Pekan 9–12)</h3>
+                                <p class="text-xs text-slate-500 font-normal">Mencakup Chapter 8–11: Uncertainty Propagation, Machine Learning, ANOVA, & DOE (CPMK-3 & 4)</p>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-chevron-down text-slate-400 group-open:rotate-180 transition-transform duration-300"></i>
+                    </summary>
+                    <div class="p-6 pt-2 border-t border-slate-200/80 bg-white">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+                                <strong class="text-emerald-700 block mb-1">Pekan 9: Uncertainty Propagation & Validation</strong>
+                                Kalkulasi perambatan ketidakpastian (Kline-McClintock) dan uji interval kepercayaan data laboratorium.
+                            </div>
+                            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+                                <strong class="text-emerald-700 block mb-1">Pekan 10: Artificial Intelligence & Predictive Modeling</strong>
+                                Penerapan algoritma pembelajaran mesin untuk klasifikasi pola kerusakan struktur dan prediksi performa sensor.
+                            </div>
+                            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+                                <strong class="text-emerald-700 block mb-1">Pekan 11: Statistical Decision Support (ANOVA)</strong>
+                                Uji hipotesis statistik dan Analisis Variansi (ANOVA) untuk menguji signifikansi perlakuan rekayasa.
+                            </div>
+                            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+                                <strong class="text-emerald-700 block mb-1">Pekan 12: Design of Experiments (DOE) & RSM</strong>
+                                Desain faktorial dan Response Surface Methodology (RSM) untuk menemukan titik optimum variabel proses rekayasa.
+                            </div>
+                        </div>
+                    </div>
+                </details>
+
+                <!-- Phase 4 -->
+                <details class="group rounded-2xl bg-slate-50 border border-slate-200 overflow-hidden">
+                    <summary class="flex justify-between items-center p-6 cursor-pointer font-bold text-slate-900 select-none hover:bg-slate-100 transition">
+                        <div class="flex items-center gap-4">
+                            <span class="w-10 h-10 rounded-xl bg-amber-600 text-white flex items-center justify-center text-sm font-extrabold shadow-sm">IV</span>
+                            <div>
+                                <h3 class="text-base sm:text-lg font-bold text-slate-900">Fase 4: Robust Design, Manuskrip Jurnal, & Capstone UAS (Pekan 13–16)</h3>
+                                <p class="text-xs text-slate-500 font-normal">Mencakup Chapter 12: Taguchi Method, Scientific Writing, & Sidang Akhir (CPMK-4)</p>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-chevron-down text-slate-400 group-open:rotate-180 transition-transform duration-300"></i>
+                    </summary>
+                    <div class="p-6 pt-2 border-t border-slate-200/80 bg-white">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+                                <strong class="text-amber-700 block mb-1">Pekan 13: Robust Design & Taguchi Sustainability</strong>
+                                Optimasi parameter kokoh (Robust Design Taguchi) dan analisis siklus hidup produk yang ramah lingkungan.
+                            </div>
+                            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+                                <strong class="text-amber-700 block mb-1">Pekan 14–15: Scientific Manuscript Writing (LaTeX)</strong>
+                                Pembimbingan intensif menyusun draf paper jurnal ilmiah berstandar IEEE/Elsevier berdasarkan 12 Chapter DEP.
+                            </div>
+                            <div class="p-3 rounded-xl bg-amber-50 border border-amber-200 sm:col-span-2">
+                                <strong class="text-amber-900 block mb-1">Pekan 16: Ujian Akhir Semester (UAS / Capstone) — Bobot 50%</strong>
+                                Evaluasi luaran portofolio Digital Engineering Portfolio (DEP) dan sidang presentasi manuskrip paper akhir.
+                            </div>
+                        </div>
+                    </div>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Hub / Module Center Section -->
+    <section id="materi" class="py-20 bg-slate-50 border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-10">
+                <span class="text-blue-600 font-bold text-xs uppercase tracking-widest bg-blue-50 px-3 py-1 rounded-full border border-blue-200">Repository Dokumen</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mt-3 mb-3">Pusat Unduhan Materi & Kode Simulasi</h2>
+                <p class="text-slate-600 text-sm sm:text-base">
+                    Seluruh modul telah diperbarui dengan nomor versi formal <strong>v1.2</strong> dan rujukan DOI terverifikasi.
+                </p>
+            </div>
+
+            <!-- Search and Filter Bar -->
+            <div class="max-w-4xl mx-auto mb-10">
+                <search class="flex flex-col sm:flex-row gap-3 bg-white p-3 rounded-2xl border border-slate-200 shadow-sm">
+                    <div class="relative flex-grow">
+                        <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-slate-400"></i>
+                        <input type="text" id="module-search" onkeyup="filterModules()" placeholder="Cari nama materi, kata kunci (misal: baut, piezo, akustik, rmsd)..." class="w-full pl-11 pr-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
+                    </div>
+                    <div class="flex gap-1.5 overflow-x-auto pb-1 sm:pb-0" id="filter-btn-group">
+                        <button type="button" onclick="setCategoryFilter('all')" class="cat-btn px-3.5 py-2 rounded-xl text-xs font-bold bg-blue-600 text-white transition whitespace-nowrap" data-cat="all">Semua</button>
+                        <button type="button" onclick="setCategoryFilter('modul')" class="cat-btn px-3.5 py-2 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 transition whitespace-nowrap" data-cat="modul">Modul & LKM</button>
+                        <button type="button" onclick="setCategoryFilter('slide')" class="cat-btn px-3.5 py-2 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 transition whitespace-nowrap" data-cat="slide">Slide Beamer</button>
+                        <button type="button" onclick="setCategoryFilter('kode')" class="cat-btn px-3.5 py-2 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 transition whitespace-nowrap" data-cat="kode">Skrip Octave</button>
+                        <button type="button" onclick="setCategoryFilter('buku')" class="cat-btn px-3.5 py-2 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 transition whitespace-nowrap" data-cat="buku">Buku Acuan</button>
+                    </div>
+                </search>
+            </div>
+
+            <!-- Material Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="module-cards-grid">
+                
+                <!-- Card 1: Modul Pekan Impedansi -->
+                <article class="module-card bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md hover:border-blue-400 transition flex flex-col justify-between" data-category="modul" data-keywords="impedansi emi piezo pzt baut kendur loosening coating cat korosi rmsd bloom c1-c6">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-blue-100 text-blue-800">Modul & LKM</span>
+                            <span class="font-mono text-xs text-slate-400 font-bold">v1.2</span>
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-lg mb-2">Metode Eksperimen Berbasis Impedansi (EMI)</h3>
+                        <p class="text-xs text-slate-600 mb-4 leading-relaxed">
+                            Modul komprehensif electromechanical impedance, transduser PZT, pemantauan kuat-kendur ikatan baut, integritas coating cat, dan problem set Taksonomi Bloom C1–C6.
+                        </p>
+                    </div>
+                    <div class="pt-4 border-t border-slate-100 flex items-center justify-between gap-2">
+                        <a href="assets/Modul_LKM_Pekan_Impedansi.pdf" target="_blank" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl transition flex items-center gap-1.5">
+                            <i class="fa-regular fa-file-pdf"></i> Unduh PDF
+                        </a>
+                        <button type="button" onclick="openModal('modal-desc-impedansi')" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl transition">
+                            Detail LKM
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Card 2: Slide Pekan Impedansi -->
+                <article class="module-card bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md hover:border-blue-400 transition flex flex-col justify-between" data-category="slide" data-keywords="slide beamer impedansi emi pzt flensa ad5933 rmsd">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-indigo-100 text-indigo-800">Slide Beamer</span>
+                            <span class="font-mono text-xs text-slate-400 font-bold">v1.2</span>
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-lg mb-2">Slide Presentasi: Eksperimen Impedansi</h3>
+                        <p class="text-xs text-slate-600 mb-4 leading-relaxed">
+                            Slide kuliah 16:9 Beamer menjelaskan model kopling elektromekanis Liang (1994), pengkondisian admitansi listrik $Y(\omega)=G+jB$, dan diagram alir DEEF.
+                        </p>
+                    </div>
+                    <div class="pt-4 border-t border-slate-100 flex items-center justify-between gap-2">
+                        <a href="assets/Slide_Pekan_Impedansi.pdf" target="_blank" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-xl transition flex items-center gap-1.5">
+                            <i class="fa-regular fa-file-pdf"></i> Unduh Slide
+                        </a>
+                        <span class="text-xs text-slate-400"><i class="fa-solid fa-desktop mr-1"></i> 16:9 HD</span>
+                    </div>
+                </article>
+
+                <!-- Card 3: Skrip Octave Impedansi -->
+                <article class="module-card bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md hover:border-amber-400 transition flex flex-col justify-between" data-category="kode" data-keywords="skrip octave simulasi matlab kode impedansi baut rmsd m-file">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-amber-100 text-amber-800">Skrip Octave</span>
+                            <span class="font-mono text-xs text-slate-400 font-bold">.m Script</span>
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-lg mb-2">simulasi_impedansi_baut.m</h3>
+                        <p class="text-xs text-slate-600 mb-4 leading-relaxed">
+                            Kode simulasi GNU Octave mandiri untuk pemodelan respon konduktansi PZT, penurunan frekuensi baut longgar, dan perhitungan otomatis metrik RMSD/MAPD.
+                        </p>
+                    </div>
+                    <div class="pt-4 border-t border-slate-100 flex items-center justify-between gap-2">
+                        <a href="assets/simulasi_impedansi_baut.m" target="_blank" download class="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-xl transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-code"></i> Unduh Kode (.m)
+                        </a>
+                        <a href="assets/plot_impedansi_baut.png" target="_blank" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl transition">
+                            Lihat Plot
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Card 4: Modul Pekan Akustik & UT -->
+                <article class="module-card bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md hover:border-emerald-400 transition flex flex-col justify-between" data-category="modul" data-keywords="akustik emisi ae ultrasonic testing ut kebocoran pipa lamb waves tdoa near-field snellius astm e1316">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-emerald-100 text-emerald-800">Modul & LKM</span>
+                            <span class="font-mono text-xs text-slate-400 font-bold">v1.2</span>
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-lg mb-2">Metode Eksperimen Akustik & Ultrasonik</h3>
+                        <p class="text-xs text-slate-600 mb-4 leading-relaxed">
+                            Panduan lengkap Acoustic Emission (AE) pasif dan Ultrasonic Testing (UT) aktif. Dilengkapi persamaan gelombang Lamb, lokalisasi kebocoran pipa TDOA, dan problem set C1–C6.
+                        </p>
+                    </div>
+                    <div class="pt-4 border-t border-slate-100 flex items-center justify-between gap-2">
+                        <a href="assets/Modul_LKM_Pekan_Akustik.pdf" target="_blank" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl transition flex items-center gap-1.5">
+                            <i class="fa-regular fa-file-pdf"></i> Unduh PDF
+                        </a>
+                        <button type="button" onclick="openModal('modal-desc-akustik')" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl transition">
+                            Detail LKM
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Card 5: Slide Pekan Akustik & UT -->
+                <article class="module-card bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md hover:border-emerald-400 transition flex flex-col justify-between" data-category="slide" data-keywords="slide beamer akustik ae ut lamb wave tdoa pipa kebocoran">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-teal-100 text-teal-800">Slide Beamer</span>
+                            <span class="font-mono text-xs text-slate-400 font-bold">v1.2</span>
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-lg mb-2">Slide Presentasi: Eksperimen Akustik</h3>
+                        <p class="text-xs text-slate-600 mb-4 leading-relaxed">
+                            Slide presentasi Beamer berorientasi industri: membedakan sinyal kontinu turbulensi jet kebocoran vs letupan retak, serta karakterisasi medan dekat ultrasonik.
+                        </p>
+                    </div>
+                    <div class="pt-4 border-t border-slate-100 flex items-center justify-between gap-2">
+                        <a href="assets/Slide_Pekan_Akustik.pdf" target="_blank" class="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold rounded-xl transition flex items-center gap-1.5">
+                            <i class="fa-regular fa-file-pdf"></i> Unduh Slide
+                        </a>
+                        <span class="text-xs text-slate-400"><i class="fa-solid fa-desktop mr-1"></i> 16:9 HD</span>
+                    </div>
+                </article>
+
+                <!-- Card 6: Skrip Octave Akustik -->
+                <article class="module-card bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md hover:border-amber-400 transition flex flex-col justify-between" data-category="kode" data-keywords="skrip octave simulasi akustik kebocoran fft rms m-file kode">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-amber-100 text-amber-800">Skrip Octave</span>
+                            <span class="font-mono text-xs text-slate-400 font-bold">.m Script</span>
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-lg mb-2">simulasi_akustik_kebocoran.m</h3>
+                        <p class="text-xs text-slate-600 mb-4 leading-relaxed">
+                            Skrip Octave untuk simulasi sinyal emisi akustik kebocoran pipa, atenuasi jarak radial, analisis spektrum FFT puncak 150 kHz, dan kalkulasi energi RMS.
+                        </p>
+                    </div>
+                    <div class="pt-4 border-t border-slate-100 flex items-center justify-between gap-2">
+                        <a href="assets/simulasi_akustik_kebocoran.m" target="_blank" download class="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-xl transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-code"></i> Unduh Kode (.m)
+                        </a>
+                        <a href="assets/plot_akustik_kebocoran.png" target="_blank" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl transition">
+                            Lihat Plot
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Card 7: Bahan Ajar Minggu 1 & 2 -->
+                <article class="module-card bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md hover:border-blue-400 transition flex flex-col justify-between" data-category="modul" data-keywords="bahan ajar minggu 1 2 engineering problem research object physical variables deef">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-blue-100 text-blue-800">Bahan Ajar</span>
+                            <span class="font-mono text-xs text-slate-400 font-bold">v1.2</span>
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-lg mb-2">Bahan Ajar Minggu 1 & 2</h3>
+                        <p class="text-xs text-slate-600 mb-4 leading-relaxed">
+                            Panduan fundamental rekayasa: mengubah Engineering Problem menjadi Research Object yang terukur dan memetakan variabel fisis independen, dependen, dan kontrol.
+                        </p>
+                    </div>
+                    <div class="pt-4 border-t border-slate-100 flex items-center justify-between gap-2">
+                        <a href="assets/Bahan_Ajar_Minggu_1_2.pdf" target="_blank" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl transition flex items-center gap-1.5">
+                            <i class="fa-regular fa-file-pdf"></i> Unduh PDF
+                        </a>
+                        <span class="text-xs text-slate-400 font-medium">Chapter 1 & 2</span>
+                    </div>
+                </article>
+
+                <!-- Card 8: Problem Set & LKM Minggu 1 & 2 -->
+                <article class="module-card bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md hover:border-blue-400 transition flex flex-col justify-between" data-category="modul" data-keywords="problem set lkm worksheet minggu 1 2 soal kline mcclintock kline fourier hooke">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-purple-100 text-purple-800">Problem Set & LKM</span>
+                            <span class="font-mono text-xs text-slate-400 font-bold">v1.2</span>
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-lg mb-2">Problem Set & Worksheet M1–2</h3>
+                        <p class="text-xs text-slate-600 mb-4 leading-relaxed">
+                            Kumpulan lembar kerja mandiri mahasiswa dan soal perhitungan kuantitatif (konduksi Fourier, regangan elastis casing, propagasi galat, dan trade-off isolator termal).
+                        </p>
+                    </div>
+                    <div class="pt-4 border-t border-slate-100 flex items-center justify-between gap-2">
+                        <a href="assets/Problem_Set_Minggu_1_2.pdf" target="_blank" class="px-3.5 py-2 bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold rounded-xl transition">
+                            Problem Set
+                        </a>
+                        <a href="assets/Worksheet_Minggu_1_2.pdf" target="_blank" class="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold rounded-xl transition">
+                            Worksheet LKM
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Card 9: Buku Acuan (Holman & Montgomery) -->
+                <article class="module-card bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md hover:border-slate-400 transition flex flex-col justify-between" data-category="buku" data-keywords="buku acuan teks holman montgomery design analysis experiments engineering metode eksperimen silabus perpustakaan isbn hak cipta">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-slate-100 text-slate-800">Buku Referensi</span>
+                            <span class="text-[11px] font-semibold text-amber-700 bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200 flex items-center gap-1">
+                                <i class="fa-solid fa-copyright text-[10px]"></i> Hak Cipta Penerbit
+                            </span>
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-lg mb-2">Buku Teks Referensi Standar</h3>
+                        <p class="text-xs text-slate-600 mb-3 leading-relaxed">
+                            Buku teks acuan dilindungi hak cipta (*copyright*). Tidak disediakan berkas unduhan digital demi kepatuhan hak cipta akademik. Mahasiswa dapat meminjam edisi fisik atau mengakses koleksi digital melalui perpustakaan resmi:
+                        </p>
+                        <div class="space-y-2 mb-4 bg-slate-50 p-3.5 rounded-xl border border-slate-200 text-xs text-slate-700">
+                            <div class="flex items-start gap-2">
+                                <i class="fa-solid fa-book-bookmark text-blue-600 mt-0.5"></i>
+                                <div>
+                                    <strong class="text-slate-900">J.P. Holman (2012)</strong><br>
+                                    <span class="italic text-slate-600">Experimental Methods for Engineers</span>, 8th Ed, McGraw-Hill.<br>
+                                    <span class="font-mono text-[11px] text-slate-500">ISBN: 978-0073529301</span>
+                                </div>
+                            </div>
+                            <div class="border-t border-slate-200 pt-2 flex items-start gap-2">
+                                <i class="fa-solid fa-book-bookmark text-indigo-600 mt-0.5"></i>
+                                <div>
+                                    <strong class="text-slate-900">Douglas C. Montgomery (2017)</strong><br>
+                                    <span class="italic text-slate-600">Design and Analysis of Experiments</span>, 9th Ed, John Wiley & Sons.<br>
+                                    <span class="font-mono text-[11px] text-slate-500">ISBN: 978-1119113478</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pt-4 border-t border-slate-100 flex items-center justify-between gap-2">
+                        <span class="text-[11px] text-slate-500 italic flex items-center gap-1">
+                            <i class="fa-solid fa-building-columns text-slate-400"></i> Koleksi UPT Perpustakaan UNIB
+                        </span>
+                        <a href="https://library.unib.ac.id" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold rounded-xl transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> E-Library UNIB
+                        </a>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Verified References Section with Active DOIs -->
+    <section id="pustaka" class="py-20 bg-white border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-14">
+                <span class="text-emerald-600 font-bold text-xs uppercase tracking-widest bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">Integritas Saintifik</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mt-3 mb-4">Daftar Rujukan Ilmiah Terverifikasi (Valid DOI)</h2>
+                <p class="text-slate-600 text-sm sm:text-base">
+                    Seluruh literatur acuan telah melalui audit integritas dan verifikasi tautan langsung ke Crossref, OpenAlex, dan registri DOI resmi.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-6xl mx-auto">
+                <!-- Ref 1 -->
+                <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col justify-between hover:bg-blue-50/50 transition">
+                    <div>
+                        <span class="text-xs font-bold text-blue-700 block mb-1">Elektromekanikal Impedansi (EMI Model)</span>
+                        <h4 class="text-sm font-bold text-slate-900">Liang, Sun, & Rogers (1994)</h4>
+                        <p class="text-xs text-slate-600 mt-1 italic">Coupled Electro-Mechanical Analysis of Adaptive Material Systems...</p>
+                        <p class="text-xs text-slate-500 mt-1"><em>Journal of Intelligent Material Systems and Structures</em>, 5(1): 12–20.</p>
+                    </div>
+                    <a href="https://doi.org/10.1177/1045389X9400500102" target="_blank" class="mt-3 inline-flex items-center text-xs font-bold text-blue-600 hover:text-blue-800">
+                        <i class="fa-solid fa-arrow-up-right-from-square mr-1.5"></i> DOI: 10.1177/1045389X9400500102
+                    </a>
+                </div>
+
+                <!-- Ref 2 -->
+                <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col justify-between hover:bg-blue-50/50 transition">
+                    <div>
+                        <span class="text-xs font-bold text-blue-700 block mb-1">Monitoring Baut Piezoelektrik 3D</span>
+                        <h4 class="text-sm font-bold text-slate-900">Li, Wang, & Song (2020)</h4>
+                        <p class="text-xs text-slate-600 mt-1 italic">Monitoring of bolt looseness using piezoelectric transducers: Three-dimensional numerical modeling with experimental verification.</p>
+                        <p class="text-xs text-slate-500 mt-1"><em>Journal of Intelligent Material Systems and Structures</em>, 31(6): 911–918.</p>
+                    </div>
+                    <a href="https://doi.org/10.1177/1045389X20906003" target="_blank" class="mt-3 inline-flex items-center text-xs font-bold text-blue-600 hover:text-blue-800">
+                        <i class="fa-solid fa-arrow-up-right-from-square mr-1.5"></i> DOI: 10.1177/1045389X20906003
+                    </a>
+                </div>
+
+                <!-- Ref 3 -->
+                <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col justify-between hover:bg-blue-50/50 transition">
+                    <div>
+                        <span class="text-xs font-bold text-emerald-700 block mb-1">Deteksi Kebocoran Pipa Akustik</span>
+                        <h4 class="text-sm font-bold text-slate-900">Ahadi & Bakhtiar (2010)</h4>
+                        <p class="text-xs text-slate-600 mt-1 italic">Leak detection in water-filled plastic pipes through the application of tuned wavelet transforms to Acoustic Emission signals.</p>
+                        <p class="text-xs text-slate-500 mt-1"><em>Applied Acoustics</em>, 71(7): 634–639.</p>
+                    </div>
+                    <a href="https://doi.org/10.1016/j.apacoust.2010.02.006" target="_blank" class="mt-3 inline-flex items-center text-xs font-bold text-emerald-600 hover:text-emerald-800">
+                        <i class="fa-solid fa-arrow-up-right-from-square mr-1.5"></i> DOI: 10.1016/j.apacoust.2010.02.006
+                    </a>
+                </div>
+
+                <!-- Ref 4 -->
+                <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col justify-between hover:bg-blue-50/50 transition">
+                    <div>
+                        <span class="text-xs font-bold text-emerald-700 block mb-1">Standar Internasional Emisi Akustik</span>
+                        <h4 class="text-sm font-bold text-slate-900">Grosse & Ohtsu, Eds. (2008)</h4>
+                        <p class="text-xs text-slate-600 mt-1 italic">Acoustic Emission Testing: Basics for Research—Applications in Civil Engineering.</p>
+                        <p class="text-xs text-slate-500 mt-1">Springer-Verlag, Berlin Heidelberg.</p>
+                    </div>
+                    <a href="https://doi.org/10.1007/978-3-540-69972-9" target="_blank" class="mt-3 inline-flex items-center text-xs font-bold text-emerald-600 hover:text-emerald-800">
+                        <i class="fa-solid fa-arrow-up-right-from-square mr-1.5"></i> DOI: 10.1007/978-3-540-69972-9
+                    </a>
+                </div>
+
+                <!-- Ref 5 -->
+                <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col justify-between hover:bg-blue-50/50 transition">
+                    <div>
+                        <span class="text-xs font-bold text-blue-700 block mb-1">Integritas Rongga & Debonding Sambungan</span>
+                        <h4 class="text-sm font-bold text-slate-900">Tenreiro, Lopes, & da Silva (2023)</h4>
+                        <p class="text-xs text-slate-600 mt-1 italic">Influence of void damage on the electromechanical impedance spectra of Single Lap Joints.</p>
+                        <p class="text-xs text-slate-500 mt-1"><em>NDT & E International</em>, 138: 102865.</p>
+                    </div>
+                    <a href="https://doi.org/10.1016/j.ndteint.2023.102865" target="_blank" class="mt-3 inline-flex items-center text-xs font-bold text-blue-600 hover:text-blue-800">
+                        <i class="fa-solid fa-arrow-up-right-from-square mr-1.5"></i> DOI: 10.1016/j.ndteint.2023.102865
+                    </a>
+                </div>
+
+                <!-- Ref 6 -->
+                <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col justify-between hover:bg-blue-50/50 transition">
+                    <div>
+                        <span class="text-xs font-bold text-emerald-700 block mb-1">Gelombang Terpandu (Guided Lamb Waves)</span>
+                        <h4 class="text-sm font-bold text-slate-900">Rose, Joseph L. (2014)</h4>
+                        <p class="text-xs text-slate-600 mt-1 italic">Ultrasonic Guided Waves in Solid Media.</p>
+                        <p class="text-xs text-slate-500 mt-1">Cambridge University Press, Cambridge, UK.</p>
+                    </div>
+                    <a href="https://doi.org/10.1017/CBO9781107273610" target="_blank" class="mt-3 inline-flex items-center text-xs font-bold text-emerald-600 hover:text-emerald-800">
+                        <i class="fa-solid fa-arrow-up-right-from-square mr-1.5"></i> DOI: 10.1017/CBO9781107273610
                     </a>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <!-- Weekly Materials Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Week 1 & 2 Block -->
-                <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition">
-                    <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-xl font-bold text-gray-900">Minggu 1 & 2</h3>
-                        <span class="bg-green-100 text-green-700 text-xs font-bold px-2.5 py-1 rounded">Tersedia</span>
+    <!-- Instructors Section -->
+    <section id="pengampu" class="py-20 bg-slate-50 border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-blue-600 font-bold text-xs uppercase tracking-widest bg-blue-50 px-3 py-1 rounded-full border border-blue-200">Fakultas Teknik UNIB</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mt-3 mb-4">Tim Dosen Pengampu Mata Kuliah</h2>
+                <p class="text-slate-600 text-sm sm:text-base">
+                    Kolaborasi pakar dalam rekayasa eksperimental, sistem instrumentasi digital, pemodelan komputasi, dan kecerdasan buatan.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Lecturer 1 -->
+                <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm text-center hover:shadow-lg transition">
+                    <div class="w-20 h-20 bg-blue-50 text-blue-600 rounded-2xl mx-auto mb-4 flex items-center justify-center text-3xl shadow-inner">
+                        <i class="fa-solid fa-user-tie"></i>
                     </div>
-                    <p class="text-gray-600 text-sm mb-6 border-b border-gray-100 pb-4">
-                        <strong class="text-gray-800">Topik:</strong> Engineering Problem, Research Object, & Physical Variables
-                    </p>
-                    <div class="space-y-3">
-                        <a href="/metode-eksperimen/assets/Bahan_Ajar_Minggu_1_2.pdf" target="_blank" class="flex items-center justify-between p-3 rounded-lg bg-gray-50 hover:bg-blue-50 border border-gray-100 transition group">
-                            <div class="flex items-center">
-                                <i class="fa-solid fa-book text-blue-500 mr-3"></i>
-                                <span class="text-sm font-medium text-gray-700 group-hover:text-blue-700">Handout / Bahan Ajar</span>
-                            </div>
-                            <i class="fa-solid fa-download text-gray-400 group-hover:text-blue-500"></i>
-                        </a>
-                        <a href="/metode-eksperimen/assets/Slide_Minggu_1_2.pdf" target="_blank" class="flex items-center justify-between p-3 rounded-lg bg-gray-50 hover:bg-blue-50 border border-gray-100 transition group">
-                            <div class="flex items-center">
-                                <i class="fa-solid fa-desktop text-indigo-500 mr-3"></i>
-                                <span class="text-sm font-medium text-gray-700 group-hover:text-blue-700">Slide Presentasi (Beamer)</span>
-                            </div>
-                            <i class="fa-solid fa-download text-gray-400 group-hover:text-blue-500"></i>
-                        </a>
-                        <a href="/metode-eksperimen/assets/Worksheet_Minggu_1_2.pdf" target="_blank" class="flex items-center justify-between p-3 rounded-lg bg-gray-50 hover:bg-blue-50 border border-gray-100 transition group">
-                            <div class="flex items-center">
-                                <i class="fa-solid fa-clipboard-list text-emerald-500 mr-3"></i>
-                                <span class="text-sm font-medium text-gray-700 group-hover:text-blue-700">Lembar Kerja (LKM)</span>
-                            </div>
-                            <i class="fa-solid fa-download text-gray-400 group-hover:text-blue-500"></i>
-                        </a>
-                        <a href="/metode-eksperimen/assets/Problem_Set_Minggu_1_2.pdf" target="_blank" class="flex items-center justify-between p-3 rounded-lg bg-gray-50 hover:bg-blue-50 border border-gray-100 transition group">
-                            <div class="flex items-center">
-                                <i class="fa-solid fa-calculator text-amber-500 mr-3"></i>
-                                <span class="text-sm font-medium text-gray-700 group-hover:text-blue-700">Problem Set (Soal Kuantitatif)</span>
-                            </div>
-                            <i class="fa-solid fa-download text-gray-400 group-hover:text-blue-500"></i>
-                        </a>
-                    </div>
+                    <h3 class="font-bold text-slate-900 text-base">Ir. A Sofwan FA</h3>
+                    <p class="text-xs text-blue-600 font-semibold mb-2">M.Tech., Ph.D., IPM.</p>
+                    <p class="text-xs text-slate-500">Engineering Thinking & Framework Design</p>
                 </div>
 
-                <!-- Future Weeks Placeholder -->
-                <div class="bg-gray-50 rounded-2xl border border-dashed border-gray-300 p-6 flex flex-col items-center justify-center text-center">
-                    <div class="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center text-gray-400 text-2xl mb-4">
-                        <i class="fa-solid fa-lock"></i>
+                <!-- Lecturer 2 -->
+                <div class="bg-white rounded-3xl p-6 border-2 border-blue-600 shadow-md text-center relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-blue-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-bl-xl">Koordinator Digital</div>
+                    <div class="w-20 h-20 bg-blue-600 text-white rounded-2xl mx-auto mb-4 flex items-center justify-center text-3xl shadow-md shadow-blue-500/30">
+                        <i class="fa-solid fa-laptop-code"></i>
                     </div>
-                    <h3 class="text-lg font-bold text-gray-700 mb-2">Minggu 3 & 4</h3>
-                    <p class="text-sm text-gray-500 max-w-xs">Materi Measurement System & Instrumentation akan dibuka pada pekan perkuliahan terkait.</p>
+                    <h3 class="font-bold text-slate-900 text-base">Ir. Novalio Daratha</h3>
+                    <p class="text-xs text-blue-600 font-semibold mb-2">S.T., M.Sc., Ph.D.</p>
+                    <p class="text-xs text-slate-500">Digital Model, Simulation & Optimization</p>
+                </div>
+
+                <!-- Lecturer 3 -->
+                <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm text-center hover:shadow-lg transition">
+                    <div class="w-20 h-20 bg-indigo-50 text-indigo-600 rounded-2xl mx-auto mb-4 flex items-center justify-center text-3xl shadow-inner">
+                        <i class="fa-solid fa-microchip"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-900 text-base">Ir. Arie Vatresia</h3>
+                    <p class="text-xs text-indigo-600 font-semibold mb-2">S.T., M.T.I., Ph.D.</p>
+                    <p class="text-xs text-slate-500">Data Acquisition & Artificial Intelligence</p>
+                </div>
+
+                <!-- Lecturer 4 -->
+                <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm text-center hover:shadow-lg transition">
+                    <div class="w-20 h-20 bg-emerald-50 text-emerald-600 rounded-2xl mx-auto mb-4 flex items-center justify-center text-3xl shadow-inner">
+                        <i class="fa-solid fa-chalkboard-user"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-900 text-base">Prof. Dr. Lindung Zalbuin Mase</h3>
+                    <p class="text-xs text-emerald-600 font-semibold mb-2">Guru Besar</p>
+                    <p class="text-xs text-slate-500">Advanced Analytics & Research Methodology</p>
                 </div>
             </div>
         </div>
     </section>
+    </main>
+
+    <!-- Modern Native Dialog Modals -->
+    <!-- Modal 1: Geothermal Breakdown -->
+    <dialog id="modal-geothermal" class="p-0 rounded-3xl max-w-2xl w-11/12 shadow-2xl border border-slate-200 bg-white">
+        <div class="p-6 sm:p-8">
+            <div class="flex justify-between items-start mb-4">
+                <h3 class="text-xl font-bold text-slate-900">Bedah Kasus: Geothermal Logging Tool</h3>
+                <button type="button" onclick="closeModal('modal-geothermal')" class="text-slate-400 hover:text-slate-700 text-lg p-1" aria-label="Tutup Dialog">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="space-y-4 text-xs sm:text-sm text-slate-600 leading-relaxed max-h-[60vh] overflow-y-auto pr-2">
+                <p>
+                    Dalam sumur eksplorasi panas bumi, gradien temperatur dan tekanan hidrostatik fluida merupakan variabel kritis penentu kapasitas reservoir. Kondisi operasi mencakup temperatur &gt;250&deg;C dan tekanan &gt;15 MPa.
+                </p>
+                <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200">
+                    <h4 class="font-bold text-slate-900 mb-2">3 Pertimbangan Multifisika Utama:</h4>
+                    <ol class="list-decimal pl-4 space-y-1.5 text-xs text-slate-700">
+                        <li><strong>Konduksi & Konveksi:</strong> Selubung silinder logam Titanium Grade 5 dengan isolator mikropori menjaga suhu ruang sirkuit elektronik tetap di bawah 85&deg;C.</li>
+                        <li><strong>Tegangan Tangensial (*Hoop Stress*):</strong> Tekanan eksternal 15 MPa dihitung terhadap risiko kolaps (*implosion*) dan tekuk lokal tabung.</li>
+                        <li><strong>Integritas Segel (*O-Ring*):</strong> Pemilihan elastomer fluoro-silikon khusus tahan uap panas dan gas asam terlarut (H<sub>2</sub>S, CO<sub>2</sub>).</li>
+                    </ol>
+                </div>
+                <p>
+                    Mahasiswa diajarkan untuk menyusun <em>Variable Matrix</em> dan <em>Physical Phenomena Map</em> sebelum memilih sensor fisik di laboratorium.
+                </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-slate-200 flex justify-end">
+                <button type="button" onclick="closeModal('modal-geothermal')" class="px-5 py-2.5 bg-slate-900 text-white text-xs font-bold rounded-xl hover:bg-slate-800 transition">
+                    Tutup Informasi
+                </button>
+            </div>
+        </div>
+    </dialog>
+
+    <!-- Modal 2: Impedansi Detail -->
+    <dialog id="modal-desc-impedansi" class="p-0 rounded-3xl max-w-xl w-11/12 shadow-2xl border border-slate-200 bg-white">
+        <div class="p-6 sm:p-8">
+            <div class="flex justify-between items-start mb-4">
+                <h3 class="text-xl font-bold text-slate-900">Deskripsi Modul: Pekan Impedansi (EMI)</h3>
+                <button type="button" onclick="closeModal('modal-desc-impedansi')" class="text-slate-400 hover:text-slate-700 text-lg p-1" aria-label="Tutup Dialog">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="text-xs sm:text-sm text-slate-600 space-y-3 leading-relaxed">
+                <p>
+                    Modul ini membedah teknik <strong>Electromechanical Impedance (EMI)</strong> berbasis sensor piezoelektrik PZT. Struktur fisik yang dipantau mencakup:
+                </p>
+                <ul class="list-disc pl-5 space-y-1 text-xs">
+                    <li>Pemantauan kuat-kendur sambungan baut flensa pipa (torsi 50 Nm &rarr; 0 Nm).</li>
+                    <li>Evaluasi pelepasan adhesi / delaminasi lapisan cat (*coating void damage*).</li>
+                    <li>Algoritma kompensasi efek termal *Effective Frequency Shift* (EFS).</li>
+                </ul>
+                <div class="p-3 bg-blue-50 rounded-xl text-xs text-blue-800 border border-blue-200">
+                    <strong>Kompetensi Bloom:</strong> C1 (Mengingat admitansi), C2 (Shear-lag effect), C3 (Kalkulasi RMSD), C4 (Analisis EFS suhu), C5 (Evaluasi saturasi op-amp AD5933), C6 (Rancang arsitektur multi-baut).
+                </div>
+            </div>
+            <div class="mt-6 pt-4 border-t border-slate-200 flex justify-end gap-2">
+                <a href="assets/Modul_LKM_Pekan_Impedansi.pdf" target="_blank" class="px-5 py-2 bg-blue-600 text-white text-xs font-bold rounded-xl hover:bg-blue-700 transition">
+                    Unduh PDF Modul
+                </a>
+            </div>
+        </div>
+    </dialog>
+
+    <!-- Modal 3: Akustik Detail -->
+    <dialog id="modal-desc-akustik" class="p-0 rounded-3xl max-w-xl w-11/12 shadow-2xl border border-slate-200 bg-white">
+        <div class="p-6 sm:p-8">
+            <div class="flex justify-between items-start mb-4">
+                <h3 class="text-xl font-bold text-slate-900">Deskripsi Modul: Pekan Akustik & UT</h3>
+                <button type="button" onclick="closeModal('modal-desc-akustik')" class="text-slate-400 hover:text-slate-700 text-lg p-1" aria-label="Tutup Dialog">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="text-xs sm:text-sm text-slate-600 space-y-3 leading-relaxed">
+                <p>
+                    Modul ini mengintegrasikan metode pasif <strong>Acoustic Emission (AE)</strong> dan metode aktif <strong>Ultrasonic Testing (UT)</strong>:
+                </p>
+                <ul class="list-disc pl-5 space-y-1 text-xs">
+                    <li>Karakterisasi sinyal kontinu turbulensi jet kebocoran fluida pipa ($V_{\text{RMS}} \propto d^2 \sqrt{\Delta P}$).</li>
+                    <li>Lokalisasi posisi kebocoran melalui gelombang Lamb mode simetris $S_0$ dengan TDOA.</li>
+                    <li>Pengujian cacat rongga bejana tekan dan penentuan batas zona medan dekat ultrasonik.</li>
+                </ul>
+                <div class="p-3 bg-emerald-50 rounded-xl text-xs text-emerald-800 border border-emerald-200">
+                    <strong>Kompetensi Bloom:</strong> C1 (Terminologi ASTM E1316), C2 (Dispersi Lamb Rose 2014), C3 (TDOA & atenuasi dB), C4 (Analisis Kurtosis vs Letupan), C5 (Evaluasi cacat medan dekat N), C6 (Rancang arsitektur multi-sensor pipeline).
+                </div>
+            </div>
+            <div class="mt-6 pt-4 border-t border-slate-200 flex justify-end gap-2">
+                <a href="assets/Modul_LKM_Pekan_Akustik.pdf" target="_blank" class="px-5 py-2 bg-emerald-600 text-white text-xs font-bold rounded-xl hover:bg-emerald-700 transition">
+                    Unduh PDF Modul
+                </a>
+            </div>
+        </div>
+    </dialog>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-gray-300 py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
-            <div class="mb-6 md:mb-0 text-center md:text-left">
-                <div class="flex items-center justify-center md:justify-start mb-2">
-                    <i class="fa-solid fa-microscope text-blue-500 text-xl mr-2"></i>
-                    <span class="font-bold text-xl text-white">TIN-213</span>
+    <footer class="bg-slate-900 text-slate-400 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 pb-12 border-b border-slate-800">
+                <div>
+                    <div class="flex items-center gap-3 text-white font-extrabold text-lg mb-3">
+                        <div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-sm">
+                            <i class="fa-solid fa-microscope"></i>
+                        </div>
+                        TIN-213 Metode Eksperimen Teknik
+                    </div>
+                    <p class="text-xs text-slate-400 leading-relaxed mb-4">
+                        Program Studi Magister (S2) Teknik Mesin, Fakultas Teknik, Universitas Bengkulu. Mengembangkan kompetensi rekayasa berbasis bukti eksperimental dan digitalisasi.
+                    </p>
+                    <p class="text-xs text-slate-500 font-mono">Dokumen Versi Resmi: v1.2 (September 2026)</p>
                 </div>
-                <p class="text-sm text-gray-400">Magister Teknik Mesin, Universitas Bengkulu.</p>
+                <div>
+                    <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-4">Navigasi Utama</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="#beranda" class="hover:text-blue-400 transition">Beranda & Pengantar</a></li>
+                        <li><a href="#framework" class="hover:text-blue-400 transition">Tiga Pilar DEEF</a></li>
+                        <li><a href="#silabus" class="hover:text-blue-400 transition">Silabus 16 Pekan RPS</a></li>
+                        <li><a href="#lab-virtual" class="hover:text-blue-400 transition">Kalkulator Interaktif Virtual Lab</a></li>
+                        <li><a href="#materi" class="hover:text-blue-400 transition">Pusat Unduhan Modul PDF & Kode</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-4">Kontak & Lokasi Kampus</h4>
+                    <p class="text-xs text-slate-400 leading-relaxed mb-2">
+                        Gedung Fakultas Teknik, Universitas Bengkulu<br>
+                        Jl. WR. Supratman, Kandang Limun, Bengkulu 38371A
+                    </p>
+                    <p class="text-xs text-slate-400">
+                        Email Dosen: <a href="mailto:novaliodaratha@unib.ac.id" class="text-blue-400 hover:underline">novaliodaratha@unib.ac.id</a>
+                    </p>
+                </div>
             </div>
-            <div class="text-sm text-gray-500 text-center md:text-right">
-                &copy; 2026 Ir. Novalio Daratha, Ph.D. <br>
-                Built with 💙 for Digital Experimental Engineering.
+            <div class="pt-8 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500 gap-4">
+                <p>&copy; 2026 Program Magister Teknik Mesin Universitas Bengkulu. Dikelola oleh Tim Dosen Pengampu TIN-213.</p>
+                <p>Dirancang dengan standar web modern & aksesibilitas WCAG 2.1.</p>
             </div>
         </div>
     </footer>
 
+    <!-- Interactive Logic Scripts -->
+    <script>
+        // Mobile Menu Toggle
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
+
+        menuBtn.addEventListener('click', () => {
+            const isOpen = !mobileMenu.classList.contains('hidden');
+            if (isOpen) {
+                mobileMenu.classList.add('hidden');
+                menuIcon.classList.replace('fa-xmark', 'fa-bars');
+                menuBtn.setAttribute('aria-expanded', 'false');
+            } else {
+                mobileMenu.classList.remove('hidden');
+                menuIcon.classList.replace('fa-bars', 'fa-xmark');
+                menuBtn.setAttribute('aria-expanded', 'true');
+            }
+        });
+
+        // Close mobile menu on clicking any link
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                menuIcon.classList.replace('fa-xmark', 'fa-bars');
+                menuBtn.setAttribute('aria-expanded', 'false');
+            });
+        });
+
+        // Modal open & close functions using native <dialog>
+        function openModal(id) {
+            const dialog = document.getElementById(id);
+            if (dialog) dialog.showModal();
+        }
+        function closeModal(id) {
+            const dialog = document.getElementById(id);
+            if (dialog) dialog.close();
+        }
+        // Light dismiss dialog when clicking outside
+        document.querySelectorAll('dialog').forEach(dialog => {
+            dialog.addEventListener('click', (e) => {
+                const rect = dialog.getBoundingClientRect();
+                const inDialog = (rect.top <= e.clientY && e.clientY <= rect.top + rect.height &&
+                                  rect.left <= e.clientX && e.clientX <= rect.left + rect.width);
+                if (!inDialog) dialog.close();
+            });
+        });
+
+        // Virtual Lab Tab Switching
+        function switchToolTab(tab) {
+            const tabs = ['tdoa', 'rmsd', 'nearfield'];
+            tabs.forEach(t => {
+                const panel = document.getElementById(`tool-${t}`);
+                const btn = document.getElementById(`tab-btn-${t}`);
+                if (t === tab) {
+                    panel.classList.remove('hidden');
+                    btn.className = "px-5 py-2.5 rounded-xl text-sm font-bold bg-blue-600 text-white shadow-sm transition";
+                } else {
+                    panel.classList.add('hidden');
+                    btn.className = "px-5 py-2.5 rounded-xl text-sm font-bold text-slate-600 hover:text-slate-900 transition";
+                }
+            });
+        }
+
+        // TDOA Calculator Logic
+        function calculateTDOA() {
+            const L = parseFloat(document.getElementById('tdoa-length').value);
+            const vg = parseFloat(document.getElementById('tdoa-speed').value);
+            const dtMicro = parseFloat(document.getElementById('tdoa-deltat').value);
+            const dtSec = dtMicro * 1e-6;
+
+            if (isNaN(L) || isNaN(vg) || isNaN(dtSec) || L <= 0 || vg <= 0) {
+                alert("Mohon masukkan angka valid dan lebih besar dari nol.");
+                return;
+            }
+
+            const x1 = 0.5 * (L - vg * dtSec);
+            const x2 = L - x1;
+
+            document.getElementById('res-x1').textContent = x1.toFixed(3) + " meter";
+            document.getElementById('res-x2').textContent = x2.toFixed(3) + " meter";
+
+            // Update pipe visual leak indicator position
+            let percent = (x1 / L) * 100;
+            if (percent < 5) percent = 5;
+            if (percent > 95) percent = 95;
+            document.getElementById('pipe-leak-indicator').style.left = percent + "%";
+        }
+
+        // RMSD Calculator Logic
+        function calculateRMSD() {
+            const g0Str = document.getElementById('rmsd-g0').value;
+            const gStr = document.getElementById('rmsd-g').value;
+
+            const g0 = g0Str.split(',').map(s => parseFloat(s.trim())).filter(n => !isNaN(n));
+            const g = gStr.split(',').map(s => parseFloat(s.trim())).filter(n => !isNaN(n));
+
+            if (g0.length === 0 || g.length === 0 || g0.length !== g.length) {
+                alert("Jumlah elemen G0 dan G harus sama dan berupa deret angka dipisahkan koma.");
+                return;
+            }
+
+            let sumDiffSq = 0;
+            let sumBaseSq = 0;
+            for (let i = 0; i < g0.length; i++) {
+                sumDiffSq += Math.pow(g[i] - g0[i], 2);
+                sumBaseSq += Math.pow(g0[i], 2);
+            }
+
+            if (sumBaseSq === 0) return;
+
+            const rmsd = Math.sqrt(sumDiffSq / sumBaseSq) * 100;
+            document.getElementById('res-rmsd').textContent = rmsd.toFixed(2) + "%";
+
+            const badge = document.getElementById('rmsd-badge');
+            if (rmsd < 5) {
+                badge.className = "inline-block px-4 py-1.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-300";
+                badge.textContent = "Status: Sambungan Baut Aman / Coating Sempurna (RMSD < 5%)";
+            } else if (rmsd < 20) {
+                badge.className = "inline-block px-4 py-1.5 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-300";
+                badge.textContent = "Status: Baut Mengalami Pengenduran Parsial / Retak Awal (5% - 20%)";
+            } else {
+                badge.className = "inline-block px-4 py-1.5 rounded-full text-xs font-bold bg-red-100 text-red-800 border border-red-300";
+                badge.textContent = "Status: Baut Sangat Kendur (0 Nm) / Delaminasi Parah (RMSD > 20%)";
+            }
+        }
+
+        // Near-Field Calculator Logic
+        function calculateNearField() {
+            const D = parseFloat(document.getElementById('nf-diam').value); // mm
+            const fMHz = parseFloat(document.getElementById('nf-freq').value); // MHz
+            const v = parseFloat(document.getElementById('nf-vel').value); // m/s
+
+            if (isNaN(D) || isNaN(fMHz) || isNaN(v) || D <= 0 || fMHz <= 0 || v <= 0) {
+                alert("Mohon masukkan angka valid.");
+                return;
+            }
+
+            const lambdaMm = (v / (fMHz * 1e6)) * 1000; // mm
+            const N_mm = Math.pow(D, 2) / (4 * lambdaMm);
+
+            document.getElementById('res-lambda').textContent = lambdaMm.toFixed(3) + " mm";
+            document.getElementById('res-nearfield').textContent = N_mm.toFixed(2) + " mm";
+
+            const advice = document.getElementById('nearfield-advice');
+            advice.textContent = `Rekomendasi: Zona medan dekat N adalah ${N_mm.toFixed(1)} mm. Deteksi cacat di dalam zona ini rentan interferensi dan galat estimasi amplitudo. Untuk memeriksa cacat dangkal (< ${N_mm.toFixed(1)} mm), gunakan frekuensi lebih rendah atau baji sudut (angle-beam).`;
+        }
+
+        // Live Search & Category Filtering
+        let activeCategory = 'all';
+
+        function setCategoryFilter(cat) {
+            activeCategory = cat;
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                if (btn.getAttribute('data-cat') === cat) {
+                    btn.className = "cat-btn px-3.5 py-2 rounded-xl text-xs font-bold bg-blue-600 text-white transition whitespace-nowrap";
+                } else {
+                    btn.className = "cat-btn px-3.5 py-2 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 transition whitespace-nowrap";
+                }
+            });
+            filterModules();
+        }
+
+        function filterModules() {
+            const query = document.getElementById('module-search').value.toLowerCase().trim();
+            const cards = document.querySelectorAll('.module-card');
+
+            cards.forEach(card => {
+                const category = card.getAttribute('data-category');
+                const keywords = card.getAttribute('data-keywords').toLowerCase();
+                const title = card.querySelector('h3').textContent.toLowerCase();
+                const desc = card.querySelector('p').textContent.toLowerCase();
+
+                const matchesCat = (activeCategory === 'all' || category === activeCategory);
+                const matchesQuery = !query || keywords.includes(query) || title.includes(query) || desc.includes(query);
+
+                if (matchesCat && matchesQuery) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+    </script>
 </body>
 </html>
