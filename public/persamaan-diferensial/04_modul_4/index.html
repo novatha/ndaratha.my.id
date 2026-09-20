@@ -1,11 +1,15 @@
 
 <!doctype html>
-<html lang="en" class="no-js">
+<html lang="id" class="no-js">
   <head>
     
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
+        <meta name="description" content="Materi Perkuliahan dan Dokumentasi Persamaan Diferensial Teknik Elektro Universitas Bengkulu">
+      
+      
+        <meta name="author" content="Novalio Daratha, Ph.D. & Muhammad Arfan">
       
       
       
@@ -23,11 +27,14 @@
     
     
       
-        <title>Modul 4: Persamaan Diferensial Biasa Orde 2 Linier Homogen - Persamaan Diferensial UNIB</title>
+        <title>Minggu 4: PDB Orde 2 Homogen - Persamaan Diferensial UNIB</title>
       
     
     
       <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -55,7 +62,14 @@
   </head>
   
   
-    <body dir="ltr">
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -64,8 +78,8 @@
     <div data-md-component="skip">
       
         
-        <a href="#modul-4-persamaan-diferensial-biasa-orde-2-linier-homogen" class="md-skip">
-          Skip to content
+        <a href="#modul-pembelajaran-persamaan-diferensial" class="md-skip">
+          Lewati ke isi
         </a>
       
     </div>
@@ -76,9 +90,7 @@
     
       
 
-  
-
-<header class="md-header md-header--shadow" data-md-component="header">
+<header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href=".." title="Persamaan Diferensial UNIB" class="md-header__button md-logo" aria-label="Persamaan Diferensial UNIB" data-md-component="logo">
       
@@ -100,12 +112,38 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Modul 4: Persamaan Diferensial Biasa Orde 2 Linier Homogen
+              Minggu 4: PDB Orde 2 Homogen
             
           </span>
         </div>
       </div>
     </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Mode Gelap"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Mode Gelap" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Mode Terang"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Mode Terang" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
     
     
       <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
@@ -122,16 +160,16 @@
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <input type="text" class="md-search__input" name="query" aria-label="Cari" placeholder="Cari" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
       <label class="md-search__icon md-icon" for="__search">
         
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
         
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
       </label>
-      <nav class="md-search__options" aria-label="Search">
+      <nav class="md-search__options" aria-label="Cari">
         
-        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+        <button type="reset" class="md-search__icon md-icon" title="Kosongkan" aria-label="Kosongkan" tabindex="-1">
           
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
         </button>
@@ -142,7 +180,7 @@
       <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
         <div class="md-search-result" data-md-component="search-result">
           <div class="md-search-result__meta">
-            Initializing search
+            Mempersiapkan pencarian
           </div>
           <ol class="md-search-result__list" role="presentation"></ol>
         </div>
@@ -162,6 +200,75 @@
       
         
           
+            
+<nav class="md-tabs" aria-label="Tab" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  🏠 Beranda
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../01_modul_1/" class="md-tabs__link">
+          
+  
+  
+  📚 Modul Pembelajaran
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../modul_studi_kasus_modern/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  ⚡ Studi Kasus Modern
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
         
       
       <main class="md-main" data-md-component="main">
@@ -175,8 +282,10 @@
                     
 
 
+  
 
-<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigasi" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href=".." title="Persamaan Diferensial UNIB" class="md-nav__button md-logo" aria-label="Persamaan Diferensial UNIB" data-md-component="logo">
       
@@ -203,7 +312,7 @@
   <span class="md-ellipsis">
     
   
-    📘 Selamat Datang di Mata Kuliah Persamaan Diferensial
+    🏠 Beranda
   
 
     
@@ -218,6 +327,61 @@
     
       
       
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📚 Modul Pembelajaran
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    📚 Modul Pembelajaran
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
   
   
   
@@ -230,7 +394,7 @@
   <span class="md-ellipsis">
     
   
-    Modul 1: Pengantar Persamaan Diferensial
+    Minggu 1: Pengantar & Klasifikasi PDB
   
 
     
@@ -242,9 +406,10 @@
     </li>
   
 
-    
-      
-      
+              
+            
+              
+                
   
   
   
@@ -257,7 +422,7 @@
   <span class="md-ellipsis">
     
   
-    Modul 2: Persamaan Diferensial Biasa Orde 1
+    Minggu 2: PDB Orde 1
   
 
     
@@ -269,9 +434,10 @@
     </li>
   
 
-    
-      
-      
+              
+            
+              
+                
   
   
   
@@ -284,7 +450,7 @@
   <span class="md-ellipsis">
     
   
-    Modul 3: Aplikasi Persamaan Diferensial Biasa Orde 1
+    Minggu 3: Aplikasi PDB Orde 1
   
 
     
@@ -296,9 +462,10 @@
     </li>
   
 
-    
-      
-      
+              
+            
+              
+                
   
   
     
@@ -320,7 +487,7 @@
   <span class="md-ellipsis">
     
   
-    Modul 4: Persamaan Diferensial Biasa Orde 2 Linier Homogen
+    Minggu 4: PDB Orde 2 Homogen
   
 
     
@@ -338,7 +505,7 @@
   <span class="md-ellipsis">
     
   
-    Modul 4: Persamaan Diferensial Biasa Orde 2 Linier Homogen
+    Minggu 4: PDB Orde 2 Homogen
   
 
     
@@ -350,7 +517,7 @@
       
         
 
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+<nav class="md-nav md-nav--secondary" aria-label="Daftar isi">
   
   
   
@@ -359,15 +526,15 @@
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
-      Table of contents
+      Daftar isi
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#pendahuluan" class="md-nav__link">
+  <a href="#pendahuluan-sistem-orde-dua-dalam-rekayasa-elektro" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Pendahuluan
+        Pendahuluan: Sistem Orde Dua dalam Rekayasa Elektro
       
     </span>
   </a>
@@ -375,54 +542,138 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#materi-utama" class="md-nav__link">
+  <a href="#bentuk-standar-prinsip-superposisi" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Materi Utama
+        Bentuk Standar \&amp; Prinsip Superposisi
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bentuk Standar \&amp; Prinsip Superposisi">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#uji-kebebasan-linier-determinan-wronskian" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Uji Kebebasan Linier: Determinan Wronskian
       
     </span>
   </a>
   
 </li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
         <li class="md-nav__item">
-  <a href="#bentuk-umum" class="md-nav__link">
+  <a href="#persamaan-karakteristik-tiga-ragam-solusi" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Bentuk Umum
+        Persamaan Karakteristik \&amp; Tiga Ragam Solusi
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Persamaan Karakteristik \&amp; Tiga Ragam Solusi">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kasus-1-diskriminan-positif-d-b2-4ac-0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Kasus 1: Diskriminan Positif (\(D = b^2 - 4ac &gt; 0\))
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#persamaan-karakteristik" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#kasus-2-diskriminan-nol-d-b2-4ac-0" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Persamaan Karakteristik
+        Kasus 2: Diskriminan Nol (\(D = b^2 - 4ac = 0\))
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#tiga-kasus-solusi-umum" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#kasus-3-diskriminan-negatif-d-b2-4ac-0" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Tiga Kasus Solusi Umum
+        Kasus 3: Diskriminan Negatif (\(D = b^2 - 4ac &lt; 0\))
       
     </span>
   </a>
   
 </li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
         <li class="md-nav__item">
-  <a href="#ringkasan" class="md-nav__link">
+  <a href="#aplikasi-fisik-rangkaian-osilator-lc-murni" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Ringkasan
+        Aplikasi Fisik: Rangkaian Osilator LC Murni
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Aplikasi Fisik: Rangkaian Osilator LC Murni">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#penurunan-model-dari-hukum-kirchhoff-kvl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Penurunan Model dari Hukum Kirchhoff (KVL)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#solusi-muatan-dan-arus-listrik" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Solusi Muatan dan Arus Listrik
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kekekalan-energi-total-rangkaian" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Kekekalan Energi Total Rangkaian
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rangkuman-komparatif" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rangkuman Komparatif
       
     </span>
   </a>
@@ -447,9 +698,10 @@
     </li>
   
 
-    
-      
-      
+              
+            
+              
+                
   
   
   
@@ -462,7 +714,7 @@
   <span class="md-ellipsis">
     
   
-    Modul 5: PDB Orde 2 Non-Homogen (Metode Koefisien Tak Tentu) &amp; Aplikasi RLC Seri
+    Minggu 5: PDB Orde 2 Non-Homogen & RLC
   
 
     
@@ -474,9 +726,10 @@
     </li>
   
 
-    
-      
-      
+              
+            
+              
+                
   
   
   
@@ -489,7 +742,7 @@
   <span class="md-ellipsis">
     
   
-    Modul 6: Transformasi Laplace Dasar
+    Minggu 6: Transformasi Laplace Dasar
   
 
     
@@ -501,9 +754,10 @@
     </li>
   
 
-    
-      
-      
+              
+            
+              
+                
   
   
   
@@ -516,7 +770,7 @@
   <span class="md-ellipsis">
     
   
-    Modul 7: Invers Laplace &amp; Solusi PDB dengan Laplace
+    Minggu 7: Invers Laplace & Solusi PDB
   
 
     
@@ -528,9 +782,10 @@
     </li>
   
 
-    
-      
-      
+              
+            
+              
+                
   
   
   
@@ -543,7 +798,7 @@
   <span class="md-ellipsis">
     
   
-    Modul 9: Pengantar PDP &amp; Deret Fourier
+    Minggu 9: Pengantar PDP & Deret Fourier
   
 
     
@@ -555,9 +810,10 @@
     </li>
   
 
-    
-      
-      
+              
+            
+              
+                
   
   
   
@@ -570,7 +826,7 @@
   <span class="md-ellipsis">
     
   
-    Modul 10: Solusi PDP dengan Metode Pemisahan Variabel
+    Minggu 10: Solusi PDP Pemisahan Variabel
   
 
     
@@ -582,9 +838,10 @@
     </li>
   
 
-    
-      
-      
+              
+            
+              
+                
   
   
   
@@ -597,7 +854,7 @@
   <span class="md-ellipsis">
     
   
-    Modul 11: Persamaan Gelombang 1D (Vibrasi &amp; Transmisi Sinyal)
+    Minggu 11: Persamaan Gelombang 1D
   
 
     
@@ -609,9 +866,10 @@
     </li>
   
 
-    
-      
-      
+              
+            
+              
+                
   
   
   
@@ -624,7 +882,7 @@
   <span class="md-ellipsis">
     
   
-    Modul 12: Persamaan Panas 1D (Difusi Termal pada Kabel)
+    Minggu 12: Persamaan Panas 1D
   
 
     
@@ -636,9 +894,10 @@
     </li>
   
 
-    
-      
-      
+              
+            
+              
+                
   
   
   
@@ -651,7 +910,7 @@
   <span class="md-ellipsis">
     
   
-    Modul 13: Persamaan Laplace 2D (Distribusi Potensial Elektrostatik)
+    Minggu 13: Persamaan Laplace 2D
   
 
     
@@ -663,9 +922,10 @@
     </li>
   
 
-    
-      
-      
+              
+            
+              
+                
   
   
   
@@ -678,7 +938,7 @@
   <span class="md-ellipsis">
     
   
-    Modul 14: Fungsi Khusus 1 (Persamaan Bessel &amp; Aplikasi Gelombang Silinder)
+    Minggu 14: Fungsi Bessel & Gelombang Silinder
   
 
     
@@ -690,9 +950,10 @@
     </li>
   
 
-    
-      
-      
+              
+            
+              
+                
   
   
   
@@ -705,7 +966,42 @@
   <span class="md-ellipsis">
     
   
-    Modul 15: Kaitan PDP dengan Persamaan Maxwell
+    Minggu 15: PDP & Persamaan Maxwell
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../modul_studi_kasus_modern/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ⚡ Studi Kasus Modern
   
 
     
@@ -731,7 +1027,7 @@
                   <div class="md-sidebar__inner">
                     
 
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+<nav class="md-nav md-nav--secondary" aria-label="Daftar isi">
   
   
   
@@ -740,15 +1036,15 @@
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
-      Table of contents
+      Daftar isi
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#pendahuluan" class="md-nav__link">
+  <a href="#pendahuluan-sistem-orde-dua-dalam-rekayasa-elektro" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Pendahuluan
+        Pendahuluan: Sistem Orde Dua dalam Rekayasa Elektro
       
     </span>
   </a>
@@ -756,54 +1052,138 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#materi-utama" class="md-nav__link">
+  <a href="#bentuk-standar-prinsip-superposisi" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Materi Utama
+        Bentuk Standar \&amp; Prinsip Superposisi
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bentuk Standar \&amp; Prinsip Superposisi">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#uji-kebebasan-linier-determinan-wronskian" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Uji Kebebasan Linier: Determinan Wronskian
       
     </span>
   </a>
   
 </li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
         <li class="md-nav__item">
-  <a href="#bentuk-umum" class="md-nav__link">
+  <a href="#persamaan-karakteristik-tiga-ragam-solusi" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Bentuk Umum
+        Persamaan Karakteristik \&amp; Tiga Ragam Solusi
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Persamaan Karakteristik \&amp; Tiga Ragam Solusi">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kasus-1-diskriminan-positif-d-b2-4ac-0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Kasus 1: Diskriminan Positif (\(D = b^2 - 4ac &gt; 0\))
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#persamaan-karakteristik" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#kasus-2-diskriminan-nol-d-b2-4ac-0" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Persamaan Karakteristik
+        Kasus 2: Diskriminan Nol (\(D = b^2 - 4ac = 0\))
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#tiga-kasus-solusi-umum" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#kasus-3-diskriminan-negatif-d-b2-4ac-0" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Tiga Kasus Solusi Umum
+        Kasus 3: Diskriminan Negatif (\(D = b^2 - 4ac &lt; 0\))
       
     </span>
   </a>
   
 </li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
         <li class="md-nav__item">
-  <a href="#ringkasan" class="md-nav__link">
+  <a href="#aplikasi-fisik-rangkaian-osilator-lc-murni" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Ringkasan
+        Aplikasi Fisik: Rangkaian Osilator LC Murni
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Aplikasi Fisik: Rangkaian Osilator LC Murni">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#penurunan-model-dari-hukum-kirchhoff-kvl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Penurunan Model dari Hukum Kirchhoff (KVL)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#solusi-muatan-dan-arus-listrik" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Solusi Muatan dan Arus Listrik
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kekekalan-energi-total-rangkaian" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Kekekalan Energi Total Rangkaian
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rangkuman-komparatif" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rangkuman Komparatif
       
     </span>
   </a>
@@ -838,73 +1218,233 @@
 
 
 
-<h1 id="modul-4-persamaan-diferensial-biasa-orde-2-linier-homogen">Modul 4: Persamaan Diferensial Biasa Orde 2 Linier Homogen</h1>
-<h2 id="pendahuluan">Pendahuluan</h2>
-<p>Persamaan Diferensial Orde 2 banyak muncul dalam pemodelan sistem dinamik yang memiliki elemen penyimpan energi ganda, seperti rangkaian RLC pada Teknik Elektro maupun sistem massa-pegas pada mekanika. Pada minggu ini, kita akan berfokus pada Persamaan Diferensial Biasa (PDB) Orde 2 Linier Homogen dengan Koefisien Konstan. Pemahaman terhadap metode persamaan karakteristik menjadi kunci untuk menganalisis respons natural dari sistem orde dua.</p>
-<h2 id="materi-utama">Materi Utama</h2>
-<h2 id="bentuk-umum">Bentuk Umum</h2>
-<p>Bentuk umum PDB Orde 2 Linier dengan Koefisien Konstan adalah:</p>
-<div class="arithmatex">\[
-a \frac{d^2y}{dx^2} + b \frac{dy}{dx} + cy = f(x)
-\]</div>
-<p>Jika <span class="arithmatex">\(f(x) = 0\)</span>, maka persamaan disebut <strong>Homogen</strong>. Sehingga bentuk PDB linier orde 2 homogen adalah:</p>
-<div class="arithmatex">\[
-ay'' + by' + cy = 0
-\]</div>
-<p>dengan <span class="arithmatex">\(a, b, c\)</span> adalah konstanta real dan <span class="arithmatex">\(a \neq 0\)</span>.</p>
-<h2 id="persamaan-karakteristik">Persamaan Karakteristik</h2>
-<p>Solusi untuk PDB jenis ini dicari dalam bentuk fungsi eksponensial <span class="arithmatex">\(y = e^{rx}\)</span>. Dengan mensubstitusikan <span class="arithmatex">\(y\)</span>, <span class="arithmatex">\(y' = re^{rx}\)</span>, dan <span class="arithmatex">\(y'' = r^2e^{rx}\)</span> ke persamaan asli, kita dapatkan:</p>
-<div class="arithmatex">\[
-a(r^2e^{rx}) + b(re^{rx}) + c(e^{rx}) = 0
-\]</div>
-<div class="arithmatex">\[
-e^{rx} (ar^2 + br + c) = 0
-\]</div>
-<p>Karena <span class="arithmatex">\(e^{rx} \neq 0\)</span> untuk setiap nilai <span class="arithmatex">\(x\)</span>, maka haruslah:</p>
-<div class="arithmatex">\[
-ar^2 + br + c = 0
-\]</div>
-<p>Persamaan kuadrat ini disebut <strong>Persamaan Karakteristik</strong> (atau Persamaan Pembantu). Akar-akar dari persamaan karakteristik (<span class="arithmatex">\(r_1\)</span> dan <span class="arithmatex">\(r_2\)</span>) menentukan bentuk solusi umum.</p>
-<h2 id="tiga-kasus-solusi-umum">Tiga Kasus Solusi Umum</h2>
-<p>Diskriminan dari persamaan karakteristik adalah <span class="arithmatex">\(D = b^2 - 4ac\)</span>. Terdapat tiga kasus solusi tergantung nilai <span class="arithmatex">\(D\)</span>:</p>
-<p><strong>Kasus I: Dua Akar Real dan Berbeda (<span class="arithmatex">\(D &gt; 0\)</span>)</strong><br>
-Jika <span class="arithmatex">\(r_1 \neq r_2\)</span> dan keduanya adalah bilangan real, maka basis solusinya adalah <span class="arithmatex">\(y_1 = e^{r_1x}\)</span> dan <span class="arithmatex">\(y_2 = e^{r_2x}\)</span>.
-Solusi umum:</p>
-<div class="arithmatex">\[
-y(x) = C_1 e^{r_1x} + C_2 e^{r_2x}
-\]</div>
-<p>(Dalam analisis rangkaian RLC, kondisi ini bersesuaian dengan sistem <em>overdamped</em>).</p>
-<p><strong>Kasus II: Akar Kembar / Real Sama (<span class="arithmatex">\(D = 0\)</span>)</strong><br>
-Jika <span class="arithmatex">\(r_1 = r_2 = r\)</span>, maka solusi basisnya adalah <span class="arithmatex">\(y_1 = e^{rx}\)</span> dan agar linier independen, solusi kedua dikalikan <span class="arithmatex">\(x\)</span>, menjadi <span class="arithmatex">\(y_2 = x e^{rx}\)</span>.
-Solusi umum:</p>
-<div class="arithmatex">\[
+<h1 id="modul-pembelajaran-persamaan-diferensial">{Modul Pembelajaran Persamaan Diferensial</h1>
+<p>\begin{tcolorbox}[colback=blue!5!white,colframe=blue!75!black,title=Capaian Pembelajaran Khusus (Sub-CPMK 4)]
+Setelah mempelajari modul ini, mahasiswa diharapkan mampu:</p>
+<div class="highlight"><pre><span></span><code>- Menjelaskan struktur PDB linier orde 2 homogen dengan koefisien konstan.
+- Menguji kebebasan linier pasangan solusi basis menggunakan determinan Wronskian.
+- Membuktikan kemunculan suku $x e^{rx}$ pada akar kembar melalui Metode Reduksi Orde.
+- Menyelesaikan Masalah Nilai Awal (IVP) untuk 3 kasus diskriminan ($D &gt; 0, D = 0, D &lt; 0$).
+- Memodelkan osilasi alami pada sistem fisik rangkaian listrik LC murni tanpa redaman.
+</code></pre></div>
+<p>\end{tcolorbox}</p>
+<h2 id="pendahuluan-sistem-orde-dua-dalam-rekayasa-elektro">Pendahuluan: Sistem Orde Dua dalam Rekayasa Elektro</h2>
+<p>Pada perkuliahan minggu sebelumnya, kita telah mempelajari sistem orde satu yang hanya memuat satu elemen penyimpan energi (seperti induktor pada rangkaian RL atau kapasitor pada rangkaian RC). Namun, mayoritas sistem kelistrikan industri bersifat <strong>orde dua atau lebih tinggi</strong> karena memuat dua elemen penyimpan energi yang saling bertukar medan, yaitu:</p>
+<div class="highlight"><pre><span></span><code>- **Induktor ($L$):** menyimpan energi dalam bentuk medan magnetik ($E_L = \frac{1}{2} L i^2$).
+- **Kapasitor ($C$):** menyimpan energi dalam bentuk medan listrik ($E_C = \frac{1}{2} C v^2 = \frac{q^2}{2C}$).
+</code></pre></div>
+<p>Interaksi dinamis antara kedua elemen ini melahirkan persamaan diferensial yang melibatkan turunan kedua terhadap waktu (<span class="arithmatex">\(\frac{d^2 i}{dt^2}\)</span> atau <span class="arithmatex">\(\frac{d^2 q}{dt^2}\)</span>). Sebelum menganalisis pengaruh sumber tegangan luar (sistem non-homogen pada Minggu 5), kita wajib menguasai perilaku alami (<em>natural response</em>) sistem melalui <strong>PDB Linier Orde 2 Homogen</strong>.</p>
+<hr />
+<h2 id="bentuk-standar-prinsip-superposisi">Bentuk Standar \&amp; Prinsip Superposisi</h2>
+<div class="admonition info">
+<p class="admonition-title">PDB Linier Orde 2 Homogen Koefisien Konstan</p>
+<p>Bentuk umum PDB linier orde 2 dengan koefisien konstan dinyatakan oleh:
+\begin{equation}
+a \frac{d^2y}{dx^2} + b \frac{dy}{dx} + c y = 0 \quad \iff \quad a y'' + b y' + c y = 0
+\end{equation}
+di mana <span class="arithmatex">\(a, b, c \in \mathbb{R}\)</span> adalah konstanta riil dengan <span class="arithmatex">\(a \neq 0\)</span>.</p>
+</div>
+<div class="arithmatex">\[\begin{theorem}[Prinsip Superposisi Linier]
+Jika $y_1(x)$ dan $y_2(x)$ adalah dua solusi bebas dari persamaan homogen $a y'' + b y' + c y = 0$, maka sembarang kombinasi linier:
+\begin{equation}
+y(x) = C_1 y_1(x) + C_2 y_2(x)
+\end{equation}
+juga merupakan solusi dari persamaan tersebut untuk sembarang konstanta $C_1, C_2 \in \mathbb{R}$.
+\end{theorem}\]</div>
+<h3 id="uji-kebebasan-linier-determinan-wronskian">Uji Kebebasan Linier: Determinan Wronskian</h3>
+<p>Dua buah fungsi <span class="arithmatex">\(y_1(x)\)</span> dan <span class="arithmatex">\(y_2(x)\)</span> dikatakan <strong>bebas linier</strong> (<em>linearly independent</em>) pada suatu interval <span class="arithmatex">\(I\)</span> jika tidak ada konstanta <span class="arithmatex">\(k\)</span> sehingga <span class="arithmatex">\(y_1(x) = k y_2(x)\)</span>. Untuk membuktikan kebebasan linier secara matematis, digunakan <strong>Determinan Wronskian</strong>:
+\begin{equation}
+W(y_1, y_2)(x) = \begin{vmatrix} y_1(x) &amp; y_2(x) </p>
+<p>y_1'(x) &amp; y_2'(x) \end{vmatrix} = y_1(x) y_2'(x) - y_1'(x) y_2(x)
+\end{equation}</p>
+<div class="highlight"><pre><span></span><code>- Jika $W(y_1, y_2) \neq 0$ untuk setiap $x \in I$, maka $y_1$ dan $y_2$ membentuk **Himpunan Solusi Fundamental** (*Fundamental Set of Solutions*), dan solusi umum $y = C_1 y_1 + C_2 y_2$ dijamin mampu memenuhi sembarang kondisi awal (IVP).
+- Jika $W(y_1, y_2) = 0$, kedua fungsi bergantung linier dan tidak dapat membentuk solusi umum.
+</code></pre></div>
+<hr />
+<h2 id="persamaan-karakteristik-tiga-ragam-solusi">Persamaan Karakteristik \&amp; Tiga Ragam Solusi</h2>
+<p>Untuk menyelesaikan <span class="arithmatex">\(a y'' + b y' + c y = 0\)</span>, kita mengasumsikan solusi eksponensial <span class="arithmatex">\(y = e^{rx}\)</span>. Mengingat sifat turunan fungsi eksponensial <span class="arithmatex">\(y' = r e^{rx}\)</span> dan <span class="arithmatex">\(y'' = r^2 e^{rx}\)</span>, substitusi ke dalam PDB menghasilkan:
+\begin{equation}
+a (r^2 e^{rx}) + b (r e^{rx}) + c (e^{rx}) = e^{rx}(a r^2 + b r + c) = 0
+\end{equation}
+Karena fungsi eksponensial <span class="arithmatex">\(e^{rx} \neq 0\)</span> untuk seluruh <span class="arithmatex">\(x \in \mathbb{R}\)</span>, syarat agar persamaan bernilai nol adalah:
+\begin{equation}
+a r^2 + b r + c = 0 \quad \text{(Persamaan Karakteristik / Polinomial Pembantu)}
+\end{equation}</p>
+<p>Akar-akar dari persamaan kuadrat ini diberikan oleh rumus kuadratik:
+\begin{equation}
+r_{1,2} = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
+\end{equation}
+Bentuk solusi umum sangat bergantung pada nilai diskriminan <span class="arithmatex">\(D = b^2 - 4ac\)</span>.</p>
+<hr />
+<h3 id="kasus-1-diskriminan-positif-d-b2-4ac-0">Kasus 1: Diskriminan Positif (<span class="arithmatex">\(D = b^2 - 4ac &gt; 0\)</span>)</h3>
+<p>Pada kasus ini, persamaan karakteristik menghasilkan dua akar real berbeda (<span class="arithmatex">\(r_1 \neq r_2\)</span>).
+Pasangan solusi basis adalah <span class="arithmatex">\(y_1 = e^{r_1 x}\)</span> dan <span class="arithmatex">\(y_2 = e^{r_2 x}\)</span>.
+Wronskian dari pasangan ini adalah:
+\begin{equation}
+W(e^{r_1 x}, e^{r_2 x}) = e^{r_1 x}(r_2 e^{r_2 x}) - (r_1 e^{r_1 x})e^{r_2 x} = (r_2 - r_1) e^{(r_1+r_2)x} \neq 0
+\end{equation}
+Karena <span class="arithmatex">\(r_1 \neq r_2\)</span>, maka <span class="arithmatex">\(W \neq 0\)</span>, membuktikan bahwa kedua solusi bebas linier.</p>
+<div class="arithmatex">\[\begin{tcolorbox}[colback=green!5!white,colframe=green!60!black,title=Bentuk Solusi Umum Kasus 1 (Akar Real Berbeda)]
+\begin{equation}
+y(x) = C_1 e^{r_1 x} + C_2 e^{r_2 x}
+\end{equation}
+*Interpretasi Fisis:* Bersesuaian dengan sistem tanpa osilasi yang kembali ke titik kesetimbangan secara lambat (*Overdamped*).
+\end{tcolorbox}\]</div>
+<div class="admonition example">
+<p class="admonition-title">Masalah Nilai Awal Kasus 1</p>
+<p>Selesaikan Masalah Nilai Awal (IVP) berikut:
+$$ y'' - y' - 6y = 0, \quad y(0) = 5, \quad y'(0) = 0 $$
+<strong>Langkah Penyelesaian:</strong></p>
+<div class="highlight"><pre><span></span><code>- **Susun Persamaan Karakteristik:**
+$$ r^2 - r - 6 = 0 \implies (r - 3)(r + 2) = 0 \implies r_1 = 3, \quad r_2 = -2 $$
+- **Tuliskan Solusi Umum:**
+$$ y(x) = C_1 e^{3x} + C_2 e^{-2x} $$
+- **Hitung Turunan Pertama:**
+$$ y&#39;(x) = 3C_1 e^{3x} - 2C_2 e^{-2x} $$
+- **Terapkan Kondisi Awal:**
+$$ y(0) = C_1 + C_2 = 5 $$
+$$ y&#39;(0) = 3C_1 - 2C_2 = 0 \implies C_2 = \frac{3}{2} C_1 $$
+Substitusi ke persamaan pertama:
+$$ C_1 + \frac{3}{2} C_1 = 5 \implies \frac{5}{2} C_1 = 5 \implies C_1 = 2 \implies C_2 = 3 $$
+- **Solusi Khusus:**
+$$ \mathbf{y(x) = 2e^{3x} + 3e^{-2x}} $$
+</code></pre></div>
+</div>
+<hr />
+<h3 id="kasus-2-diskriminan-nol-d-b2-4ac-0">Kasus 2: Diskriminan Nol (<span class="arithmatex">\(D = b^2 - 4ac = 0\)</span>)</h3>
+<p>Jika diskriminan bernilai nol, persamaan karakteristik menghasilkan sepasang <strong>akar kembar real</strong>:
+$$ r_1 = r_2 = r = -\frac{b}{2a} $$
+Dari akar ini, kita baru memiliki satu solusi basis: <span class="arithmatex">\(y_1(x) = e^{rx}\)</span>. Kita memerlukan solusi kedua <span class="arithmatex">\(y_2(x)\)</span> yang bebas linier agar membentuk himpunan solusi fundamental.</p>
+<p>\begin{tcolorbox}[colback=yellow!10!white,colframe=orange!80!black,title=Penurunan: Mengapa Muncul Faktor Pengali <span class="arithmatex">\(x\)</span> (Metode Reduksi Orde)?]
+Misalkan solusi kedua berbentuk <span class="arithmatex">\(y_2(x) = u(x) y_1(x) = u(x) e^{rx}\)</span>.</p>
+<p>Turunkan <span class="arithmatex">\(y_2(x)\)</span>:
+$$ y_2' = u' e^{rx} + r u e^{rx} $$
+$$ y_2'' = u'' e^{rx} + 2r u' e^{rx} + r^2 u e^{rx} $$
+Substitusikan ke dalam PDB <span class="arithmatex">\(a y_2'' + b y_2' + c y_2 = 0\)</span>:
+$$ a(u'' + 2r u' + r^2 u)e^{rx} + b(u' + r u)e^{rx} + c u e^{rx} = 0 $$
+Kumpulkan suku-suku berdasarkan turunan <span class="arithmatex">\(u\)</span>:
+$$ e^{rx} \Big[ a u'' + (2ar + b)u' + (a r^2 + b r + c)u \Big] = 0 $$
+Perhatikan dua identitas penting:</p>
+<div class="highlight"><pre><span></span><code>- Karena $r = -\frac{b}{2a}$, maka $2ar + b = 2a\left(-\frac{b}{2a}\right) + b = 0$.
+- Karena $r$ adalah akar karakteristik, maka $a r^2 + b r + c = 0$.
+</code></pre></div>
+<p>Sehingga persamaan tereduksi secara dramatis menjadi:
+$$ a u'' = 0 \implies u''(x) = 0 \quad (\text{karena } a \neq 0) $$
+Integrasikan dua kali terhadap <span class="arithmatex">\(x\)</span>:
+$$ u'(x) = C \implies u(x) = C x + K $$
+Dengan mengambil konstanta sederhana <span class="arithmatex">\(C = 1\)</span> dan <span class="arithmatex">\(K = 0\)</span>, diperoleh:
+$$ u(x) = x \implies \mathbf{y_2(x) = x e^{rx}} $$
+\end{tcolorbox}</p>
+<div class="arithmatex">\[\begin{tcolorbox}[colback=green!5!white,colframe=green!60!black,title=Bentuk Solusi Umum Kasus 2 (Akar Real Kembar)]
+\begin{equation}
 y(x) = C_1 e^{rx} + C_2 x e^{rx} = (C_1 + C_2 x) e^{rx}
-\]</div>
-<p>(Kondisi ini bersesuaian dengan sistem <em>critically damped</em>).</p>
-<p><strong>Kasus III: Akar Kompleks Konjugat (<span class="arithmatex">\(D &lt; 0\)</span>)</strong><br>
-Jika akar-akar tersebut kompleks berbentuk <span class="arithmatex">\(r_1 = \alpha + i\beta\)</span> dan <span class="arithmatex">\(r_2 = \alpha - i\beta\)</span> dengan <span class="arithmatex">\(\alpha = -\frac{b}{2a}\)</span> dan <span class="arithmatex">\(\beta = \frac{\sqrt{4ac - b^2}}{2a}\)</span>.
-Menggunakan identitas Euler (<span class="arithmatex">\(e^{i\theta} = \cos\theta + i\sin\theta\)</span>), solusi umumnya dapat ditulis dalam bentuk sinus dan kosinus beramplitudo eksponensial.
-Solusi umum:</p>
-<div class="arithmatex">\[
-y(x) = e^{\alpha x} (C_1 \cos \beta x + C_2 \sin \beta x)
-\]</div>
-<p>(Kondisi ini bersesuaian dengan sistem <em>underdamped</em>, menunjukkan osilasi yang meluruh jika <span class="arithmatex">\(\alpha &lt; 0\)</span>).</p>
-<p><strong>Contoh:</strong></p>
-<p>Tentukan solusi umum PDB: <span class="arithmatex">\(y'' + 5y' + 6y = 0\)</span><br>
-<strong>Penyelesaian:</strong><br>
-Persamaan karakteristik: <span class="arithmatex">\(r^2 + 5r + 6 = 0\)</span><br>
-Faktorisasi: <span class="arithmatex">\((r+2)(r+3) = 0 \implies r_1 = -2, r_2 = -3\)</span><br>
-Karena <span class="arithmatex">\(r_1 \neq r_2\)</span> real (Kasus I), maka solusi umumnya adalah:</p>
-<div class="arithmatex">\[
-y(x) = C_1 e^{-2x} + C_2 e^{-3x}
-\]</div>
-<h2 id="ringkasan">Ringkasan</h2>
-<p>Penyelesaian PDB Orde 2 Linier Homogen dengan Koefisien Konstan didasarkan pada pencarian akar-akar dari Persamaan Karakteristik <span class="arithmatex">\(ar^2 + br + c = 0\)</span>. Bentuk solusi umum dijamin secara eksklusif jatuh ke dalam tiga kasus: akar real berbeda (sistem <em>overdamped</em>), akar kembar (sistem <em>critically damped</em>), atau akar kompleks konjugat (sistem <em>underdamped</em>).</p>
+\end{equation}
+*Interpretasi Fisis:* Bersesuaian dengan sistem redaman kritis (*Critically Damped*) yang kembali ke titik netral paling cepat tanpa pernah berosilasi.
+\end{tcolorbox}\]</div>
+<div class="admonition example">
+<p class="admonition-title">Masalah Nilai Awal Kasus 2</p>
+<p>Selesaikan IVP: <span class="arithmatex">\(y'' + 6y' + 9y = 0\)</span>, dengan <span class="arithmatex">\(y(0) = 2\)</span> dan <span class="arithmatex">\(y'(0) = -1\)</span>.</p>
+<div class="highlight"><pre><span></span><code>- Persamaan karakteristik: $r^2 + 6r + 9 = (r + 3)^2 = 0 \implies r = -3$ (akar kembar).
+- Solusi umum: $y(x) = (C_1 + C_2 x)e^{-3x}$.
+- Turunan: $y&#39;(x) = C_2 e^{-3x} - 3(C_1 + C_2 x)e^{-3x}$.
+- Kondisi awal:
+$$ y(0) = C_1 = 2 $$
+$$ y&#39;(0) = C_2 - 3C_1 = -1 \implies C_2 - 3(2) = -1 \implies C_2 = 5 $$
+- Solusi khusus: $\mathbf{y(x) = (2 + 5x)e^{-3x}}$.
+</code></pre></div>
+</div>
+<hr />
+<h3 id="kasus-3-diskriminan-negatif-d-b2-4ac-0">Kasus 3: Diskriminan Negatif (<span class="arithmatex">\(D = b^2 - 4ac &lt; 0\)</span>)</h3>
+<p>Jika diskriminan negatif, akar-akar karakteristik berupa pasangan <strong>bilangan kompleks konjugat</strong>:
+\begin{equation}
+r_{1,2} = \alpha \pm j\beta, \quad \text{dengan } \alpha = -\frac{b}{2a}, \quad \beta = \frac{\sqrt{4ac - b^2}}{2a}
+\end{equation}
+Solusi formal dalam domain kompleks adalah:
+$$ y(x) = c_1 e^{(\alpha + j\beta)x} + c_2 e^{(\alpha - j\beta)x} = e^{\alpha x} \left( c_1 e^{j\beta x} + c_2 e^{-j\beta x} \right) $$
+Menggunakan <strong>Formula Euler</strong> (<span class="arithmatex">\(e^{j\theta} = \cos\theta + j\sin\theta\)</span> dan <span class="arithmatex">\(e^{-j\theta} = \cos\theta - j\sin\theta\)</span>):
+$$ y(x) = e^{\alpha x} \left[ c_1(\cos\beta x + j\sin\beta x) + c_2(\cos\beta x - j\sin\beta x) \right] $$
+$$ y(x) = e^{\alpha x} \left[ (c_1 + c_2)\cos\beta x + j(c_1 - c_2)\sin\beta x \right] $$
+Agar solusi bernilai riil untuk fenomena fisik rekayasa nyata, kita mendefinisikan konstanta riil baru:
+$$ C_1 = c_1 + c_2 \quad \text{dan} \quad C_2 = j(c_1 - c_2) $$
+sehingga bilangan imajiner <span class="arithmatex">\(j\)</span> melebur secara alami ke dalam konstanta riil <span class="arithmatex">\(C_2\)</span>.</p>
+<div class="arithmatex">\[\begin{tcolorbox}[colback=green!5!white,colframe=green!60!black,title=Bentuk Solusi Umum Kasus 3 (Akar Kompleks Konjugat)]
+\begin{equation}
+y(x) = e^{\alpha x} \left( C_1 \cos(\beta x) + C_2 \sin(\beta x) \right)
+\end{equation}
+*Interpretasi Fisis:* Bersesuaian dengan sistem osilasi teredam (*Underdamped*), di mana $\alpha$ mengatur laju peluruhan amplutido dan $\beta$ mengatur frekuensi osilasi sudut.
+\end{tcolorbox}\]</div>
+<div class="admonition example">
+<p class="admonition-title">Masalah Nilai Awal Kasus 3</p>
+<p>Tentukan solusi dari: <span class="arithmatex">\(y'' + 4y' + 13y = 0\)</span>, <span class="arithmatex">\(y(0) = 3\)</span>, <span class="arithmatex">\(y'(0) = 2\)</span>.</p>
+<div class="highlight"><pre><span></span><code>- Karakteristik: $r^2 + 4r + 13 = 0 \implies r = \frac{-4 \pm \sqrt{16 - 52}}{2} = \frac{-4 \pm \sqrt{-36}}{2} = -2 \pm 3j$.
+- Parameter: $\alpha = -2, \beta = 3$.
+- Solusi umum: $y(x) = e^{-2x}(C_1 \cos 3x + C_2 \sin 3x)$.
+- Turunan:
+$$ y&#39;(x) = -2e^{-2x}(C_1 \cos 3x + C_2 \sin 3x) + e^{-2x}(-3C_1 \sin 3x + 3C_2 \cos 3x) $$
+- Masukkan kondisi awal:
+$$ y(0) = C_1 = 3 $$
+$$ y&#39;(0) = -2C_1 + 3C_2 = 2 \implies -2(3) + 3C_2 = 2 \implies 3C_2 = 8 \implies C_2 = \frac{8}{3} $$
+- Solusi khusus: $\mathbf{y(x) = e^{-2x}\left( 3\cos 3x + \frac{8}{3}\sin 3x \right)}$.
+</code></pre></div>
+</div>
+<hr />
+<h2 id="aplikasi-fisik-rangkaian-osilator-lc-murni">Aplikasi Fisik: Rangkaian Osilator LC Murni</h2>
+<p>Tinjau sebuah rangkaian tertutup yang terdiri atas induktor ideal <span class="arithmatex">\(L\)</span> (Henry) dan kapasitor ideal <span class="arithmatex">\(C\)</span> (Farad) tanpa adanya hambatan resistor (<span class="arithmatex">\(R = 0\)</span>). Rangkaian ini dikenal sebagai <strong>Tangki Osilator Frekuensi Radio (<em>RF Tank Circuit</em>)</strong>.</p>
+<h3 id="penurunan-model-dari-hukum-kirchhoff-kvl">Penurunan Model dari Hukum Kirchhoff (KVL)</h3>
+<p>Berdasarkan Hukum Tegangan Kirchhoff (KVL), jumlah tegangan dalam loop tertutup bernilai nol:
+\begin{equation}
+v_L(t) + v_C(t) = 0
+\end{equation}
+Mengingat hubungan arus dan muatan listrik:
+$$ i(t) = \frac{dq}{dt}, \quad v_L = L \frac{di}{dt} = L \frac{d^2q}{dt^2}, \quad v_C = \frac{q}{C} $$
+Substitusikan ke persamaan KVL:
+\begin{equation}
+L \frac{d^2q}{dt^2} + \frac{1}{C} q(t) = 0 \quad \iff \quad \frac{d^2q}{dt^2} + \omega_0^2 q(t) = 0
+\end{equation}
+di mana <span class="arithmatex">\(\omega_0 = \frac{1}{\sqrt{LC}}\)</span> adalah <strong>frekuensi sudut resonansi alami</strong> (<em>undamped natural resonant angular frequency</em>) dalam satuan rad/s.</p>
+<h3 id="solusi-muatan-dan-arus-listrik">Solusi Muatan dan Arus Listrik</h3>
+<p>Persamaan karakteristik: <span class="arithmatex">\(r^2 + \omega_0^2 = 0 \implies r = \pm j\omega_0\)</span>.
+Karena <span class="arithmatex">\(\alpha = 0\)</span> dan <span class="arithmatex">\(\beta = \omega_0\)</span>, maka solusi muatan pada kapasitor adalah osilasi harmonik abadi:
+\begin{equation}
+q(t) = C_1 \cos(\omega_0 t) + C_2 \sin(\omega_0 t)
+\end{equation}
+Arus listrik yang mengalir dalam loop:
+\begin{equation}
+i(t) = \frac{dq}{dt} = -\omega_0 C_1 \sin(\omega_0 t) + \omega_0 C_2 \cos(\omega_0 t)
+\end{equation}</p>
+<h3 id="kekekalan-energi-total-rangkaian">Kekekalan Energi Total Rangkaian</h3>
+<p>Energi total sistem pada sembarang waktu <span class="arithmatex">\(t\)</span> adalah jumlah energi magnetik induktor dan energi elektrostatik kapasitor:
+\begin{equation}
+E_{\text{total}}(t) = E_L(t) + E_C(t) = \frac{1}{2} L [i(t)]^2 + \frac{1}{2C} [q(t)]^2
+\end{equation}
+Jika kita masukkan solusi <span class="arithmatex">\(q(t) = Q_0 \cos(\omega_0 t)\)</span> (asumsi muatan awal <span class="arithmatex">\(Q_0\)</span> dan arus awal <span class="arithmatex">\(i(0) = 0\)</span>), maka <span class="arithmatex">\(i(t) = -\omega_0 Q_0 \sin(\omega_0 t)\)</span>:
+$$ E_{\text{total}} = \frac{1}{2} L \left(-\frac{1}{\sqrt{LC}} Q_0 \sin\omega_0 t\right)^2 + \frac{1}{2C} (Q_0 \cos\omega_0 t)^2 $$
+$$ E_{\text{total}} = \frac{Q_0^2}{2C} \sin^2(\omega_0 t) + \frac{Q_0^2}{2C} \cos^2(\omega_0 t) = \frac{Q_0^2}{2C} (\sin^2\omega_0 t + \cos^2\omega_0 t) = \mathbf{\frac{Q_0^2}{2C} = \text{Konstan}} $$
+Persamaan ini membuktikan secara analitik bahwa energi berpindah secara kontinu bolak-balik antara kapasitor dan induktor tanpa ada energi yang terdisipasi (hilang menjadi panas).</p>
+<hr />
+<h2 id="rangkuman-komparatif">Rangkuman Komparatif</h2>
+<p>\begin{table}[h!]
+\centering
+\small
+\begin{tabular}{@{}llll@{}}
+\toprule
+<strong>Kriteria</strong> &amp; <strong>Kasus 1 (<span class="arithmatex">\(D &gt; 0\)</span>)</strong> &amp; <strong>Kasus 2 (<span class="arithmatex">\(D = 0\)</span>)</strong> &amp; <strong>Kasus 3 (<span class="arithmatex">\(D &lt; 0\)</span>)</strong> </p>
+<p>\midrule
+<strong>Akar Karakteristik</strong> &amp; Real Berbeda (<span class="arithmatex">\(r_1 \neq r_2\)</span>) &amp; Real Kembar (<span class="arithmatex">\(r_1 = r_2 = r\)</span>) &amp; Kompleks Konjugat (<span class="arithmatex">\(\alpha \pm j\beta\)</span>) </p>
+<p><strong>Solusi Basis</strong> &amp; <span class="arithmatex">\(e^{r_1 x}, e^{r_2 x}\)</span> &amp; <span class="arithmatex">\(e^{rx}, x e^{rx}\)</span> &amp; <span class="arithmatex">\(e^{\alpha x}\cos\beta x, e^{\alpha x}\sin\beta x\)</span> </p>
+<p><strong>Bentuk Solusi</strong> &amp; <span class="arithmatex">\(y = C_1 e^{r_1 x} + C_2 e^{r_2 x}\)</span> &amp; <span class="arithmatex">\(y = (C_1 + C_2 x)e^{rx}\)</span> &amp; <span class="arithmatex">\(y = e^{\alpha x}(C_1 \cos\beta x + C_2 \sin\beta x)\)</span> </p>
+<p><strong>Rezim Fisik</strong> &amp; <em>Overdamped</em> (Sangat Redam) &amp; <em>Critically Damped</em> (Redam Kritis) &amp; <em>Underdamped</em> (Kurang Redam) </p>
+<p><strong>Osilasi</strong> &amp; Tidak ada osilasi &amp; Tidak ada osilasi &amp; Ada osilasi sinusoidal </p>
+<p><strong>Kecepatan Redaman</strong> &amp; Paling lambat (ekivalen <span class="arithmatex">\(R\)</span> besar) &amp; Tercepat mencapai nol &amp; Meluruh perlahan jika <span class="arithmatex">\(\alpha &lt; 0\)</span> </p>
+<p>\bottomrule
+\end{tabular}
+\end{table}</p>
+<hr />
 <h2 id="referensi">Referensi</h2>
-<ul>
-<li>Erwin Kreyszig, <em>Advanced Engineering Mathematics</em>, John Wiley &amp; Sons.</li>
-<li>Dennis G. Zill, <em>A First Course in Differential Equations with Modeling Applications</em>, Cengage Learning.</li>
-</ul>
+<div class="highlight"><pre><span></span><code>- Erwin Kreyszig, *Advanced Engineering Mathematics*, 10th Edition, John Wiley \&amp; Sons, 2011.
+- Dennis G. Zill, *A First Course in Differential Equations with Modeling Applications*, 11th Edition, Cengage Learning, 2018.
+- Charles K. Alexander \&amp; Matthew N. O. Sadiku, *Fundamentals of Electric Circuits*, 7th Edition, McGraw-Hill, 2021.
+</code></pre></div>
 
 
 
@@ -924,6 +1464,12 @@ y(x) = C_1 e^{-2x} + C_2 e^{-3x}
           
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Kembali ke atas
+</button>
         
       </main>
       
@@ -954,7 +1500,7 @@ y(x) = C_1 e^{-2x} + C_2 e^{-3x}
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": [], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.tabs", "navigation.top", "navigation.tracking", "content.code.copy", "content.action.edit"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Tersalin ke clipboard", "clipboard.copy": "Salin ke clipboard", "search.result.more.one": "1 lagi di halaman ini", "search.result.more.other": "# lagi di halaman ini", "search.result.none": "Tidak ada dokumen yang sesuai", "search.result.one": "1 dokumen ditemukan", "search.result.other": "# dokumen ditemukan", "search.result.placeholder": "Ketik untuk mulai pencarian", "search.result.term.missing": "Tidak ada", "select.version": "Pilih versi"}, "version": null}</script>
     
     
       <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
