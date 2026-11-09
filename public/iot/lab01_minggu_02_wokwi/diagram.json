@@ -1,0 +1,92 @@
+{
+  "version": 1,
+  "author": "Tim PjBL Informatika UNIB - Lab 1 (Minggu 2)",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "wokwi-esp32-devkit-v1",
+      "id": "esp",
+      "top": 20,
+      "left": 0,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-potentiometer",
+      "id": "potSoil",
+      "top": 10,
+      "left": -175,
+      "attrs": { "value": "500" }
+    },
+    {
+      "type": "wokwi-relay-module",
+      "id": "relayPump",
+      "top": 120,
+      "left": -215,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-led",
+      "id": "ledPump",
+      "top": 225,
+      "left": -145,
+      "attrs": { "color": "green", "label": "Pompa" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "rPump",
+      "top": 275,
+      "left": -155,
+      "attrs": { "value": "220" }
+    },
+    {
+      "type": "wokwi-dht22",
+      "id": "dht1",
+      "top": -25,
+      "left": 175,
+      "attrs": { "temperature": "31.5", "humidity": "68.0" }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "ledFanPwm",
+      "top": 120,
+      "left": 195,
+      "attrs": { "color": "blue", "label": "Kipas PWM" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "rFan",
+      "top": 175,
+      "left": 175,
+      "attrs": { "value": "220" }
+    },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btnMode",
+      "top": 230,
+      "left": 180,
+      "attrs": { "color": "yellow", "label": "Override" }
+    }
+  ],
+  "connections": [
+    [ "esp:TX0", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX0", "$serialMonitor:TX", "", [] ],
+    [ "dht1:VCC", "esp:3V3", "red", [] ],
+    [ "dht1:GND", "esp:GND.1", "black", [] ],
+    [ "dht1:SDA", "esp:D4", "blue", [] ],
+    [ "potSoil:VCC", "esp:3V3", "red", [] ],
+    [ "potSoil:GND", "esp:GND.2", "black", [] ],
+    [ "potSoil:SIG", "esp:D34", "purple", [] ],
+    [ "btnMode:1.l", "esp:D15", "gold", [] ],
+    [ "btnMode:2.l", "esp:GND.1", "black", [] ],
+    [ "relayPump:VCC", "esp:VIN", "red", [] ],
+    [ "relayPump:GND", "esp:GND.2", "black", [] ],
+    [ "relayPump:IN", "esp:D26", "green", [] ],
+    [ "esp:D26", "rPump:1", "green", [] ],
+    [ "rPump:2", "ledPump:A", "green", [] ],
+    [ "ledPump:C", "esp:GND.2", "black", [] ],
+    [ "esp:D18", "rFan:1", "cyan", [] ],
+    [ "rFan:2", "ledFanPwm:A", "cyan", [] ],
+    [ "ledFanPwm:C", "esp:GND.1", "black", [] ]
+  ],
+  "dependencies": {}
+}

@@ -1,0 +1,1765 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <script>
+    try {
+      const savedScheme = localStorage.getItem("color-scheme");
+      if (savedScheme === "light" || savedScheme === "dark") {
+        document.querySelector('meta[name="color-scheme"]').content = savedScheme;
+      }
+    } catch (_) {}
+  </script>
+  <title>Teknologi Internet of Things (IoT) — Portal Kuliah S1 Informatika FT UNIB</title>
+  <meta name="description" content="Portal resmi perkuliahan Teknologi Internet of Things (IoT) berbasis OBE, PjBL, dan CBL — Program Studi S1 Informatika, Fakultas Teknik, Universitas Bengkulu.">
+  <style>
+    :root {
+      color-scheme: light dark;
+
+      &:has(> head > meta[name="color-scheme"][content="dark"]) {
+        color-scheme: dark;
+      }
+      &:has(> head > meta[name="color-scheme"][content="light"]) {
+        color-scheme: light;
+      }
+
+      /* Identitas Akademik UNIB dengan Dukungan Light-Dark Otomatis */
+      --bg-page: light-dark(#f5f7fb, #0b1220);
+      --bg-surface: light-dark(#ffffff, #111c2e);
+      --bg-subtle: light-dark(#ebf2fa, #18263e);
+      --bg-muted: light-dark(#f1f5f9, #162033);
+      --text-primary: light-dark(#0f172a, #f1f5f9);
+      --text-secondary: light-dark(#334155, #cbd5e1);
+      --text-muted: light-dark(#475569, #94a3b8);
+
+      --brand-navy: light-dark(#0b2e59, #7cb4f8);
+      --brand-navy-solid: #0b2e59;
+      --brand-blue: light-dark(#1b4f72, #60a5fa);
+      --brand-gold: light-dark(#9a6700, #f5b942);
+      --brand-gold-bg: light-dark(#fef6e4, #2f2410);
+      --brand-green: light-dark(#146c43, #4ade80);
+      --brand-green-bg: light-dark(#e6f4ea, #0f2e20);
+
+      --border-color: light-dark(#cbd5e1, #2d3f59);
+      --border-strong: light-dark(#94a3b8, #475f82);
+      --shadow-sm: 0 1px 3px rgba(11, 46, 89, 0.08);
+      --shadow-md: 0 6px 20px rgba(11, 46, 89, 0.12);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --max-w: 1200px;
+    }
+
+    @media (forced-colors: active) {
+      :root {
+        --border-color: CanvasText;
+        --border-strong: CanvasText;
+      }
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.55;
+      background-color: var(--bg-page);
+      color: var(--text-primary);
+    }
+
+    body {
+      margin: 0;
+    }
+
+    a {
+      color: var(--brand-navy);
+      text-underline-offset: 3px;
+    }
+
+    /* Navigasi Utama */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background-color: var(--bg-surface);
+      border-bottom: 1px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .topbar-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0.75rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: var(--text-primary);
+    }
+
+    .brand-mark {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #0b2e59, #1b4f72);
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 0.95rem;
+      display: grid;
+      place-items: center;
+      letter-spacing: 0.5px;
+      border: 2px solid #d99b26;
+      flex-shrink: 0;
+    }
+
+    .brand-text strong {
+      display: block;
+      font-size: 1rem;
+      line-height: 1.2;
+    }
+
+    .brand-text span {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 0.42rem 0.75rem;
+      border-radius: var(--radius-sm);
+      transition: background-color 0.15s ease, color 0.15s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus-visible {
+      background-color: var(--bg-subtle);
+      color: var(--brand-navy);
+    }
+
+    .theme-select {
+      font-size: 0.85rem;
+      padding: 0.38rem 0.6rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-strong);
+      background-color: var(--bg-surface);
+      color: var(--text-primary);
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* Hero Banner */
+    .hero {
+      background: linear-gradient(135deg, #08203e 0%, #0b2e59 55%, #1b4f72 100%);
+      color: #ffffff;
+      padding: 3rem 1.25rem 2.6rem;
+      border-bottom: 4px solid #d99b26;
+    }
+
+    .hero-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.55fr 1fr;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    @media (max-width: 900px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background-color: rgba(217, 155, 38, 0.22);
+      border: 1px solid #f5b942;
+      color: #fde68a;
+      padding: 0.28rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      margin-bottom: 0.85rem;
+    }
+
+    .hero h1 {
+      margin: 0 0 0.75rem;
+      font-size: clamp(1.75rem, 3.2vw, 2.5rem);
+      line-height: 1.18;
+    }
+
+    .hero p {
+      margin: 0 0 1.35rem;
+      color: #e2e8f0;
+      font-size: 1rem;
+      max-width: 66ch;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      padding: 0.6rem 1rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: transform 0.1s ease, filter 0.15s ease, background-color 0.15s ease;
+      font-family: inherit;
+    }
+
+    .btn:active {
+      transform: translateY(1px);
+    }
+
+    .btn-gold {
+      background-color: #d99b26;
+      color: #0b1220;
+      border-color: #f5b942;
+      font-weight: 700;
+    }
+
+    .btn-gold:hover {
+      filter: brightness(1.06);
+    }
+
+    .btn-hero-outline {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.45);
+    }
+
+    .btn-hero-outline:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-primary {
+      background-color: var(--brand-navy-solid);
+      color: #ffffff;
+      border-color: var(--brand-navy-solid);
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.15);
+    }
+
+    .btn-secondary {
+      background-color: var(--bg-subtle);
+      color: var(--brand-navy);
+      border-color: var(--border-strong);
+    }
+
+    .btn-secondary:hover {
+      filter: brightness(0.97);
+    }
+
+    .btn-sm {
+      padding: 0.42rem 0.75rem;
+      font-size: 0.83rem;
+    }
+
+    .hero-card {
+      background-color: rgba(15, 23, 42, 0.48);
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+    }
+
+    .hero-card h2 {
+      margin: 0 0 0.75rem;
+      font-size: 1rem;
+      color: #fde68a;
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+    }
+
+    .stat-item {
+      background-color: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      padding: 0.7rem 0.85rem;
+      border-radius: var(--radius-sm);
+    }
+
+    .stat-item strong {
+      display: block;
+      font-size: 1.25rem;
+      color: #ffffff;
+    }
+
+    .stat-item span {
+      font-size: 0.78rem;
+      color: #cbd5e1;
+    }
+
+    /* Kontainer Bagian */
+    main {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 2rem 1.25rem 3.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2.75rem;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.15rem;
+      padding-bottom: 0.65rem;
+      border-bottom: 2px solid var(--border-color);
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: 1.45rem;
+      color: var(--brand-navy);
+    }
+
+    .section-head p {
+      margin: 0.25rem 0 0;
+      color: var(--text-muted);
+      font-size: 0.92rem;
+    }
+
+    /* Kartu Unggulan Materi Tersedia (Minggu 1 & Minggu 2) */
+    .featured-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .week-featured-card {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-strong);
+      border-top: 5px solid var(--brand-navy-solid);
+      border-radius: var(--radius-md);
+      padding: 1.35rem;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+    }
+
+    .week-featured-card.latest {
+      border-top-color: #d99b26;
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 0.22rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid transparent;
+    }
+
+    .badge-ready {
+      background-color: var(--brand-green-bg);
+      color: var(--brand-green);
+      border-color: var(--brand-green);
+    }
+
+    .badge-gold {
+      background-color: var(--brand-gold-bg);
+      color: var(--brand-gold);
+      border-color: var(--brand-gold);
+    }
+
+    .badge-scheduled {
+      background-color: var(--bg-muted);
+      color: var(--text-muted);
+      border-color: var(--border-color);
+    }
+
+    .week-featured-card h3 {
+      margin: 0;
+      font-size: 1.18rem;
+      line-height: 1.3;
+    }
+
+    .subcpmk-box {
+      background-color: var(--bg-subtle);
+      border-left: 4px solid var(--brand-navy);
+      padding: 0.6rem 0.8rem;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    .topic-list {
+      margin: 0;
+      padding-left: 1.2rem;
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      display: grid;
+      gap: 0.25rem;
+    }
+
+    .resource-list {
+      display: grid;
+      gap: 0.55rem;
+      margin-top: auto;
+      padding-top: 0.5rem;
+      border-top: 1px dashed var(--border-color);
+    }
+
+    .resource-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.6rem;
+      background-color: var(--bg-muted);
+      padding: 0.55rem 0.75rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-color);
+      flex-wrap: wrap;
+    }
+
+    .resource-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .resource-info strong {
+      font-size: 0.86rem;
+    }
+
+    .resource-info span {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+    }
+
+    .resource-btns {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+
+    /* Filter Bar Peta 16 Minggu */
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .filter-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+
+    .pill {
+      padding: 0.4rem 0.8rem;
+      border-radius: 999px;
+      border: 1px solid var(--border-strong);
+      background-color: var(--bg-surface);
+      color: var(--text-secondary);
+      font-size: 0.83rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .pill[aria-pressed="true"] {
+      background-color: var(--brand-navy-solid);
+      color: #ffffff;
+      border-color: var(--brand-navy-solid);
+    }
+
+    .search-input {
+      padding: 0.45rem 0.8rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-strong);
+      background-color: var(--bg-surface);
+      color: var(--text-primary);
+      font-size: 0.88rem;
+      min-width: 240px;
+    }
+
+    /* Tabel / Grid Silabus 16 Minggu */
+    .syllabus-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(275px, 1fr));
+      gap: 0.9rem;
+    }
+
+    .week-mini-card {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .week-mini-card[data-ready="true"] {
+      border-color: var(--brand-green);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .week-mini-card h4 {
+      margin: 0;
+      font-size: 0.98rem;
+    }
+
+    .week-mini-card p {
+      margin: 0;
+      font-size: 0.84rem;
+      color: var(--text-secondary);
+    }
+
+    .week-meta {
+      margin-top: auto;
+      padding-top: 0.5rem;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.77rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    /* Bagian Evaluasi OBE & PjBL */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 1.25rem;
+    }
+
+    @media (max-width: 860px) {
+      .two-col {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .panel {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+    }
+
+    .panel h3 {
+      margin: 0 0 0.85rem;
+      font-size: 1.1rem;
+      color: var(--brand-navy);
+    }
+
+    .weight-row {
+      margin-bottom: 0.75rem;
+    }
+
+    .weight-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.86rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .progress-track {
+      height: 10px;
+      background-color: var(--bg-muted);
+      border-radius: 999px;
+      border: 1px solid var(--border-color);
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #0b2e59, #1b4f72);
+    }
+
+    .progress-fill.gold {
+      background: linear-gradient(90deg, #b7791f, #d99b26);
+    }
+
+    .milestone-list {
+      display: grid;
+      gap: 0.65rem;
+    }
+
+    .milestone-item {
+      padding: 0.7rem 0.85rem;
+      border-radius: var(--radius-sm);
+      background-color: var(--bg-muted);
+      border-left: 4px solid #d99b26;
+      font-size: 0.86rem;
+    }
+
+    .milestone-item strong {
+      display: block;
+      color: var(--text-primary);
+    }
+
+    /* Bank Kasus Kontekstual Bengkulu */
+    .case-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 0.8rem;
+    }
+
+    details.case-item {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 0.75rem 1rem;
+    }
+
+    details.case-item summary {
+      font-weight: 700;
+      font-size: 0.92rem;
+      cursor: pointer;
+      color: var(--brand-navy);
+    }
+
+    details.case-item p {
+      margin: 0.55rem 0 0;
+      font-size: 0.86rem;
+      color: var(--text-secondary);
+    }
+
+    /* Modal Native <dialog> */
+    dialog {
+      width: min(1040px, 94vw);
+      max-height: 90vh;
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-md);
+      padding: 0;
+      background-color: var(--bg-surface);
+      color: var(--text-primary);
+      box-shadow: var(--shadow-md);
+    }
+
+    dialog::backdrop {
+      background-color: rgba(8, 20, 38, 0.72);
+    }
+
+    .modal-header {
+      padding: 0.85rem 1.15rem;
+      background-color: var(--bg-subtle);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .modal-header h3 {
+      margin: 0;
+      font-size: 1rem;
+    }
+
+    .modal-body {
+      padding: 1rem 1.15rem;
+      overflow-y: auto;
+      max-height: calc(90vh - 65px);
+    }
+
+    .pdf-frame {
+      width: 100%;
+      height: 75vh;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      background-color: #ffffff;
+    }
+
+    .code-tabs {
+      display: flex;
+      gap: 0.45rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.75rem;
+    }
+
+    pre.code-box {
+      margin: 0;
+      padding: 0.9rem;
+      border-radius: var(--radius-sm);
+      background-color: #0f172a;
+      color: #e2e8f0;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.8rem;
+      overflow-x: auto;
+      max-height: 52vh;
+      border: 1px solid #334155;
+    }
+
+    footer {
+      border-top: 1px solid var(--border-color);
+      background-color: var(--bg-surface);
+      padding: 1.5rem 1.25rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigasi Atas -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a href="#" class="brand">
+        <div class="brand-mark" aria-hidden="true">IoT</div>
+        <div class="brand-text">
+          <strong>Teknologi Internet of Things (IoT)</strong>
+          <span>Prodi S1 Informatika · Fakultas Teknik UNIB</span>
+        </div>
+      </a>
+      <nav class="nav-links" aria-label="Navigasi Utama">
+        <a href="#materi-utama">Materi &amp; Praktikum</a>
+        <a href="#peta-16-minggu">Peta 16 Minggu</a>
+        <a href="#evaluasi-pjbl">OBE &amp; PjBL</a>
+        <a href="#bank-kasus">Bank Kasus Bengkulu</a>
+        <label for="schemeSelect" class="sr-only" hidden>Tema Tampilan</label>
+        <select id="schemeSelect" class="theme-select" aria-label="Pilih tema warna tampilan">
+          <option value="system">Tema: Sistem</option>
+          <option value="light">Tema: Terang</option>
+          <option value="dark">Tema: Gelap</option>
+        </select>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div>
+        <div class="eyebrow">Kurikulum OBE · Standar SN-Dikti &amp; LAM Infokom · 3 SKS (2T + 1P)</div>
+        <h1>Portal Perkuliahan Teknologi Internet of Things</h1>
+        <p>
+          Berfokus pada rekayasa <strong>End-to-End IoT Software Stack</strong>: pemrograman <em>firmware</em> ESP32 &amp; <em>edge gateway</em> Raspberry Pi, protokol MQTT/CoAP/HTTP/WebSocket, RESTful API, basis data <em>time-series</em>, keamanan TLS/STRIDE/UU PDP, serta <em>dashboard</em> analitik melalui proyek kontekstual Provinsi Bengkulu.
+        </p>
+        <div class="hero-actions">
+          <button type="button" class="btn btn-gold" data-preview-pdf="./RPS_Teknologi_IoT_Informatika_UNIB.pdf" data-preview-title="RPS Teknologi IoT — S1 Informatika FT UNIB">
+            📄 Pratinjau RPS (PDF)
+          </button>
+          <a class="btn btn-hero-outline" href="./RPS_Teknologi_IoT_Informatika_UNIB.pdf" target="_blank" rel="noopener">
+            ↗ Buka RPS Tab Baru
+          </a>
+          <a class="btn btn-hero-outline" href="./RPS_Teknologi_IoT_Informatika_UNIB.docx" download>
+            ⬇ Unduh RPS (.docx)
+          </a>
+        </div>
+      </div>
+
+      <aside class="hero-card" aria-label="Ringkasan Struktur Mata Kuliah">
+        <h2>Ringkasan Eksekutif Mata Kuliah</h2>
+        <div class="stat-grid">
+          <div class="stat-item">
+            <strong>3 / 16</strong>
+            <span>Minggu Materi Siap Akses</span>
+          </div>
+          <div class="stat-item">
+            <strong>7 CPMK</strong>
+            <span>14 Sub-CPMK Terukur</span>
+          </div>
+          <div class="stat-item">
+            <strong>50% PjBL</strong>
+            <span>4 Milestone s.d. IoT Expo</span>
+          </div>
+          <div class="stat-item">
+            <strong>Lab 0–10</strong>
+            <span>ESP32, RPi, Wokwi, Docker</span>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <main>
+
+    <!-- Bagian 1: Materi Mingguan yang Sudah Tersedia Lengkap -->
+    <section id="materi-utama">
+      <div class="section-head">
+        <div>
+          <h2>Perangkat Pembelajaran Mingguan (Siap Digunakan)</h2>
+          <p>Setiap paket mingguan dilengkapi Slide Beamer 16:9, Modul Bahan Ajar + LKM + Problem Set (C1–C6), serta Panduan Praktikum Mandiri.</p>
+        </div>
+      </div>
+
+      <div class="featured-grid">
+        <!-- Kartu Minggu 1 -->
+        <article class="week-featured-card">
+          <div class="card-top">
+            <span class="badge badge-ready">✓ Tersedia Lengkap · Minggu 1</span>
+            <span class="badge badge-scheduled">Sub-CPMK 1.1 (C2, A2)</span>
+          </div>
+          <h3>Minggu 1: Fondasi, Arsitektur Referensi, &amp; Software Stack IoT</h3>
+          <div class="subcpmk-box">
+            Menjelaskan konsep, karakteristik, dan arsitektur berlapis IoT serta memetakan komponen sistem pada kasus lokal Bengkulu.
+          </div>
+          <ul class="topic-list">
+            <li>Kontrak perkuliahan OBE, pembagian 4 peran tim PjBL, &amp; orientasi proyek.</li>
+            <li>Evolusi M2M → IoT → AIoT &amp; arsitektur ITU-T Y.4000 / ISO/IEC 30141:2024.</li>
+            <li><strong>Kasus A (LK-1):</strong> Sistem Peringatan Dini Banjir DAS Air Bengkulu.</li>
+            <li><strong>Lab-0:</strong> Toolchain VS Code + PlatformIO, Wokwi JSON <em>non-blocking</em>, &amp; Git.</li>
+          </ul>
+          <div class="resource-list">
+            <div class="resource-row">
+              <div class="resource-info">
+                <strong>📊 Slide Kuliah Minggu 1 (ch1.pdf)</strong>
+                <span>11 Slide LaTeX Beamer 16:9</span>
+              </div>
+              <div class="resource-btns">
+                <button type="button" class="btn btn-primary btn-sm" data-preview-pdf="./ch1.pdf" data-preview-title="Slide Minggu 1 — Fondasi & Arsitektur IoT">Pratinjau</button>
+                <a class="btn btn-secondary btn-sm" href="./ch1.pdf" target="_blank" rel="noopener">Buka PDF</a>
+              </div>
+            </div>
+            <div class="resource-row">
+              <div class="resource-info">
+                <strong>📘 Modul Bahan Ajar, LK-1 &amp; Problem Set C1–C6</strong>
+                <span>Modul_Minggu_01_Teknologi_IoT.pdf · 10 Halaman A4</span>
+              </div>
+              <div class="resource-btns">
+                <button type="button" class="btn btn-primary btn-sm" data-preview-pdf="./Modul_Minggu_01_Teknologi_IoT.pdf" data-preview-title="Modul Bahan Ajar Minggu 1">Pratinjau</button>
+                <a class="btn btn-secondary btn-sm" href="./Modul_Minggu_01_Teknologi_IoT.pdf" target="_blank" rel="noopener">Buka PDF</a>
+              </div>
+            </div>
+            <div class="resource-row">
+              <div class="resource-info">
+                <strong>🔬 Panduan Praktikum Minggu 1 (Lab-0)</strong>
+                <span>Praktikum_Minggu_01_Toolchain_Wokwi_Git.pdf · 6 Halaman A4</span>
+              </div>
+              <div class="resource-btns">
+                <button type="button" class="btn btn-primary btn-sm" data-preview-pdf="./Praktikum_Minggu_01_Toolchain_Wokwi_Git.pdf" data-preview-title="Panduan Praktikum Minggu 1 (Lab-0)">Pratinjau</button>
+                <a class="btn btn-secondary btn-sm" href="./Praktikum_Minggu_01_Toolchain_Wokwi_Git.pdf" target="_blank" rel="noopener">Buka PDF</a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Kartu Minggu 2 -->
+        <article class="week-featured-card">
+          <div class="card-top">
+            <span class="badge badge-ready">✓ Tersedia Lengkap · Minggu 2</span>
+            <span class="badge badge-scheduled">Sub-CPMK 1.2 (C4)</span>
+          </div>
+          <h3>Minggu 2: Pemilihan Perangkat Keras, Sensor–Aktuator, &amp; Konektivitas</h3>
+          <div class="subcpmk-box">
+            Menganalisis dan menjustifikasi pemilihan sensor, aktuator, MCU/SBC, dan konektivitas menggunakan Matriks Keputusan Berbobot (WDM).
+          </div>
+          <ul class="topic-list">
+            <li>Sensor analog vs digital, kuantisasi ADC 12-bit ESP32 (aturan ADC1 vs Wi-Fi), PWM <code>LEDC</code>, &amp; histeresis.</li>
+            <li>Komparasi MCU (ESP32) vs SBC (Raspberry Pi 4/5) &amp; perhitungan umur baterai <em>duty cycling</em>.</li>
+            <li>Segitiga <em>trade-off</em> Wi-Fi, BLE, Zigbee/Thread, LoRaWAN (AS923-2), &amp; NB-IoT/LTE-M.</li>
+            <li><strong>Kasus B (CBL):</strong> <em>Smart Farming</em> Kebun Kopi Robusta Rejang Lebong &amp; persiapan M1.</li>
+          </ul>
+          <div class="resource-list">
+            <div class="resource-row">
+              <div class="resource-info">
+                <strong>📊 Slide Kuliah Minggu 2 (ch2.pdf)</strong>
+                <span>13 Slide LaTeX Beamer 16:9</span>
+              </div>
+              <div class="resource-btns">
+                <button type="button" class="btn btn-primary btn-sm" data-preview-pdf="./ch2.pdf" data-preview-title="Slide Minggu 2 — Perangkat Keras & Konektivitas IoT">Pratinjau</button>
+                <a class="btn btn-secondary btn-sm" href="./ch2.pdf" target="_blank" rel="noopener">Buka PDF</a>
+              </div>
+            </div>
+            <div class="resource-row">
+              <div class="resource-info">
+                <strong>📘 Modul Bahan Ajar, WDM &amp; Problem Set C1–C6</strong>
+                <span>Modul_Minggu_02_Teknologi_IoT.pdf · 10 Halaman A4</span>
+              </div>
+              <div class="resource-btns">
+                <button type="button" class="btn btn-primary btn-sm" data-preview-pdf="./Modul_Minggu_02_Teknologi_IoT.pdf" data-preview-title="Modul Bahan Ajar Minggu 2">Pratinjau</button>
+                <a class="btn btn-secondary btn-sm" href="./Modul_Minggu_02_Teknologi_IoT.pdf" target="_blank" rel="noopener">Buka PDF</a>
+              </div>
+            </div>
+            <div class="resource-row">
+              <div class="resource-info">
+                <strong>🔬 Panduan Praktikum Minggu 2 (Lab-1 · Bobot 2%)</strong>
+                <span>Praktikum_Minggu_02_GPIO_ADC_PWM_Sensor.pdf · 7 Halaman A4</span>
+              </div>
+              <div class="resource-btns">
+                <button type="button" class="btn btn-primary btn-sm" data-preview-pdf="./Praktikum_Minggu_02_GPIO_ADC_PWM_Sensor.pdf" data-preview-title="Panduan Praktikum Minggu 2 (Lab-1)">Pratinjau</button>
+                <a class="btn btn-secondary btn-sm" href="./Praktikum_Minggu_02_GPIO_ADC_PWM_Sensor.pdf" target="_blank" rel="noopener">Buka PDF</a>
+              </div>
+            </div>
+            <div class="resource-row">
+              <div class="resource-info">
+                <strong>⚡ Starter Kit Simulasi Wokwi Lab-1</strong>
+                <span>Kode siap tempel: main.cpp, diagram.json, &amp; platformio.ini</span>
+              </div>
+              <div class="resource-btns">
+                <button type="button" class="btn btn-gold btn-sm open-wokwi-btn" data-lab="lab1">Kode Simulasi Wokwi</button>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Kartu Minggu 3 -->
+        <article class="week-featured-card latest">
+          <div class="card-top">
+            <span class="badge badge-ready">✓ Tersedia Lengkap · Minggu 3</span>
+            <span class="badge badge-gold">★ Terbaru · Sub-CPMK 2.1 (C3, P3)</span>
+          </div>
+          <h3>Minggu 3: Firmware ESP32, Bus I2C/SPI, FreeRTOS, &amp; Deep Sleep</h3>
+          <div class="subcpmk-box">
+            Mengembangkan firmware ESP32 non-blocking dan hemat daya menggunakan bus I2C/SPI, FreeRTOS multi-tasking dual-core, dan mode Deep Sleep dengan persistensi memori RTC.
+          </div>
+          <ul class="topic-list">
+            <li>Karakteristik bus serial I2C (open-drain, pull-up, addressing), SPI (full-duplex 80 MHz), &amp; UART.</li>
+            <li>Akuisisi presisi BME280/BMP280 (Suhu, Tekanan, Elevasi) &amp; rendering grafis OLED SSD1306 buffer 1 KB.</li>
+            <li>Hardware Interrupts aman (<code>IRAM_ATTR</code>, <code>volatile</code>) &amp; FreeRTOS Dual-Core (Core 0 vs Core 1).</li>
+            <li>Manajemen daya <em>Deep Sleep</em> (&gt;270× hemat energi), Timer &amp; EXT0 wakeup, serta retensi <code>RTC_DATA_ATTR</code>.</li>
+          </ul>
+          <div class="resource-list">
+            <div class="resource-row">
+              <div class="resource-info">
+                <strong>📊 Slide Kuliah Minggu 3 (ch3.pdf)</strong>
+                <span>13 Slide LaTeX Beamer 16:9</span>
+              </div>
+              <div class="resource-btns">
+                <button type="button" class="btn btn-primary btn-sm" data-preview-pdf="./ch3.pdf" data-preview-title="Slide Minggu 3 — Firmware ESP32, I2C/SPI, FreeRTOS, & Deep Sleep">Pratinjau</button>
+                <a class="btn btn-secondary btn-sm" href="./ch3.pdf" target="_blank" rel="noopener">Buka PDF</a>
+              </div>
+            </div>
+            <div class="resource-row">
+              <div class="resource-info">
+                <strong>📘 Modul Bahan Ajar, LKM &amp; Problem Set C1–C6</strong>
+                <span>Modul_Minggu_03_Teknologi_IoT.pdf · 8 Halaman A4</span>
+              </div>
+              <div class="resource-btns">
+                <button type="button" class="btn btn-primary btn-sm" data-preview-pdf="./Modul_Minggu_03_Teknologi_IoT.pdf" data-preview-title="Modul Bahan Ajar Minggu 3">Pratinjau</button>
+                <a class="btn btn-secondary btn-sm" href="./Modul_Minggu_03_Teknologi_IoT.pdf" target="_blank" rel="noopener">Buka PDF</a>
+              </div>
+            </div>
+            <div class="resource-row">
+              <div class="resource-info">
+                <strong>🔬 Panduan Praktikum Minggu 3 (Lab-2 · Bobot 2% NA)</strong>
+                <span>Praktikum_Minggu_03_I2C_OLED_FreeRTOS_DeepSleep.pdf · 7 Halaman A4</span>
+              </div>
+              <div class="resource-btns">
+                <button type="button" class="btn btn-primary btn-sm" data-preview-pdf="./Praktikum_Minggu_03_I2C_OLED_FreeRTOS_DeepSleep.pdf" data-preview-title="Panduan Praktikum Minggu 3 (Lab-2)">Pratinjau</button>
+                <a class="btn btn-secondary btn-sm" href="./Praktikum_Minggu_03_I2C_OLED_FreeRTOS_DeepSleep.pdf" target="_blank" rel="noopener">Buka PDF</a>
+              </div>
+            </div>
+            <div class="resource-row">
+              <div class="resource-info">
+                <strong>⚡ Starter Kit Simulasi Wokwi Lab-2</strong>
+                <span>Kode siap tempel: main.cpp, diagram.json, libraries.txt</span>
+              </div>
+              <div class="resource-btns">
+                <button type="button" class="btn btn-gold btn-sm open-wokwi-btn" data-lab="lab2">Kode Simulasi Wokwi</button>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Bagian 2: Peta Jalan Lengkap 16 Minggu -->
+    <section id="peta-16-minggu">
+      <div class="section-head">
+        <div>
+          <h2>Peta Jalan Pembelajaran 16 Minggu (Sesuai RPS OBE)</h2>
+          <p>Saring berdasarkan modul atau cari topik kajian, protokol, laboratorium, maupun milestone evaluasi.</p>
+        </div>
+      </div>
+
+      <div class="filter-bar">
+        <div class="filter-pills" role="group" aria-label="Filter modul mingguan">
+          <button type="button" class="pill" data-filter="all" aria-pressed="true">Semua (16)</button>
+          <button type="button" class="pill" data-filter="ready" aria-pressed="false">✓ Materi Tersedia (2)</button>
+          <button type="button" class="pill" data-filter="edge" aria-pressed="false">Fondasi &amp; Edge (M1–M4)</button>
+          <button type="button" class="pill" data-filter="proto" aria-pressed="false">Protokol IoT (M5–M7)</button>
+          <button type="button" class="pill" data-filter="cloudsec" aria-pressed="false">Backend, Cloud &amp; Keamanan (M9–M14)</button>
+          <button type="button" class="pill" data-filter="milestone" aria-pressed="false">Milestone &amp; Ujian</button>
+        </div>
+        <input type="search" id="syllabusSearch" class="search-input" placeholder="Cari topik (mis. MQTT, TLS, Grafana, LoRa)..." aria-label="Cari topik pada peta 16 minggu">
+      </div>
+
+      <div class="syllabus-grid" id="syllabusGrid"></div>
+    </section>
+
+    <!-- Bagian 3: Skema Evaluasi OBE & Milestone PjBL -->
+    <section id="evaluasi-pjbl">
+      <div class="section-head">
+        <div>
+          <h2>Komposisi Penilaian OBE &amp; Evaluasi Proyek Terpadu (PjBL)</h2>
+          <p>Ambang kelulusan minimal tiap CPMK adalah 60 (PAP); nilai proyek individu dikalikan Faktor Kontribusi sejawat WebPA (0,80–1,10).</p>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="panel">
+          <h3>Distribusi Bobot Nilai Akhir (Total 100%)</h3>
+          <div class="weight-row">
+            <div class="weight-label"><span>Proyek Terpadu PjBL (M1 5% + M2 15% + M3 15% + M4/UAS 15%)</span><span>50%</span></div>
+            <div class="progress-track"><div class="progress-fill gold" style="width: 50%"></div></div>
+          </div>
+          <div class="weight-row">
+            <div class="weight-label"><span>Laporan Praktikum Terstruktur (Lab-1 s.d. Lab-10 @ 2%)</span><span>20%</span></div>
+            <div class="progress-track"><div class="progress-fill" style="width: 20%"></div></div>
+          </div>
+          <div class="weight-row">
+            <div class="weight-label"><span>Ujian Tengah Semester — Kasus Terintegrasi &amp; Troubleshooting (Mg 8)</span><span>15%</span></div>
+            <div class="progress-track"><div class="progress-fill" style="width: 15%"></div></div>
+          </div>
+          <div class="weight-row">
+            <div class="weight-label"><span>Kuis Teori Daring di LMS (Kuis-1 Mg 7 &amp; Kuis-2 Mg 13)</span><span>10%</span></div>
+            <div class="progress-track"><div class="progress-fill" style="width: 10%"></div></div>
+          </div>
+          <div class="weight-row">
+            <div class="weight-label"><span>Partisipasi Analisis Kasus CBL (LK-1 s.d. LK-5 @ 1%)</span><span>5%</span></div>
+            <div class="progress-track"><div class="progress-fill" style="width: 5%"></div></div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3>Empat Milestone Proyek "Bengkulu Tangguh &amp; Cerdas"</h3>
+          <div class="milestone-list">
+            <div class="milestone-item">
+              <strong>M1 — Proposal Ide Proyek &amp; Pitching (Minggu 4 · Bobot 5%)</strong>
+              Analisis masalah mitra, arsitektur berlapis, Matriks Keputusan Berbobot (40% skor R-M1), BoM, &amp; Gantt chart.
+            </div>
+            <div class="milestone-item">
+              <strong>M2 — Implementasi Layer Perangkat &amp; Protokol (Minggu 9 · Bobot 15%)</strong>
+              Prototipe <em>firmware</em> ESP32 + <em>gateway</em>, komunikasi MQTT + 1 protokol lain, desain topik/payload, &amp; uji jaringan.
+            </div>
+            <div class="milestone-item">
+              <strong>M3 — Integrasi Cloud, Keamanan, &amp; Dashboard (Minggu 15 · Bobot 15%)</strong>
+              RESTful API (OpenAPI 3.1), InfluxDB/TimescaleDB, Docker Compose, keamanan TLS/ACL/JWT, &amp; Grafana alerting.
+            </div>
+            <div class="milestone-item">
+              <strong>M4 / UAS — Pameran Karya "UNIB IoT Expo" (Minggu 16 · Bobot 15%)</strong>
+              Demo <em>live</em> di hadapan juri, artikel ilmiah format IEEE (6–8 hal), poster A1, video ≤ 3 menit, &amp; <em>viva voce</em> individu.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bagian 4: Bank Kasus Kontekstual Bengkulu -->
+    <section id="bank-kasus">
+      <div class="section-head">
+        <div>
+          <h2>Bank Studi Kasus Kontekstual Provinsi Bengkulu (CBL)</h2>
+          <p>Klik setiap kasus untuk melihat skenario permasalahan nyata yang dikaji di kelas maupun dijadikan inspirasi topik proyek tim.</p>
+        </div>
+      </div>
+
+      <div class="case-grid">
+        <details class="case-item" open>
+          <summary>Kasus A — Peringatan Dini Banjir DAS Air Bengkulu (Minggu 1 / LK-1)</summary>
+          <p>Pemantauan tinggi muka air, curah hujan, dan arus pada 5 pos pantau dari hulu Bengkulu Tengah (panel surya &amp; seluler fluktuatif) hingga muara Rawa Makmur–Tanjung Agung dengan deteksi kenaikan cepat ≥ 15 cm/10 menit dan latensi peringatan &lt; 3 detik.</p>
+        </details>
+        <details class="case-item" open>
+          <summary>Kasus B — Smart Farming Kebun Kopi Robusta Rejang Lebong (Minggu 2)</summary>
+          <p>Pemantauan lengas tanah perakaran dan mikro-iklim pada 6 hektare kebun berbukit (950 mdpl, sebagian <em>blank spot</em> seluler) serta kendali irigasi tetes histeresis di <em>greenhouse</em> pembibitan dengan plafon BoM ≤ Rp 4,5 juta.</p>
+        </details>
+        <details class="case-item">
+          <summary>Kasus C — Smart Campus FT UNIB: Monitoring Energi &amp; Okupansi Ruang (Minggu 4 &amp; 10)</summary>
+          <p>Akuisisi arus/daya berfrekuensi tinggi (PZEM-004T) dan okupansi ruang kuliah dengan agregasi tepi Raspberry Pi, kebijakan retensi basis data <em>time-series</em>, serta <em>continuous aggregate</em>.</p>
+        </details>
+        <details class="case-item">
+          <summary>Kasus D — Pemantauan Pesisir &amp; Kriteria False Alarm Kebencanaan Bengkulu (Minggu 14)</summary>
+          <p>Perancangan ambang peringatan multi-variabel, deteksi anomali <em>z-score</em>/IQR, dan manajemen kompromi antara sensitivitas peringatan dini terhadap risiko kelelahan alarm palsu (<em>alarm fatigue</em>).</p>
+        </details>
+        <details class="case-item">
+          <summary>Kasus E — Mitigasi Vendor Lock-In: Penghentian Google Cloud IoT Core (Minggu 11)</summary>
+          <p>Studi arsitektur portabel berbasis protokol standar (MQTT/OpenAPI) dan kontainerisasi Docker Compose agar sistem IoT tidak lumpuh ketika penyedia layanan <em>cloud</em> menghentikan produknya.</p>
+        </details>
+        <details class="case-item">
+          <summary>Kasus F — Insiden Botnet Mirai, Kamera IP, &amp; Kepatuhan UU PDP No. 27/2022 (Minggu 12–13)</summary>
+          <p>Pemodelan ancaman STRIDE, pengamanan kanal mTLS &amp; ACL <em>broker</em>, penghapusan kredensial baku, serta analisis kewajiban hukum pelindungan data pribadi pada perangkat IoT.</p>
+        </details>
+        <details class="case-item">
+          <summary>Kasus G — Rantai Dingin Hasil Perikanan Pelabuhan Pulau Baai (UTS Minggu 8)</summary>
+          <p>Penjaminan suhu ruang pendingin kapal dan armada truk distribusi ikan lintas kabupaten disertai strategi penyangga lokal (<em>offline buffering</em>) saat melintasi jalur tanpa sinyal.</p>
+        </details>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <strong>Program Studi S1 Informatika — Fakultas Teknik, Universitas Bengkulu (UNIB)</strong><br>
+    Laboratorium Jaringan Komputer &amp; Sistem Tertanam · Dokumen Kurikulum OBE 2026
+  </footer>
+
+  <!-- Modal Pratinjau PDF -->
+  <dialog id="pdfModal" aria-labelledby="pdfModalTitle">
+    <div class="modal-header">
+      <h3 id="pdfModalTitle">Pratinjau Dokumen</h3>
+      <div style="display:flex; gap:0.5rem; align-items:center;">
+        <a id="pdfExternalLink" class="btn btn-secondary btn-sm" href="#" target="_blank" rel="noopener">↗ Buka Layar Penuh</a>
+        <button type="button" class="btn btn-primary btn-sm" id="closePdfModalBtn">Tutup ✕</button>
+      </div>
+    </div>
+    <div class="modal-body">
+      <iframe id="pdfFrame" class="pdf-frame" title="Pratinjau Berkas PDF Mata Kuliah"></iframe>
+    </div>
+  </dialog>
+
+  <!-- Modal Kode Starter Wokwi (Lab-1 & Lab-2) -->
+  <dialog id="wokwiModal" aria-labelledby="wokwiModalTitle">
+    <div class="modal-header">
+      <h3 id="wokwiModalTitle">⚡ Starter Kit Simulasi Wokwi</h3>
+      <div style="display:flex; gap:0.5rem; align-items:center;">
+        <a class="btn btn-gold btn-sm" href="https://wokwi.com/projects/new/esp32" target="_blank" rel="noopener">↗ Buka Simulator Wokwi ESP32</a>
+        <button type="button" class="btn btn-primary btn-sm" id="closeWokwiModalBtn">Tutup ✕</button>
+      </div>
+    </div>
+    <div class="modal-body">
+      <p style="margin-top:0; font-size:0.88rem; color:var(--text-secondary);">
+        Proyek lengkap juga tersimpan secara lokal di folder <code id="wokwiFolderCode">lab02_minggu_03_wokwi/</code>. Pilih berkas di bawah ini lalu klik <strong>Salin Kode</strong> untuk menempelkannya langsung ke VS Code atau <code>wokwi.com</code>:
+      </p>
+      <div class="code-tabs" role="tablist">
+        <button type="button" class="pill" data-code-tab="main" aria-pressed="true">src/main.cpp</button>
+        <button type="button" class="pill" data-code-tab="diagram" aria-pressed="false">diagram.json</button>
+        <button type="button" class="pill" data-code-tab="pio" aria-pressed="false">platformio.ini</button>
+        <button type="button" class="pill" data-code-tab="libs" aria-pressed="false">libraries.txt</button>
+        <button type="button" class="btn btn-secondary btn-sm" id="copyCodeBtn" style="margin-left:auto;">📋 Salin Kode</button>
+      </div>
+      <pre class="code-box"><code id="wokwiCodeDisplay"></code></pre>
+    </div>
+  </dialog>
+
+  <script>
+    // 1. Pengaturan Tema (System / Light / Dark) sesuai standar modern-web-guidance
+    const schemeMeta = document.querySelector('meta[name="color-scheme"]');
+    const schemeSelect = document.getElementById("schemeSelect");
+
+    function syncThemeControl() {
+      let current = "system";
+      try {
+        const stored = localStorage.getItem("color-scheme");
+        if (stored === "light" || stored === "dark") current = stored;
+      } catch (_) {}
+      schemeSelect.value = current;
+    }
+
+    schemeSelect.addEventListener("change", () => {
+      const val = schemeSelect.value;
+      if (val === "system") {
+        schemeMeta.content = "light dark";
+        try { localStorage.removeItem("color-scheme"); } catch (_) {}
+      } else {
+        schemeMeta.content = val;
+        try { localStorage.setItem("color-scheme", val); } catch (_) {}
+      }
+    });
+
+    window.addEventListener("storage", (e) => {
+      if (e.key === "color-scheme") {
+        schemeMeta.content = e.newValue ?? "light dark";
+        syncThemeControl();
+      }
+    });
+    syncThemeControl();
+
+    // 2. Data Peta Jalan 16 Minggu
+    const weeksData = [
+      { w: 1, mod: "edge", ready: true, milestone: false, sub: "Sub-CPMK 1.1", weight: "1% (LK-1)", title: "Fondasi, Arsitektur Referensi, & Software Stack", desc: "Kontrak kuliah PjBL, M2M→IoT→AIoT, ITU-T Y.4000, ISO/IEC 30141:2024, Kasus A Banjir, Lab-0 Wokwi & Git." },
+      { w: 2, mod: "edge", ready: true, milestone: false, sub: "Sub-CPMK 1.2", weight: "2% (Lab-1)", title: "Perangkat Keras, Sensor–Aktuator, & Konektivitas", desc: "ADC 12-bit ESP32, PWM LEDC, histeresis, ESP32 vs RPi, Wi-Fi/BLE/Zigbee/LoRaWAN/NB-IoT, WDM & Kasus B Kopi." },
+      { w: 3, mod: "edge", ready: true, milestone: false, sub: "Sub-CPMK 2.1", weight: "2% (Lab-2)", title: "Pemrograman ESP32 Non-Blocking & Manajemen Daya", desc: "Antarmuka I2C/SPI/UART, BME280 & OLED SSD1306, interrupt, FreeRTOS dasar, deep sleep & kalibrasi." },
+      { w: 4, mod: "edge", ready: false, milestone: true, sub: "Sub-CPMK 2.2 & 7.1", weight: "6% (M1 5% + LK-2 1%)", title: "Edge Gateway Raspberry Pi, Serialisasi, & Pitching M1", desc: "Linux RPi, Docker di edge, JSON vs CBOR vs Protobuf, Kasus C, serta Presentasi Proposal Proyek (Milestone 1)." },
+      { w: 5, mod: "proto", ready: false, milestone: false, sub: "Sub-CPMK 3.1", weight: "2% (Lab-3)", title: "Komunikasi HTTP/REST & WebSocket Full-Duplex", desc: "Semantik HTTP (RFC 9110), polling vs push, WebSocket (RFC 6455), FastAPI server, & inspeksi paket Wireshark." },
+      { w: 6, mod: "proto", ready: false, milestone: false, sub: "Sub-CPMK 3.2", weight: "2% (Lab-4)", title: "Arsitektur Broker & Protokol Publish/Subscribe MQTT", desc: "MQTT 3.1.1 & 5.0, desain hierarki topik, wildcard, QoS 0/1/2, Retained Message, LWT, Mosquitto & EMQX." },
+      { w: 7, mod: "proto", ready: false, milestone: true, sub: "Sub-CPMK 3.3", weight: "7% (Lab-5 2% + Kuis-1 5%)", title: "Protokol CoAP & Benchmarking Eksperimental", desc: "CoAP di atas UDP (CON/NON, Observe), perbandingan MQTT–CoAP–HTTP–WS dengan tc netem, & Kuis-1." },
+      { w: 8, mod: "proto", ready: false, milestone: true, sub: "Evaluasi Tengah Semester", weight: "15% (UTS)", title: "UTS Berbasis Kasus Terintegrasi & Uji Praktik", desc: "Analisis Kasus G (Rantai Dingin Ikan Pulau Baai) & ujian praktik individu troubleshooting perangkat–broker." },
+      { w: 9, mod: "cloudsec", ready: false, milestone: true, sub: "Sub-CPMK 4.1 & 7.2", weight: "17% (M2 15% + Lab-6 2%)", title: "RESTful API (OpenAPI 3.1), Ingestion, & Demo M2", desc: "Prinsip REST, validasi Pydantic, jembatan MQTT→API/DB, pengujian Postman/pytest, & Demo Milestone 2." },
+      { w: 10, mod: "cloudsec", ready: false, milestone: false, sub: "Sub-CPMK 4.2", weight: "2% (Lab-7)", title: "Basis Data Time-Series (InfluxDB/TimescaleDB) & NoSQL", desc: "Pemodelan measurement/tag/field, hypertable, continuous aggregate, kebijakan retensi, & downsampling." },
+      { w: 11, mod: "cloudsec", ready: false, milestone: false, sub: "Sub-CPMK 4.3", weight: "3% (Lab-8 2% + LK-3 1%)", title: "Integrasi Cloud/Edge & Deployment Kontainer", desc: "AWS IoT Core / ThingsBoard CE, device shadow, orkestrasi stack Docker Compose, & Kasus E (vendor lock-in)." },
+      { w: 12, mod: "cloudsec", ready: false, milestone: false, sub: "Sub-CPMK 5.1", weight: "2% (Lab-9)", title: "Pemodelan Ancaman STRIDE & Kanal Aman TLS/mTLS", desc: "OWASP IoT Top 10, studi botnet Mirai, sertifikat X.509 OpenSSL, Mosquitto TLS port 8883, & ACL per topik." },
+      { w: 13, mod: "cloudsec", ready: false, milestone: true, sub: "Sub-CPMK 5.2", weight: "6% (Kuis-2 5% + LK-4 1%)", title: "Autentikasi API (JWT), Secure OTA, & UU PDP", desc: "JWT/OAuth 2.0 pada FastAPI, HTTPS OTA ESP32, privacy-by-design sesuai UU No. 27/2022, audit etis, & Kuis-2." },
+      { w: 14, mod: "cloudsec", ready: false, milestone: false, sub: "Sub-CPMK 6.1", weight: "3% (Lab-10 2% + LK-5 1%)", title: "Dashboard Real-Time, Alerting, & Deteksi Anomali", desc: "Grafana + InfluxDB, notifikasi Telegram, deteksi anomali z-score/IQR, Kasus D, & pengantar TinyML." },
+      { w: 15, mod: "cloudsec", ready: false, milestone: true, sub: "Sub-CPMK 7.2", weight: "15% (Milestone 3)", title: "Pengujian End-to-End, Uji Beban, & Review M3", desc: "Uji latensi, throughput (Locust/MQTT benchmark), offline buffering, observabilitas, C4 diagram, & Demo M3." },
+      { w: 16, mod: "cloudsec", ready: false, milestone: true, sub: "Sub-CPMK 7.3 (UAS)", weight: "15% (M4 / Expo)", title: "UAS — Pameran Karya UNIB IoT Expo & Viva Voce", desc: "Demo live sistem end-to-end di hadapan dosen & juri praktisi, artikel ilmiah IEEE, poster/video, & ujian lisan." }
+    ];
+
+    const syllabusGrid = document.getElementById("syllabusGrid");
+    const searchInput = document.getElementById("syllabusSearch");
+    let activeFilter = "all";
+
+    function renderSyllabus() {
+      const q = searchInput.value.trim().toLowerCase();
+      syllabusGrid.innerHTML = "";
+      weeksData.forEach((item) => {
+        const matchFilter =
+          activeFilter === "all" ||
+          (activeFilter === "ready" && item.ready) ||
+          (activeFilter === "milestone" && item.milestone) ||
+          item.mod === activeFilter;
+        const matchQuery =
+          !q ||
+          item.title.toLowerCase().includes(q) ||
+          item.desc.toLowerCase().includes(q) ||
+          item.sub.toLowerCase().includes(q) ||
+          `minggu ${item.w}`.includes(q);
+
+        if (!matchFilter || !matchQuery) return;
+
+        const card = document.createElement("article");
+        card.className = "week-mini-card";
+        card.dataset.ready = String(item.ready);
+        card.innerHTML = `
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:0.4rem;">
+            <span class="badge ${item.ready ? "badge-ready" : item.milestone ? "badge-gold" : "badge-scheduled"}">
+              ${item.ready ? "✓ Tersedia" : item.milestone ? "★ Evaluasi Utama" : "📅 Terjadwal"} · Mg ${item.w}
+            </span>
+            <span style="font-size:0.75rem; color:var(--text-muted); font-weight:600;">${item.sub}</span>
+          </div>
+          <h4>${item.title}</h4>
+          <p>${item.desc}</p>
+          <div class="week-meta">
+            <span>Bobot: ${item.weight}</span>
+            ${item.ready ? `<a href="#materi-utama">Akses Berkas ↑</a>` : `<span>Segera Hadir</span>`}
+          </div>
+        `;
+        syllabusGrid.appendChild(card);
+      });
+    }
+
+    document.querySelectorAll(".filter-pills .pill").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".filter-pills .pill").forEach((b) => b.setAttribute("aria-pressed", "false"));
+        btn.setAttribute("aria-pressed", "true");
+        activeFilter = btn.dataset.filter;
+        renderSyllabus();
+      });
+    });
+    searchInput.addEventListener("input", renderSyllabus);
+    renderSyllabus();
+
+    // 3. Modal Pratinjau PDF
+    const pdfModal = document.getElementById("pdfModal");
+    const pdfFrame = document.getElementById("pdfFrame");
+    const pdfModalTitle = document.getElementById("pdfModalTitle");
+    const pdfExternalLink = document.getElementById("pdfExternalLink");
+
+    document.querySelectorAll("[data-preview-pdf]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const url = btn.getAttribute("data-preview-pdf");
+        const title = btn.getAttribute("data-preview-title");
+        pdfModalTitle.textContent = title;
+        pdfFrame.src = url;
+        pdfExternalLink.href = url;
+        pdfModal.showModal();
+      });
+    });
+
+    document.getElementById("closePdfModalBtn").addEventListener("click", () => {
+      pdfModal.close();
+      pdfFrame.src = "";
+    });
+
+    pdfModal.addEventListener("click", (e) => {
+      if (e.target === pdfModal) {
+        pdfModal.close();
+        pdfFrame.src = "";
+      }
+    });
+
+    // 4. Modal Starter Kit Simulasi Wokwi (Multi-Lab: Lab-1 & Lab-2)
+    const wokwiProjects = {
+      lab1: {
+        title: "⚡ Starter Kit Simulasi Wokwi — Praktikum Minggu 2 (Lab-1)",
+        folder: "lab01_minggu_02_wokwi/",
+        files: {
+          main: `#include <Arduino.h>
+#include <DHT.h>
+#include <ArduinoJson.h>
+
+#define PIN_DHT             4
+#define TIPE_DHT            DHT22
+#define PIN_SOIL_ADC1       34   // Input-only ADC1_CH6 (Aman saat Wi-Fi aktif)
+#define PIN_TOMBOL_MODE     15   // Pushbutton INPUT_PULLUP
+#define PIN_RELAY_POMPA     26   // Output penggerak relai pompa & LED hijau
+#define PIN_PWM_KIPAS       18   // Output PWM kecepatan kipas / LED biru
+
+// Ubah ke 0 untuk menguji gejala CHATTERING, 1 untuk HISTERESIS
+#define GUNAKAN_HISTERESIS  1
+
+const int MV_TANAH_KERING = 2650;
+const int MV_TANAH_BASAH  = 1100;
+const float AMBANG_POMPA_ON  = 35.0f;
+const float AMBANG_POMPA_OFF = 60.0f;
+const float AMBANG_TUNGGAL   = 45.0f;
+
+const int PWM_FREQ_HZ = 5000;
+const int PWM_RES_BIT = 8;
+const int PWM_KANAL   = 0;
+
+const int UKURAN_FILTER = 5;
+uint32_t bufferMv[UKURAN_FILTER] = {0};
+int indeksFilter = 0;
+bool filterPenuh = false;
+
+DHT dht(PIN_DHT, TIPE_DHT);
+unsigned long waktuTelemetriTerakhir = 0;
+unsigned long waktuDebounceTombol    = 0;
+const unsigned long INTERVAL_BACA_MS = 1000;
+
+bool statusPompa       = false;
+bool modeOverridePaksa = false;
+bool tombolSebelumnya  = HIGH;
+unsigned long seqPaket = 0;
+unsigned long hitungTransisiRelai = 0;
+
+void setupPwmKipas() {
+#if defined(ESP_ARDUINO_VERSION) && (ESP_ARDUINO_VERSION >= ESP_ARDUINO_VERSION_VAL(3, 0, 0))
+  ledcAttach(PIN_PWM_KIPAS, PWM_FREQ_HZ, PWM_RES_BIT);
+#else
+  ledcSetup(PWM_KANAL, PWM_FREQ_HZ, PWM_RES_BIT);
+  ledcAttachPin(PIN_PWM_KIPAS, PWM_KANAL);
+#endif
+}
+
+void tulisPwmKipas(uint8_t duty) {
+#if defined(ESP_ARDUINO_VERSION) && (ESP_ARDUINO_VERSION >= ESP_ARDUINO_VERSION_VAL(3, 0, 0))
+  ledcWrite(PIN_PWM_KIPAS, duty);
+#else
+  ledcWrite(PWM_KANAL, duty);
+#endif
+}
+
+uint32_t bacaSoilMilliVoltsTerfilter() {
+  uint32_t mvMentah = analogReadMilliVolts(PIN_SOIL_ADC1);
+  bufferMv[indeksFilter] = mvMentah;
+  indeksFilter = (indeksFilter + 1) % UKURAN_FILTER;
+  if (indeksFilter == 0) filterPenuh = true;
+  int jumlahSampel = filterPenuh ? UKURAN_FILTER : indeksFilter;
+  uint64_t total = 0;
+  for (int i = 0; i < jumlahSampel; i++) total += bufferMv[i];
+  return (uint32_t)(total / jumlahSampel);
+}
+
+void setup() {
+  Serial.begin(115200);
+  pinMode(PIN_SOIL_ADC1, INPUT);
+  pinMode(PIN_TOMBOL_MODE, INPUT_PULLUP);
+  pinMode(PIN_RELAY_POMPA, OUTPUT);
+  analogReadResolution(12);
+  analogSetPinAttenuation(PIN_SOIL_ADC1, ADC_11db);
+  setupPwmKipas();
+  dht.begin();
+  Serial.println("{\\"event\\":\\"boot\\",\\"lab\\":\\"Lab-01 Greenhouse Kopi UNIB\\"}");
+}
+
+void loop() {
+  unsigned long sekarang = millis();
+  bool bacaTombol = digitalRead(PIN_TOMBOL_MODE);
+  if (bacaTombol == LOW && tombolSebelumnya == HIGH && (sekarang - waktuDebounceTombol > 60)) {
+    waktuDebounceTombol = sekarang;
+    modeOverridePaksa = !modeOverridePaksa;
+  }
+  tombolSebelumnya = bacaTombol;
+
+  if (sekarang - waktuTelemetriTerakhir >= INTERVAL_BACA_MS) {
+    waktuTelemetriTerakhir = sekarang;
+    int adcRaw      = analogRead(PIN_SOIL_ADC1);
+    uint32_t soilMv = bacaSoilMilliVoltsTerfilter();
+    float soilPct   = constrain((MV_TANAH_KERING - (int)soilMv) * 100.0f / (MV_TANAH_KERING - MV_TANAH_BASAH), 0.0f, 100.0f);
+    float suhuUdara   = dht.readTemperature();
+    float lembapUdara = dht.readHumidity();
+    if (isnan(suhuUdara) || isnan(lembapUdara)) return;
+
+    bool pompaSebelum = statusPompa;
+    if (modeOverridePaksa) statusPompa = true;
+    else {
+#if GUNAKAN_HISTERESIS == 1
+      if (soilPct < AMBANG_POMPA_ON)       statusPompa = true;
+      else if (soilPct >= AMBANG_POMPA_OFF) statusPompa = false;
+#else
+      statusPompa = (soilPct < AMBANG_TUNGGAL);
+#endif
+    }
+    if (statusPompa != pompaSebelum) hitungTransisiRelai++;
+    digitalWrite(PIN_RELAY_POMPA, statusPompa ? HIGH : LOW);
+
+    int nilaiDuty = constrain(map((long)(suhuUdara * 10.0f), 280, 380, 0, 255), 0, 255);
+    tulisPwmKipas((uint8_t)nilaiDuty);
+
+    JsonDocument doc;
+    doc["device_id"]      = "esp32-kopi-gh01";
+    doc["seq"]            = ++seqPaket;
+    doc["adc_raw"]        = adcRaw;
+    doc["soil_mv_avg"]    = soilMv;
+    doc["soil_pct"]       = serialized(String(soilPct, 1));
+    doc["temp_c"]         = serialized(String(suhuUdara, 1));
+    doc["air_hum_pct"]    = serialized(String(lembapUdara, 1));
+    doc["pump_on"]        = statusPompa;
+    doc["relay_switches"] = hitungTransisiRelai;
+    doc["fan_pwm_pct"]    = serialized(String((nilaiDuty * 100.0f) / 255.0f, 1));
+    serializeJson(doc, Serial);
+    Serial.println();
+  }
+}`,
+          diagram: `{
+  "version": 1,
+  "author": "Tim PjBL Informatika UNIB - Lab 1 (Minggu 2)",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "wokwi-esp32-devkit-v1", "id": "esp", "top": 20, "left": 0, "attrs": {} },
+    { "type": "wokwi-potentiometer", "id": "potSoil", "top": 10, "left": -175, "attrs": { "value": "500" } },
+    { "type": "wokwi-relay-module", "id": "relayPump", "top": 120, "left": -215, "attrs": {} },
+    { "type": "wokwi-led", "id": "ledPump", "top": 225, "left": -145, "attrs": { "color": "green", "label": "Pompa" } },
+    { "type": "wokwi-resistor", "id": "rPump", "top": 275, "left": -155, "attrs": { "value": "220" } },
+    { "type": "wokwi-dht22", "id": "dht1", "top": -25, "left": 175, "attrs": { "temperature": "31.5", "humidity": "68.0" } },
+    { "type": "wokwi-led", "id": "ledFanPwm", "top": 120, "left": 195, "attrs": { "color": "blue", "label": "Kipas PWM" } },
+    { "type": "wokwi-resistor", "id": "rFan", "top": 175, "left": 175, "attrs": { "value": "220" } },
+    { "type": "wokwi-pushbutton", "id": "btnMode", "top": 230, "left": 180, "attrs": { "color": "yellow", "label": "Override" } }
+  ],
+  "connections": [
+    [ "esp:TX0", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX0", "$serialMonitor:TX", "", [] ],
+    [ "dht1:VCC", "esp:3V3", "red", [] ],
+    [ "dht1:GND", "esp:GND.1", "black", [] ],
+    [ "dht1:SDA", "esp:D4", "blue", [] ],
+    [ "potSoil:VCC", "esp:3V3", "red", [] ],
+    [ "potSoil:GND", "esp:GND.2", "black", [] ],
+    [ "potSoil:SIG", "esp:D34", "purple", [] ],
+    [ "btnMode:1.l", "esp:D15", "gold", [] ],
+    [ "btnMode:2.l", "esp:GND.1", "black", [] ],
+    [ "relayPump:VCC", "esp:VIN", "red", [] ],
+    [ "relayPump:GND", "esp:GND.2", "black", [] ],
+    [ "relayPump:IN", "esp:D26", "green", [] ],
+    [ "esp:D26", "rPump:1", "green", [] ],
+    [ "rPump:2", "ledPump:A", "green", [] ],
+    [ "ledPump:C", "esp:GND.2", "black", [] ],
+    [ "esp:D18", "rFan:1", "cyan", [] ],
+    [ "rFan:2", "ledFanPwm:A", "cyan", [] ],
+    [ "ledFanPwm:C", "esp:GND.1", "black", [] ]
+  ]
+}`,
+          pio: `[env:esp32doit-devkit-v1]
+platform = espressif32
+board = esp32doit-devkit-v1
+framework = arduino
+monitor_speed = 115200
+lib_deps =
+    adafruit/DHT sensor library @ ^1.4.6
+    adafruit/Adafruit Unified Sensor @ ^1.1.14
+    bblanchon/ArduinoJson @ ^7.0.4`,
+          libs: `DHT sensor library
+Adafruit Unified Sensor
+ArduinoJson`
+        }
+      },
+      lab2: {
+        title: "⚡ Starter Kit Simulasi Wokwi — Praktikum Minggu 3 (Lab-2)",
+        folder: "lab02_minggu_03_wokwi/",
+        files: {
+          main: `#include <Arduino.h>
+#include <Wire.h>
+#include <Adafruit_Sensor.h>
+#include <Adafruit_BMP280.h>
+#include <Adafruit_SSD1306.h>
+#include <ArduinoJson.h>
+
+#define LEBAR_LAYAR         128
+#define TINGGI_LAYAR        64
+#define ALAMAT_OLED         0x3C
+#define PIN_LED_STATUS      2
+#define PIN_WAKEUP_TOMBOL   GPIO_NUM_15
+#define DURASI_TIDUR_DETIK  10
+
+Adafruit_SSD1306 display(LEBAR_LAYAR, TINGGI_LAYAR, &Wire, -1);
+Adafruit_BMP280 bmp; // Berkomunikasi melalui Wire pada I2C default
+
+// --- VARIABEL PERSISTEN DI RTC SLOW MEMORY ---
+RTC_DATA_ATTR int nomorSiklusBoot = 0;
+RTC_DATA_ATTR float riwayatSuhuTerakhir = 0.0f;
+RTC_DATA_ATTR float riwayatTekananTerakhir = 0.0f;
+
+// Struktur data telemetri bersama antar-tugas FreeRTOS
+struct DataSensor {
+  float suhu;
+  float tekanan;
+  float elevasi;
+  bool valid;
+} dataCuaca;
+
+SemaphoreHandle_t mutexData;
+
+void cetakDiagnostikWakeup() {
+  esp_sleep_wakeup_cause_t alasan = esp_sleep_get_wakeup_cause();
+  Serial.printf("\\n========================================\\n");
+  Serial.printf("[RTC] Siklus Bangun Ke-%d\\n", nomorSiklusBoot);
+  switch (alasan) {
+    case ESP_SLEEP_WAKEUP_TIMER:
+      Serial.println("[RTC WAKEUP] Pemicu: Pewaktu Internal (RTC Timer)");
+      break;
+    case ESP_SLEEP_WAKEUP_EXT0:
+      Serial.println("[RTC WAKEUP] Pemicu: Tombol Darurat Luar (EXT0 pada GPIO 15)");
+      break;
+    default:
+      Serial.println("[RTC WAKEUP] Pemicu: Power-on Reset / Boot Pertama");
+      break;
+  }
+  Serial.printf("[RTC MEM] Riwayat Siklus Lalu -> Suhu: %.2f C | Tekanan: %.2f hPa\\n",
+                riwayatSuhuTerakhir, riwayatTekananTerakhir);
+}
+
+void perbaruiTampilanOled(float t, float p, float alt, int siklus, const char* pemicu) {
+  display.clearDisplay();
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+
+  // Baris Judul
+  display.setCursor(0, 0);
+  display.printf("UNIB IoT - STASIUN CUACA");
+  display.drawLine(0, 10, 127, 10, SSD1306_WHITE);
+
+  // Parameter Lingkungan
+  display.setCursor(0, 14);
+  display.printf("Suhu    : %.1f C", t);
+  display.setCursor(0, 26);
+  display.printf("Tekanan : %.1f hPa", p);
+  display.setCursor(0, 38);
+  display.printf("Elevasi : %.1f m", alt);
+
+  // Baris Status Manajemen Daya
+  display.drawLine(0, 50, 127, 50, SSD1306_WHITE);
+  display.setCursor(0, 54);
+  display.printf("#%d | %s", siklus, pemicu);
+  display.display();
+}
+
+// Task Khusus FreeRTOS pada Core 0: Menangani UI dan Serialisasi
+void TaskTampilanDanSerial(void *pvParameters) {
+  xSemaphoreTake(mutexData, portMAX_DELAY);
+  DataSensor lokal = dataCuaca;
+  xSemaphoreGive(mutexData);
+
+  if (lokal.valid) {
+    esp_sleep_wakeup_cause_t alasan = esp_sleep_get_wakeup_cause();
+    const char* labelPemicu = (alasan == ESP_SLEEP_WAKEUP_EXT0) ? "EXT0 BTN" : "TIMER";
+
+    // 1. Tampilkan ke Layar OLED SSD1306
+    perbaruiTampilanOled(lokal.suhu, lokal.tekanan, lokal.elevasi, nomorSiklusBoot, labelPemicu);
+
+    // 2. Serialisasi JSON ke Serial Monitor
+    JsonDocument doc;
+    doc["device_id"]      = "esp32-weather-st01";
+    doc["boot_count"]     = nomorSiklusBoot;
+    doc["wakeup_cause"]   = labelPemicu;
+    doc["temp_c"]         = serialized(String(lokal.suhu, 2));
+    doc["pressure_hpa"]   = serialized(String(lokal.tekanan, 2));
+    doc["altitude_m"]     = serialized(String(lokal.elevasi, 1));
+    doc["prev_temp_c"]    = serialized(String(riwayatSuhuTerakhir, 2));
+    serializeJson(doc, Serial);
+    Serial.println();
+
+    // Simpan ke memori RTC untuk siklus berikutnya
+    riwayatSuhuTerakhir = lokal.suhu;
+    riwayatTekananTerakhir = lokal.tekanan;
+  }
+  vTaskDelete(NULL);
+}
+
+void setup() {
+  Serial.begin(115200);
+  pinMode(PIN_LED_STATUS, OUTPUT);
+  pinMode(PIN_WAKEUP_TOMBOL, INPUT_PULLUP);
+  digitalWrite(PIN_LED_STATUS, HIGH); // LED MENYALA: FASE AKTIF
+
+  nomorSiklusBoot++;
+  cetakDiagnostikWakeup();
+
+  mutexData = xSemaphoreCreateMutex();
+  Wire.begin(21, 22); // SDA = 21, SCL = 22
+
+  // Inisialisasi Layar OLED
+  if (!display.begin(SSD1306_SWITCHCAPVCC, ALAMAT_OLED)) {
+    Serial.println("Gagal menemukan layar OLED SSD1306!");
+  }
+
+  // Inisialisasi Sensor BMP280 / BME280 pada alamat 0x76
+  if (!bmp.begin(0x76)) {
+    Serial.println("Gagal mendeteksi sensor BMP/BME280 pada alamat 0x76!");
+    dataCuaca.valid = false;
+  } else {
+    bmp.setSampling(Adafruit_BMP280::MODE_FORCED,
+                    Adafruit_BMP280::SAMPLING_X2,
+                    Adafruit_BMP280::SAMPLING_X16,
+                    Adafruit_BMP280::FILTER_X16,
+                    Adafruit_BMP280::STANDBY_MS_500);
+    bmp.takeForcedMeasurement();
+
+    xSemaphoreTake(mutexData, portMAX_DELAY);
+    dataCuaca.suhu    = bmp.readTemperature();
+    dataCuaca.tekanan = bmp.readPressure() / 100.0F;
+    dataCuaca.elevasi = bmp.readAltitude(1013.25);
+    dataCuaca.valid   = true;
+    xSemaphoreGive(mutexData);
+  }
+
+  // Task UI pada Core 0 (Protocol Core)
+  xTaskCreatePinnedToCore(TaskTampilanDanSerial, "TaskUI", 4096, NULL, 1, NULL, 0);
+  delay(500);
+
+  // Persiapan Deep Sleep
+  Serial.printf("[POWER] Menyiapkan Deep Sleep selama %d detik...\\n", DURASI_TIDUR_DETIK);
+  esp_sleep_enable_timer_wakeup((uint64_t)DURASI_TIDUR_DETIK * 1000000ULL);
+  esp_sleep_enable_ext0_wakeup(PIN_WAKEUP_TOMBOL, 0);
+
+  digitalWrite(PIN_LED_STATUS, LOW); // LED MATI: MEMASUKI DEEP SLEEP
+  Serial.println("[POWER] Zzz... Memasuki Deep Sleep. Arus turun ke ~10-150 uA.");
+  Serial.flush();
+  esp_deep_sleep_start();
+}
+
+void loop() {}`,
+          diagram: `{
+  "version": 1,
+  "author": "Tim PjBL Informatika UNIB - Lab 2 (Minggu 3)",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "wokwi-esp32-devkit-v1", "id": "esp", "top": 0, "left": 0, "attrs": {} },
+    { "type": "wokwi-bmp280", "id": "bmp1", "top": -40, "left": -160, "attrs": {} },
+    { "type": "board-ssd1306", "id": "oled1", "top": -40, "left": 160, "attrs": {} },
+    { "type": "wokwi-pushbutton", "id": "btnWake", "top": 160, "left": -140, "attrs": { "color": "yellow", "label": "EXT0 Wakeup" } },
+    { "type": "wokwi-led", "id": "ledStatus", "top": 140, "left": 170, "attrs": { "color": "blue", "label": "Active Mode" } },
+    { "type": "wokwi-resistor", "id": "rLed", "top": 185, "left": 160, "attrs": { "value": "220" } }
+  ],
+  "connections": [
+    [ "esp:TX0", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX0", "$serialMonitor:TX", "", [] ],
+    [ "bmp1:VCC", "esp:3V3", "red", [] ],
+    [ "bmp1:GND", "esp:GND.1", "black", [] ],
+    [ "bmp1:SDA", "esp:D21", "blue", [] ],
+    [ "bmp1:SCL", "esp:D22", "green", [] ],
+    [ "oled1:VCC", "esp:3V3", "red", [] ],
+    [ "oled1:GND", "esp:GND.1", "black", [] ],
+    [ "oled1:SDA", "esp:D21", "blue", [] ],
+    [ "oled1:SCL", "esp:D22", "green", [] ],
+    [ "btnWake:1.l", "esp:D15", "gold", [] ],
+    [ "btnWake:2.l", "esp:GND.2", "black", [] ],
+    [ "esp:D2", "rLed:1", "orange", [] ],
+    [ "rLed:2", "ledStatus:A", "orange", [] ],
+    [ "ledStatus:C", "esp:GND.2", "black", [] ]
+  ],
+  "dependencies": {}
+}`,
+          pio: `[env:esp32doit-devkit-v1]
+platform = espressif32
+board = esp32doit-devkit-v1
+framework = arduino
+monitor_speed = 115200
+lib_deps =
+    adafruit/Adafruit BMP280 Library @ ^2.6.8
+    adafruit/Adafruit SSD1306 @ ^2.5.10
+    adafruit/Adafruit GFX Library @ ^1.11.9
+    adafruit/Adafruit Unified Sensor @ ^1.1.14
+    bblanchon/ArduinoJson @ ^7.0.4`,
+          libs: `Adafruit BMP280 Library
+Adafruit SSD1306
+Adafruit GFX Library
+Adafruit Unified Sensor
+ArduinoJson`
+        }
+      }
+    };
+
+    const wokwiModal = document.getElementById("wokwiModal");
+    const wokwiCodeDisplay = document.getElementById("wokwiCodeDisplay");
+    const copyCodeBtn = document.getElementById("copyCodeBtn");
+    let currentLab = "lab2";
+    let currentTab = "main";
+
+    function updateWokwiDisplay() {
+      const proj = wokwiProjects[currentLab];
+      if (!proj) return;
+      document.getElementById("wokwiModalTitle").textContent = proj.title;
+      const folderEl = document.getElementById("wokwiFolderCode");
+      if (folderEl) folderEl.textContent = proj.folder;
+      wokwiCodeDisplay.textContent = proj.files[currentTab] || "";
+    }
+
+    document.querySelectorAll(".open-wokwi-btn, #openWokwiModalBtn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const lab = btn.getAttribute("data-lab") || "lab2";
+        currentLab = lab;
+        updateWokwiDisplay();
+        wokwiModal.showModal();
+      });
+    });
+
+    document.getElementById("closeWokwiModalBtn").addEventListener("click", () => {
+      wokwiModal.close();
+    });
+    wokwiModal.addEventListener("click", (e) => {
+      if (e.target === wokwiModal) wokwiModal.close();
+    });
+
+    document.querySelectorAll("[data-code-tab]").forEach((tabBtn) => {
+      tabBtn.addEventListener("click", () => {
+        document.querySelectorAll("[data-code-tab]").forEach((b) => b.setAttribute("aria-pressed", "false"));
+        tabBtn.setAttribute("aria-pressed", "true");
+        currentTab = tabBtn.getAttribute("data-code-tab");
+        updateWokwiDisplay();
+      });
+    });
+
+    copyCodeBtn.addEventListener("click", async () => {
+      try {
+        const proj = wokwiProjects[currentLab];
+        const codeText = proj ? proj.files[currentTab] : "";
+        await navigator.clipboard.writeText(codeText);
+        const original = copyCodeBtn.textContent;
+        copyCodeBtn.textContent = "✓ Berhasil Disalin!";
+        setTimeout(() => { copyCodeBtn.textContent = original; }, 1800);
+      } catch (_) {}
+    });
+  </script>
+</body>
+</html>
