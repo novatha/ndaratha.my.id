@@ -1,0 +1,2 @@
+# Pustaka simulasi Wokwi
+bblanchon/ArduinoJson@^6.21.3

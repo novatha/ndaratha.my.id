@@ -1,0 +1,428 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[indonesian]{babel}
+\usepackage{newtxtext,newtxmath}
+\usepackage[a4paper,left=2.0cm,right=2.0cm,top=2.3cm,bottom=2.1cm,headheight=15pt]{geometry}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage[table]{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, calc, fit, backgrounds}
+\usepackage{listings}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\definecolor{unibnavy}{HTML}{0B2E59}
+\definecolor{unibblue}{HTML}{1B4F72}
+\definecolor{unibgold}{HTML}{D99B26}
+\definecolor{uniblight}{HTML}{EBF2FA}
+\definecolor{unibsoft}{HTML}{F7F9FC}
+\definecolor{codebg}{HTML}{F4F6F9}
+\definecolor{codeframe}{HTML}{CBD5E1}
+\definecolor{darkgreen}{HTML}{1E6F50}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=unibnavy,
+    urlcolor=unibblue,
+    pdftitle={Panduan Praktikum Minggu 4 (Lab-3) - Teknologi IoT - Prodi Informatika FT UNIB},
+    pdfauthor={Laboratorium Jaringan Komputer dan Sistem Tertanam, Prodi Informatika FT UNIB}
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\setlength{\emergencystretch}{1.5em}
+\setlength{\tabcolsep}{5pt}
+\setlength{\LTleft}{0pt}
+\setlength{\LTright}{0pt}
+\renewcommand{\arraystretch}{1.24}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+
+\setlist[itemize]{leftmargin=1.4em, nosep, topsep=2pt}
+\setlist[enumerate]{leftmargin=1.6em, nosep, topsep=2pt}
+
+\lstdefinestyle{labcode}{
+    backgroundcolor=\color{codebg},
+    frame=single,
+    rulecolor=\color{codeframe},
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\color{unibnavy}\bfseries,
+    commentstyle=\color{darkgreen}\itshape,
+    stringstyle=\color{unibblue},
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    numbersep=6pt,
+    xleftmargin=12pt,
+    xrightmargin=4pt,
+    breaklines=true,
+    showstringspaces=false,
+    tabsize=2,
+    captionpos=b
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\footnotesize\textbf{Panduan Praktikum Minggu 4 --- Teknologi IoT} $|$ Prodi S1 Informatika FT UNIB}
+\fancyhead[R]{\footnotesize Lab-3: Edge Gateway, Serial Ingestion, Docker \& Serialisasi}
+\fancyfoot[L]{\footnotesize Laboratorium Jaringan Komputer \& Sistem Tertanam FT UNIB}
+\fancyfoot[R]{\footnotesize Halaman \thepage\ dari \pageref{LastPage}}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\newcommand{\secbanner}[2]{%
+    \vspace{8pt}%
+    \noindent\colorbox{unibnavy}{%
+        \parbox{\dimexpr\textwidth-2\fboxsep\relax}{%
+            \vspace{4pt}\textbf{\large\color{white}#1 --- #2}\vspace{4pt}%
+        }%
+    }%
+    \vspace{4pt}%
+}
+
+\newcommand{\infobox}[2]{%
+    \vspace{4pt}%
+    \noindent\fcolorbox{unibnavy}{uniblight}{%
+        \parbox{\dimexpr\textwidth-2\fboxsep-2\fboxrule\relax}{%
+            \vspace{3pt}\textbf{\color{unibnavy}#1}\\[2pt]#2\vspace{3pt}%
+        }%
+    }%
+    \vspace{4pt}%
+}
+
+\begin{document}
+
+% ============================================================================
+% KOP MODUL PRAKTIKUM MINGGU 4 (Total Lebar Tepat 17.0 cm)
+% ============================================================================
+\noindent
+\begin{tabular}{|C{3.6cm}|C{7.30cm}|L{1.8cm}|L{2.8cm}|}
+\hline
+\rowcolor{unibnavy}
+\multicolumn{2}{|c|}{\textbf{\color{white}UNIVERSITAS BENGKULU --- FAKULTAS TEKNIK}} &
+\multicolumn{2}{c|}{\textbf{\color{white}MODUL PRAKTIKUM}} \\
+\hline
+\multirow{3}{3.6cm}{\centering\textbf{\footnotesize LAB. JARINGAN \& SISTEM TERTANAM}\\\footnotesize Prodi S1 Informatika\\Fakultas Teknik UNIB} &
+\multirow{3}{7.30cm}{\centering\textbf{PANDUAN PRAKTIKUM MINGGU KE-4}\\[2pt]\textbf{\small Teknologi Internet of Things (IoT)}\\[2pt]\footnotesize Edge Gateway, Serial Ingestion, Docker, \& Serialisasi} &
+\footnotesize\textbf{Kode Lab} & \footnotesize \textbf{Lab-3} \\
+\cline{3-4}
+& & \footnotesize\textbf{Durasi} & \footnotesize $1 \times 170$ Menit \\
+\cline{3-4}
+& & \footnotesize\textbf{Sub-CPMK} & \footnotesize Sub-CPMK 2.2 \& 7.1 \\
+\hline
+\end{tabular}
+
+\vspace{4pt}
+\infobox{Tujuan dan Luaran Praktikum Minggu Ke-4 (Laporan Praktikum Lab-3)}{
+\textbf{Tujuan Praktikum:}
+\begin{enumerate}
+    \item Membangun jembatan komunikasi serial UART yang andal antara mikrokontroler sensor (ESP32) dan komputer \textit{Edge Gateway} (Raspberry Pi atau laptop pengembang) menggunakan pustaka Python \texttt{pyserial}.
+    \item Mengimplementasikan parser telemetri terstruktur berbasis JSON lengkap dengan validasi skema, penanganan galat pembingkaian (\textit{framing errors}), dan pemulihan koneksi otomatis.
+    \item Membandingkan secara eksperimental efisiensi tiga paradigma serialisasi data IoT (\textbf{JSON}, \textbf{CBOR} RFC 8949, dan \textbf{Protocol Buffers / Protobuf}) dalam hal ukuran muatan (\textit{payload size}), waktu komputasi, dan komparasi konsumsi kuota seluler.
+    \item Mengemas layanan gateway ke dalam kontainer mandiri berbasis \textbf{Docker} dan mengorkestrasikan arsitektur multi-layanan (Gateway Bridge + Local Broker Mosquitto) menggunakan \textbf{Docker Compose}.
+    \item Mengasah keterampilan berpikir tingkat tinggi mahasiswa melalui pemecahan Lembar Kerja Terstruktur (C1--C6) berstandar akreditasi internasional.
+\end{enumerate}
+}
+
+% ============================================================================
+% BAGIAN 1: PERSIAPAN DAN KEBUTUHAN PERANGKAT
+% ============================================================================
+\secbanner{BAGIAN 1}{PERSIAPAN LINGKUNGAN PRAKTIKUM}
+
+Praktikum Lab-3 dirancang dengan pendekatan hibrida (\textit{dual-mode}):
+\begin{itemize}
+    \item \textbf{Mode Perangkat Keras Fisik (Ideal):} Modul ESP32 DevKitC terhubung ke port USB Raspberry Pi 4/5 atau laptop pengembang via kabel USB.
+    \item \textbf{Mode Simulasi Perangkat Lunak Penuh (Tanpa Hardware):} Bagi mahasiswa yang belum membawa mikrokontroler fisik atau menjalankan praktikum secara mandiri di rumah, laboratorium menyediakan skrip simulator transmisi (\texttt{simulated\_sender.py}) yang membuat port serial virtual (\textit{pseudo-terminal} \texttt{pty} di Linux/macOS atau TCP loopback socket di Windows) yang mengalirkan data telemetri tiruan dengan perilaku transmisi identik dengan ESP32 asli.
+\end{itemize}
+
+\textbf{Daftar Perangkat Lunak Pendukung (Host / Laptop):}
+\begin{enumerate}
+    \item Python 3.10 atau 3.11 beserta modul \texttt{venv} (\textit{virtual environment}).
+    \item Pustaka Python: \texttt{pyserial}, \texttt{cbor2}, \texttt{protobuf}, \texttt{tabulate}.
+    \item Kompilator Google Protobuf (\texttt{protoc}) untuk menghasilkan stub kode Python \texttt{telemetry\_pb2.py}.
+    \item Docker Engine dan Docker Compose (tersedia via Docker Desktop di macOS/Windows atau \texttt{docker-ce} di Linux).
+\end{enumerate}
+
+% ============================================================================
+% BAGIAN 2: LANGKAH KERJA 1 - FIRMWARE SENSOR ESP32 & SERIAL STREAMER
+% ============================================================================
+\secbanner{BAGIAN 2}{LANGKAH KERJA 1: PENGIRIM DATA SERIAL ESP32}
+
+\subsection*{2.1 Kode Sumber Firmware Pengirim Data (ESP32 / Wokwi)}
+Program berikut membaca sensor lingkungan (misalnya potensiometer ADC dan sensor suhu internal) lalu mengalirkannya ke port serial UART dengan format JSON berkarakter pembatas \textit{Newline} (\texttt{\textbackslash n}) setiap 2 detik:
+
+\begin{lstlisting}[style=labcode, language=C++, caption={Firmware Pengirim Data Serial ESP32 (src/main.cpp)}]
+#include <Arduino.h>
+#include <ArduinoJson.h>
+
+const char* NODE_ID = "ESP32_UNIB_01";
+const int POT_PIN = 34; // Pin ADC pembaca tegangan analog
+
+void setup() {
+    Serial.begin(115200);
+    while (!Serial) { delay(10); }
+    pinMode(POT_PIN, INPUT);
+    analogReadResolution(12); // ADC 12-bit (0 - 4095)
+}
+
+void loop() {
+    StaticJsonDocument<256> doc;
+    doc["node_id"] = NODE_ID;
+    doc["timestamp"] = (uint32_t)(millis() / 1000);
+    
+    // Simulasi pembacaan parameter lingkungan terkalibrasi
+    int raw_adc = analogRead(POT_PIN);
+    float voltage = (raw_adc / 4095.0f) * 3.3f;
+    float temp = 25.0f + (voltage * 4.0f);     // Skala suhu 25.0 - 38.2 C
+    float hum = 60.0f + ((4095 - raw_adc) / 4095.0f) * 30.0f; // 60 - 90%
+    float battery = 3.6f + (voltage / 3.3f) * 0.6f;            // 3.6 - 4.2 V
+    
+    doc["temp"] = round(temp * 100.0) / 100.0;
+    doc["hum"] = round(hum * 10.0) / 10.0;
+    doc["lux"] = map(raw_adc, 0, 4095, 100, 1200);
+    doc["battery"] = round(battery * 100.0) / 100.0;
+    doc["status"] = (battery > 3.7f) ? "NORMAL" : "LOW_BAT";
+
+    // Serialisasikan dan kirim ke port serial dengan newline delimiter
+    serializeJson(doc, Serial);
+    Serial.println(); // Mengirimkan karakter \r\n pembatas bingkai
+
+    delay(2000); // Interval pengiriman 2 detik
+}
+\end{lstlisting}
+
+\subsection*{2.2 Mode Simulator Serial Virtual (Untuk Laptop Tanpa ESP32 Fisik)}
+Jika Anda tidak memiliki modul ESP32 fisik saat pengujian laboratorium, jalankan script \texttt{simulated\_sender.py} berikut di terminal terpisah. Skrip ini memanfaatkan antarmuka \texttt{pty} sistem operasi POSIX untuk membuat sepasang port serial virtual:
+
+\begin{lstlisting}[style=labcode, language=Python, caption={Simulator Node Sensor Serial Virtual (simulated\_sender.py)}]
+import os, pty, serial, time, json, random
+
+def main():
+    master, slave = pty.openpty()
+    slave_name = os.ttyname(slave)
+    print(f"[SIMULATOR] Port serial virtual siap pada: {slave_name}")
+    print("[SIMULATOR] Gunakan nama port di atas pada skrip gateway Anda!\n")
+    
+    seq = 0
+    while True:
+        seq += 1
+        payload = {
+            "node_id": "ESP32_VIRTUAL_01",
+            "timestamp": int(time.time()),
+            "seq": seq,
+            "temp": round(random.uniform(26.0, 31.5), 2),
+            "hum": round(random.uniform(70.0, 85.0), 1),
+            "lux": random.randint(250, 950),
+            "battery": round(random.uniform(3.75, 4.15), 2),
+            "status": "ONLINE"
+        }
+        json_bytes = (json.dumps(payload) + "\n").encode('utf-8')
+        os.write(master, json_bytes)
+        print(f"[SIMULATOR -> TX] {payload}")
+        time.sleep(2.0)
+
+if __name__ == "__main__":
+    main()
+\end{lstlisting}
+
+% ============================================================================
+% BAGIAN 3: LANGKAH KERJA 2 - BENCHMARK SERIALISASI DATA (JSON, CBOR, PROTOBUF)
+% ============================================================================
+\secbanner{BAGIAN 3}{LANGKAH KERJA 2: BENCHMARK SERIALISASI DATA}
+
+Pada tahap ini, mahasiswa akan membuktikan secara empiris perbedaan ukuran muatan dan efisiensi pengkodean antara tiga format serialisasi.
+
+\subsection*{3.1 Kompilasi Skema Protocol Buffers (\texttt{telemetry.proto})}
+Pastikan file \texttt{telemetry.proto} tersedia di direktori kerja Anda:
+
+\begin{lstlisting}[style=labcode, caption={Definisi Kontrak Skema Biner (telemetry.proto)}]
+syntax = "proto3";
+
+message TelemetryPacket {
+  string node_id = 1;
+  uint64 timestamp = 2;
+  uint32 seq = 3;
+  float temp = 4;
+  float hum = 5;
+  uint32 lux = 6;
+  float battery = 7;
+  string status = 8;
+}
+\end{lstlisting}
+
+Jalankan kompilator \texttt{protoc} untuk menghasilkan stub kode Python:
+\begin{lstlisting}[style=labcode, language=bash]
+protoc --python_out=. telemetry.proto
+ls -l telemetry_pb2.py # Memastikan file hasil kompilasi telah tercipta
+\end{lstlisting}
+
+\subsection*{3.2 Skrip Eksperimen Komparasi Ukuran \& Waktu Eksekusi}
+Jalankan program eksperimen \texttt{benchmark\_serialization.py}:
+
+\begin{lstlisting}[style=labcode, language=Python, caption={Skrip Benchmark Kuantitatif Serialisasi (benchmark\_serialization.py)}]
+import json, time
+import cbor2
+import telemetry_pb2
+
+# Data uji standar telemetri stasiun cuaca
+data_dict = {
+    "node_id": "ESP32_UNIB_01",
+    "timestamp": 1794212500,
+    "seq": 1024,
+    "temp": 29.85,
+    "hum": 78.4,
+    "lux": 650,
+    "battery": 3.95,
+    "status": "ONLINE"
+}
+
+ITERATIONS = 10000
+
+# 1. Evaluasi JSON
+t0 = time.perf_counter()
+for _ in range(ITERATIONS):
+    json_str = json.dumps(data_dict)
+    json_bytes = json_str.encode('utf-8')
+t_json = (time.perf_counter() - t0) / ITERATIONS * 1e6 # microsecond
+
+# 2. Evaluasi CBOR
+t0 = time.perf_counter()
+for _ in range(ITERATIONS):
+    cbor_bytes = cbor2.dumps(data_dict)
+t_cbor = (time.perf_counter() - t0) / ITERATIONS * 1e6
+
+# 3. Evaluasi Protocol Buffers
+proto_obj = telemetry_pb2.TelemetryPacket(
+    node_id=data_dict["node_id"],
+    timestamp=data_dict["timestamp"],
+    seq=data_dict["seq"],
+    temp=data_dict["temp"],
+    hum=data_dict["hum"],
+    lux=data_dict["lux"],
+    battery=data_dict["battery"],
+    status=data_dict["status"]
+)
+t0 = time.perf_counter()
+for _ in range(ITERATIONS):
+    proto_bytes = proto_obj.SerializeToString()
+t_proto = (time.perf_counter() - t0) / ITERATIONS * 1e6
+
+len_json = len(json_bytes)
+len_cbor = len(cbor_bytes)
+len_proto = len(proto_bytes)
+
+print("\n================ HASIL BENCHMARK SERIALISASI IOT ================")
+print(f"Format JSON     : {len_json:3d} Byte | Encode: {t_json:6.2f} us | Reduksi:  0.0%")
+print(f"Format CBOR     : {len_cbor:3d} Byte | Encode: {t_cbor:6.2f} us | Reduksi: {(len_json-len_cbor)/len_json*100:5.1f}%")
+print(f"Format Protobuf : {len_proto:3d} Byte | Encode: {t_proto:6.2f} us | Reduksi: {(len_json-len_proto)/len_json*100:5.1f}%")
+print("=================================================================\n")
+\end{lstlisting}
+
+% ============================================================================
+% BAGIAN 4: LANGKAH KERJA 3 - DEPLOYMENT DOCKER & DOCKER COMPOSE
+% ============================================================================
+\secbanner{BAGIAN 4}{LANGKAH KERJA 3: DEPLOYMENT KONTAINER DOCKER}
+
+\subsection*{4.1 Struktur Direktori Proyek Gateway}
+Pastikan direktori proyek Anda memiliki tata letak terstruktur sebagai berikut:
+\begin{lstlisting}[style=labcode]
+lab03_minggu_04_edge_gateway/
+|-- Dockerfile
+|-- docker-compose.yml
+|-- requirements.txt
+|-- gateway_service.py
+|-- benchmark_serialization.py
+|-- telemetry.proto
+|-- telemetry_pb2.py
+\-- mosquitto.conf
+\end{lstlisting}
+
+\subsection*{4.2 Konfigurasi Broker MQTT Lokal (\texttt{mosquitto.conf})}
+\begin{lstlisting}[style=labcode]
+listener 1883
+allow_anonymous true
+persistence true
+persistence_location /mosquitto/data/
+\end{lstlisting}
+
+\subsection*{4.3 Pembangunan dan Eksekusi Kontainer}
+Jalankan perintah berikut di direktori proyek:
+\begin{lstlisting}[style=labcode, language=bash]
+# 1. Build image dan jalankan stack layanan di latar belakang
+docker compose up -d --build
+
+# 2. Periksa status kedua kontainer (gateway-bridge & local-broker)
+docker compose ps
+
+# 3. Pantau log aliran ingestion data serial secara live
+docker compose logs -f gateway-bridge
+\end{lstlisting}
+
+% ============================================================================
+% BAGIAN 5: LEMBAR KERJA MAHASISWA & PROBLEM SET (C1 - C6)
+% ============================================================================
+\secbanner{BAGIAN 5}{LEMBAR KERJA MAHASISWA (PROBLEM SET C1 -- C6)}
+
+Jawablah pertanyaan-pertanyaan berikut secara komprehensif pada Laporan Resmi Praktikum Anda:
+
+\begin{enumerate}
+    \item \textbf{[C1 --- Mengingat] Bobot: 10}\\
+    Apa yang dimaksud dengan peranti serial \texttt{/dev/ttyUSB0} pada sistem operasi Linux? Mengapa port tersebut memerlukan izin akses grup \texttt{dialout} bagi pengguna non-root?
+
+    \item \textbf{[C2 --- Memahami] Bobot: 15}\\
+    Berdasarkan hasil eksekusi \texttt{benchmark\_serialization.py}, jelaskan mengapa ukuran muatan CBOR lebih kecil daripada JSON, tetapi masih jauh lebih besar daripada Protobuf! Komponen data apa yang masih dibawa oleh CBOR sehingga ukurannya belum se-minimal Protobuf?
+
+    \item \textbf{[C3 --- Mengaplikasikan] Bobot: 20}\\
+    Modifikasilah skrip \texttt{gateway\_service.py} agar setiap kali menerima data serial dari ESP32, gateway secara otomatis:
+    \begin{enumerate}[label=(\alph*)]
+        \item Mengonversi payload JSON tersebut ke format \textbf{CBOR}.
+        \item Menyimpan rekaman byte CBOR beserta stempel waktu lokal ke dalam file log biner terotasi (\texttt{telemetry\_archive.cbor}).
+    \end{enumerate}
+    Sertakan potongan kode modifikasi Anda dan tangkapan layar (\textit{screenshot}) file biner yang dihasilkan!
+
+    \item \textbf{[C4 --- Menganalisis] Bobot: 20}\\
+    Sebuah armada 50 unit sensor pemantau tinggi muka air di sepanjang DAS Air Bengkulu mengirimkan telemetri setiap 30 detik. Operator seluler mengenakan tarif Rp 25 per Kilobyte kuota data. Bandingkan secara matematis biaya kuota operasional per bulan (30 hari) antara sistem yang menggunakan format JSON (130 byte) dan sistem yang menggunakan format Protobuf (42 byte)! Berapa rupiah anggaran universitas yang berhasil dihemat per tahun?
+
+    \item \textbf{[C5 --- Mengevaluasi] Bobot: 15}\\
+    Evaluasilah keandalan mekanisme penanganan koneksi serial pada \texttt{gateway\_service.py}! Apa yang terjadi pada program gateway jika kabel USB ESP32 dicabut secara paksa saat data sedang dialirkan, kemudian ditancapkan kembali 10 detik kemudian? Apakah kontainer Docker mengalami \textit{crash} permanen atau mampu pulih secara mandiri? Jelaskan mekanismenya!
+
+    \item \textbf{[C6 --- Merancang] Bobot: 20}\\
+    Rancanglah mekanisme \textbf{\textit{Offline Store-and-Forward}} sederhana menggunakan basis data \textbf{SQLite} pada skrip gateway Python Anda. Jika koneksi ke broker MQTT pusat terputus, data telemetri disimpan ke tabel \texttt{pending\_telemetry(id, payload\_proto, created\_at)}. Saat koneksi pulih, data dikirimkan berurutan (\textit{FIFO}) dan dihapus dari tabel lokal. Tuliskan rancangan fungsi Python tersebut secara rapi!
+\end{enumerate}
+
+% ============================================================================
+% BAGIAN 6: RUBRIK PENILAIAN PRAKTIKUM
+% ============================================================================
+\secbanner{BAGIAN 6}{RUBRIK PENILAIAN LAPORAN PRAKTIKUM LAB-3}
+
+{\small
+\begin{longtable}{|L{3.0cm}|C{1.3cm}|L{5.5cm}|L{5.5cm}|}
+\hline
+\rowcolor{uniblight}
+\textbf{Komponen Evaluasi} & \textbf{Bobot} & \textbf{Kriteria Memuaskan (80--100)} & \textbf{Kriteria Kurang ($<80$)} \\
+\hline
+\endfirsthead
+\hline
+\rowcolor{uniblight}
+\textbf{Komponen Evaluasi} & \textbf{Bobot} & \textbf{Kriteria Memuaskan (80--100)} & \textbf{Kriteria Kurang ($<80$)} \\
+\hline
+\endhead
+\textbf{1. Fungsionalitas Serial Ingestion} & 25\% & Serial stream terbaca stabil tanpa jeda; framing delimiter tertangani; validasi skema JSON berjalan sempurna. & Terjadi galat parsing berulang; program crash saat data serial terputus. \\
+\hline
+\textbf{2. Eksperimen Benchmark Serialisasi} & 25\% & Data kuantitatif JSON vs CBOR vs Protobuf tersaji lengkap dengan tabel, grafik, dan analisis matematis mendalam. & Data pengujian tidak lengkap; analisis perbandingan hanya bersifat narasi tanpa data numerik. \\
+\hline
+\textbf{3. Kontainerisasi Docker \& Compose} & 20\% & Dockerfile optimal (multi-stage / clean cache); docker-compose multi-service berjalan stabil; perangkat serial ter-mount dengan benar. & Kontainer gagal build; port serial tidak dapat diakses dari dalam kontainer. \\
+\hline
+\textbf{4. Penyelesaian Problem Set C1--C6} & 30\% & Seluruh soal C1--C6 terjawab dengan argumentasi rekayasa ilmiah yang tajam, perhitungan akurat, dan kode yang dapat diuji. & Jawaban bersifat umum; kode rancangan tidak memenuhi spesifikasi problem set. \\
+\hline
+\end{longtable}
+}
+
+\end{document}

@@ -944,10 +944,10 @@
         </article>
 
         <!-- Kartu Minggu 3 -->
-        <article class="week-featured-card latest">
+        <article class="week-featured-card">
           <div class="card-top">
             <span class="badge badge-ready">✓ Tersedia Lengkap · Minggu 3</span>
-            <span class="badge badge-gold">★ Terbaru · Sub-CPMK 2.1 (C3, P3)</span>
+            <span class="badge badge-secondary">Sub-CPMK 2.1 (C3, P3)</span>
           </div>
           <h3>Minggu 3: Firmware ESP32, Bus I2C/SPI, FreeRTOS, &amp; Deep Sleep</h3>
           <div class="subcpmk-box">
@@ -1001,6 +1001,66 @@
             </div>
           </div>
         </article>
+
+        <!-- Kartu Minggu 4 -->
+        <article class="week-featured-card latest">
+          <div class="card-top">
+            <span class="badge badge-ready">✓ Tersedia Lengkap · Minggu 4</span>
+            <span class="badge badge-gold">★ Terbaru · Sub-CPMK 2.2 &amp; 7.1 (C3, C6, P3)</span>
+          </div>
+          <h3>Minggu 4: Edge Gateway, Embedded Linux, Docker, &amp; Serialisasi Data</h3>
+          <div class="subcpmk-box">
+            Mengonfigurasi Raspberry Pi sebagai edge gateway berbasis Linux, Python, dan kontainer Docker, membandingkan serialisasi JSON vs CBOR vs Protobuf, serta melaksanakan Pitching Proposal Ide Proyek (Milestone 1).
+          </div>
+          <ul class="topic-list">
+            <li>Arsitektur Edge Gateway: Protocol translation, edge filtering/aggregation, &amp; offline buffering.</li>
+            <li>Embedded Linux (Raspberry Pi OS Headless), pengamanan SSH (ed25519), firewall ufw, &amp; systemd daemon.</li>
+            <li>Serial Ingestion (<code>pyserial</code>) &amp; Benchmark Kuantitatif: JSON vs CBOR (RFC 8949) vs Protobuf v3 (hemat 68%).</li>
+            <li>Kontainerisasi Docker &amp; Docker Compose (Multi-Service Gateway + Local Mosquitto Broker).</li>
+            <li>Studi Kasus C (Smart Campus UNIB) &amp; Pelaksanaan Pitching Milestone 1 (M1 Proposal Proyek PjBL).</li>
+          </ul>
+          <div class="resource-list">
+            <div class="resource-row">
+              <div class="resource-info">
+                <strong>📊 Slide Kuliah Minggu 4 (ch4.pdf)</strong>
+                <span>25 Slide LaTeX Beamer 16:9</span>
+              </div>
+              <div class="resource-btns">
+                <button type="button" class="btn btn-primary btn-sm" data-preview-pdf="./ch4.pdf" data-preview-title="Slide Minggu 4 — Edge Gateway, Embedded Linux, Docker & Serialisasi">Pratinjau</button>
+                <a class="btn btn-secondary btn-sm" href="./ch4.pdf" target="_blank" rel="noopener">Buka PDF</a>
+              </div>
+            </div>
+            <div class="resource-row">
+              <div class="resource-info">
+                <strong>📘 Modul Bahan Ajar, LKM &amp; Problem Set C1–C6</strong>
+                <span>Modul_Minggu_04_Teknologi_IoT.pdf · 10 Halaman A4</span>
+              </div>
+              <div class="resource-btns">
+                <button type="button" class="btn btn-primary btn-sm" data-preview-pdf="./Modul_Minggu_04_Teknologi_IoT.pdf" data-preview-title="Modul Bahan Ajar Minggu 4">Pratinjau</button>
+                <a class="btn btn-secondary btn-sm" href="./Modul_Minggu_04_Teknologi_IoT.pdf" target="_blank" rel="noopener">Buka PDF</a>
+              </div>
+            </div>
+            <div class="resource-row">
+              <div class="resource-info">
+                <strong>🔬 Panduan Praktikum Minggu 4 (Lab-3)</strong>
+                <span>Praktikum_Minggu_04_Edge_Gateway_RaspberryPi_Docker.pdf · 6 Halaman A4</span>
+              </div>
+              <div class="resource-btns">
+                <button type="button" class="btn btn-primary btn-sm" data-preview-pdf="./Praktikum_Minggu_04_Edge_Gateway_RaspberryPi_Docker.pdf" data-preview-title="Panduan Praktikum Minggu 4 (Lab-3)">Pratinjau</button>
+                <a class="btn btn-secondary btn-sm" href="./Praktikum_Minggu_04_Edge_Gateway_RaspberryPi_Docker.pdf" target="_blank" rel="noopener">Buka PDF</a>
+              </div>
+            </div>
+            <div class="resource-row">
+              <div class="resource-info">
+                <strong>⚡ Starter Kit Simulasi Wokwi Lab-3 &amp; Docker</strong>
+                <span>ESP32 JSON Streamer, Docker Compose, &amp; Python Gateway Daemon</span>
+              </div>
+              <div class="resource-btns">
+                <button type="button" class="btn btn-gold btn-sm open-wokwi-btn" data-lab="lab3">Kode Starter Lab-3</button>
+              </div>
+            </div>
+          </div>
+        </article>
       </div>
     </section>
 
@@ -1016,7 +1076,7 @@
       <div class="filter-bar">
         <div class="filter-pills" role="group" aria-label="Filter modul mingguan">
           <button type="button" class="pill" data-filter="all" aria-pressed="true">Semua (16)</button>
-          <button type="button" class="pill" data-filter="ready" aria-pressed="false">✓ Materi Tersedia (2)</button>
+          <button type="button" class="pill" data-filter="ready" aria-pressed="false">✓ Materi Tersedia (4)</button>
           <button type="button" class="pill" data-filter="edge" aria-pressed="false">Fondasi &amp; Edge (M1–M4)</button>
           <button type="button" class="pill" data-filter="proto" aria-pressed="false">Protokol IoT (M5–M7)</button>
           <button type="button" class="pill" data-filter="cloudsec" aria-pressed="false">Backend, Cloud &amp; Keamanan (M9–M14)</button>
@@ -1210,7 +1270,7 @@
       { w: 1, mod: "edge", ready: true, milestone: false, sub: "Sub-CPMK 1.1", weight: "1% (LK-1)", title: "Fondasi, Arsitektur Referensi, & Software Stack", desc: "Kontrak kuliah PjBL, M2M→IoT→AIoT, ITU-T Y.4000, ISO/IEC 30141:2024, Kasus A Banjir, Lab-0 Wokwi & Git." },
       { w: 2, mod: "edge", ready: true, milestone: false, sub: "Sub-CPMK 1.2", weight: "2% (Lab-1)", title: "Perangkat Keras, Sensor–Aktuator, & Konektivitas", desc: "ADC 12-bit ESP32, PWM LEDC, histeresis, ESP32 vs RPi, Wi-Fi/BLE/Zigbee/LoRaWAN/NB-IoT, WDM & Kasus B Kopi." },
       { w: 3, mod: "edge", ready: true, milestone: false, sub: "Sub-CPMK 2.1", weight: "2% (Lab-2)", title: "Pemrograman ESP32 Non-Blocking & Manajemen Daya", desc: "Antarmuka I2C/SPI/UART, BME280 & OLED SSD1306, interrupt, FreeRTOS dasar, deep sleep & kalibrasi." },
-      { w: 4, mod: "edge", ready: false, milestone: true, sub: "Sub-CPMK 2.2 & 7.1", weight: "6% (M1 5% + LK-2 1%)", title: "Edge Gateway Raspberry Pi, Serialisasi, & Pitching M1", desc: "Linux RPi, Docker di edge, JSON vs CBOR vs Protobuf, Kasus C, serta Presentasi Proposal Proyek (Milestone 1)." },
+      { w: 4, mod: "edge", ready: true, milestone: true, sub: "Sub-CPMK 2.2 & 7.1", weight: "6% (M1 5% + LK-2 1%)", title: "Edge Gateway Raspberry Pi, Serialisasi, & Pitching M1", desc: "Linux RPi, Docker di edge, JSON vs CBOR vs Protobuf, Kasus C, serta Presentasi Proposal Proyek (Milestone 1)." },
       { w: 5, mod: "proto", ready: false, milestone: false, sub: "Sub-CPMK 3.1", weight: "2% (Lab-3)", title: "Komunikasi HTTP/REST & WebSocket Full-Duplex", desc: "Semantik HTTP (RFC 9110), polling vs push, WebSocket (RFC 6455), FastAPI server, & inspeksi paket Wireshark." },
       { w: 6, mod: "proto", ready: false, milestone: false, sub: "Sub-CPMK 3.2", weight: "2% (Lab-4)", title: "Arsitektur Broker & Protokol Publish/Subscribe MQTT", desc: "MQTT 3.1.1 & 5.0, desain hierarki topik, wildcard, QoS 0/1/2, Retained Message, LWT, Mosquitto & EMQX." },
       { w: 7, mod: "proto", ready: false, milestone: true, sub: "Sub-CPMK 3.3", weight: "7% (Lab-5 2% + Kuis-1 5%)", title: "Protokol CoAP & Benchmarking Eksperimental", desc: "CoAP di atas UDP (CON/NON, Observe), perbandingan MQTT–CoAP–HTTP–WS dengan tc netem, & Kuis-1." },
@@ -1706,6 +1766,97 @@ Adafruit SSD1306
 Adafruit GFX Library
 Adafruit Unified Sensor
 ArduinoJson`
+        }
+      },
+      lab3: {
+        title: "⚡ Starter Kit Simulasi Wokwi — Praktikum Minggu 4 (Lab-3)",
+        folder: "lab03_minggu_04_edge_gateway/esp32_sender_wokwi/",
+        files: {
+          main: `#include <Arduino.h>
+#include <ArduinoJson.h>
+
+const char* NODE_ID = "ESP32_UNIB_01";
+const int POT_PIN = 34;   // Input ADC analog
+const int LED_PIN = 2;    // Indikator TX transmisi
+
+uint32_t packet_seq = 0;
+
+void setup() {
+    Serial.begin(115200);
+    while (!Serial) { delay(10); }
+
+    pinMode(POT_PIN, INPUT);
+    pinMode(LED_PIN, OUTPUT);
+    analogReadResolution(12);
+
+    digitalWrite(LED_PIN, HIGH);
+    delay(500);
+    digitalWrite(LED_PIN, LOW);
+}
+
+void loop() {
+    packet_seq++;
+
+    // Baca sensor analog (potensiometer simulasi tegangan)
+    int raw_adc = analogRead(POT_PIN);
+    float voltage = (raw_adc / 4095.0f) * 3.3f;
+    float temp = 25.0f + (voltage * 4.0f);                      // 25.0 - 38.2 C
+    float hum = 60.0f + ((4095 - raw_adc) / 4095.0f) * 30.0f;  // 60 - 90%
+    float battery = 3.6f + (voltage / 3.3f) * 0.6f;             // 3.6 - 4.2 V
+
+    // Susun dokumen JSON
+    StaticJsonDocument<256> doc;
+    doc["node_id"] = NODE_ID;
+    doc["timestamp"] = (uint32_t)(millis() / 1000);
+    doc["seq"] = packet_seq;
+    doc["temp"] = round(temp * 100.0) / 100.0;
+    doc["hum"] = round(hum * 10.0) / 10.0;
+    doc["lux"] = map(raw_adc, 0, 4095, 100, 1200);
+    doc["battery"] = round(battery * 100.0) / 100.0;
+    doc["status"] = (battery > 3.75f) ? "NORMAL" : "LOW_BAT";
+
+    // Kedipkan LED indikator pengiriman
+    digitalWrite(LED_PIN, HIGH);
+
+    // Kirim payload dengan delimiter newline (\\r\\n)
+    serializeJson(doc, Serial);
+    Serial.println();
+
+    digitalWrite(LED_PIN, LOW);
+
+    // Interval pengiriman 2 detik
+    delay(2000);
+}`,
+          diagram: `{
+  "version": 1,
+  "author": "Laboratorium Jaringan Komputer & Sistem Tertanam FT UNIB",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "board-esp32-devkit-c-v4", "id": "esp", "top": 0, "left": 0, "attrs": {} },
+    { "type": "wokwi-potentiometer", "id": "pot1", "top": -80, "left": -120, "attrs": { "value": "2048" } },
+    { "type": "wokwi-led", "id": "led1", "top": 40, "left": 160, "attrs": { "color": "green" } },
+    { "type": "wokwi-resistor", "id": "r1", "top": 90, "left": 160, "attrs": { "value": "220" } }
+  ],
+  "connections": [
+    [ "esp:TX", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX", "$serialMonitor:TX", "", [] ],
+    [ "pot1:GND", "esp:GND.1", "black", [ "v0" ] ],
+    [ "pot1:VCC", "esp:3V3", "red", [ "v0" ] ],
+    [ "pot1:SIG", "esp:34", "blue", [ "v0" ] ],
+    [ "esp:2", "r1:1", "green", [ "v0" ] ],
+    [ "r1:2", "led1:A", "green", [ "v0" ] ],
+    [ "led1:K", "esp:GND.2", "black", [ "v0" ] ]
+  ],
+  "dependencies": {}
+}`,
+          pio: `[env:esp32dev]
+platform = espressif32
+board = esp32dev
+framework = arduino
+monitor_speed = 115200
+lib_deps =
+    bblanchon/ArduinoJson@^6.21.3`,
+          libs: `bblanchon/ArduinoJson@^6.21.3`
         }
       }
     };

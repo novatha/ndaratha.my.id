@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package unib.iot;
+
+message TelemetryPacket {
+  string node_id = 1;
+  uint64 timestamp = 2;
+  uint32 seq = 3;
+  float temp = 4;
+  float hum = 5;
+  uint32 lux = 6;
+  float battery = 7;
+  string status = 8;
+}

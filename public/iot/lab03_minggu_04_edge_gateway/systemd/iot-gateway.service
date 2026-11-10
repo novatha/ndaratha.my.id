@@ -1,0 +1,19 @@
+[Unit]
+Description=UNIB IoT Edge Gateway Daemon
+After=network.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/opt/iot-gateway
+ExecStart=/opt/iot-gateway/venv/bin/python3 -u gateway_service.py --port /dev/ttyUSB0
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+Environment=PYTHONUNBUFFERED=1
+Environment=SERIAL_PORT=/dev/ttyUSB0
+Environment=DB_PATH=/opt/iot-gateway/telemetry_cache.db
+
+[Install]
+WantedBy=multi-user.target

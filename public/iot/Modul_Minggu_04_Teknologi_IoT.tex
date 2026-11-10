@@ -1,0 +1,601 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[indonesian]{babel}
+\usepackage{newtxtext,newtxmath}
+\usepackage[a4paper,left=2.0cm,right=2.0cm,top=2.3cm,bottom=2.1cm,headheight=15pt]{geometry}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage[table]{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, fit, backgrounds, calc}
+\usepackage{listings}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+% Palet Warna Identitas Akademik UNIB
+\definecolor{unibnavy}{HTML}{0B2E59}
+\definecolor{unibblue}{HTML}{1B4F72}
+\definecolor{unibgold}{HTML}{D99B26}
+\definecolor{uniblight}{HTML}{EBF2FA}
+\definecolor{unibsoft}{HTML}{F7F9FC}
+\definecolor{codebg}{HTML}{F4F6F9}
+\definecolor{codeframe}{HTML}{CBD5E1}
+\definecolor{darkgreen}{HTML}{1E6F50}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=unibnavy,
+    urlcolor=unibblue,
+    citecolor=unibnavy,
+    pdftitle={Bahan Ajar Minggu 4 - Teknologi Internet of Things (IoT) - Prodi Informatika FT UNIB},
+    pdfauthor={Program Studi S1 Informatika, Fakultas Teknik, Universitas Bengkulu}
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\setlength{\emergencystretch}{1.5em}
+\setlength{\tabcolsep}{5pt}
+\setlength{\LTleft}{0pt}
+\setlength{\LTright}{0pt}
+\renewcommand{\arraystretch}{1.24}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+
+\setlist[itemize]{leftmargin=1.4em, nosep, topsep=2pt}
+\setlist[enumerate]{leftmargin=1.6em, nosep, topsep=2pt}
+
+% Konfigurasi Listing Kode
+\lstdefinestyle{iotcode}{
+    backgroundcolor=\color{codebg},
+    frame=single,
+    rulecolor=\color{codeframe},
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\color{unibnavy}\bfseries,
+    commentstyle=\color{darkgreen}\itshape,
+    stringstyle=\color{unibblue},
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    numbersep=6pt,
+    xleftmargin=12pt,
+    xrightmargin=4pt,
+    breaklines=true,
+    showstringspaces=false,
+    tabsize=2,
+    captionpos=b
+}
+
+% Header & Footer
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\footnotesize\textbf{Bahan Ajar Minggu 4 --- Teknologi IoT} $|$ Prodi S1 Informatika FT UNIB}
+\fancyhead[R]{\footnotesize Modul 2: Edge Gateway, Embedded Linux, Docker \& Serialisasi}
+\fancyfoot[L]{\footnotesize Kurikulum OBE --- Standar SN-Dikti \& LAM Infokom}
+\fancyfoot[R]{\footnotesize Halaman \thepage\ dari \pageref{LastPage}}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% Kotak Judul Bagian & Kotak Informasi Estetis
+\newcommand{\secbanner}[2]{%
+    \vspace{8pt}%
+    \noindent\colorbox{unibnavy}{%
+        \parbox{\dimexpr\textwidth-2\fboxsep\relax}{%
+            \vspace{4pt}\textbf{\large\color{white}#1 --- #2}\vspace{4pt}%
+        }%
+    }%
+    \vspace{4pt}%
+}
+
+\newcommand{\infobox}[2]{%
+    \vspace{4pt}%
+    \noindent\fcolorbox{unibnavy}{uniblight}{%
+        \parbox{\dimexpr\textwidth-2\fboxsep-2\fboxrule\relax}{%
+            \vspace{3pt}\textbf{\color{unibnavy}#1}\\[2pt]#2\vspace{3pt}%
+        }%
+    }%
+    \vspace{4pt}%
+}
+
+\newcommand{\casebox}[2]{%
+    \vspace{4pt}%
+    \noindent\fcolorbox{unibgold}{unibsoft}{%
+        \parbox{\dimexpr\textwidth-2\fboxsep-2\fboxrule\relax}{%
+            \vspace{4pt}\textbf{\color{unibnavy}#1}\\[3pt]#2\vspace{4pt}%
+        }%
+    }%
+    \vspace{4pt}%
+}
+
+\begin{document}
+
+% ============================================================================
+% KOP MODUL BAHAN AJAR MINGGU 4 (Total Lebar Tepat 17.0 cm)
+% ============================================================================
+\noindent
+\begin{tabular}{|C{3.6cm}|C{7.30cm}|L{1.8cm}|L{2.8cm}|}
+\hline
+\rowcolor{unibnavy}
+\multicolumn{2}{|c|}{\textbf{\color{white}UNIVERSITAS BENGKULU --- FAKULTAS TEKNIK}} &
+\multicolumn{2}{c|}{\textbf{\color{white}BAHAN AJAR \& LKM}} \\
+\hline
+\multirow{3}{3.6cm}{\centering\textbf{\footnotesize PRODI S1 INFORMATIKA}\\\footnotesize Jurusan Teknik Informatika\\Fakultas Teknik UNIB} &
+\multirow{3}{7.30cm}{\centering\textbf{BAHAN AJAR MINGGU KE-4}\\[2pt]\textbf{\small Teknologi Internet of Things (IoT)}\\[2pt]\footnotesize Edge Gateway, Embedded Linux, Docker, \& Serialisasi} &
+\footnotesize\textbf{Minggu} & \footnotesize 4 dari 16 \\
+\cline{3-4}
+& & \footnotesize\textbf{Bobot} & \footnotesize 3 SKS (2T + 1P) \\
+\cline{3-4}
+& & \footnotesize\textbf{Sub-CPMK} & \footnotesize Sub-CPMK 2.2 \& 7.1 \\
+\hline
+\end{tabular}
+
+\vspace{4pt}
+\infobox{Capaian Pembelajaran Minggu Ke-4 (Sub-CPMK 2.2 \& 7.1 --- Level C3, C6, P3)}{
+\textbf{CPMK-2:} Mahasiswa mampu memprogram perangkat \textit{edge} (ESP32 dan Raspberry Pi) untuk akuisisi data sensor, kendali aktuator, dan fungsi \textit{gateway} secara efisien.\\
+\textbf{Sub-CPMK 2.2:} Mahasiswa mampu mengonfigurasi Raspberry Pi sebagai \textit{edge gateway} berbasis Linux, Python, dan kontainer, serta menerapkan format serialisasi data yang tepat (JSON, CBOR, Protocol Buffers).\\
+\textbf{Sub-CPMK 7.1:} Mahasiswa mampu menyusun dan mempresentasikan proposal ide proyek IoT (Milestone 1) berbasis analisis masalah nyata yang memuat kebutuhan sistem, rancangan arsitektur, matriks keputusan pemilihan teknologi, analisis risiko, dan rencana kerja tim.\\[2pt]
+\textbf{Indikator Ketercapaian:}
+\begin{enumerate}
+    \item Menjelaskan peran strategis dan arsitektur fungsional \textit{Edge Gateway} dalam mereduksi latensi, menghemat konsumsi bandwidth, dan menjamin ketersediaan sistem saat luring (\textit{offline survivability}).
+    \item Mengelola sistem operasi Linux tersemat (\textit{Raspberry Pi OS}) dalam mode \textit{headless}, mengamankan akses via SSH, dan mengonfigurasi layanan otomatis latar belakang menggunakan unit \texttt{systemd}.
+    \item Membangun jembatan komunikasi (\textit{serial bridge}) antara mikrokontroler sensor (ESP32) dan gateway menggunakan pustaka Python \texttt{pyserial}.
+    \item Menganalisis, membandingkan secara kuantitatif, dan menerapkan tiga paradigma serialisasi data IoT: berbasis teks (\textbf{JSON}), biner tanpa skema (\textbf{CBOR} - RFC 8949), dan biner berskema ketat (\textbf{Protocol Buffers / Protobuf}).
+    \item Mengemas layanan gateway ke dalam kontainer \textbf{Docker} mandiri dan mengorkestrasikan sistem terdistribusi multi-layanan menggunakan \textbf{Docker Compose}.
+    \item Menyempurnakan dokumen proposal proyek IoT dan mempresentasikan \textit{pitching} 7 menit di hadapan dosen dan tim penilai berdasarkan Rubrik R-M1.
+\end{enumerate}
+}
+
+% ============================================================================
+% BAGIAN 1: ARSITEKTUR EDGE GATEWAY DAN PERANGKAT EMBEDDED LINUX
+% ============================================================================
+\secbanner{BAGIAN 1}{ARSITEKTUR EDGE GATEWAY DAN PERANGKAT EMBEDDED LINUX}
+
+\subsection*{1.1 Mengapa Ekosistem IoT Membutuhkan Edge Gateway?}
+Pada era awal IoT, sebagian besar arsitektur mengadopsi model \textit{cloud-centric} murni di mana setiap simpul sensor (\textit{end-node}) mengirimkan seluruh data mentah secara langsung ke server cloud publik. Namun, penerapan model ini pada skala industri dan wilayah kepulauan/pesisir seperti Bengkulu menghadapi kendala fundamental:
+\begin{enumerate}
+    \item \textbf{Biaya dan Keterbatasan Bandwidth:} Pengiriman jutaan titik data telemetri berfrekuensi tinggi ($1\text{--}100\text{ Hz}$) melalui koneksi seluler (NB-IoT/LTE-M) sangat mahal dan rawan kemacetan jaringan (\textit{network congestion}).
+    \item \textbf{Latensi Kendali Kritis:} Sistem aktuasi darurat (misalnya penutupan katup bendungan atau pemutusan relai genset) memerlukan waktu respons deterministik ($<10\text{ ms}$). RTT (\textit{Round Trip Time}) menuju data center cloud ($50\text{--}200\text{ ms}$) tidak dapat ditoleransi.
+    \item \textbf{Kerentanan Terhadap Kegagalan Jaringan (\textit{Single Point of Failure}):} Ketika sambungan ISP putus akibat bencana atau gangguan transmisi kabel laut, seluruh sistem otomasi lokal menjadi lumpuh total.
+    \item \textbf{Privasi dan Keamanan Data:} Transmisi rekaman video pengawasan atau data telemetri sensitif secara terbuka melanggar regulasi privasi (UU No. 27/2022 tentang Perlindungan Data Pribadi).
+\end{enumerate}
+
+\textbf{\textit{Edge Gateway}} hadir sebagai entitas komputasi perantara yang diletakkan pada lokasi fisik yang sama dengan simpul sensor. Gateway menjalankan empat peran inti:
+\begin{itemize}
+    \item \textbf{Translasi Protokol (\textit{Protocol Translation}):} Menerjemahkan protokol komunikasi nirkabel/kabel lokal (misalnya Serial UART, RS-485 Modbus, BLE, Zigbee, ESP-NOW) menjadi protokol bertransportasi IP yang siap disalurkan ke jaringan WAN/Internet (MQTT over TLS, HTTP/REST, CoAP).
+    \item \textbf{Penyaringan dan Agregasi Data (\textit{Edge Filtering \& Aggregation}):} Melakukan komputasi statistik lokal (rata-rata bergerak, deteksi ambang batas, nilai deviasi). Data mentah berfrekuensi $1\text{ Hz}$ dapat diagregasikan menjadi ringkasan 1 menit, memangkas beban transmisi data hingga $>98\%$.
+    \item \textbf{Penyimpanan Lokal dan Forwarding (\textit{Store-and-Forward / Offline Buffering}):} Saat jaringan internet terputus, gateway menyimpan rekaman telemetri ke dalam basis data lokal (SQLite atau RocksDB). Begitu sambungan pulih, sinkronisasi otomatis dijalankan tanpa kehilangan satu data pun.
+    \item \textbf{Lingkar Kendali Otonom (\textit{Local Autonomous Control Loop}):} Logika penanganan insiden dieksekusi secara lokal tanpa bergantung pada ketersediaan koneksi internet.
+\end{itemize}
+
+\subsection*{1.2 Komparasi Karakteristik: MCU (ESP32) vs SBC (Raspberry Pi)}
+Dalam merancang arsitektur sistem IoT, mahasiswa wajib menentukan pemisahan tugas secara tegas antara mikrokontroler (\textit{End Node}) dan komputer papan tunggal (\textit{Edge Gateway}):
+
+{\small
+\begin{longtable}{|L{2.8cm}|L{6.6cm}|L{6.6cm}|}
+\hline
+\rowcolor{uniblight}
+\textbf{Karakteristik} & \textbf{Microcontroller Unit (MCU) --- mis. ESP32} & \textbf{Single Board Computer (SBC) --- mis. Raspberry Pi 4/5} \\
+\hline
+\endfirsthead
+\hline
+\rowcolor{uniblight}
+\textbf{Karakteristik} & \textbf{Microcontroller Unit (MCU) --- mis. ESP32} & \textbf{Single Board Computer (SBC) --- mis. Raspberry Pi 4/5} \\
+\hline
+\endhead
+\textbf{Arsitektur \& Frekuensi CPU} & Dual-Core 32-bit Xtensa LX6/LX7 @ $240\text{ MHz}$ atau RISC-V. & Quad-Core 64-bit ARM Cortex-A72 / A76 @ $1{,}8\text{--}2{,}4\text{ GHz}$. \\
+\hline
+\textbf{Kapasitas Memori (RAM)} & $520\text{ KB}$ SRAM internal (opsi PSRAM eksternal s.d. $8\text{ MB}$). & $2\text{ GB}$, $4\text{ GB}$, atau $8\text{ GB}$ LPDDR4X SDRAM. \\
+\hline
+\textbf{Media Penyimpanan} & SPI Flash internal ($4\text{--}16\text{ MB}$), partisi NVS / LittleFS. & Kartu MicroSD (UHS-I) atau SSD NVMe via antarmuka PCIe M.2 ($32\text{ GB}\text{--}1\text{ TB}$). \\
+\hline
+\textbf{Sistem Operasi} & \textit{Bare-metal} atau RTOS deterministik (\textbf{FreeRTOS}). & Sistem Operasi Lengkap POSIX (\textbf{Linux Debian / Raspberry Pi OS}). \\
+\hline
+\textbf{Konsumsi Daya} & Sangat rendah ($15\text{--}100\text{ mA}$ aktif, \textbf{$10\text{ }\mu\text{A}$ Deep Sleep}). Ideal untuk baterai/panel surya. & Relatif tinggi ($500\text{ mA}\text{--}3{,}0\text{ A}$ @ $5\text{ V}$, $5\text{--}15\text{ W}$). Wajib catu daya konstan / adaptor. \\
+\hline
+\textbf{Karakteristik Eksekusi} & Deterministik waktu-nyata (\textit{hard/firm real-time}), kontrol sinyal mikrodetik. & Berbagi waktu komputasi (\textit{time-sharing}), \textit{soft real-time}, cocok untuk beban kerja tinggi. \\
+\hline
+\textbf{Ekosistem Perangkat Lunak} & Kompilasi binari langsung (C/C++), keterbatasan memori dinamis. & Python, Node.js, Go, Docker, basis data relasional/NoSQL, pustaka Machine Learning (TFLite). \\
+\hline
+\textbf{Peran Ideal dalam IoT} & \textbf{Simpul Sensor / Aktuator:} Akuisisi analog fisik, pembacaan register bus I2C/SPI, kendali PWM motor. & \textbf{Edge Gateway / Server Lapangan:} Agregator multi-node, database cache, broker pesan lokal, API gateway. \\
+\hline
+\end{longtable}
+}
+
+\subsection*{1.3 Administrasi Sistem Linux Tersemat (Raspberry Pi OS Headless)}
+Di lapangan nyata, perangkat gateway dipasang di dalam panel boks industri tertutup pada tiang sensor atau ruang panel distribusi listrik, tanpa monitor dan keyboard. Kondisi ini disebut pengoperasian \textbf{\textit{headless}}.
+
+Langkah pengamanan dan administrasi standar industri meliputi:
+\begin{enumerate}
+    \item \textbf{Akses Berbasis Kunci Kriptografi (SSH Key Pair):} Akses via kata sandi teks dilarang. Otentikasi menggunakan algoritma kurva eliptis modern \texttt{Ed25519}:
+    \begin{lstlisting}[style=iotcode, language=bash]
+# Di komputer pengembang (laptop): generate key pair
+ssh-keygen -t ed25519 -C "admin-iot@unib.ac.id"
+# Salin kunci publik ke Raspberry Pi Gateway
+ssh-copy-id -i ~/.ssh/id_ed25519.pub pi@192.168.1.50
+    \end{lstlisting}
+    \item \textbf{Pengerasan Konfigurasi SSH (\texttt{/etc/ssh/sshd\_config}):} Non-aktifkan autentikasi password (\texttt{PasswordAuthentication no}) dan non-aktifkan login akun root secara langsung (\texttt{PermitRootLogin no}).
+    \item \textbf{Manajemen Firewall Host (\texttt{ufw}):} Hanya port layanan yang digunakan yang diizinkan menerima paket masuk (\textit{incoming traffic}):
+    \begin{lstlisting}[style=iotcode, language=bash]
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+sudo ufw allow 22/tcp       # Akses SSH Administrasi
+sudo ufw allow 1883/tcp     # Local MQTT Broker (jika ada)
+sudo ufw enable
+    \end{lstlisting}
+\end{enumerate}
+
+% ============================================================================
+% BAGIAN 2: KOMUNIKASI SERIAL DAN PEMROGRAMAN GATEWAY PYTHON
+% ============================================================================
+\secbanner{BAGIAN 2}{KOMUNIKASI SERIAL DAN PEMROGRAMAN GATEWAY PYTHON}
+
+\subsection*{2.1 Antarmuka Fisik ESP32 ke Raspberry Pi via Serial UART}
+Terdapat dua mekanisme standar menghubungkan simpul mikrokontroler ke gateway SBC:
+\begin{enumerate}
+    \item \textbf{Koneksi USB CDC / USB-to-UART Bridge (Paling Andal):} Menghubungkan port micro-USB/USB-C ESP32 ke port USB Host Raspberry Pi. Kernel Linux mengenali chip konverter (CP2102, CH340, atau FTDI) secara instan sebagai peranti serial virtual: \texttt{/dev/ttyUSB0} atau \texttt{/dev/ttyACM0}. Metode ini memberikan isolasi sinyal yang baik dan proteksi arus berlebih.
+    \item \textbf{Koneksi Pin Header GPIO UART Langsung:} Menghubungkan pin TX (GPIO 1) ESP32 ke RX (GPIO 15 / Pin 10) Raspberry Pi, dan RX (GPIO 3) ESP32 ke TX (GPIO 14 / Pin 8) Raspberry Pi. \textbf{Syarat mutlak:} Pin \textbf{GND kedua perangkat wajib disatukan} (\textit{Common Ground}). Karena keduanya beroperasi pada logika tegangan $3{,}3\text{ V}$ CMOS, jalur data aman tanpa memerlukan IC penggeser level tegangan (\textit{logic level shifter}).
+\end{enumerate}
+
+\subsection*{2.2 Framing dan Penanganan Aliran Data Serial}
+Komunikasi serial asinkron adalah aliran byte mentah berkelanjutan (\textit{unbounded byte stream}). Berbeda dengan paket TCP yang memiliki batas bingkai, port serial tidak memiliki mekanisme bawaan untuk membedakan awal dan akhir dari suatu pesan data. Oleh karena itu, pengembang wajib merancang protokol pembingkaian (\textbf{\textit{framing}}):
+\begin{itemize}
+    \item \textbf{\textit{Delimiter-based Framing}}: Setiap paket data diakhiri oleh karakter pembatas khusus, standar paling umum adalah karakter ASCII \textit{Newline} (\texttt{\textbackslash n} atau \texttt{0x0A}).
+    \item Firmware ESP32 memanggil \texttt{Serial.println(payload)} yang secara otomatis menambahkan karakter \texttt{\textbackslash r\textbackslash n}.
+    \item Pada sisi gateway Python, metode \texttt{ser.readline()} akan memblokir pembacaan hingga karakter pembatas terdeteksi atau batas waktu (\textit{timeout}) tercapai.
+\end{itemize}
+
+\subsection*{2.3 Implementasi Gateway Ingestion Berbasis Python}
+Berikut adalah implementasi modular skrip penerima serial gateway (\texttt{gateway\_service.py}) yang dilengkapi penanganan pengecualian dan pemulihan otomatis:
+
+\begin{lstlisting}[style=iotcode, language=Python, caption={Skrip Layanan Edge Gateway Berkelanjutan (gateway\_service.py)}]
+import serial
+import json
+import time
+import sys
+
+SERIAL_PORT = "/dev/ttyUSB0"
+BAUD_RATE = 115200
+RETRY_DELAY_SEC = 5
+
+def init_serial_connection(port, baudrate):
+    """Membuka koneksi serial dengan mekanisme retry tak terhingga."""
+    while True:
+        try:
+            ser = serial.Serial(port=port, baudrate=baudrate, timeout=2.0)
+            ser.reset_input_buffer()
+            print(f"[GATEWAY] Berhasil terhubung ke port {port} @ {baudrate} bps.")
+            return ser
+        except serial.SerialException as err:
+            print(f"[WARN] Port {port} tidak tersedia ({err}). Menunggu {RETRY_DELAY_SEC} dtk...")
+            time.sleep(RETRY_DELAY_SEC)
+
+def process_telemetry(raw_line):
+    """Memvalidasi integritas pesan JSON dan mengekstrak field telemetri."""
+    try:
+        data = json.loads(raw_line)
+        # Verifikasi field wajib
+        required_fields = ["node_id", "timestamp", "temp", "hum"]
+        if not all(field in data for field in required_fields):
+            print(f"[REJECT] Field telemetri tidak lengkap: {raw_line}")
+            return None
+        return data
+    except json.JSONDecodeError as err:
+        print(f"[ERROR] Bingkai data korup / bukan format JSON valid: {err}")
+        return None
+
+def main():
+    ser = init_serial_connection(SERIAL_PORT, BAUD_RATE)
+    while True:
+        try:
+            if ser.in_waiting > 0:
+                raw_bytes = ser.readline()
+                line = raw_bytes.decode('utf-8', errors='ignore').strip()
+                if not line:
+                    continue
+                
+                payload = process_telemetry(line)
+                if payload:
+                    print(f"[INGEST] Node: {payload['node_id']} | Temp: {payload['temp']:.2f} C | "
+                          f"Hum: {payload['hum']:.1f}% | Bat: {payload.get('battery', 0.0):.2f} V")
+                    # Tahap selanjutnya: kompresi ke CBOR/Protobuf dan simpan ke buffer lokal
+            time.sleep(0.01) # Mencegah 100% konsumsi CPU core
+        except serial.SerialException:
+            print("[CRIT] Sambungan serial terputus secara mendadak! Memulai inisialisasi ulang...")
+            ser.close()
+            ser = init_serial_connection(SERIAL_PORT, BAUD_RATE)
+        except KeyboardInterrupt:
+            print("[INFO] Mematikan layanan gateway...")
+            ser.close()
+            sys.exit(0)
+
+if __name__ == "__main__":
+    main()
+\end{lstlisting}
+
+\subsection*{2.4 Otomasi Layanan Latar Belakang Menggunakan \texttt{systemd}}
+Agar skrip gateway berjalan otomatis sejak sistem operasi Linux menyala (\textit{boot}), tahan terhadap kegagalan (\textit{crash auto-restart}), dan tercatat pada jurnal log sistem, layanan didaftarkan ke \textbf{\texttt{systemd}}.
+
+File definisi unit disimpan di \texttt{/etc/systemd/system/iot-gateway.service}:
+\begin{lstlisting}[style=iotcode]
+[Unit]
+Description=UNIB IoT Edge Gateway Daemon
+After=network.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/opt/iot-gateway
+ExecStart=/opt/iot-gateway/venv/bin/python3 -u gateway_service.py
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target
+\end{lstlisting}
+
+Perintah manajemen operasional:
+\begin{lstlisting}[style=iotcode, language=bash]
+sudo systemctl daemon-reload               # Muat ulang konfigurasi unit
+sudo systemctl enable iot-gateway.service  # Aktifkan auto-start saat booting
+sudo systemctl start iot-gateway.service   # Jalankan layanan sekarang
+sudo systemctl status iot-gateway.service  # Periksa status aktifitas proses
+journalctl -u iot-gateway.service -f       # Pantau log aliran data secara real-time
+\end{lstlisting}
+
+% ============================================================================
+% BAGIAN 3: FORMAT SERIALISASI DATA IOT (JSON VS CBOR VS PROTOBUF)
+% ============================================================================
+\secbanner{BAGIAN 3}{FORMAT SERIALISASI DATA IOT: JSON VS CBOR VS PROTOBUF}
+
+\subsection*{3.1 Definisi dan Relevansi Serialisasi Data pada Sistem Terbatas}
+\textbf{Serialisasi} adalah proses komputasi yang menerjemahkan struktur objek data dalam memori program (misalnya struktur \textit{dictionary} pada Python atau \textit{struct} pada C++) menjadi serangkaian byte linear (\textit{byte array}) agar dapat dialirkan melalui kanal transmisi komunikasi nirkabel atau disimpan pada media penyimpanan fisik. Kebalikannya, \textbf{deserialisasi} merekonstruksi serangkaian byte tersebut kembali menjadi objek program yang dapat dimanipulasi oleh aplikasi.
+
+Pada komputasi awan konvensional, bandwidth jaringan sangat melimpah ($>100\text{ Mbps}$) dan catu daya tidak menjadi kendala. Namun, pada ranah IoT:
+\begin{itemize}
+    \item \textbf{Paket Data Seluler LPWAN/NB-IoT:} Ditagih per kilobyte dengan batas transmisi harian yang ketat.
+    \item \textbf{LoRaWAN Max Payload Size:} Pada kecepatan data terendah (SF12), ukuran muatan maksimum (\textit{Maximum Payload}) hanya sebesar \textbf{51 byte}! Format JSON yang panjangnya $>100\text{ byte}$ akan terfragmentasi menjadi beberapa paket transmisi, melanggar batas regulasi \textit{duty cycle} $1\%$.
+    \item \textbf{Konsumsi Energi Transmisi Radio:} Waktu aktif pemancar radio RF berbanding lurus dengan jumlah byte yang dikirim:
+    \begin{equation}
+        E_{\text{tx}} = P_{\text{radio}} \times T_{\text{tx}} = P_{\text{radio}} \times \left(\frac{N_{\text{bytes}} \times 8}{R_{\text{data}}}\right)
+    \end{equation}
+    di mana $E_{\text{tx}}$ adalah energi transmisi (Joule), $P_{\text{radio}}$ daya aktif radio (Watt), $N_{\text{bytes}}$ jumlah byte payload, dan $R_{\text{data}}$ laju data transmisi (bps). Memangkas $N_{\text{bytes}}$ secara drastis memperpanjang umur baterai simpul sensor.
+\end{itemize}
+
+\subsection*{3.2 Analisis Tiga Paradigma Format Serialisasi}
+
+\subsubsection*{1. JSON (JavaScript Object Notation --- RFC 8259)}
+Format serialisasi berbasis teks murni yang paling populer di dunia rekayasa perangkat lunak web dan RESTful API.
+\begin{itemize}
+    \item \textbf{Kelebihan:} \textit{Human-readable} (mudah diinspeksi oleh mata manusia tanpa perkakas khusus), fleksibel (\textit{schema-less}), pustaka pengurai tersedia di hampir seluruh bahasa pemrograman.
+    \item \textbf{Kelemahan:} Sangat boros bandwidth (\textit{overhead} tinggi). Nama kunci (\textit{field keys}) seperti \texttt{"temperature"} diulang pada setiap paket pengiriman data. Angka riil (\textit{float}) disimpan sebagai deretan karakter ASCII (misal \texttt{28.75} membutuhkan 5 byte alih-alih 4 byte float IEEE 754). Diperlukan parsing string intensif yang memakan siklus CPU.
+\end{itemize}
+
+\subsubsection*{2. CBOR (Concise Binary Object Representation --- RFC 8949)}
+Standar resmi IETF yang dirancang khusus untuk lingkungan jaringan terbatas (\textit{Constrained RESTful Environments} - CoRE).
+\begin{itemize}
+    \item \textbf{Kelebihan:} Model data setara JSON secara konseptual, namun dikodekan dalam format biner kompak \textbf{Type-Length-Value (TLV)}. Bilangan bulat kecil ($0\text{--}23$) dikemas dalam 1 byte tunggal yang menyatukan tipe dan nilainya. Tidak memerlukan file definisi skema di luar paket (\textit{self-describing}).
+    \item \textbf{Kelemahan:} Nama atribut teks masih disertakan dalam paket biner (meskipun dapat disingkat secara manual), sehingga penghematannya masih di bawah Protobuf.
+\end{itemize}
+
+\subsubsection*{3. Protocol Buffers (Protobuf v3 --- Standar Google)}
+Format serialisasi biner berorientasi skema (\textbf{\textit{schema-based binary}}).
+\begin{itemize}
+    \item \textbf{Kelebihan:} \textbf{Nama field tidak pernah dikirimkan melalui jaringan!} Pengembang mendefinisikan kontrak skema pada file \texttt{.proto}. Variabel diidentifikasi oleh nomor \textbf{tag unik} ($1, 2, 3,\dots$). Menggunakan teknik pengkodean \textbf{Varint} (\textit{Variable-length Quantity}) di mana integer bernilai kecil hanya memakai 1 byte. Menghasilkan ukuran muatan terkecil dan kecepatan penguraian tertinggi.
+    \item \textbf{Kelemahan:} Paket biner mentah mustahil dibaca tanpa file skema \texttt{.proto}. Memerlukan langkah kompilasi skema (\texttt{protoc}) pada alur pengembangan.
+\end{itemize}
+
+\subsection*{3.3 Komparasi Kuantitatif dan Studi Efisiensi}
+Misalkan sebuah stasiun cuaca mengirimkan paket data telemetri dengan 7 field parameter lingkungan:
+
+\begin{lstlisting}[style=iotcode, caption={Skema Protocol Buffers untuk Telemetri Lingkungan (telemetry.proto)}]
+syntax = "proto3";
+
+message TelemetryData {
+  string node_id = 1;
+  uint64 timestamp = 2;
+  float temp = 3;
+  float hum = 4;
+  uint32 lux = 5;
+  float battery = 6;
+  string status = 7;
+}
+\end{lstlisting}
+
+{\small
+\begin{longtable}{|L{3.2cm}|C{2.6cm}|C{2.6cm}|C{2.6cm}|L{4.2cm}|}
+\hline
+\rowcolor{uniblight}
+\textbf{Parameter Uji} & \textbf{JSON (Teks)} & \textbf{CBOR (RFC 8949)} & \textbf{Protobuf (v3)} & \textbf{Analisis Keputusan Rekayasa} \\
+\hline
+\endfirsthead
+\hline
+\rowcolor{uniblight}
+\textbf{Parameter Uji} & \textbf{JSON (Teks)} & \textbf{CBOR (RFC 8949)} & \textbf{Protobuf (v3)} & \textbf{Analisis Keputusan Rekayasa} \\
+\hline
+\endhead
+\textbf{Ukuran Muatan (Byte)} & \textbf{132 Byte} & \textbf{98 Byte} & \textbf{41 Byte} & Protobuf memangkas \textbf{68,9\%} ukuran data dibanding JSON. \\
+\hline
+\textbf{Kebutuhan File Skema} & Tidak Ada & Tidak Ada & \textbf{Wajib (\texttt{.proto})} & JSON \& CBOR unggul dalam fleksibilitas perubahan field dinamis. \\
+\hline
+\textbf{Dukungan LoRaWAN SF12} & \textbf{Gagal} ($>51\text{ B}$) & \textbf{Gagal} ($>51\text{ B}$) & \textbf{Lolos} ($41\text{ B} < 51\text{ B}$) & Hanya Protobuf yang muat dalam 1 paket transmisi radio terlemah! \\
+\hline
+\textbf{Konsumsi Data 1 Bulan} (Kirim tiap 10 detik) & \textbf{34,22 Megabyte} & \textbf{25,40 Megabyte} & \textbf{10,63 Megabyte} & Penghematan kuota seluler prabayar sebesar $\sim 23{,}6\text{ MB/bulan/node}$. \\
+\hline
+\textbf{Kecepatan Deserialisasi} & Lambat & Cepat & \textbf{Sangat Cepat} & Protobuf tidak membebani pemroses gateway. \\
+\hline
+\end{longtable}
+}
+
+% ============================================================================
+% BAGIAN 4: KONTAINERISASI EDGE DENGAN DOCKER & DOCKER COMPOSE
+% ============================================================================
+\secbanner{BAGIAN 4}{KONTAINERISASI EDGE DENGAN DOCKER DAN DOCKER COMPOSE}
+
+\subsection*{4.1 Konsep Kontainerisasi di Perangkat Edge}
+Menginstal paket dependensi secara langsung di sistem operasi host (\textit{bare-metal installation}) pada armada gateway lapangan menimbulkan masalah pemeliharaan yang berat:
+\begin{itemize}
+    \item \textbf{\textit{Dependency Hell}:} Konflik versi pustaka (misalnya satu layanan membutuhkan pustaka C versi lama, sementara layanan lain membutuhkan versi terbaru).
+    \item \textbf{Ketidakseragaman Lingkungan (\textit{Environment Drift}):} Gateway yang dipasang pada bulan Januari memiliki dependensi sistem yang berbeda dengan gateway yang dipasang pada bulan Oktober.
+    \item \textbf{Risiko Kerusakan Sistem Saat Pembaruan:} Jika proses \texttt{apt upgrade} gagal di tengah jalan akibat listrik padam, sistem operasi gateway dapat mengalami \textit{corrupted boot}.
+\end{itemize}
+
+\textbf{Docker} mengisolasi aplikasi beserta seluruh dependensi pustaka, konfigurasi lingkungan, dan interpreter ke dalam sebuah citra (\textbf{\textit{container image}}) yang bersifat \textit{immutable} dan portabel. Kontainer berbagi kernel Linux dengan host tanpa overhead hypervisor mesin virtual (\textit{Virtual Machine}), sehingga tetap hemat RAM dan CPU saat berjalan di Raspberry Pi.
+
+\subsection*{4.2 Pembuatan Dockerfile untuk Gateway Service}
+Berikut adalah \texttt{Dockerfile} berbasis citra resmi Python Alpine/Slim yang dirancang khusus untuk arsitektur ARM perangkat edge:
+
+\begin{lstlisting}[style=iotcode, caption={Dockerfile untuk Edge Gateway Service (Dockerfile)}]
+FROM python:3.11-slim
+
+# Pasang dependensi kompilator C untuk pustaka serial jika diperlukan
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gcc \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+# Manfaatkan caching layer Docker untuk file requirements
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Salin kode aplikasi
+COPY gateway_service.py .
+COPY telemetry_pb2.py .
+
+# Akses grup dialout untuk membaca port serial fisik
+RUN usermod -a -G dialout root
+
+CMD ["python", "-u", "gateway_service.py"]
+\end{lstlisting}
+
+\subsection*{4.3 Orkestrasi Multi-Layanan Edge via Docker Compose}
+Arsitektur edge gateway industri modern terdiri dari beberapa layanan yang saling berkolaborasi: (1) Layanan Ingestion Serial, (2) Broker Pesan MQTT Lokal, dan (3) Basis Data Runtun Waktu Lokal untuk \textit{buffering}.
+
+\begin{lstlisting}[style=iotcode, caption={Orkestrasi Multi-Service Gateway (docker-compose.yml)}]
+version: '3.8'
+
+services:
+  # Layanan 1: Ingestion Serial dan Konversi Data
+  gateway-bridge:
+    build: .
+    container_name: unib_gateway_bridge
+    restart: unless-stopped
+    devices:
+      - "/dev/ttyUSB0:/dev/ttyUSB0"   # Pass-through port serial fisik ke dalam kontainer
+    environment:
+      - SERIAL_PORT=/dev/ttyUSB0
+      - MQTT_HOST=local-broker
+      - MQTT_PORT=1883
+    depends_on:
+      - local-broker
+    volumes:
+      - buffer-data:/app/data
+
+  # Layanan 2: Broker MQTT Lokal (Eclipse Mosquitto)
+  local-broker:
+    image: eclipse-mosquitto:2.0
+    container_name: unib_local_broker
+    restart: unless-stopped
+    ports:
+      - "1883:1883"
+    volumes:
+      - ./mosquitto.conf:/mosquitto/config/mosquitto.conf
+      - mosquitto-data:/mosquitto/data
+
+volumes:
+  buffer-data:
+  mosquitto-data:
+\end{lstlisting}
+
+% ============================================================================
+% BAGIAN 5: STUDI KASUS C - SMART CAMPUS UNIB & OFFLINE BUFFERING
+% ============================================================================
+\secbanner{BAGIAN 5}{STUDI KASUS C: SMART CAMPUS UNIB \& OFFLINE BUFFERING}
+
+\casebox{Studi Kasus Kontekstual C: Pemantauan Energi \& Okupansi Gedung Kuliah Bersama (GKB) UNIB}{
+\textbf{Deskripsi Permasalahan Lapangan:}\\
+Gedung Kuliah Bersama Fakultas Teknik Universitas Bengkulu terdiri atas 24 ruang kelas dan laboratorium. Universitas mencanangkan program efisiensi energi untuk mendeteksi pemborosan listrik (pendingin ruangan AC menyala pada ruang kelas yang kosong). Setiap ruang dipasangi satu unit sensor meteran daya listrik (\textbf{PZEM-004T}) dan sensor gerak inframerah (\textbf{PIR}) berbasis mikrokontroler ESP32.\\
+
+\textbf{Tantangan Infrastruktur Jaringan:}\\
+Infrastruktur jaringan nirkabel kampus mengalami lonjakan kepadatan trafik (\textit{traffic peak}) dan interferensi saluran saat jam sibuk perkuliahan (08.00--16.00 WIB). Kerap terjadi \textit{packet drop} dan pemutusan koneksi internet (\textit{ISP downtime}) berdurasi 15 menit hingga 2 jam.\\
+
+\textbf{Solusi Rekayasa Edge Gateway:}\\
+Alih-alih mengirimkan 24 data per detik secara langsung ke server cloud, di setiap lantai gedung dipasang 1 unit Raspberry Pi 4 sebagai \textit{Edge Gateway}:
+\begin{enumerate}
+    \item \textbf{Edge Agregasi:} Gateway mengumpulkan data PZEM per detik ($1\text{ Hz}$), menghitung daya aktif rata-rata ($P_{\text{avg}}$), faktor daya ($PF$), dan status okupansi selama jendela waktu 1 menit. Hanya 1 data ringkasan per menit yang dikirim ke cloud. Reduksi trafik: $\frac{60 - 1}{60} = \mathbf{98{,}33\%}$.
+    \item \textbf{Offline Store-and-Forward:} Ketika koneksi internet kampus terputus, modul gateway mengaktifkan mode luring. Data telemetri ditulis ke basis data lokal \textbf{SQLite} (\texttt{telemetry\_buffer.db}).
+    \item \textbf{Sinkronisasi Otomatis (\textit{Auto-Reconnection}):} Pustaka sinkronisasi memantau konektivitas cloud via \textit{heartbeat ping}. Saat internet pulih, antrean data SQLite dikirim secara bertahap (\textit{rate-limited batch transmission}) agar tidak membanjiri antrean server cloud, lalu baris data yang sukses terkirim dihapus dari memori lokal.
+\end{enumerate}
+}
+
+% ============================================================================
+% BAGIAN 6: PANDUAN MILESTONE 1 (M1) PROPOSAL PROYEK PJBL
+% ============================================================================
+\secbanner{BAGIAN 6}{PANDUAN MILESTONE 1 (M1) PROPOSAL PROYEK PJBL}
+
+\subsection*{6.1 Ketentuan Umum dan Sistematika Dokumen Proposal (Bobot: 5\% NA)}
+Milestone 1 adalah pintu gerbang dimulainya fase eksekusi rekayasa proyek terpadu kelompok (3--4 mahasiswa). Proposal wajib disusun dengan sistematika berikut (maksimal 10 halaman A4):
+\begin{enumerate}
+    \item \textbf{Latar Belakang Masalah \& Pemangku Kepentingan:} Analisis masalah riil konteks Bengkulu (Kasus A s.d. G) atau kemitraan nyata yang disetujui dosen pembina.
+    \item \textbf{Analisis Kebutuhan Sistem:} Perumusan Kebutuhan Fungsional (\textit{Functional Requirements} - FR) dan Kebutuhan Non-Fungsional (\textit{Non-Functional Requirements} - NFR) yang spesifik dan terukur.
+    \item \textbf{Rancangan Arsitektur Sistem Berlapis:} Diagram arsitektur 4-lapisan terpadu (\textit{Perangkat Sensor, Edge Gateway, Cloud/Platform, dan Aplikasi Visualisasi Pengguna}).
+    \item \textbf{Matriks Keputusan Berbobot (\textit{Weighted Decision Matrix}):} Justifikasi pemilihan mikrokontroler (ESP32 vs STM32), pemilihan komputer gateway (Raspberry Pi vs Orange Pi vs IPC), dan pemilihan protokol data (MQTT vs CoAP vs HTTP) berbasis data kuantitatif lembar data (\textit{datasheet}).
+    \item \textbf{Rencana Model Data \& Basis Data:} Desain struktur telemetri, metadata, dan pemilihan basis data runtun waktu (\textit{Time-series DB}).
+    \item \textbf{Analisis Keamanan Awal:} Identifikasi aset bernilai, pemodelan ancaman dasar (spoofing, tampering), dan kepatuhan privasi (UU PDP No. 27/2022).
+    \item \textbf{Bill of Materials (BoM) \& Rencana Anggaran:} Daftar komponen perangkat keras nyata, tautan toko penyedia, dan estimasi biaya per unit prototipe.
+    \item \textbf{Rencana Kerja Tim (Gantt Chart) \& Pembagian Peran:} Pembagian 4 peran rotasional (*Firmware Engineer, Backend/Data Engineer, Security/DevOps Engineer, Frontend/PM*).
+\end{enumerate}
+
+\subsection*{6.2 Pelaksanaan Sesi Pitching Proposal (Minggu 4)}
+Setiap kelompok mempresentasikan ide rancangan proyek selama \textbf{7 menit} di depan kelas, diikuti \textbf{3 menit} sesi tanya jawab kritis oleh dosen pengampu dan audiens mahasiswa lain. Penilaian berpedoman penuh pada \textbf{Rubrik R-M1}.
+
+% ============================================================================
+% BAGIAN 7: SOAL LATIHAN TERSTRUKTUR (C1 - C6) DENGAN RUBRIK
+% ============================================================================
+\secbanner{BAGIAN 7}{SOAL LATIHAN TERSTRUKTUR (C1 -- C6) DENGAN RUBRIK}
+
+Kerjakan seluruh soal di bawah ini secara mandiri pada lembar kerja terpisah sebagai persiapan evaluasi formatif Minggu 4:
+
+\begin{enumerate}
+    \item \textbf{[C1 --- Mengingat] Bobot Skor: 10}\\
+    Sebutkan dan jelaskan secara singkat tiga fungsi esensial dari sebuah \textit{Edge Gateway} yang membedakannya secara fungsional dari sekadar mikrokontroler sensor \textit{end-node}!
+
+    \item \textbf{[C2 --- Memahami] Bobot Skor: 15}\\
+    Jelaskan prinsip kerja pengkodean \textbf{\textit{Varint}} pada Protocol Buffers (Protobuf)! Mengapa bilangan integer bernilai 15 hanya membutuhkan 1 byte dalam format Protobuf, sedangkan dalam format biner standar 32-bit integer membutuhkan 4 byte, dan dalam format JSON teks \texttt{"15"} membutuhkan 2 byte?
+
+    \item \textbf{[C3 --- Mengaplikasikan] Bobot Skor: 20}\\
+    Sebuah tim proyek membangun simpul pemantau kualitas air tambak udang di Pantai Panjang Bengkulu. Node mengirimkan parameter: (1) \texttt{node\_id} (string), (2) \texttt{timestamp} (unsigned integer 64-bit epoch), (3) \texttt{ph} (float), (4) \texttt{salinitas} (float dalam satuan ppt), (5) \texttt{suhu} (float), dan (6) \texttt{oksigen\_terlarut} (float dalam mg/L).\\
+    \textbf{Tugas Anda:} Tuliskan definisi skema lengkap file \texttt{tambak.proto} menggunakan sintaks \texttt{proto3} dengan penetapan nomor tag variabel yang efisien!
+
+    \item \textbf{[C4 --- Menganalisis] Bobot Skor: 20}\\
+    Pada stasiun pemantau getaran jembatan elevated Outer Ring Road Nakau--Air Sebakul Bengkulu, sensor akselerometer mengambil sampel getaran pada frekuensi $100\text{ Hz}$ (100 sampel per detik). Setiap sampel terdiri atas sumbu X, Y, Z (masing-masing float 4-byte) dan stempel waktu (8-byte). Bandingkan secara kuantitatif:
+    \begin{enumerate}[label=(\alph*)]
+        \item Total volume data harian (dalam Megabyte) jika seluruh sampel mentah dikirim langsung ke cloud menggunakan payload JSON (asumsikan ukuran rata-rata paket JSON adalah 95 byte).
+        \item Total volume data harian jika Raspberry Pi Edge Gateway melakukan pengolahan lokal \textit{Fast Fourier Transform} (FFT) dan hanya mengirimkan frekuensi dominan dan amplitudo puncak setiap 10 detik sekali dalam format Protobuf (ukuran paket 35 byte).
+        \item Hitung persentase penghematan kuota data seluler yang dicapai oleh implementasi gateway tersebut!
+    \end{enumerate}
+
+    \item \textbf{[C5 --- Mengevaluasi] Bobot Skor: 15}\\
+    Sebuah kelompok mahasiswa mengusulkan penggunaan format JSON murni di atas protokol HTTP POST langsung dari simpul mikrokontroler bertenaga baterai kancing CR2032 (kapasitas $220\text{ mAh}$) yang diletakkan di tengah hutan lindung Bukit Daun Rejang Lebong untuk mendeteksi suara gergaji mesin (\textit{illegal logging}).\\
+    \textbf{Tugas Anda:} Evaluasilah keputusan arsitektur kelompok tersebut! Tinjau kelayakannya berdasarkan: (1) masa pakai baterai (\textit{battery lifetime}), (2) keandalan transmisi di area blank-spot sinyal, dan (3) overhead protokol. Berikan rekomendasi arsitektur perbaikan yang lebih realistis dan ilmiah!
+
+    \item \textbf{[C6 --- Merancang] Bobot Skor: 20}\\
+    Rancanglah sebuah arsitektur file \texttt{docker-compose.yml} tingkat produksi untuk sebuah \textit{Edge Gateway} di Stasiun Cuaca BMKG Bengkulu. Konfigurasi tersebut wajib memuat minimal 3 layanan terisolasi:
+    \begin{enumerate}[label=(\alph*)]
+        \item Layanan \texttt{serial-receiver} (berbasis Python) yang membaca peranti \texttt{/dev/ttyUSB0}.
+        \item Layanan \texttt{local-broker} (Eclipse Mosquitto) untuk mendistribusikan data ke aplikasi lokal lain.
+        \item Layanan \texttt{local-cache} (SQLite atau InfluxDB) dengan \textit{named volume} persisten agar rekaman telemetri tidak hilang saat listrik padam atau kontainer di-restart.
+    \end{enumerate}
+    Sertakan kebijakan restart otomatis (\texttt{restart: unless-stopped}) dan isolasi jaringan internal Docker!
+\end{enumerate}
+
+\end{document}
