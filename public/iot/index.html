@@ -14,6 +14,7 @@
   </script>
   <title>Teknologi Internet of Things (IoT) — Portal Kuliah S1 Informatika FT UNIB</title>
   <meta name="description" content="Portal resmi perkuliahan Teknologi Internet of Things (IoT) berbasis OBE, PjBL, dan CBL — Program Studi S1 Informatika, Fakultas Teknik, Universitas Bengkulu.">
+  <base href="/iot/">
   <style>
     :root {
       color-scheme: light dark;
@@ -285,6 +286,17 @@
 
     .btn-secondary:hover {
       filter: brightness(0.97);
+    }
+
+    .btn-download {
+      background-color: #1e6f50;
+      color: #ffffff !important;
+      border-color: #1e6f50;
+    }
+
+    .btn-download:hover {
+      filter: brightness(1.15);
+      color: #ffffff !important;
     }
 
     .btn-sm {
@@ -786,13 +798,16 @@
           Berfokus pada rekayasa <strong>End-to-End IoT Software Stack</strong>: pemrograman <em>firmware</em> ESP32 &amp; <em>edge gateway</em> Raspberry Pi, protokol MQTT/CoAP/HTTP/WebSocket, RESTful API, basis data <em>time-series</em>, keamanan TLS/STRIDE/UU PDP, serta <em>dashboard</em> analitik melalui proyek kontekstual Provinsi Bengkulu.
         </p>
         <div class="hero-actions">
-          <button type="button" class="btn btn-gold" data-preview-pdf="./RPS_Teknologi_IoT_Informatika_UNIB.pdf" data-preview-title="RPS Teknologi IoT — S1 Informatika FT UNIB">
-            📄 Pratinjau RPS (PDF)
-          </button>
-          <a class="btn btn-hero-outline" href="./RPS_Teknologi_IoT_Informatika_UNIB.pdf" target="_blank" rel="noopener">
-            ↗ Buka RPS Tab Baru
+          <a class="btn btn-gold" href="/iot/RPS_Teknologi_IoT_Informatika_UNIB.pdf" download="RPS_Teknologi_IoT_Informatika_UNIB.pdf">
+            ⬇ Unduh RPS (PDF)
           </a>
-          <a class="btn btn-hero-outline" href="./RPS_Teknologi_IoT_Informatika_UNIB.docx" download>
+          <button type="button" class="btn btn-hero-outline" data-preview-pdf="/iot/RPS_Teknologi_IoT_Informatika_UNIB.pdf" data-preview-title="RPS Teknologi IoT — S1 Informatika FT UNIB">
+            📄 Pratinjau RPS
+          </button>
+          <a class="btn btn-hero-outline" href="/iot/RPS_Teknologi_IoT_Informatika_UNIB.pdf" target="_blank" rel="noopener">
+            ↗ Buka Tab Baru
+          </a>
+          <a class="btn btn-hero-outline" href="/iot/RPS_Teknologi_IoT_Informatika_UNIB.docx" download="RPS_Teknologi_IoT_Informatika_UNIB.docx">
             ⬇ Unduh RPS (.docx)
           </a>
         </div>
@@ -802,7 +817,7 @@
         <h2>Ringkasan Eksekutif Mata Kuliah</h2>
         <div class="stat-grid">
           <div class="stat-item">
-            <strong>3 / 16</strong>
+            <strong>4 / 16</strong>
             <span>Minggu Materi Siap Akses</span>
           </div>
           <div class="stat-item">
@@ -857,8 +872,9 @@
                 <span>11 Slide LaTeX Beamer 16:9</span>
               </div>
               <div class="resource-btns">
-                <button type="button" class="btn btn-primary btn-sm" data-preview-pdf="./ch1.pdf" data-preview-title="Slide Minggu 1 — Fondasi & Arsitektur IoT">Pratinjau</button>
-                <a class="btn btn-secondary btn-sm" href="./ch1.pdf" target="_blank" rel="noopener">Buka PDF</a>
+                <a class="btn btn-download btn-sm" href="/iot/ch1.pdf" download="ch1.pdf">⬇ Unduh PDF</a>
+                <button type="button" class="btn btn-primary btn-sm" data-preview-pdf="/iot/ch1.pdf" data-preview-title="Slide Minggu 1 — Fondasi &amp; Arsitektur IoT">Pratinjau</button>
+                <a class="btn btn-secondary btn-sm" href="/iot/ch1.pdf" target="_blank" rel="noopener">↗ Buka Tab</a>
               </div>
             </div>
             <div class="resource-row">
@@ -867,8 +883,9 @@
                 <span>Modul_Minggu_01_Teknologi_IoT.pdf · 10 Halaman A4</span>
               </div>
               <div class="resource-btns">
-                <button type="button" class="btn btn-primary btn-sm" data-preview-pdf="./Modul_Minggu_01_Teknologi_IoT.pdf" data-preview-title="Modul Bahan Ajar Minggu 1">Pratinjau</button>
-                <a class="btn btn-secondary btn-sm" href="./Modul_Minggu_01_Teknologi_IoT.pdf" target="_blank" rel="noopener">Buka PDF</a>
+                <a class="btn btn-download btn-sm" href="/iot/Modul_Minggu_01_Teknologi_IoT.pdf" download="Modul_Minggu_01_Teknologi_IoT.pdf">⬇ Unduh PDF</a>
+                <button type="button" class="btn btn-primary btn-sm" data-preview-pdf="/iot/Modul_Minggu_01_Teknologi_IoT.pdf" data-preview-title="Modul Bahan Ajar Minggu 1">Pratinjau</button>
+                <a class="btn btn-secondary btn-sm" href="/iot/Modul_Minggu_01_Teknologi_IoT.pdf" target="_blank" rel="noopener">↗ Buka Tab</a>
               </div>
             </div>
             <div class="resource-row">
@@ -877,8 +894,9 @@
                 <span>Praktikum_Minggu_01_Toolchain_Wokwi_Git.pdf · 6 Halaman A4</span>
               </div>
               <div class="resource-btns">
-                <button type="button" class="btn btn-primary btn-sm" data-preview-pdf="./Praktikum_Minggu_01_Toolchain_Wokwi_Git.pdf" data-preview-title="Panduan Praktikum Minggu 1 (Lab-0)">Pratinjau</button>
-                <a class="btn btn-secondary btn-sm" href="./Praktikum_Minggu_01_Toolchain_Wokwi_Git.pdf" target="_blank" rel="noopener">Buka PDF</a>
+                <a class="btn btn-download btn-sm" href="/iot/Praktikum_Minggu_01_Toolchain_Wokwi_Git.pdf" download="Praktikum_Minggu_01_Toolchain_Wokwi_Git.pdf">⬇ Unduh PDF</a>
+                <button type="button" class="btn btn-primary btn-sm" data-preview-pdf="/iot/Praktikum_Minggu_01_Toolchain_Wokwi_Git.pdf" data-preview-title="Panduan Praktikum Minggu 1 (Lab-0)">Pratinjau</button>
+                <a class="btn btn-secondary btn-sm" href="/iot/Praktikum_Minggu_01_Toolchain_Wokwi_Git.pdf" target="_blank" rel="noopener">↗ Buka Tab</a>
               </div>
             </div>
           </div>
@@ -907,8 +925,9 @@
                 <span>13 Slide LaTeX Beamer 16:9</span>
               </div>
               <div class="resource-btns">
-                <button type="button" class="btn btn-primary btn-sm" data-preview-pdf="./ch2.pdf" data-preview-title="Slide Minggu 2 — Perangkat Keras & Konektivitas IoT">Pratinjau</button>
-                <a class="btn btn-secondary btn-sm" href="./ch2.pdf" target="_blank" rel="noopener">Buka PDF</a>
+                <a class="btn btn-download btn-sm" href="/iot/ch2.pdf" download="ch2.pdf">⬇ Unduh PDF</a>
+                <button type="button" class="btn btn-primary btn-sm" data-preview-pdf="/iot/ch2.pdf" data-preview-title="Slide Minggu 2 — Perangkat Keras &amp; Konektivitas IoT">Pratinjau</button>
+                <a class="btn btn-secondary btn-sm" href="/iot/ch2.pdf" target="_blank" rel="noopener">↗ Buka Tab</a>
               </div>
             </div>
             <div class="resource-row">
@@ -917,8 +936,9 @@
                 <span>Modul_Minggu_02_Teknologi_IoT.pdf · 10 Halaman A4</span>
               </div>
               <div class="resource-btns">
-                <button type="button" class="btn btn-primary btn-sm" data-preview-pdf="./Modul_Minggu_02_Teknologi_IoT.pdf" data-preview-title="Modul Bahan Ajar Minggu 2">Pratinjau</button>
-                <a class="btn btn-secondary btn-sm" href="./Modul_Minggu_02_Teknologi_IoT.pdf" target="_blank" rel="noopener">Buka PDF</a>
+                <a class="btn btn-download btn-sm" href="/iot/Modul_Minggu_02_Teknologi_IoT.pdf" download="Modul_Minggu_02_Teknologi_IoT.pdf">⬇ Unduh PDF</a>
+                <button type="button" class="btn btn-primary btn-sm" data-preview-pdf="/iot/Modul_Minggu_02_Teknologi_IoT.pdf" data-preview-title="Modul Bahan Ajar Minggu 2">Pratinjau</button>
+                <a class="btn btn-secondary btn-sm" href="/iot/Modul_Minggu_02_Teknologi_IoT.pdf" target="_blank" rel="noopener">↗ Buka Tab</a>
               </div>
             </div>
             <div class="resource-row">
@@ -927,8 +947,9 @@
                 <span>Praktikum_Minggu_02_GPIO_ADC_PWM_Sensor.pdf · 7 Halaman A4</span>
               </div>
               <div class="resource-btns">
-                <button type="button" class="btn btn-primary btn-sm" data-preview-pdf="./Praktikum_Minggu_02_GPIO_ADC_PWM_Sensor.pdf" data-preview-title="Panduan Praktikum Minggu 2 (Lab-1)">Pratinjau</button>
-                <a class="btn btn-secondary btn-sm" href="./Praktikum_Minggu_02_GPIO_ADC_PWM_Sensor.pdf" target="_blank" rel="noopener">Buka PDF</a>
+                <a class="btn btn-download btn-sm" href="/iot/Praktikum_Minggu_02_GPIO_ADC_PWM_Sensor.pdf" download="Praktikum_Minggu_02_GPIO_ADC_PWM_Sensor.pdf">⬇ Unduh PDF</a>
+                <button type="button" class="btn btn-primary btn-sm" data-preview-pdf="/iot/Praktikum_Minggu_02_GPIO_ADC_PWM_Sensor.pdf" data-preview-title="Panduan Praktikum Minggu 2 (Lab-1)">Pratinjau</button>
+                <a class="btn btn-secondary btn-sm" href="/iot/Praktikum_Minggu_02_GPIO_ADC_PWM_Sensor.pdf" target="_blank" rel="noopener">↗ Buka Tab</a>
               </div>
             </div>
             <div class="resource-row">
@@ -966,8 +987,9 @@
                 <span>13 Slide LaTeX Beamer 16:9</span>
               </div>
               <div class="resource-btns">
-                <button type="button" class="btn btn-primary btn-sm" data-preview-pdf="./ch3.pdf" data-preview-title="Slide Minggu 3 — Firmware ESP32, I2C/SPI, FreeRTOS, & Deep Sleep">Pratinjau</button>
-                <a class="btn btn-secondary btn-sm" href="./ch3.pdf" target="_blank" rel="noopener">Buka PDF</a>
+                <a class="btn btn-download btn-sm" href="/iot/ch3.pdf" download="ch3.pdf">⬇ Unduh PDF</a>
+                <button type="button" class="btn btn-primary btn-sm" data-preview-pdf="/iot/ch3.pdf" data-preview-title="Slide Minggu 3 — Firmware ESP32, I2C/SPI, FreeRTOS, &amp; Deep Sleep">Pratinjau</button>
+                <a class="btn btn-secondary btn-sm" href="/iot/ch3.pdf" target="_blank" rel="noopener">↗ Buka Tab</a>
               </div>
             </div>
             <div class="resource-row">
@@ -976,8 +998,9 @@
                 <span>Modul_Minggu_03_Teknologi_IoT.pdf · 8 Halaman A4</span>
               </div>
               <div class="resource-btns">
-                <button type="button" class="btn btn-primary btn-sm" data-preview-pdf="./Modul_Minggu_03_Teknologi_IoT.pdf" data-preview-title="Modul Bahan Ajar Minggu 3">Pratinjau</button>
-                <a class="btn btn-secondary btn-sm" href="./Modul_Minggu_03_Teknologi_IoT.pdf" target="_blank" rel="noopener">Buka PDF</a>
+                <a class="btn btn-download btn-sm" href="/iot/Modul_Minggu_03_Teknologi_IoT.pdf" download="Modul_Minggu_03_Teknologi_IoT.pdf">⬇ Unduh PDF</a>
+                <button type="button" class="btn btn-primary btn-sm" data-preview-pdf="/iot/Modul_Minggu_03_Teknologi_IoT.pdf" data-preview-title="Modul Bahan Ajar Minggu 3">Pratinjau</button>
+                <a class="btn btn-secondary btn-sm" href="/iot/Modul_Minggu_03_Teknologi_IoT.pdf" target="_blank" rel="noopener">↗ Buka Tab</a>
               </div>
             </div>
             <div class="resource-row">
@@ -986,8 +1009,9 @@
                 <span>Praktikum_Minggu_03_I2C_OLED_FreeRTOS_DeepSleep.pdf · 7 Halaman A4</span>
               </div>
               <div class="resource-btns">
-                <button type="button" class="btn btn-primary btn-sm" data-preview-pdf="./Praktikum_Minggu_03_I2C_OLED_FreeRTOS_DeepSleep.pdf" data-preview-title="Panduan Praktikum Minggu 3 (Lab-2)">Pratinjau</button>
-                <a class="btn btn-secondary btn-sm" href="./Praktikum_Minggu_03_I2C_OLED_FreeRTOS_DeepSleep.pdf" target="_blank" rel="noopener">Buka PDF</a>
+                <a class="btn btn-download btn-sm" href="/iot/Praktikum_Minggu_03_I2C_OLED_FreeRTOS_DeepSleep.pdf" download="Praktikum_Minggu_03_I2C_OLED_FreeRTOS_DeepSleep.pdf">⬇ Unduh PDF</a>
+                <button type="button" class="btn btn-primary btn-sm" data-preview-pdf="/iot/Praktikum_Minggu_03_I2C_OLED_FreeRTOS_DeepSleep.pdf" data-preview-title="Panduan Praktikum Minggu 3 (Lab-2)">Pratinjau</button>
+                <a class="btn btn-secondary btn-sm" href="/iot/Praktikum_Minggu_03_I2C_OLED_FreeRTOS_DeepSleep.pdf" target="_blank" rel="noopener">↗ Buka Tab</a>
               </div>
             </div>
             <div class="resource-row">
@@ -1026,8 +1050,9 @@
                 <span>25 Slide LaTeX Beamer 16:9</span>
               </div>
               <div class="resource-btns">
-                <button type="button" class="btn btn-primary btn-sm" data-preview-pdf="./ch4.pdf" data-preview-title="Slide Minggu 4 — Edge Gateway, Embedded Linux, Docker & Serialisasi">Pratinjau</button>
-                <a class="btn btn-secondary btn-sm" href="./ch4.pdf" target="_blank" rel="noopener">Buka PDF</a>
+                <a class="btn btn-download btn-sm" href="/iot/ch4.pdf" download="ch4.pdf">⬇ Unduh PDF</a>
+                <button type="button" class="btn btn-primary btn-sm" data-preview-pdf="/iot/ch4.pdf" data-preview-title="Slide Minggu 4 — Edge Gateway, Embedded Linux, Docker &amp; Serialisasi">Pratinjau</button>
+                <a class="btn btn-secondary btn-sm" href="/iot/ch4.pdf" target="_blank" rel="noopener">↗ Buka Tab</a>
               </div>
             </div>
             <div class="resource-row">
@@ -1036,8 +1061,9 @@
                 <span>Modul_Minggu_04_Teknologi_IoT.pdf · 10 Halaman A4</span>
               </div>
               <div class="resource-btns">
-                <button type="button" class="btn btn-primary btn-sm" data-preview-pdf="./Modul_Minggu_04_Teknologi_IoT.pdf" data-preview-title="Modul Bahan Ajar Minggu 4">Pratinjau</button>
-                <a class="btn btn-secondary btn-sm" href="./Modul_Minggu_04_Teknologi_IoT.pdf" target="_blank" rel="noopener">Buka PDF</a>
+                <a class="btn btn-download btn-sm" href="/iot/Modul_Minggu_04_Teknologi_IoT.pdf" download="Modul_Minggu_04_Teknologi_IoT.pdf">⬇ Unduh PDF</a>
+                <button type="button" class="btn btn-primary btn-sm" data-preview-pdf="/iot/Modul_Minggu_04_Teknologi_IoT.pdf" data-preview-title="Modul Bahan Ajar Minggu 4">Pratinjau</button>
+                <a class="btn btn-secondary btn-sm" href="/iot/Modul_Minggu_04_Teknologi_IoT.pdf" target="_blank" rel="noopener">↗ Buka Tab</a>
               </div>
             </div>
             <div class="resource-row">
@@ -1046,8 +1072,9 @@
                 <span>Praktikum_Minggu_04_Edge_Gateway_RaspberryPi_Docker.pdf · 6 Halaman A4</span>
               </div>
               <div class="resource-btns">
-                <button type="button" class="btn btn-primary btn-sm" data-preview-pdf="./Praktikum_Minggu_04_Edge_Gateway_RaspberryPi_Docker.pdf" data-preview-title="Panduan Praktikum Minggu 4 (Lab-3)">Pratinjau</button>
-                <a class="btn btn-secondary btn-sm" href="./Praktikum_Minggu_04_Edge_Gateway_RaspberryPi_Docker.pdf" target="_blank" rel="noopener">Buka PDF</a>
+                <a class="btn btn-download btn-sm" href="/iot/Praktikum_Minggu_04_Edge_Gateway_RaspberryPi_Docker.pdf" download="Praktikum_Minggu_04_Edge_Gateway_RaspberryPi_Docker.pdf">⬇ Unduh PDF</a>
+                <button type="button" class="btn btn-primary btn-sm" data-preview-pdf="/iot/Praktikum_Minggu_04_Edge_Gateway_RaspberryPi_Docker.pdf" data-preview-title="Panduan Praktikum Minggu 4 (Lab-3)">Pratinjau</button>
+                <a class="btn btn-secondary btn-sm" href="/iot/Praktikum_Minggu_04_Edge_Gateway_RaspberryPi_Docker.pdf" target="_blank" rel="noopener">↗ Buka Tab</a>
               </div>
             </div>
             <div class="resource-row">
@@ -1198,12 +1225,17 @@
   <dialog id="pdfModal" aria-labelledby="pdfModalTitle">
     <div class="modal-header">
       <h3 id="pdfModalTitle">Pratinjau Dokumen</h3>
-      <div style="display:flex; gap:0.5rem; align-items:center;">
-        <a id="pdfExternalLink" class="btn btn-secondary btn-sm" href="#" target="_blank" rel="noopener">↗ Buka Layar Penuh</a>
+      <div style="display:flex; gap:0.5rem; align-items:center; flex-wrap:wrap;">
+        <a id="pdfDownloadLink" class="btn btn-download btn-sm" href="#" download>⬇ Unduh PDF</a>
+        <a id="pdfExternalLink" class="btn btn-secondary btn-sm" href="#" target="_blank" rel="noopener">↗ Layar Penuh</a>
         <button type="button" class="btn btn-primary btn-sm" id="closePdfModalBtn">Tutup ✕</button>
       </div>
     </div>
     <div class="modal-body">
+      <div class="pdf-modal-notice" style="padding:0.6rem 0.9rem; background:rgba(30,111,80,0.1); border-left:4px solid #1e6f50; margin-bottom:0.75rem; border-radius:4px; display:flex; justify-content:space-between; align-items:center; gap:0.75rem; flex-wrap:wrap;">
+        <span style="font-size:0.83rem; color:var(--text-primary);">💡 Jika pratinjau tidak muncul di peramban ponsel, gunakan unduh langsung:</span>
+        <a id="pdfDirectDownload" class="btn btn-download btn-sm" href="#" download>⬇ Unduh Berkas PDF</a>
+      </div>
       <iframe id="pdfFrame" class="pdf-frame" title="Pratinjau Berkas PDF Mata Kuliah"></iframe>
     </div>
   </dialog>
@@ -1344,14 +1376,25 @@
     const pdfFrame = document.getElementById("pdfFrame");
     const pdfModalTitle = document.getElementById("pdfModalTitle");
     const pdfExternalLink = document.getElementById("pdfExternalLink");
+    const pdfDownloadLink = document.getElementById("pdfDownloadLink");
+    const pdfDirectDownload = document.getElementById("pdfDirectDownload");
 
     document.querySelectorAll("[data-preview-pdf]").forEach((btn) => {
       btn.addEventListener("click", () => {
         const url = btn.getAttribute("data-preview-pdf");
         const title = btn.getAttribute("data-preview-title");
+        const filename = url.split("/").pop();
         pdfModalTitle.textContent = title;
         pdfFrame.src = url;
         pdfExternalLink.href = url;
+        if (pdfDownloadLink) {
+          pdfDownloadLink.href = url;
+          pdfDownloadLink.setAttribute("download", filename);
+        }
+        if (pdfDirectDownload) {
+          pdfDirectDownload.href = url;
+          pdfDirectDownload.setAttribute("download", filename);
+        }
         pdfModal.showModal();
       });
     });
@@ -1367,6 +1410,11 @@
         pdfFrame.src = "";
       }
     });
+
+    // 3b. Pastikan path URL selalu memiliki trailing slash '/iot/' agar navigasi konsisten
+    if (window.location.pathname === "/iot") {
+      window.history.replaceState(null, "", "/iot/" + window.location.search + window.location.hash);
+    }
 
     // 4. Modal Starter Kit Simulasi Wokwi (Multi-Lab: Lab-1 & Lab-2)
     const wokwiProjects = {

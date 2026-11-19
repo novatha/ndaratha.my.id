@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    {
+      "source": "/iot",
+      "destination": "/iot/",
+      "permanent": true
+    }
+  ]
+}
