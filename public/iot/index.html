@@ -817,7 +817,7 @@
         <h2>Ringkasan Eksekutif Mata Kuliah</h2>
         <div class="stat-grid">
           <div class="stat-item">
-            <strong>4 / 16</strong>
+            <strong>5 / 16</strong>
             <span>Minggu Materi Siap Akses</span>
           </div>
           <div class="stat-item">
@@ -1027,10 +1027,10 @@
         </article>
 
         <!-- Kartu Minggu 4 -->
-        <article class="week-featured-card latest">
+        <article class="week-featured-card">
           <div class="card-top">
             <span class="badge badge-ready">✓ Tersedia Lengkap · Minggu 4</span>
-            <span class="badge badge-gold">★ Terbaru · Sub-CPMK 2.2 &amp; 7.1 (C3, C6, P3)</span>
+            <span class="badge badge-scheduled">Sub-CPMK 2.2 &amp; 7.1 (C3, C6, P3)</span>
           </div>
           <h3>Minggu 4: Edge Gateway, Embedded Linux, Docker, &amp; Serialisasi Data</h3>
           <div class="subcpmk-box">
@@ -1068,19 +1068,81 @@
             </div>
             <div class="resource-row">
               <div class="resource-info">
-                <strong>🔬 Panduan Praktikum Minggu 4 (Lab-3)</strong>
+                <strong>🔬 Panduan Praktikum Minggu 4 (Formatif)</strong>
                 <span>Praktikum_Minggu_04_Edge_Gateway_RaspberryPi_Docker.pdf · 6 Halaman A4</span>
               </div>
               <div class="resource-btns">
                 <a class="btn btn-download btn-sm" href="/iot/Praktikum_Minggu_04_Edge_Gateway_RaspberryPi_Docker.pdf" download="Praktikum_Minggu_04_Edge_Gateway_RaspberryPi_Docker.pdf">⬇ Unduh PDF</a>
-                <button type="button" class="btn btn-primary btn-sm" data-preview-pdf="/iot/Praktikum_Minggu_04_Edge_Gateway_RaspberryPi_Docker.pdf" data-preview-title="Panduan Praktikum Minggu 4 (Lab-3)">Pratinjau</button>
+                <button type="button" class="btn btn-primary btn-sm" data-preview-pdf="/iot/Praktikum_Minggu_04_Edge_Gateway_RaspberryPi_Docker.pdf" data-preview-title="Panduan Praktikum Minggu 4 (Formatif)">Pratinjau</button>
                 <a class="btn btn-secondary btn-sm" href="/iot/Praktikum_Minggu_04_Edge_Gateway_RaspberryPi_Docker.pdf" target="_blank" rel="noopener">↗ Buka Tab</a>
               </div>
             </div>
             <div class="resource-row">
               <div class="resource-info">
-                <strong>⚡ Starter Kit Simulasi Wokwi Lab-3 &amp; Docker</strong>
+                <strong>⚡ Starter Kit Simulasi Wokwi Minggu 4 &amp; Docker</strong>
                 <span>ESP32 JSON Streamer, Docker Compose, &amp; Python Gateway Daemon</span>
+              </div>
+              <div class="resource-btns">
+                <button type="button" class="btn btn-gold btn-sm open-wokwi-btn" data-lab="lab_m4">Kode Starter Mg 4</button>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Kartu Minggu 5 -->
+        <article class="week-featured-card latest">
+          <div class="card-top">
+            <span class="badge badge-ready">✓ Tersedia Lengkap · Minggu 5</span>
+            <span class="badge badge-gold">★ Terbaru · Sub-CPMK 3.1 (C3, P4)</span>
+          </div>
+          <h3>Minggu 5: Komunikasi HTTP/REST (RFC 9110) &amp; WebSocket Full-Duplex (RFC 6455)</h3>
+          <div class="subcpmk-box">
+            Mengimplementasikan komunikasi <em>request–response</em> HTTP/REST dan kanal persisten <em>full-duplex</em> WebSocket antara ESP32 dan server FastAPI ASGI, serta menganalisis efisiensi paket via Wireshark.
+          </div>
+          <ul class="topic-list">
+            <li>Taksonomi pola komunikasi IoT (<em>request–response</em>, <em>full-duplex push</em>, <em>pub/sub</em>) &amp; semantik RFC 9110.</li>
+            <li>Analisis inefisiensi <em>header</em> HTTP/1.1 (~24% efisiensi payload) vs WebSocket Framing (hanya 2–6 byte overhead).</li>
+            <li>Mekanisme <em>HTTP Upgrade 101 Switching Protocols</em>, <em>masking</em> RFC 6455, &amp; heartbeat <code>Ping/Pong</code>.</li>
+            <li>Backend asinkron <strong>FastAPI + Pydantic</strong> (<code>POST /api/v1/telemetry</code> + <code>/ws/device/{id}</code>) &amp; inspeksi Wireshark.</li>
+          </ul>
+          <div class="resource-list">
+            <div class="resource-row">
+              <div class="resource-info">
+                <strong>📊 Slide Kuliah Minggu 5 (ch5.pdf)</strong>
+                <span>18 Slide LaTeX Beamer 16:9</span>
+              </div>
+              <div class="resource-btns">
+                <a class="btn btn-download btn-sm" href="/iot/ch5.pdf" download="ch5.pdf">⬇ Unduh PDF</a>
+                <button type="button" class="btn btn-primary btn-sm" data-preview-pdf="/iot/ch5.pdf" data-preview-title="Slide Minggu 5 — HTTP/REST &amp; WebSocket Full-Duplex">Pratinjau</button>
+                <a class="btn btn-secondary btn-sm" href="/iot/ch5.pdf" target="_blank" rel="noopener">↗ Buka Tab</a>
+              </div>
+            </div>
+            <div class="resource-row">
+              <div class="resource-info">
+                <strong>📘 Modul Bahan Ajar, LKM &amp; Problem Set C1–C6</strong>
+                <span>Modul_Minggu_05_Teknologi_IoT.pdf · 5 Halaman A4</span>
+              </div>
+              <div class="resource-btns">
+                <a class="btn btn-download btn-sm" href="/iot/Modul_Minggu_05_Teknologi_IoT.pdf" download="Modul_Minggu_05_Teknologi_IoT.pdf">⬇ Unduh PDF</a>
+                <button type="button" class="btn btn-primary btn-sm" data-preview-pdf="/iot/Modul_Minggu_05_Teknologi_IoT.pdf" data-preview-title="Modul Bahan Ajar Minggu 5">Pratinjau</button>
+                <a class="btn btn-secondary btn-sm" href="/iot/Modul_Minggu_05_Teknologi_IoT.pdf" target="_blank" rel="noopener">↗ Buka Tab</a>
+              </div>
+            </div>
+            <div class="resource-row">
+              <div class="resource-info">
+                <strong>🔬 Panduan Praktikum Minggu 5 (Lab-3 · Bobot 2% NA)</strong>
+                <span>Praktikum_Minggu_05_HTTP_REST_WebSocket.pdf · 3 Halaman A4</span>
+              </div>
+              <div class="resource-btns">
+                <a class="btn btn-download btn-sm" href="/iot/Praktikum_Minggu_05_HTTP_REST_WebSocket.pdf" download="Praktikum_Minggu_05_HTTP_REST_WebSocket.pdf">⬇ Unduh PDF</a>
+                <button type="button" class="btn btn-primary btn-sm" data-preview-pdf="/iot/Praktikum_Minggu_05_HTTP_REST_WebSocket.pdf" data-preview-title="Panduan Praktikum Minggu 5 (Lab-3)">Pratinjau</button>
+                <a class="btn btn-secondary btn-sm" href="/iot/Praktikum_Minggu_05_HTTP_REST_WebSocket.pdf" target="_blank" rel="noopener">↗ Buka Tab</a>
+              </div>
+            </div>
+            <div class="resource-row">
+              <div class="resource-info">
+                <strong>⚡ Starter Kit Wokwi &amp; FastAPI Lab-3</strong>
+                <span>ESP32 HTTP/WebSocket Client, Server FastAPI, &amp; Simulator Python</span>
               </div>
               <div class="resource-btns">
                 <button type="button" class="btn btn-gold btn-sm open-wokwi-btn" data-lab="lab3">Kode Starter Lab-3</button>
@@ -1103,7 +1165,7 @@
       <div class="filter-bar">
         <div class="filter-pills" role="group" aria-label="Filter modul mingguan">
           <button type="button" class="pill" data-filter="all" aria-pressed="true">Semua (16)</button>
-          <button type="button" class="pill" data-filter="ready" aria-pressed="false">✓ Materi Tersedia (4)</button>
+          <button type="button" class="pill" data-filter="ready" aria-pressed="false">✓ Materi Tersedia (5)</button>
           <button type="button" class="pill" data-filter="edge" aria-pressed="false">Fondasi &amp; Edge (M1–M4)</button>
           <button type="button" class="pill" data-filter="proto" aria-pressed="false">Protokol IoT (M5–M7)</button>
           <button type="button" class="pill" data-filter="cloudsec" aria-pressed="false">Backend, Cloud &amp; Keamanan (M9–M14)</button>
@@ -1303,7 +1365,7 @@
       { w: 2, mod: "edge", ready: true, milestone: false, sub: "Sub-CPMK 1.2", weight: "2% (Lab-1)", title: "Perangkat Keras, Sensor–Aktuator, & Konektivitas", desc: "ADC 12-bit ESP32, PWM LEDC, histeresis, ESP32 vs RPi, Wi-Fi/BLE/Zigbee/LoRaWAN/NB-IoT, WDM & Kasus B Kopi." },
       { w: 3, mod: "edge", ready: true, milestone: false, sub: "Sub-CPMK 2.1", weight: "2% (Lab-2)", title: "Pemrograman ESP32 Non-Blocking & Manajemen Daya", desc: "Antarmuka I2C/SPI/UART, BME280 & OLED SSD1306, interrupt, FreeRTOS dasar, deep sleep & kalibrasi." },
       { w: 4, mod: "edge", ready: true, milestone: true, sub: "Sub-CPMK 2.2 & 7.1", weight: "6% (M1 5% + LK-2 1%)", title: "Edge Gateway Raspberry Pi, Serialisasi, & Pitching M1", desc: "Linux RPi, Docker di edge, JSON vs CBOR vs Protobuf, Kasus C, serta Presentasi Proposal Proyek (Milestone 1)." },
-      { w: 5, mod: "proto", ready: false, milestone: false, sub: "Sub-CPMK 3.1", weight: "2% (Lab-3)", title: "Komunikasi HTTP/REST & WebSocket Full-Duplex", desc: "Semantik HTTP (RFC 9110), polling vs push, WebSocket (RFC 6455), FastAPI server, & inspeksi paket Wireshark." },
+      { w: 5, mod: "proto", ready: true, milestone: false, sub: "Sub-CPMK 3.1", weight: "2% (Lab-3)", title: "Komunikasi HTTP/REST & WebSocket Full-Duplex", desc: "Semantik HTTP (RFC 9110), polling vs push, WebSocket (RFC 6455), FastAPI server, & inspeksi paket Wireshark." },
       { w: 6, mod: "proto", ready: false, milestone: false, sub: "Sub-CPMK 3.2", weight: "2% (Lab-4)", title: "Arsitektur Broker & Protokol Publish/Subscribe MQTT", desc: "MQTT 3.1.1 & 5.0, desain hierarki topik, wildcard, QoS 0/1/2, Retained Message, LWT, Mosquitto & EMQX." },
       { w: 7, mod: "proto", ready: false, milestone: true, sub: "Sub-CPMK 3.3", weight: "7% (Lab-5 2% + Kuis-1 5%)", title: "Protokol CoAP & Benchmarking Eksperimental", desc: "CoAP di atas UDP (CON/NON, Observe), perbandingan MQTT–CoAP–HTTP–WS dengan tc netem, & Kuis-1." },
       { w: 8, mod: "proto", ready: false, milestone: true, sub: "Evaluasi Tengah Semester", weight: "15% (UTS)", title: "UTS Berbasis Kasus Terintegrasi & Uji Praktik", desc: "Analisis Kasus G (Rantai Dingin Ikan Pulau Baai) & ujian praktik individu troubleshooting perangkat–broker." },
@@ -1816,8 +1878,8 @@ Adafruit Unified Sensor
 ArduinoJson`
         }
       },
-      lab3: {
-        title: "⚡ Starter Kit Simulasi Wokwi — Praktikum Minggu 4 (Lab-3)",
+      lab_m4: {
+        title: "⚡ Starter Kit Simulasi Wokwi — Praktikum Minggu 4 (Formatif)",
         folder: "lab03_minggu_04_edge_gateway/esp32_sender_wokwi/",
         files: {
           main: `#include <Arduino.h>
@@ -1905,6 +1967,141 @@ monitor_speed = 115200
 lib_deps =
     bblanchon/ArduinoJson@^6.21.3`,
           libs: `bblanchon/ArduinoJson@^6.21.3`
+        }
+      },
+      lab3: {
+        title: "⚡ Starter Kit Simulasi Wokwi & FastAPI — Praktikum Minggu 5 (Lab-3)",
+        folder: "lab_minggu_05_http_websocket/ (lihat backend/main.py & esp32_wokwi/)",
+        files: {
+          main: `#include <Arduino.h>
+#include <WiFi.h>
+#include <HTTPClient.h>
+#include <WebSocketsClient.h>
+#include <ArduinoJson.h>
+#include <DHT.h>
+
+const char* WIFI_SSID = "Wokwi-GUEST";
+const char* WIFI_PASS = "";
+const char* SERVER_HOST = "example-tunnel.trycloudflare.com"; // Ganti dengan URL tunnel / IP lokal
+const uint16_t SERVER_PORT = 80;
+const char* NODE_ID = "esp32-bengkulu-01";
+
+#define PIN_DHT        4
+#define PIN_POT_WATER  34
+#define PIN_PUMP_LED   26
+#define PIN_TOMBOL     15
+
+DHT dht(PIN_DHT, DHT22);
+WebSocketsClient webSocket;
+bool pumpOn = false;
+uint32_t seqCounter = 0;
+uint32_t lastTelemetryMs = 0;
+
+void applyPumpState(bool on) {
+  pumpOn = on;
+  digitalWrite(PIN_PUMP_LED, pumpOn ? HIGH : LOW);
+  Serial.printf("[AKTUATOR] Status Pompa: %s\\n", pumpOn ? "ON" : "OFF");
+}
+
+void onWebSocketEvent(WStype_t type, uint8_t* payload, size_t length) {
+  if (type == WStype_CONNECTED) {
+    Serial.println("[WS] Handshake 101 Switching Protocols berhasil!");
+  } else if (type == WStype_TEXT) {
+    JsonDocument doc;
+    if (!deserializeJson(doc, payload, length) && strcmp(doc["type"] | "", "ACTUATOR_CMD") == 0) {
+      applyPumpState(strcmp(doc["pump_state"] | "OFF", "ON") == 0);
+      JsonDocument ack;
+      ack["type"] = "ACK"; ack["node_id"] = NODE_ID; ack["pump_state"] = pumpOn ? "ON" : "OFF";
+      String out; serializeJson(ack, out);
+      webSocket.sendTXT(out);
+    }
+  }
+}
+
+void setup() {
+  Serial.begin(115200);
+  pinMode(PIN_PUMP_LED, OUTPUT);
+  pinMode(PIN_TOMBOL, INPUT_PULLUP);
+  analogReadResolution(12);
+  dht.begin();
+  WiFi.begin(WIFI_SSID, WIFI_PASS);
+  while (WiFi.status() != WL_CONNECTED) { delay(250); }
+  webSocket.begin(SERVER_HOST, SERVER_PORT, String("/ws/device/") + NODE_ID);
+  webSocket.onEvent(onWebSocketEvent);
+  webSocket.setReconnectInterval(3000);
+  webSocket.enableHeartbeat(15000, 3000, 2);
+}
+
+void loop() {
+  webSocket.loop();
+  if (millis() - lastTelemetryMs >= 4000) {
+    lastTelemetryMs = millis(); seqCounter++;
+    float temp = dht.readTemperature(); if (isnan(temp)) temp = 29.5f;
+    float hum = dht.readHumidity(); if (isnan(hum)) hum = 76.0f;
+    float waterCm = (analogRead(PIN_POT_WATER) / 4095.0f) * 250.0f;
+    JsonDocument doc;
+    doc["node_id"] = NODE_ID; doc["seq"] = seqCounter;
+    doc["temp_c"] = temp; doc["hum_pct"] = hum; doc["water_level_cm"] = waterCm;
+    doc["pump_state"] = pumpOn ? "ON" : "OFF";
+    if (seqCounter % 2 == 1) {
+      HTTPClient http;
+      http.begin(String("http://") + SERVER_HOST + ":" + SERVER_PORT + "/api/v1/telemetry");
+      http.addHeader("Content-Type", "application/json");
+      http.setTimeout(3000);
+      String body; serializeJson(doc, body);
+      Serial.printf("[HTTP POST #%lu] Kode=%d\\n", seqCounter, http.POST(body));
+      http.end();
+    } else if (webSocket.isConnected()) {
+      doc["type"] = "TELEMETRY";
+      String body; serializeJson(doc, body);
+      webSocket.sendTXT(body);
+      Serial.printf("[WS SEND #%lu] Terkirim!\\n", seqCounter);
+    }
+  }
+}`,
+          diagram: `{
+  "version": 1,
+  "author": "Tim PjBL Informatika UNIB - Lab 3 (Minggu 5)",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "wokwi-esp32-devkit-v1", "id": "esp", "top": 0, "left": 0, "attrs": {} },
+    { "type": "wokwi-dht22", "id": "dht1", "top": -60, "left": -150, "attrs": {} },
+    { "type": "wokwi-potentiometer", "id": "potWater", "top": 110, "left": -160, "attrs": { "label": "Water Level" } },
+    { "type": "wokwi-led", "id": "ledPump", "top": 50, "left": 180, "attrs": { "color": "red", "label": "Pompa/Relai" } },
+    { "type": "wokwi-resistor", "id": "rPump", "top": 100, "left": 175, "attrs": { "value": "220" } },
+    { "type": "wokwi-pushbutton", "id": "btnOverride", "top": 170, "left": 170, "attrs": { "color": "blue", "label": "Manual Pump" } }
+  ],
+  "connections": [
+    [ "esp:TX0", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX0", "$serialMonitor:TX", "", [] ],
+    [ "dht1:VCC", "esp:3V3", "red", [] ],
+    [ "dht1:GND", "esp:GND.1", "black", [] ],
+    [ "dht1:SDA", "esp:D4", "green", [] ],
+    [ "potWater:VCC", "esp:3V3", "red", [] ],
+    [ "potWater:GND", "esp:GND.1", "black", [] ],
+    [ "potWater:SIG", "esp:D34", "blue", [] ],
+    [ "esp:D26", "rPump:1", "orange", [] ],
+    [ "rPump:2", "ledPump:A", "orange", [] ],
+    [ "ledPump:C", "esp:GND.2", "black", [] ],
+    [ "btnOverride:1.l", "esp:D15", "purple", [] ],
+    [ "btnOverride:2.l", "esp:GND.2", "black", [] ]
+  ],
+  "dependencies": {}
+}`,
+          pio: `[env:esp32doit-devkit-v1]
+platform = espressif32
+board = esp32doit-devkit-v1
+framework = arduino
+monitor_speed = 115200
+lib_deps =
+    bblanchon/ArduinoJson @ ^7.0.4
+    adafruit/DHT sensor library @ ^1.4.6
+    adafruit/Adafruit Unified Sensor @ ^1.1.14
+    links2004/WebSockets @ ^2.6.1`,
+          libs: `ArduinoJson
+DHT sensor library
+Adafruit Unified Sensor
+WebSockets`
         }
       }
     };

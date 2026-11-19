@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "author": "Tim PjBL Informatika UNIB - Lab 3 (Minggu 5)",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "wokwi-esp32-devkit-v1", "id": "esp", "top": 0, "left": 0, "attrs": {} },
+    { "type": "wokwi-dht22", "id": "dht1", "top": -60, "left": -150, "attrs": {} },
+    { "type": "wokwi-potentiometer", "id": "potWater", "top": 110, "left": -160, "attrs": { "label": "Water Level" } },
+    { "type": "wokwi-led", "id": "ledPump", "top": 50, "left": 180, "attrs": { "color": "red", "label": "Pompa/Relai" } },
+    { "type": "wokwi-resistor", "id": "rPump", "top": 100, "left": 175, "attrs": { "value": "220" } },
+    { "type": "wokwi-pushbutton", "id": "btnOverride", "top": 170, "left": 170, "attrs": { "color": "blue", "label": "Manual Pump" } }
+  ],
+  "connections": [
+    [ "esp:TX0", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX0", "$serialMonitor:TX", "", [] ],
+    [ "dht1:VCC", "esp:3V3", "red", [] ],
+    [ "dht1:GND", "esp:GND.1", "black", [] ],
+    [ "dht1:SDA", "esp:D4", "green", [] ],
+    [ "potWater:VCC", "esp:3V3", "red", [] ],
+    [ "potWater:GND", "esp:GND.1", "black", [] ],
+    [ "potWater:SIG", "esp:D34", "blue", [] ],
+    [ "esp:D26", "rPump:1", "orange", [] ],
+    [ "rPump:2", "ledPump:A", "orange", [] ],
+    [ "ledPump:C", "esp:GND.2", "black", [] ],
+    [ "btnOverride:1.l", "esp:D15", "purple", [] ],
+    [ "btnOverride:2.l", "esp:GND.2", "black", [] ]
+  ],
+  "dependencies": {}
+}

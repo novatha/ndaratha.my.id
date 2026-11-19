@@ -1,0 +1,7 @@
+services:
+  fastapi-gateway:
+    build: ./backend
+    container_name: unib_iot_lab3_fastapi
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
