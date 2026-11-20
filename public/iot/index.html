@@ -817,7 +817,7 @@
         <h2>Ringkasan Eksekutif Mata Kuliah</h2>
         <div class="stat-grid">
           <div class="stat-item">
-            <strong>5 / 16</strong>
+            <strong>6 / 16</strong>
             <span>Minggu Materi Siap Akses</span>
           </div>
           <div class="stat-item">
@@ -1090,10 +1090,10 @@
         </article>
 
         <!-- Kartu Minggu 5 -->
-        <article class="week-featured-card latest">
+        <article class="week-featured-card">
           <div class="card-top">
             <span class="badge badge-ready">✓ Tersedia Lengkap · Minggu 5</span>
-            <span class="badge badge-gold">★ Terbaru · Sub-CPMK 3.1 (C3, P4)</span>
+            <span class="badge badge-scheduled">Sub-CPMK 3.1 (C3, P4)</span>
           </div>
           <h3>Minggu 5: Komunikasi HTTP/REST (RFC 9110) &amp; WebSocket Full-Duplex (RFC 6455)</h3>
           <div class="subcpmk-box">
@@ -1150,6 +1150,68 @@
             </div>
           </div>
         </article>
+
+        <!-- Kartu Minggu 6 -->
+        <article class="week-featured-card latest">
+          <div class="card-top">
+            <span class="badge badge-ready">✓ Tersedia Lengkap · Minggu 6</span>
+            <span class="badge badge-gold">★ Terbaru · Sub-CPMK 3.2 (C3, C6, P4)</span>
+          </div>
+          <h3>Minggu 6: Arsitektur Broker &amp; Protokol Publish/Subscribe MQTT (3.1.1 &amp; 5.0)</h3>
+          <div class="subcpmk-box">
+            Merancang hierarki topik MQTT yang skalabel serta mengimplementasikan komunikasi <em>publish/subscribe</em> dengan konfigurasi QoS 0/1/2, <em>Retained Message</em>, <em>Persistent Session</em>, dan <em>Last Will and Testament</em> (LWT).
+          </div>
+          <ul class="topic-list">
+            <li>Arsitektur broker MQTT (Mosquitto, EMQX, HiveMQ), 3 dimensi <em>decoupling</em>, &amp; header biner 2 byte.</li>
+            <li>Desain hierarki topik terstruktur &amp; aturan <em>wildcard</em> single-level (<code>+</code>) serta multi-level (<code>#</code>).</li>
+            <li>Jaminan pengiriman <strong>QoS 0, 1, 2</strong>, <em>Retained Message</em>, <strong>LWT</strong> (1,5× Keep-Alive), &amp; <em>Persistent Session</em>.</li>
+            <li>Fitur produksi <strong>MQTT 5.0</strong> (<em>Shared Subscriptions</em>, <em>Message Expiry</em>, <em>Reason Codes</em>) &amp; pengantar <strong>Sparkplug B</strong>.</li>
+          </ul>
+          <div class="resource-list">
+            <div class="resource-row">
+              <div class="resource-info">
+                <strong>📊 Slide Kuliah Minggu 6 (ch6.pdf)</strong>
+                <span>15 Slide LaTeX Beamer 16:9</span>
+              </div>
+              <div class="resource-btns">
+                <a class="btn btn-download btn-sm" href="/iot/ch6.pdf" download="ch6.pdf">⬇ Unduh PDF</a>
+                <button type="button" class="btn btn-primary btn-sm" data-preview-pdf="/iot/ch6.pdf" data-preview-title="Slide Minggu 6 — Arsitektur Broker &amp; Protokol MQTT">Pratinjau</button>
+                <a class="btn btn-secondary btn-sm" href="/iot/ch6.pdf" target="_blank" rel="noopener">↗ Buka Tab</a>
+              </div>
+            </div>
+            <div class="resource-row">
+              <div class="resource-info">
+                <strong>📘 Modul Bahan Ajar, LKM &amp; Problem Set C1–C6</strong>
+                <span>Modul_Minggu_06_Teknologi_IoT.pdf · 4 Halaman A4</span>
+              </div>
+              <div class="resource-btns">
+                <a class="btn btn-download btn-sm" href="/iot/Modul_Minggu_06_Teknologi_IoT.pdf" download="Modul_Minggu_06_Teknologi_IoT.pdf">⬇ Unduh PDF</a>
+                <button type="button" class="btn btn-primary btn-sm" data-preview-pdf="/iot/Modul_Minggu_06_Teknologi_IoT.pdf" data-preview-title="Modul Bahan Ajar Minggu 6">Pratinjau</button>
+                <a class="btn btn-secondary btn-sm" href="/iot/Modul_Minggu_06_Teknologi_IoT.pdf" target="_blank" rel="noopener">↗ Buka Tab</a>
+              </div>
+            </div>
+            <div class="resource-row">
+              <div class="resource-info">
+                <strong>🔬 Panduan Praktikum Minggu 6 (Lab-4 · Bobot 2% NA)</strong>
+                <span>Praktikum_Minggu_06_MQTT_Broker_QoS_LWT.pdf · 3 Halaman A4</span>
+              </div>
+              <div class="resource-btns">
+                <a class="btn btn-download btn-sm" href="/iot/Praktikum_Minggu_06_MQTT_Broker_QoS_LWT.pdf" download="Praktikum_Minggu_06_MQTT_Broker_QoS_LWT.pdf">⬇ Unduh PDF</a>
+                <button type="button" class="btn btn-primary btn-sm" data-preview-pdf="/iot/Praktikum_Minggu_06_MQTT_Broker_QoS_LWT.pdf" data-preview-title="Panduan Praktikum Minggu 6 (Lab-4)">Pratinjau</button>
+                <a class="btn btn-secondary btn-sm" href="/iot/Praktikum_Minggu_06_MQTT_Broker_QoS_LWT.pdf" target="_blank" rel="noopener">↗ Buka Tab</a>
+              </div>
+            </div>
+            <div class="resource-row">
+              <div class="resource-info">
+                <strong>⚡ Starter Kit Mosquitto Docker &amp; Wokwi Lab-4</strong>
+                <span>ESP32 PubSubClient (LWT/Retained), Docker Mosquitto, &amp; Python Crash-Test</span>
+              </div>
+              <div class="resource-btns">
+                <button type="button" class="btn btn-gold btn-sm open-wokwi-btn" data-lab="lab4">Kode Starter Lab-4</button>
+              </div>
+            </div>
+          </div>
+        </article>
       </div>
     </section>
 
@@ -1165,7 +1227,7 @@
       <div class="filter-bar">
         <div class="filter-pills" role="group" aria-label="Filter modul mingguan">
           <button type="button" class="pill" data-filter="all" aria-pressed="true">Semua (16)</button>
-          <button type="button" class="pill" data-filter="ready" aria-pressed="false">✓ Materi Tersedia (5)</button>
+          <button type="button" class="pill" data-filter="ready" aria-pressed="false">✓ Materi Tersedia (6)</button>
           <button type="button" class="pill" data-filter="edge" aria-pressed="false">Fondasi &amp; Edge (M1–M4)</button>
           <button type="button" class="pill" data-filter="proto" aria-pressed="false">Protokol IoT (M5–M7)</button>
           <button type="button" class="pill" data-filter="cloudsec" aria-pressed="false">Backend, Cloud &amp; Keamanan (M9–M14)</button>
@@ -1366,7 +1428,7 @@
       { w: 3, mod: "edge", ready: true, milestone: false, sub: "Sub-CPMK 2.1", weight: "2% (Lab-2)", title: "Pemrograman ESP32 Non-Blocking & Manajemen Daya", desc: "Antarmuka I2C/SPI/UART, BME280 & OLED SSD1306, interrupt, FreeRTOS dasar, deep sleep & kalibrasi." },
       { w: 4, mod: "edge", ready: true, milestone: true, sub: "Sub-CPMK 2.2 & 7.1", weight: "6% (M1 5% + LK-2 1%)", title: "Edge Gateway Raspberry Pi, Serialisasi, & Pitching M1", desc: "Linux RPi, Docker di edge, JSON vs CBOR vs Protobuf, Kasus C, serta Presentasi Proposal Proyek (Milestone 1)." },
       { w: 5, mod: "proto", ready: true, milestone: false, sub: "Sub-CPMK 3.1", weight: "2% (Lab-3)", title: "Komunikasi HTTP/REST & WebSocket Full-Duplex", desc: "Semantik HTTP (RFC 9110), polling vs push, WebSocket (RFC 6455), FastAPI server, & inspeksi paket Wireshark." },
-      { w: 6, mod: "proto", ready: false, milestone: false, sub: "Sub-CPMK 3.2", weight: "2% (Lab-4)", title: "Arsitektur Broker & Protokol Publish/Subscribe MQTT", desc: "MQTT 3.1.1 & 5.0, desain hierarki topik, wildcard, QoS 0/1/2, Retained Message, LWT, Mosquitto & EMQX." },
+      { w: 6, mod: "proto", ready: true, milestone: false, sub: "Sub-CPMK 3.2", weight: "2% (Lab-4)", title: "Arsitektur Broker & Protokol Publish/Subscribe MQTT", desc: "MQTT 3.1.1 & 5.0, desain hierarki topik, wildcard, QoS 0/1/2, Retained Message, LWT, Mosquitto & EMQX." },
       { w: 7, mod: "proto", ready: false, milestone: true, sub: "Sub-CPMK 3.3", weight: "7% (Lab-5 2% + Kuis-1 5%)", title: "Protokol CoAP & Benchmarking Eksperimental", desc: "CoAP di atas UDP (CON/NON, Observe), perbandingan MQTT–CoAP–HTTP–WS dengan tc netem, & Kuis-1." },
       { w: 8, mod: "proto", ready: false, milestone: true, sub: "Evaluasi Tengah Semester", weight: "15% (UTS)", title: "UTS Berbasis Kasus Terintegrasi & Uji Praktik", desc: "Analisis Kasus G (Rantai Dingin Ikan Pulau Baai) & ujian praktik individu troubleshooting perangkat–broker." },
       { w: 9, mod: "cloudsec", ready: false, milestone: true, sub: "Sub-CPMK 4.1 & 7.2", weight: "17% (M2 15% + Lab-6 2%)", title: "RESTful API (OpenAPI 3.1), Ingestion, & Demo M2", desc: "Prinsip REST, validasi Pydantic, jembatan MQTT→API/DB, pengujian Postman/pytest, & Demo Milestone 2." },
@@ -2102,6 +2164,144 @@ lib_deps =
 DHT sensor library
 Adafruit Unified Sensor
 WebSockets`
+        }
+      },
+      lab4: {
+        title: "⚡ Starter Kit Mosquitto & Wokwi — Praktikum Minggu 6 (Lab-4 MQTT)",
+        folder: "lab_minggu_06_mqtt_mosquitto/ (lihat docker-compose.yml, python_tools/ & esp32_wokwi/)",
+        files: {
+          main: `#include <Arduino.h>
+#include <WiFi.h>
+#include <PubSubClient.h>
+#include <ArduinoJson.h>
+#include <DHT.h>
+
+const char* WIFI_SSID   = "Wokwi-GUEST";
+const char* WIFI_PASS   = "";
+const char* MQTT_BROKER = "broker.hivemq.com"; // Atau IP lokal Mosquitto Docker
+const uint16_t MQTT_PORT = 1883;
+const char* GROUP_ID    = "tim01";             // Ganti sesuai nomor tim PjBL Anda!
+const char* NODE_ID     = "node-01";
+
+#define PIN_DHT       4
+#define PIN_SOIL_ADC  34
+#define PIN_PUMP_LED  26
+
+DHT dht(PIN_DHT, DHT22);
+WiFiClient espClient;
+PubSubClient mqtt(espClient);
+String topicStatus, topicTelemetry, topicCmdPump, topicAckPump;
+bool pumpOn = false;
+uint32_t seqCounter = 0, lastPubMs = 0, lastReconnectMs = 0;
+
+void applyPump(bool state) {
+  pumpOn = state;
+  digitalWrite(PIN_PUMP_LED, pumpOn ? HIGH : LOW);
+  Serial.printf("[AKTUATOR] Pompa Irigasi -> %s\\n", pumpOn ? "ON" : "OFF");
+}
+
+void onMqttMessage(char* topic, byte* payload, unsigned int length) {
+  String msg;
+  for (unsigned int i = 0; i < length; i++) msg += (char)payload[i];
+  msg.trim();
+  Serial.printf("[MQTT-SUB] %s => %s\\n", topic, msg.c_str());
+  if (String(topic) == topicCmdPump) {
+    if (msg.equalsIgnoreCase("ON") || msg.indexOf("\\"ON\\"") >= 0) applyPump(true);
+    else if (msg.equalsIgnoreCase("OFF") || msg.indexOf("\\"OFF\\"") >= 0) applyPump(false);
+    JsonDocument ack;
+    ack["node_id"] = NODE_ID; ack["pump_state"] = pumpOn ? "ON" : "OFF";
+    String out; serializeJson(ack, out);
+    mqtt.publish(topicAckPump.c_str(), out.c_str(), false);
+  }
+}
+
+bool reconnectMqttNonBlocking() {
+  String clientId = String("unib-") + GROUP_ID + "-" + NODE_ID + "-" + String((uint32_t)ESP.getEfuseMac(), HEX);
+  String lwtMsg = String("{\\"node_id\\":\\"") + NODE_ID + "\\",\\"status\\":\\"offline\\",\\"reason\\":\\"lwt\\"}";
+  if (mqtt.connect(clientId.c_str(), topicStatus.c_str(), 1, true, lwtMsg.c_str())) {
+    String onlineMsg = String("{\\"node_id\\":\\"") + NODE_ID + "\\",\\"status\\":\\"online\\"}";
+    mqtt.publish(topicStatus.c_str(), onlineMsg.c_str(), true); // Retained!
+    mqtt.subscribe(topicCmdPump.c_str(), 1);
+    Serial.printf("[MQTT] Terhubung & subscribe: %s\\n", topicCmdPump.c_str());
+    return true;
+  }
+  return false;
+}
+
+void setup() {
+  Serial.begin(115200);
+  pinMode(PIN_PUMP_LED, OUTPUT);
+  analogReadResolution(12);
+  dht.begin();
+  String base = String("unib/") + GROUP_ID + "/rejang-lebong/kebun-kopi/" + NODE_ID;
+  topicStatus = base + "/status"; topicTelemetry = base + "/telemetry";
+  topicCmdPump = base + "/cmd/pump"; topicAckPump = base + "/ack/pump";
+  WiFi.begin(WIFI_SSID, WIFI_PASS);
+  while (WiFi.status() != WL_CONNECTED) delay(250);
+  mqtt.setServer(MQTT_BROKER, MQTT_PORT);
+  mqtt.setKeepAlive(15);
+  mqtt.setBufferSize(512);
+  mqtt.setCallback(onMqttMessage);
+}
+
+void loop() {
+  if (!mqtt.connected()) {
+    if (millis() - lastReconnectMs >= 4000) { lastReconnectMs = millis(); reconnectMqttNonBlocking(); }
+  } else mqtt.loop();
+  if (mqtt.connected() && (millis() - lastPubMs >= 5000)) {
+    lastPubMs = millis(); seqCounter++;
+    float t = dht.readTemperature(); if (isnan(t)) t = 24.5f;
+    float h = dht.readHumidity(); if (isnan(h)) h = 78.0f;
+    float soil = (analogRead(PIN_SOIL_ADC) / 4095.0f) * 100.0f;
+    JsonDocument doc;
+    doc["node_id"] = NODE_ID; doc["seq"] = seqCounter;
+    doc["temp_c"] = t; doc["hum_pct"] = h; doc["soil_moisture_pct"] = soil;
+    doc["pump_state"] = pumpOn ? "ON" : "OFF";
+    String payload; serializeJson(doc, payload);
+    mqtt.publish(topicTelemetry.c_str(), payload.c_str(), false);
+    Serial.printf("[MQTT-PUB #%lu] %s -> %s\\n", seqCounter, topicTelemetry.c_str(), payload.c_str());
+  }
+}`,
+          diagram: `{
+  "version": 1,
+  "author": "Tim PjBL Informatika UNIB - Lab 4 (Minggu 6 MQTT)",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "wokwi-esp32-devkit-v1", "id": "esp", "top": 0, "left": 0, "attrs": {} },
+    { "type": "wokwi-dht22", "id": "dht1", "top": -60, "left": -150, "attrs": {} },
+    { "type": "wokwi-potentiometer", "id": "potSoil", "top": 110, "left": -160, "attrs": { "label": "Soil Moisture" } },
+    { "type": "wokwi-led", "id": "ledPump", "top": 55, "left": 180, "attrs": { "color": "green", "label": "Irigasi Tetes" } },
+    { "type": "wokwi-resistor", "id": "rPump", "top": 105, "left": 175, "attrs": { "value": "220" } }
+  ],
+  "connections": [
+    [ "esp:TX0", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX0", "$serialMonitor:TX", "", [] ],
+    [ "dht1:VCC", "esp:3V3", "red", [] ],
+    [ "dht1:GND", "esp:GND.1", "black", [] ],
+    [ "dht1:SDA", "esp:D4", "green", [] ],
+    [ "potSoil:VCC", "esp:3V3", "red", [] ],
+    [ "potSoil:GND", "esp:GND.1", "black", [] ],
+    [ "potSoil:SIG", "esp:D34", "blue", [] ],
+    [ "esp:D26", "rPump:1", "orange", [] ],
+    [ "rPump:2", "ledPump:A", "orange", [] ],
+    [ "ledPump:C", "esp:GND.2", "black", [] ]
+  ],
+  "dependencies": {}
+}`,
+          pio: `[env:esp32doit-devkit-v1]
+platform = espressif32
+board = esp32doit-devkit-v1
+framework = arduino
+monitor_speed = 115200
+lib_deps =
+    knolleary/PubSubClient @ ^2.8
+    bblanchon/ArduinoJson @ ^7.0.4
+    adafruit/DHT sensor library @ ^1.4.6
+    adafruit/Adafruit Unified Sensor @ ^1.11.14`,
+          libs: `PubSubClient
+ArduinoJson
+DHT sensor library
+Adafruit Unified Sensor`
         }
       }
     };
