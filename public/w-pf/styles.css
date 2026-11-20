@@ -1498,6 +1498,10 @@ dialog::backdrop {
   border: 1px solid var(--border-subtle);
 }
 
+.companion-files-top {
+  margin-block: 0 1.75rem;
+}
+
 .file-pills {
   display: flex;
   flex-wrap: wrap;

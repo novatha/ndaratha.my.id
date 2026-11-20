@@ -35,6 +35,7 @@
             <li><a href="#galeri">Galeri</a></li>
             <li><a href="#repositori">Kode Python</a></li>
             <li><a href="#evaluasi">Kuis &amp; Capstone</a></li>
+            <li><a href="#publikasi-l2">PDF &amp; Level 2</a></li>
           </ul>
         </nav>
         <button type="button" id="theme-toggle" class="theme-toggle">
@@ -68,8 +69,9 @@
           </p>
           <div class="hero-actions">
             <a href="#simulator" class="btn btn-primary">Jelajahi Simulator IEEE 14-Bus</a>
-            <a href="Buku_Panduan_Pelatihan_Power_Flow_Python.md" class="btn btn-secondary">Buka Buku Panduan (.md)</a>
-            <a href="hasil/n1_ranking.csv" class="btn btn-secondary">Unduh Ranking N-1 (.csv)</a>
+            <a href="publikasi/Buku_Ajar_Analisis_Aliran_Daya_Python.pdf" class="btn btn-secondary">Unduh Buku Ajar (.pdf)</a>
+            <a href="Buku_Panduan_Pelatihan_Power_Flow_Python.md" class="btn btn-secondary">Buku Panduan (.md)</a>
+            <a href="hasil/n1_ranking.csv" class="btn btn-secondary">Ranking N-1 (.csv)</a>
           </div>
           <ul class="metrics-strip" role="list">
             <li class="metric-card">
@@ -886,6 +888,79 @@ finally:
             <h3>Studi Hosting Capacity PLTS Terdistribusi (PV Hosting)</h3>
             <p>Injeksi bertahap pembangkit surya pada Bus 10, 13, dan 14 untuk menemukan kapasitas maksimum MW sebelum muncul pelanggaran <em>overvoltage</em> <code>&gt; 1,05 p.u.</code> atau arus balik termal.</p>
           </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== PUBLIKASI PDF & SERI LANJUTAN LEVEL 2 ==================== -->
+    <section id="publikasi-l2" class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Publikasi PDF (Buku Ajar &amp; Slide Beamer) &amp; Seri Lanjutan Level 2</h2>
+          <p>
+            Seluruh panduan telah dikompilasi ke format buku ajar LaTeX/PDF dan 4 dek slide presentasi Beamer per modul, disertai jalur lanjutan <strong>Level 2 (24 JP)</strong> yang mencakup <em>AC-OPF</em>, <em>PV Hosting Capacity</em>, dan skrining kontinjensi ganda <em>N-2</em> berbasis risiko.
+          </p>
+        </div>
+
+        <div class="companion-files companion-files-top">
+          <h3>Unduh Buku Ajar PDF, Slide Presentasi Beamer &amp; Berkas Level 2</h3>
+          <ul class="file-pills" role="list">
+            <li><a href="publikasi/Buku_Ajar_Analisis_Aliran_Daya_Python.pdf">📘 Buku Ajar Lengkap (.pdf)</a></li>
+            <li><a href="publikasi/slides_modul1.pdf">🎞️ Slide Modul 1: Ybus (.pdf)</a></li>
+            <li><a href="publikasi/slides_modul2.pdf">🎞️ Slide Modul 2: NR &amp; Q-Limit (.pdf)</a></li>
+            <li><a href="publikasi/slides_modul3.pdf">🎞️ Slide Modul 3: pandapower (.pdf)</a></li>
+            <li><a href="publikasi/slides_modul4.pdf">🎞️ Slide Modul 4: N-1 &amp; Level 2 (.pdf)</a></li>
+            <li><a href="level2/Kurikulum_Level2_Power_Flow_Lanjutan.md">📄 Silabus Level 2 (.md)</a></li>
+            <li><a href="level2/level2_advanced_studies.py">🐍 level2_advanced_studies.py</a></li>
+            <li><a href="level2/hasil/n2_risk_ranking.csv">📊 Ranking Risiko N-2 (.csv)</a></li>
+          </ul>
+        </div>
+
+        <div class="gallery-grid">
+          <figure class="gallery-card">
+            <img
+              src="figures/level2_opf_comparison.png"
+              alt="Perbandingan redistribusi pembangkitan aktif dan profil tegangan antara Base Case PF dan solusi AC-OPF pada sistem uji IEEE 14-Bus."
+              width="3450"
+              height="1290"
+              loading="lazy"
+            >
+            <figcaption>
+              <span class="gallery-title">Modul L2-1: AC-OPF &amp; Locational Marginal Pricing</span>
+              <p class="gallery-desc">Biaya turun <code>$8.170 → $8.082/jam</code> (−1,08%), rugi daya anjlok <strong>−29,3%</strong> ke <code>9,47 MW</code>, dengan LMP <code>$36,92–$41,52/MWh</code>.</p>
+              <button type="button" class="zoom-btn" data-img-src="figures/level2_opf_comparison.png" data-img-w="3450" data-img-h="1290" data-img-title="Modul L2-1: Perbandingan Base Case PF vs AC-OPF IEEE 14-Bus" data-img-desc="Dihasilkan oleh level2/level2_advanced_studies.py: AC-OPF menurunkan biaya operasi 1,08% dan memangkas rugi daya aktif dari 13,39 MW menjadi 9,47 MW sambil menjaga seluruh tegangan dalam [0,95; 1,06] p.u.">Perbesar Grafik <span class="visually-hidden">Perbandingan AC-OPF IEEE 14-Bus</span></button>
+            </figcaption>
+          </figure>
+
+          <figure class="gallery-card">
+            <img
+              src="figures/level2_pv_hosting_capacity.png"
+              alt="Kurva kenaikan tegangan dan kurva berbentuk-U rugi transmisi total terhadap injeksi PLTS pada Bus 10, Bus 13, dan Bus 14."
+              width="3450"
+              height="1290"
+              loading="lazy"
+            >
+            <figcaption>
+              <span class="gallery-title">Modul L2-2: Studi PV Hosting Capacity (Bus 10, 13, 14)</span>
+              <p class="gallery-desc">Kapasitas hosting aman (≤1,06 p.u.): <strong>Bus 10 = 10 MW</strong>, <strong>Bus 13 = 20 MW</strong>, <strong>Bus 14 = 25 MW</strong> beserta kurva-U rugi transmisi.</p>
+              <button type="button" class="zoom-btn" data-img-src="figures/level2_pv_hosting_capacity.png" data-img-w="3450" data-img-h="1290" data-img-title="Modul L2-2: Kurva PV Hosting Capacity & Rugi Transmisi IEEE 14-Bus" data-img-desc="Dihasilkan oleh level2/level2_advanced_studies.py: memetakan ambang overvoltage 1,06 p.u. dan perubahan rugi transmisi saat penetrasi PLTS meningkat di Bus 10, 13, dan 14.">Perbesar Grafik <span class="visually-hidden">Kurva PV Hosting Capacity IEEE 14-Bus</span></button>
+            </figcaption>
+          </figure>
+
+          <figure class="gallery-card">
+            <img
+              src="figures/level2_n2_risk_top15.png"
+              alt="Grafik batang 15 skenario kontinjensi ganda N-2 dengan Indeks Risiko tertinggi dari 190 pasangan cabang IEEE 14-Bus."
+              width="3150"
+              height="1560"
+              loading="lazy"
+            >
+            <figcaption>
+              <span class="gallery-title">Modul L2-3: Skrining Risiko Kontinjensi Ganda N-2 (190 Pasangan)</span>
+              <p class="gallery-desc">Mendeteksi <strong>27 skenario islanding</strong>; risiko tertinggi pada <code>L1-2 + L1-5</code> (13 bus terisolasi) dan <code>L9-14 + L13-14</code>.</p>
+              <button type="button" class="zoom-btn" data-img-src="figures/level2_n2_risk_top15.png" data-img-w="3150" data-img-h="1560" data-img-title="Modul L2-3: 15 Skenario Kontinjensi N-2 Berisiko Tertinggi" data-img-desc="Dihasilkan oleh level2/level2_advanced_studies.py dari 190 kombinasi pasangan cabang IEEE 14-Bus menggunakan Indeks Risiko RI = p_i * p_j * (PI_S + PI_V + penalti islanding).">Perbesar Grafik <span class="visually-hidden">Top 15 Skenario Risiko Kontinjensi N-2</span></button>
+            </figcaption>
+          </figure>
         </div>
       </div>
     </section>
