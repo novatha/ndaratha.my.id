@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analisis Aliran Daya Python — Portal Kurikulum, Simulator IEEE 14-Bus &amp; Kontinjensi N-1</title>
+  <meta name="description" content="Portal pelatihan teknis intensif Analisis Aliran Daya (Power Flow Analysis) Menggunakan Python: pemodelan Ybus sparse, Newton-Raphson polar from-scratch, otomasi pandapower, dan skrining kontinjensi N-1.">
+  <!-- MANDATORY: Deklarasi skema warna terang & gelap dan pencegahan FOUC minimal -->
+  <meta name="color-scheme" content="light dark">
+  <script>
+    try {
+      const savedScheme = localStorage.getItem("color-scheme");
+      if (savedScheme === "light" || savedScheme === "dark") {
+        document.querySelector('meta[name="color-scheme"]').content = savedScheme;
+      }
+    } catch {}
+  </script>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <a href="#judul-utama" class="skip-link visually-hidden">Lewati ke konten utama</a>
+    <div class="container header-inner">
+      <a href="#judul-utama" class="brand">
+        <span class="brand-mark" aria-hidden="true">PF</span>
+        <span>Pelatihan Aliran Daya Python</span>
+      </a>
+      <div class="nav-wrap">
+        <nav class="primary-nav" aria-label="Utama">
+          <ul>
+            <li><a href="#kurikulum">Kurikulum</a></li>
+            <li><a href="#simulator">Simulator 14-Bus</a></li>
+            <li><a href="#kontinjensi">Tabel N-1</a></li>
+            <li><a href="#galeri">Galeri</a></li>
+            <li><a href="#repositori">Kode Python</a></li>
+            <li><a href="#evaluasi">Kuis &amp; Capstone</a></li>
+          </ul>
+        </nav>
+        <button type="button" id="theme-toggle" class="theme-toggle">
+          <span class="theme-option theme-to-dark">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
+            </svg>
+            <span>Mode Gelap</span>
+          </span>
+          <span class="theme-option theme-to-light">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <circle cx="12" cy="12" r="4"/>
+              <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+            </svg>
+            <span>Mode Terang</span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ==================== HERO ==================== -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <p class="eyebrow">Workshop Teknis Intensif · 32 Jam Pelatihan (4 Hari)</p>
+          <h1 id="judul-utama" tabindex="-1">Analisis Aliran Daya (Power Flow Analysis) Menggunakan Python: Dari Algoritma Numerik hingga Aplikasi Industri</h1>
+          <p class="hero-lead">
+            Program pelatihan terstruktur bagi mahasiswa tingkat akhir, peneliti, dan praktisi sistem tenaga listrik. Menjembatani perumusan matriks admitansi sparse <code>scipy.sparse.csr_matrix</code> dan algoritma Newton-Raphson polar <em>from-scratch</em> hingga otomasi skrining keamanan kontinjensi <em>N-1</em> berbasis <code>pandapower</code>.
+          </p>
+          <div class="hero-actions">
+            <a href="#simulator" class="btn btn-primary">Jelajahi Simulator IEEE 14-Bus</a>
+            <a href="Buku_Panduan_Pelatihan_Power_Flow_Python.md" class="btn btn-secondary">Buka Buku Panduan (.md)</a>
+            <a href="hasil/n1_ranking.csv" class="btn btn-secondary">Unduh Ranking N-1 (.csv)</a>
+          </div>
+          <ul class="metrics-strip" role="list">
+            <li class="metric-card">
+              <span class="metric-value">4 Modul</span>
+              <span class="metric-label">Taksonomi Bloom C2–C6 (40% Teori, 60% Lab)</span>
+            </li>
+            <li class="metric-card">
+              <span class="metric-value">4,44×10⁻¹⁶</span>
+              <span class="metric-label">Selisih maks. |ΔV| p.u. vs solver pandapower</span>
+            </li>
+            <li class="metric-card">
+              <span class="metric-value">4 Iterasi</span>
+              <span class="metric-label">Konvergensi kuadratik NR pada IEEE 14-Bus</span>
+            </li>
+            <li class="metric-card">
+              <span class="metric-value">20 Cabang</span>
+              <span class="metric-label">Skrining N-1 penuh (17 saluran + 3 trafo)</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="hero-aside">
+          <figure class="hero-figure">
+            <img
+              src="figures/topologi_base.png"
+              alt="Diagram topologi jaringan IEEE 14-Bus kondisi dasar dengan distribusi profil tegangan per-unit dan tingkat pembebanan cabang normal di bawah 80 persen."
+              width="1500"
+              height="1300"
+              fetchpriority="high"
+            >
+            <figcaption>
+              <strong>Gambar Utama:</strong> Topologi IEEE 14-Bus kondisi dasar (rugi aktif total 13,3933 MW atau 5,17% beban 259,0 MW).
+            </figcaption>
+          </figure>
+
+          <div class="quickstart-box">
+            <div class="code-toolbar">
+              <span>Eksekusi Cepat di Terminal Lokal</span>
+              <button type="button" class="copy-btn" data-copy-target="cmd-quickstart" aria-label="Salin Kode perintah eksekusi cepat">Salin Kode</button>
+            </div>
+            <pre tabindex="0"><code id="cmd-quickstart">python3 ybus.py
+python3 newton_raphson.py
+MPLCONFIGDIR=/tmp python3 pandapower_workflow.py</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== KURIKULUM 4 MODUL ==================== -->
+    <section id="kurikulum" class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Struktur Pelatihan 4 Hari &amp; Kurikulum Inti</h2>
+          <p>
+            Setiap modul dirancang dengan alur pedagogis <em>white-box ke production-grade</em>: peserta membangun intuisi numerik melalui NumPy/SciPy sebelum mengotomatisasi studi skala jaringan nyata. Seluruh isi modul di bawah tetap terindeks oleh fitur <em>Find in Page</em> (<kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>F</kbd>).
+          </p>
+        </div>
+
+        <ol class="schedule-grid" role="list">
+          <li class="schedule-card">
+            <span class="day-tag">Hari 1 · 8 Jam</span>
+            <h3>Modul 1: Pemodelan &amp; Ybus Sparse</h3>
+            <p>Sistem per-unit, model saluran nominal-π, trafo bertap kompleks &amp; geser fasa, serta perakitan <code>csr_matrix</code>.</p>
+          </li>
+          <li class="schedule-card">
+            <span class="day-tag">Hari 2 · 8 Jam</span>
+            <h3>Modul 2: Solver Numerik From-Scratch</h3>
+            <p>Formulasi polar Newton-Raphson, 4 sub-matriks Jacobian, penegakan Q-limit PV↔PQ, FDLF-XB, dan Gauss-Seidel.</p>
+          </li>
+          <li class="schedule-card">
+            <span class="day-tag">Hari 3 · 8 Jam</span>
+            <h3>Modul 3: Otomasi Skala Industri</h3>
+            <p>Konversi fisik parameter per-unit IEEE 14-Bus ke satuan SI DataFrame <code>pandapower</code> dan audit neraca daya.</p>
+          </li>
+          <li class="schedule-card">
+            <span class="day-tag">Hari 4 · 8 Jam</span>
+            <h3>Modul 4: Kontinjensi N-1 &amp; Capstone</h3>
+            <p>Skrining cepat pelepasan tunggal tanpa <code>deepcopy</code>, indeks keparahan komposit <em>PI</em>, dan mitigasi pelanggaran.</p>
+          </li>
+        </ol>
+
+        <div class="accordion-group">
+          <!-- MODUL 1 -->
+          <details class="module-disclosure" name="kurikulum-modul" open>
+            <summary>
+              <span class="summary-main">
+                <span class="module-num">MODUL 1</span>
+                <span>Pemodelan Jaringan &amp; Pembentukan Matriks Admitansi Bus (Ybus)</span>
+                <span class="summary-meta">8 JP · NumPy &amp; SciPy Sparse</span>
+              </span>
+              <span class="summary-chevron" aria-hidden="true">▾</span>
+            </summary>
+            <div class="module-body">
+              <div class="module-panel">
+                <h3>(a) Tujuan Pembelajaran</h3>
+                <ul>
+                  <li><span class="bloom-badge">C2</span> Menjelaskan peran fisik dan variabel diketahui/tak-diketahui pada Slack Bus, PV Bus, dan PQ Bus.</li>
+                  <li><span class="bloom-badge">C3</span> Menurunkan model untai dua-kutub saluran transmisi nominal-π dan transformator ber-rasio kompleks <em>a = t·e<sup>jθ</sup></em>.</li>
+                  <li><span class="bloom-badge">C4</span> Menganalisis asimetri matriks <em>Y<sub>bus</sub></em> akibat transformator penggeser fasa (<em>phase-shifting transformer</em>).</li>
+                  <li><span class="bloom-badge">C5</span> Membangun fungsi <code>build_ybus()</code> berformat <code>scipy.sparse.csr_matrix</code> dengan pemetaan nomor bus eksternal tak-berurutan.</li>
+                </ul>
+              </div>
+              <div class="module-panel">
+                <h3>(b) Ringkasan Teori &amp; Persamaan Utama</h3>
+                <p>Hubungan arus injeksi nodal <strong>I = Y<sub>bus</sub> V</strong> untuk cabang antara bus <em>f</em> (sisi tap) dan bus <em>t</em> dengan admitansi seri <em>y<sub>s</sub> = (R + jX)<sup>−1</sup></em> serta <em>charging</em> <em>B<sub>c</sub></em>:</p>
+                <div class="equation-box">
+                  Y<sub>ff</sub> = (y<sub>s</sub> + j B<sub>c</sub>/2) / |a|², &nbsp; Y<sub>ft</sub> = −y<sub>s</sub> / a*, &nbsp; Y<sub>tf</sub> = −y<sub>s</sub> / a, &nbsp; Y<sub>tt</sub> = y<sub>s</sub> + j B<sub>c</sub>/2
+                </div>
+                <p>Pada sistem besar ribuan bus, lebih dari 99% entri bernilai nol sehingga struktur COO→CSR memangkas memori dari <em>O(N²)</em> menjadi <em>O(N + L)</em>.</p>
+              </div>
+              <div class="module-panel">
+                <h3>(c) Rencana Tugas Lab &amp; Checkpoint</h3>
+                <ol>
+                  <li>Verifikasi pemetaan indeks <code>bus_map</code> menggunakan nomor bus acak <code>[101, 205, 309, 412, 9001]</code>.</li>
+                  <li>Rakit <em>Y<sub>bus</sub>, Y<sub>f</sub>, Y<sub>t</sub></em> pada IEEE 14-Bus (14 bus, 20 cabang termasuk 3 trafo off-nominal).</li>
+                  <li>Uji konsistensi daya kompleks cabang terhadap <code>S_bus = V * conj(Y_bus @ V)</code>.</li>
+                </ol>
+                <div class="checkpoint-note">
+                  <strong>✓ Checkpoint Mandiri:</strong> Pada IEEE 14-Bus, <code>nnz(Y_bus) = 54</code> (sparsitas 72,45%), <code>Y_bus[0,0] = 6,0250 − j19,4471 p.u.</code>, dan norma asimetri <code>‖Y − Yᵀ‖∞ = 0,0</code> karena ketiga trafo memiliki <code>SHIFT = 0°</code>.
+                </div>
+              </div>
+              <div class="module-panel">
+                <h3>(d) Rubrik Evaluasi Praktikum</h3>
+                <ul>
+                  <li><strong>Sangat Baik (4):</strong> 100% vektorisasi COO→CSR tanpa loop eksplisit elemen matriks, mendukung multi-cabang paralel &amp; nomor bus tak-berurutan.</li>
+                  <li><strong>Baik (3):</strong> Elemen diagonal, off-diagonal, tap rasio, dan shunt akurat; masih memakai loop cabang sederhana.</li>
+                  <li><strong>Cukup (2):</strong> Akurat untuk saluran murni namun keliru membagi <code>|a|²</code> pada sisi tap trafo.</li>
+                  <li><strong>Kurang (1):</strong> Matriks padat (dense) dengan galat tanda admitansi seri/shunt.</li>
+                </ul>
+              </div>
+            </div>
+          </details>
+
+          <!-- MODUL 2 -->
+          <details class="module-disclosure" name="kurikulum-modul">
+            <summary>
+              <span class="summary-main">
+                <span class="module-num">MODUL 2</span>
+                <span>Implementasi Algoritma Numerik Aliran Daya From-Scratch</span>
+                <span class="summary-meta">8 JP · Polar NR, Q-Limit, FDLF &amp; GS</span>
+              </span>
+              <span class="summary-chevron" aria-hidden="true">▾</span>
+            </summary>
+            <div class="module-body">
+              <div class="module-panel">
+                <h3>(a) Tujuan Pembelajaran</h3>
+                <ul>
+                  <li><span class="bloom-badge">C3</span> Memformulasikan injeksi daya polar <em>P<sub>i</sub>(θ,|V|), Q<sub>i</sub>(θ,|V|)</em> serta vektor mismatch berdimensi <em>(N<sub>pv</sub> + 2N<sub>pq</sub>)</em>.</li>
+                  <li><span class="bloom-badge">C4</span> Menyusun keempat blok matriks Jacobian <em>J<sub>1</sub>, J<sub>2</sub>, J<sub>3</sub>, J<sub>4</sub></em> dan mendiagnosis singularitas jaringan sakit (<em>ill-conditioned</em>).</li>
+                  <li><span class="bloom-badge">C5</span> Mengimplementasikan switching <em>PV → PQ</em> (pelanggaran terbesar per siklus) dan <em>PQ → PV</em> (komplementaritas AVR).</li>
+                  <li><span class="bloom-badge">C5</span> Mengevaluasi trade-off kecepatan vs ketahanan rasio <em>R/X</em> antara NR, FDLF-XB, dan Gauss-Seidel.</li>
+                </ul>
+              </div>
+              <div class="module-panel">
+                <h3>(b) Ringkasan Teori &amp; Persamaan Utama</h3>
+                <p>Persamaan koreksi linier Newton-Raphson per iterasi menggunakan solver langsung sparse <code>spsolve(J, mismatch)</code>:</p>
+                <div class="equation-box">
+                  [ ΔP<sub>PV∪PQ</sub> ; ΔQ<sub>PQ</sub> ] = [ J<sub>1</sub> (∂P/∂θ) &nbsp; J<sub>2</sub> (∂P/∂|V|) ; J<sub>3</sub> (∂Q/∂θ) &nbsp; J<sub>4</sub> (∂Q/∂|V|) ] · [ Δθ<sub>PV∪PQ</sub> ; Δ|V|<sub>PQ</sub> ]
+                </div>
+                <p>Elemen diagonal menggunakan identitas hemat komputasi: <em>∂P<sub>i</sub>/∂θ<sub>i</sub> = −Q<sub>i</sub> − B<sub>ii</sub>|V<sub>i</sub>|²</em> dan <em>∂Q<sub>i</sub>/∂|V<sub>i</sub>| = Q<sub>i</sub>/|V<sub>i</sub>| − B<sub>ii</sub>|V<sub>i</sub>|</em>.</p>
+              </div>
+              <div class="module-panel">
+                <h3>(c) Rencana Tugas Lab &amp; Checkpoint</h3>
+                <ol>
+                  <li>Validasi analitik matriks Jacobian terhadap beda hingga terpusat (<em>central finite-difference</em> <code>ε = 10⁻⁷</code>).</li>
+                  <li>Uji penegakan batas reaktif Bus 8 dengan menurunkan <code>Q_max</code> menjadi <code>10 MVAr</code>.</li>
+                  <li>Bandingkan kurva konvergensi NR, FDLF-XB, dan Gauss-Seidel (<code>α = 1,6</code>) pada rasio <em>R/X</em> meningkat.</li>
+                </ol>
+                <div class="checkpoint-note">
+                  <strong>✓ Checkpoint Mandiri:</strong> Galat Jacobian <code>&lt; 10⁻⁸</code>; mismatch NR IEEE 14-Bus turun kuadratik <code>9,22e-1 → 1,01e-1 → 7,10e-4 → 5,98e-8 → 4,15e-15 p.u.</code> (4 iterasi); saat <code>Q_max,8 = 10 MVAr</code>, <code>|V_8|</code> turun dari <code>1,0900</code> ke <code>1,0675 p.u.</code>
+                </div>
+              </div>
+              <div class="module-panel">
+                <h3>(d) Rubrik Evaluasi Praktikum</h3>
+                <ul>
+                  <li><strong>Sangat Baik (4):</strong> Konvergensi kuadratik mencapai <code>&lt; 10⁻⁸ p.u.</code>, mendukung multi-generator per bus (<code>np.add.at</code>), PV↔PQ dua arah, dan deteksi Jacobian singular.</li>
+                  <li><strong>Baik (3):</strong> Konvergen akurat dan mendukung switching satu arah PV→PQ tanpa osilasi.</li>
+                  <li><strong>Cukup (2):</strong> Konvergen lambat (linier) akibat kekeliruan salah satu tanda suku diagonal Jacobian.</li>
+                  <li><strong>Kurang (1):</strong> Indeks Slack/PV/PQ tertukar sehingga ukuran Jacobian tidak konsisten.</li>
+                </ul>
+              </div>
+            </div>
+          </details>
+
+          <!-- MODUL 3 -->
+          <details class="module-disclosure" name="kurikulum-modul">
+            <summary>
+              <span class="summary-main">
+                <span class="module-num">MODUL 3</span>
+                <span>Otomasi &amp; Skala Industri Menggunakan pandapower</span>
+                <span class="summary-meta">8 JP · Konversi Satuan SI &amp; Audit Losses</span>
+              </span>
+              <span class="summary-chevron" aria-hidden="true">▾</span>
+            </summary>
+            <div class="module-body">
+              <div class="module-panel">
+                <h3>(a) Tujuan Pembelajaran</h3>
+                <ul>
+                  <li><span class="bloom-badge">C3</span> Mengonversi parameter per-unit IEEE 14-Bus ke satuan fisik SI (Ω/km, nF/km, kA, %u<sub>k</sub>, %u<sub>kr</sub>) pada tabel <code>pandapower</code>.</li>
+                  <li><span class="bloom-badge">C4</span> Membedakan konvensi perhitungan <code>loading_percent</code> berbasis arus maksimum (<em>I/I<sub>max</sub></em>) dibanding daya semu (<em>S/S<sub>rate</sub></em>).</li>
+                  <li><span class="bloom-badge">C5</span> Memvalidasi silang hasil tegangan dan aliran cabang solver <em>from-scratch</em> terhadap <code>pp.runpp()</code> hingga presisi mesin.</li>
+                </ul>
+              </div>
+              <div class="module-panel">
+                <h3>(b) Ringkasan Teori &amp; Persamaan Utama</h3>
+                <p>Transformasi impedansi basis <em>Z<sub>base</sub> = V<sub>n,kV</sub>² / S<sub>base,MVA</sub></em> dan pemetaan tap trafo sisi HV:</p>
+                <div class="equation-box">
+                  R<sub>Ω</sub> = r<sub>pu</sub> · Z<sub>base</sub>, &nbsp; C<sub>nF</sub> = [ b<sub>pu</sub> / (2π f Z<sub>base</sub>) ] · 10⁹, &nbsp; u<sub>k</sub>(%) = 100 · √(r<sub>pu</sub>² + x<sub>pu</sub>²) · (S<sub>n,trafo</sub> / S<sub>base</sub>)
+                </div>
+                <p>Neraca daya sistem wajib memenuhi konservasi: <em>∑ P<sub>gen</sub> − ∑ P<sub>load</sub> − ∑ P<sub>shunt</sub> = ∑ P<sub>loss,line+trafo</sub></em>.</p>
+              </div>
+              <div class="module-panel">
+                <h3>(c) Rencana Tugas Lab &amp; Checkpoint</h3>
+                <ol>
+                  <li>Bangun jaringan IEEE 14-Bus di <code>pandapower</code> (<code>ext_grid</code>, <code>gen</code>, <code>load</code>, <code>shunt</code>, <code>line</code>, <code>trafo</code>).</li>
+                  <li>Eksekusi <code>pp.runpp(net, enforce_q_lims=False)</code> dan <code>enforce_q_lims=True</code>.</li>
+                  <li>Susun tabel audit rugi-rugi aktif dan reaktif 5 cabang paling boros rugi daya.</li>
+                </ol>
+                <div class="checkpoint-note">
+                  <strong>✓ Checkpoint Mandiri:</strong> Deviasi maksimum <code>max|V_scratch − V_pp| = 4,44×10⁻¹⁶ p.u.</code>; injeksi Slack Bus 1 = <code>232,3933 MW</code>; total rugi sistem = <code>13,3933 MW + j30,1224 MVAr</code> (saluran <code>L1-2</code> menyumbang <code>4,298 MW</code> atau 32,1% rugi total).
+                </div>
+              </div>
+              <div class="module-panel">
+                <h3>(d) Rubrik Evaluasi Praktikum</h3>
+                <ul>
+                  <li><strong>Sangat Baik (4):</strong> Selisih tegangan terhadap solver <em>from-scratch</em> <code>&lt; 10⁻⁷ p.u.</code>, neraca daya klop hingga 4 desimal, polaritas tap dan kapasitor Bus 9 tepat.</li>
+                  <li><strong>Baik (3):</strong> Selisih <code>&lt; 10⁻⁴ p.u.</code>; terdapat pembulatan minor pada konversi <code>c_nf_per_km</code>.</li>
+                  <li><strong>Cukup (2):</strong> Jaringan konvergen namun polaritas <code>tap_step_percent</code> atau tanda reaktif shunt terbalik.</li>
+                  <li><strong>Kurang (1):</strong> Gagal konvergen akibat salah level <code>vn_kv</code> pada sisi HV/LV transformator.</li>
+                </ul>
+              </div>
+            </div>
+          </details>
+
+          <!-- MODUL 4 -->
+          <details class="module-disclosure" name="kurikulum-modul">
+            <summary>
+              <span class="summary-main">
+                <span class="module-num">MODUL 4</span>
+                <span>Studi Kasus Nyata &amp; Otomasi Analisis Kontinjensi N-1</span>
+                <span class="summary-meta">8 JP · Keamanan Operasi &amp; Visualisasi</span>
+              </span>
+              <span class="summary-chevron" aria-hidden="true">▾</span>
+            </summary>
+            <div class="module-body">
+              <div class="module-panel">
+                <h3>(a) Tujuan Pembelajaran</h3>
+                <ul>
+                  <li><span class="bloom-badge">C4</span> Mengidentifikasi skenario pelepasan tunggal yang memicu <em>line overload</em> (&gt; 100%), <em>undervoltage</em> (&lt; 0,95 p.u.), dan <em>bus islanding</em>.</li>
+                  <li><span class="bloom-badge">C5</span> Merancang loop skrining N-1 berkecepatan tinggi dengan togel <code>in_service</code> di dalam blok <code>try...finally</code> tanpa duplikasi <code>copy.deepcopy</code>.</li>
+                  <li><span class="bloom-badge">C6</span> Merumuskan peringkat keparahan berbasis <em>Performance Index (PI)</em> dan merancang rekomendasi tindakan korektif operator.</li>
+                </ul>
+              </div>
+              <div class="module-panel">
+                <h3>(b) Ringkasan Teori &amp; Persamaan Utama</h3>
+                <p>Indeks Keparahan Gabungan (<em>Composite Performance Index</em>) untuk pengurutan prioritas kontinjensi <em>k</em>:</p>
+                <div class="equation-box">
+                  PI<sub>k</sub> = ∑<sub>ℓ=1..N<sub>br</sub></sub> (w<sub>ℓ</sub>/2n) · (Loading<sub>ℓ</sub> / 100%)<sup>2n</sup> + ∑<sub>i=1..N<sub>b</sub></sub> (w<sub>v,i</sub>/2n) · [ (|V<sub>i</sub>| − V<sub>nom</sub>) / ΔV<sub>lim</sub> ]<sup>2n</sup>
+                </div>
+                <p>Dengan eksponen penalti <em>n = 2</em> (pangkat 4), pelanggaran berat didorong tajam ke urutan teratas menghindari efek <em>masking</em>.</p>
+              </div>
+              <div class="module-panel">
+                <h3>(c) Rencana Tugas Lab &amp; Checkpoint</h3>
+                <ol>
+                  <li>Jalankan skrining 20 kontinjensi tunggal (17 saluran + 3 transformator) pada IEEE 14-Bus.</li>
+                  <li>Deteksi pulau topologi menggunakan penelusuran keterhubungan graf sebelum/sesudah solver.</li>
+                  <li>Bangkitkan visualisasi heatmap pembebanan 21×20 dan perbandingan topologi kontinjensi terburuk.</li>
+                </ol>
+                <div class="checkpoint-note">
+                  <strong>✓ Checkpoint Mandiri:</strong> 3 kontinjensi terparah adalah <code>L2-3</code> (<code>PI = 95,50</code>, 4 cabang overload), <code>L1-2</code> (<code>PI = 60,05</code>), dan <code>T5-6</code> (<code>PI = 27,04</code>, 7 cabang overload MVA); pelepasan <code>L7-8</code> mengisolasi Bus 8 (<code>ISLANDING</code>).
+                </div>
+              </div>
+              <div class="module-panel">
+                <h3>(d) Rubrik Evaluasi Praktikum</h3>
+                <ul>
+                  <li><strong>Sangat Baik (4):</strong> Loop bebas kebocoran state (<code>try...finally</code> + reset tegangan base case), mendeteksi saluran &amp; trafo serta islanding, visualisasi siap publikasi.</li>
+                  <li><strong>Baik (3):</strong> Skrining saluran akurat dan grafik informatif; belum mengikutsertakan kontinjensi trafo.</li>
+                  <li><strong>Cukup (2):</strong> Menggunakan <code>deepcopy</code> berulang dan gagal menangani kasus tak-konvergen/islanding.</li>
+                  <li><strong>Kurang (1):</strong> Status cabang lupa dipulihkan sehingga kontinjensi terakumulasi menjadi N-k tak sengaja.</li>
+                </ul>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SIMULATOR INTERAKTIF IEEE 14-BUS ==================== -->
+    <section id="simulator" class="section section-alt">
+      <div class="container">
+        <div class="section-header">
+          <h2>Laboratorium Interaktif IEEE 14-Bus &amp; Eksperimen Numerik</h2>
+          <p>
+            Pilih skenario operasi di bawah untuk mengamati respons profil tegangan 14 bus, redistribusi pembebanan cabang, aktivasi batas daya reaktif generator (<em>PV → PQ switching</em>), dan rugi-rugi transmisi berdasarkan hasil eksekusi eksak modul <code>newton_raphson.py</code>. Klik bus atau saluran pada diagram untuk inspeksi detail.
+          </p>
+        </div>
+
+        <div class="scenario-toolbar" role="group" aria-label="Pilih skenario simulasi IEEE 14-Bus">
+          <button type="button" class="scenario-btn" data-scenario="base" aria-pressed="true">✅ Kondisi Dasar (Base Case)</button>
+          <button type="button" class="scenario-btn" data-scenario="L2-3" aria-pressed="false">⚠️ Outage L2-3 (Darurat #1)</button>
+          <button type="button" class="scenario-btn" data-scenario="L1-2" aria-pressed="false">⚠️ Outage L1-2 (Darurat #2)</button>
+          <button type="button" class="scenario-btn" data-scenario="T5-6" aria-pressed="false">⚠️ Outage Trafo T5-6</button>
+          <button type="button" class="scenario-btn" data-scenario="qlim8" aria-pressed="false">🔄 Batas AVR Bus 8 (Qmax 10 MVAr)</button>
+          <button type="button" class="scenario-btn" data-scenario="heavy_L6-13" aria-pressed="false">📉 Beban 1,6× + Outage L6-13</button>
+        </div>
+
+        <div class="simulator-layout">
+          <!-- Kiri: Diagram Topologi Interaktif SVG -->
+          <div class="sim-card">
+            <h3>Diagram Satu Garis Interaktif IEEE 14-Bus</h3>
+            <div class="topology-svg-wrap">
+              <svg id="ieee14-svg" class="topology-svg" role="img" aria-labelledby="svg-topo-title" viewBox="0 0 760 470">
+                <title id="svg-topo-title">Diagram interaktif topologi jaringan IEEE 14-Bus yang menampilkan tegangan tiap bus dan persentase pembebanan 20 cabang.</title>
+              </svg>
+            </div>
+            <div class="svg-legend">
+              <span class="legend-item"><strong>━━</strong> Cabang Aman (≤100%)</span>
+              <span class="legend-item"><strong>╍╍ ⚠️</strong> Overload (&gt;100%)</span>
+              <span class="legend-item"><strong>┈┈ ✕</strong> Cabang Lepas (Outage)</span>
+              <span class="legend-item"><strong>◯ Putus-putus</strong> Bus PV→PQ</span>
+              <span class="legend-item"><strong>◯ Merah Tebal</strong> Undervoltage (&lt;0,95 p.u.)</span>
+            </div>
+          </div>
+
+          <!-- Kanan: Panel Telemetri & Profil Tegangan -->
+          <div class="sim-card">
+            <h3>Telemetri Solver &amp; Profil Tegangan Bus</h3>
+            <div id="sim-inspector" class="inspector-banner" aria-live="polite">
+              Kondisi Dasar: Seluruh 20 cabang beroperasi aman, 0 pelanggaran tegangan, konvergen dalam 4 iterasi NR.
+            </div>
+
+            <div class="kpi-grid">
+              <div class="kpi-box">
+                <span class="kpi-title">Iterasi &amp; Status NR</span>
+                <span id="kpi-iter" class="kpi-val">4 iter · KONVERGEN</span>
+              </div>
+              <div class="kpi-box">
+                <span class="kpi-title">Rugi Daya Sistem</span>
+                <span id="kpi-loss" class="kpi-val">13,39 MW / 30,12 MVAr</span>
+              </div>
+              <div class="kpi-box">
+                <span class="kpi-title">Tegangan Minimum</span>
+                <span id="kpi-vmin" class="kpi-val">1,0100 p.u. (Bus 3)</span>
+              </div>
+              <div class="kpi-box">
+                <span class="kpi-title">Cabang Terberat</span>
+                <span id="kpi-maxbr" class="kpi-val">L1-2 (79,10%)</span>
+              </div>
+            </div>
+
+            <h4>Profil Magnitudo Tegangan |V| (Rentang Skala 0,90 – 1,10 p.u.)</h4>
+            <div id="voltage-bars" class="voltage-bars"></div>
+          </div>
+        </div>
+
+        <!-- Perbandingan 3 Algoritma Solver -->
+        <div class="solver-compare-grid">
+          <article class="solver-card">
+            <h3>Newton-Raphson Polar (<code>newton_raphson.py</code>)</h3>
+            <p>Orde konvergensi <strong>kuadratik</strong> menggunakan matriks Jacobian sparse eksak.</p>
+            <ul>
+              <li><strong>Iterasi IEEE 14-Bus:</strong> 4 iterasi (waktu ~2,8 ms)</li>
+              <li><strong>Jejak Mismatch:</strong> <code>9,22e-1 → 1,01e-1 → 7,10e-4 → 5,98e-8 → 4,15e-15</code></li>
+              <li><strong>Ketahanan R/X Tinggi (3×R):</strong> Tetap konvergen stabil dalam 5 iterasi.</li>
+            </ul>
+          </article>
+          <article class="solver-card">
+            <h3>Fast Decoupled Load Flow (<code>pf_core.py</code> · XB)</h3>
+            <p>Orde konvergensi <strong>superlinier/linier cepat</strong> dengan faktorisasi LU tunggal matriks konstan <em>B'</em> dan <em>B''</em>.</p>
+            <ul>
+              <li><strong>Iterasi IEEE 14-Bus:</strong> 8 iterasi (waktu ~2,5 ms)</li>
+              <li><strong>Keunggulan:</strong> Sangat hemat memori untuk skrining ribuan skenario EHV.</li>
+              <li><strong>Keterbatasan:</strong> Melambat signifikan hingga &gt;25 iterasi bila rasio <em>R/X</em> tinggi (jaringan distribusi).</li>
+            </ul>
+          </article>
+          <article class="solver-card">
+            <h3>Gauss-Seidel Terakselerasi (<code>α = 1,6</code>)</h3>
+            <p>Orde konvergensi <strong>linier</strong> berbasis pembaruan tegangan sekuensial titik-tetap.</p>
+            <ul>
+              <li><strong>Iterasi IEEE 14-Bus:</strong> 104 iterasi (waktu ~7,7 ms)</li>
+              <li><strong>Peran Pedagogis:</strong> Sangat intuitif untuk pengenalan iterasi numerik awal &amp; inisialisasi kasar.</li>
+              <li><strong>Keterbatasan:</strong> Peka terhadap pemilihan Slack Bus dan jumlah bus jaringan besar.</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TABEL SKRINING KONTINJENSI N-1 ==================== -->
+    <section id="kontinjensi" class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Peringkat Lengkap Skrining Kontinjensi N-1 (20 Cabang IEEE 14-Bus)</h2>
+          <p>
+            Data di bawah merangkum hasil audit otomatis pelepasan tunggal seluruh 17 saluran transmisi dan 3 transformator menggunakan indeks keparahan komposit <em>PI</em> (eksponen <em>2n = 4</em>). Gunakan kotak pencarian atau filter status untuk menyaring skenario; pada layar sempit tabel otomatis beradaptasi menjadi kartu bertumpuk (<em>container query</em>).
+          </p>
+        </div>
+
+        <search aria-label="Filter dan urutkan tabel kontinjensi N-1">
+          <div class="filter-bar">
+            <div class="field-group">
+              <label for="n1-search">Cari cabang lepas atau cabang terdampak</label>
+              <input type="search" id="n1-search" placeholder="Contoh: L2-3, T5-6, atau L3-4">
+            </div>
+            <div class="field-group">
+              <label for="n1-status-filter">Filter kategori keamanan</label>
+              <select id="n1-status-filter">
+                <option value="all">Semua Skenario (20)</option>
+                <option value="overload">⚠️ Overload Termal (&gt;100%)</option>
+                <option value="safe">✅ Aman Normal (≤100%)</option>
+                <option value="islanding">🔌 Islanding Topologi</option>
+              </select>
+            </div>
+            <div class="field-group">
+              <label for="n1-sort">Urutkan berdasarkan</label>
+              <select id="n1-sort">
+                <option value="pi_desc">Indeks Keparahan PI (Tertinggi)</option>
+                <option value="load_desc">Loading Maksimum % (Tertinggi)</option>
+                <option value="vmin_asc">Tegangan Minimum |V|min (Terendah)</option>
+              </select>
+            </div>
+          </div>
+        </search>
+
+        <p id="n1-filter-status" class="filter-status" aria-live="polite">
+          Menampilkan 20 dari 20 skenario kontinjensi N-1.
+        </p>
+
+        <div tabindex="0" role="region" aria-labelledby="n1-table-caption" class="table-wrapper">
+          <table class="data-table">
+            <caption id="n1-table-caption">Tabel Peringkat Keparahan Kontinjensi Tunggal (N-1) Sistem Uji IEEE 14-Bus</caption>
+            <thead>
+              <tr>
+                <th scope="col">Kontinjensi</th>
+                <th scope="col">Status Keamanan</th>
+                <th scope="col">Loading Maks. (%)</th>
+                <th scope="col">Cabang Terberat</th>
+                <th scope="col">Jml Overload</th>
+                <th scope="col">|V|<sub>min</sub> (Bus)</th>
+                <th scope="col">Indeks PI</th>
+                <th scope="col">Daftar Cabang Overload</th>
+              </tr>
+            </thead>
+            <tbody id="n1-tbody">
+              <tr>
+                <th scope="row">L2-3</th>
+                <td><span class="status-badge badge-crit"><span aria-hidden="true">⚠️</span> OVERLOAD (4)</span></td>
+                <td>301,48%</td>
+                <td><code>L3-4</code></td>
+                <td>4</td>
+                <td>1,0100 p.u. (Bus 3)</td>
+                <td>95,50</td>
+                <td>L2-4, L2-5, L3-4, L4-5</td>
+              </tr>
+              <tr>
+                <th scope="row">L1-2</th>
+                <td><span class="status-badge badge-crit"><span aria-hidden="true">⚠️</span> OVERLOAD (3)</span></td>
+                <td>251,16%</td>
+                <td><code>L1-5</code></td>
+                <td>3</td>
+                <td>0,9935 p.u. (Bus 5)</td>
+                <td>60,05</td>
+                <td>L1-5, L3-4, L4-5</td>
+              </tr>
+              <tr>
+                <th scope="row">T5-6</th>
+                <td><span class="status-badge badge-crit"><span aria-hidden="true">⚠️</span> OVERLOAD (7)</span></td>
+                <td>143,85%</td>
+                <td><code>L7-9</code></td>
+                <td>7</td>
+                <td>1,0100 p.u. (Bus 3)</td>
+                <td>27,04</td>
+                <td>L4-5, L7-9, L9-10, L9-14, L10-11, T4-7, T4-9</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== GALERI VISUALISASI ==================== -->
+    <section id="galeri" class="section section-alt">
+      <div class="container">
+        <div class="section-header">
+          <h2>Galeri Visualisasi Hasil Simulasi &amp; Publikasi</h2>
+          <p>
+            Seluruh grafik resolusi tinggi di bawah dihasilkan langsung oleh skrip repositori (<code>pandapower_workflow.py</code>, <code>kode/modul3_pandapower.py</code>, dan <code>kode/modul4_n1.py</code>). Tekan tombol <strong>Perbesar Grafik</strong> untuk membuka pratinjau penuh di dalam jendela modal.
+          </p>
+        </div>
+
+        <div class="gallery-grid">
+          <figure class="gallery-card">
+            <img
+              src="figures/nr_convergence_curve.png"
+              alt="Grafik skala logaritmik penurunan norma mismatch tak-hingga terhadap iterasi Newton-Raphson pada sistem IEEE 5-Bus (3 iterasi) dan IEEE 14-Bus (4 iterasi)."
+              width="1650"
+              height="990"
+              loading="lazy"
+            >
+            <figcaption>
+              <span class="gallery-title">Kurva Konvergensi Kuadratik NR (5-Bus vs 14-Bus)</span>
+              <p class="gallery-desc">Penurunan mismatch <code>‖ΔS‖∞</code> menembus ambang toleransi <code>10⁻⁸ p.u.</code> dalam 3–4 iterasi.</p>
+              <button type="button" class="zoom-btn" data-img-src="figures/nr_convergence_curve.png" data-img-w="1650" data-img-h="990" data-img-title="Kurva Konvergensi Kuadratik NR (IEEE 5-Bus vs IEEE 14-Bus)" data-img-desc="Dihasilkan oleh pandapower_workflow.py: membandingkan laju konvergensi kuadratik solver Newton-Raphson polar pada sistem uji IEEE 5-Bus (3 iterasi) dan IEEE 14-Bus (4 iterasi).">Perbesar Grafik <span class="visually-hidden">Kurva Konvergensi Kuadratik NR</span></button>
+            </figcaption>
+          </figure>
+
+          <figure class="gallery-card">
+            <img
+              src="figures/konvergensi.png"
+              alt="Perbandingan kurva konvergensi tiga metode numerik pada IEEE 14-Bus: Newton-Raphson (4 iterasi), Fast Decoupled XB (8 iterasi), dan Gauss-Seidel terakselerasi (104 iterasi)."
+              width="1400"
+              height="840"
+              loading="lazy"
+            >
+            <figcaption>
+              <span class="gallery-title">Perbandingan NR vs FDLF-XB vs Gauss-Seidel</span>
+              <p class="gallery-desc">Kontras laju konvergensi kuadratik, superlinier/linier cepat, dan linier pada sistem uji yang sama.</p>
+              <button type="button" class="zoom-btn" data-img-src="figures/konvergensi.png" data-img-w="1400" data-img-h="840" data-img-title="Perbandingan Laju Konvergensi NR, FDLF-XB, dan Gauss-Seidel" data-img-desc="Dihasilkan oleh kode/validasi_modul1_2.py pada IEEE 14-Bus: NR konvergen dalam 4 iterasi, FDLF-XB dalam 8 iterasi, dan Gauss-Seidel (alpha=1,6) dalam 104 iterasi.">Perbesar Grafik <span class="visually-hidden">Perbandingan NR vs FDLF-XB vs Gauss-Seidel</span></button>
+            </figcaption>
+          </figure>
+
+          <figure class="gallery-card">
+            <img
+              src="figures/n1_line_loading_heatmap.png"
+              alt="Heatmap matriks 21 skenario kali 20 cabang yang memperlihatkan persentase pembebanan termal saluran dan transformator pada skrining kontinjensi N-1 IEEE 14-Bus."
+              width="2860"
+              height="1760"
+              loading="lazy"
+            >
+            <figcaption>
+              <span class="gallery-title">Heatmap Matriks Pembebanan Cabang N-1 (21×20)</span>
+              <p class="gallery-desc">Peta panas pembebanan arus cabang: menyoroti lonjakan ekstrem <code>260,8%</code> pada <code>L3-4</code> saat <code>L2-3</code> lepas.</p>
+              <button type="button" class="zoom-btn" data-img-src="figures/n1_line_loading_heatmap.png" data-img-w="2860" data-img-h="1760" data-img-title="Heatmap Matriks Pembebanan Cabang Kontinjensi N-1" data-img-desc="Dihasilkan oleh pandapower_workflow.py: matriks lengkap persentase pembebanan 17 saluran dan 3 transformator untuk Base Case dan 20 kontinjensi pelepasan tunggal.">Perbesar Grafik <span class="visually-hidden">Heatmap Matriks Pembebanan Cabang N-1</span></button>
+            </figcaption>
+          </figure>
+
+          <figure class="gallery-card">
+            <img
+              src="figures/profil_tegangan_rugi.png"
+              alt="Diagram batang profil tegangan 14 bus dalam batas 0,95 hingga 1,10 per-unit beserta distribusi rugi daya aktif MW tiap cabang pada kondisi dasar."
+              width="2200"
+              height="800"
+              loading="lazy"
+            >
+            <figcaption>
+              <span class="gallery-title">Profil Tegangan Bus &amp; Distribusi Rugi Transmisi</span>
+              <p class="gallery-desc">Audit kondisi dasar Modul 3: koridor tegangan 14 bus dan identifikasi cabang penyumbang rugi terbesar.</p>
+              <button type="button" class="zoom-btn" data-img-src="figures/profil_tegangan_rugi.png" data-img-w="2200" data-img-h="800" data-img-title="Profil Tegangan Bus & Distribusi Rugi Transmisi IEEE 14-Bus" data-img-desc="Dihasilkan oleh kode/modul3_pandapower.py: menampilkan profil magnitudo tegangan per-unit di 14 bus dan kontribusi rugi daya aktif MW tiap saluran.">Perbesar Grafik <span class="visually-hidden">Profil Tegangan Bus dan Distribusi Rugi Transmisi</span></button>
+            </figcaption>
+          </figure>
+
+          <figure class="gallery-card">
+            <img
+              src="figures/heatmap_tegangan_n1.png"
+              alt="Heatmap magnitudo tegangan 14 bus di seluruh skenario kontinjensi N-1 termasuk deteksi bus terisolasi pada skenario pelepasan L7-8."
+              width="1800"
+              height="1400"
+              loading="lazy"
+            >
+            <figcaption>
+              <span class="gallery-title">Heatmap Profil Tegangan Bus Seluruh Skenario N-1</span>
+              <p class="gallery-desc">Memetakan ketahanan tegangan tiap bus serta menandai sel <code>NaN / ISLAND</code> pada Bus 8 saat <code>L7-8</code> putus.</p>
+              <button type="button" class="zoom-btn" data-img-src="figures/heatmap_tegangan_n1.png" data-img-w="1800" data-img-h="1400" data-img-title="Heatmap Profil Tegangan Bus pada Skrining N-1" data-img-desc="Dihasilkan oleh kode/modul4_n1.py: matriks perubahan magnitudo tegangan bus di seluruh skenario kontinjensi tunggal.">Perbesar Grafik <span class="visually-hidden">Heatmap Profil Tegangan Bus Seluruh Skenario N-1</span></button>
+            </figcaption>
+          </figure>
+
+          <figure class="gallery-card">
+            <img
+              src="figures/loading_n1.png"
+              alt="Diagram batang horizontal peringkat loading maksimum cabang dan indeks keparahan PI pada 19 skenario kontinjensi terhubung IEEE 14-Bus."
+              width="2000"
+              height="800"
+              loading="lazy"
+            >
+            <figcaption>
+              <span class="gallery-title">Peringkat Loading Maksimum &amp; Skor Keparahan N-1</span>
+              <p class="gallery-desc">Membandingkan 8 skenario yang melampaui ambang termal 100% terhadap 11 skenario aman.</p>
+              <button type="button" class="zoom-btn" data-img-src="figures/loading_n1.png" data-img-w="2000" data-img-h="800" data-img-title="Peringkat Loading Maksimum Cabang & Skor PI N-1" data-img-desc="Dihasilkan oleh kode/modul4_n1.py: peringkat kontinjensi tunggal berdasarkan persentase pembebanan cabang tertinggi terhadap garis ambang 100 persen.">Perbesar Grafik <span class="visually-hidden">Peringkat Loading Maksimum dan Skor Keparahan N-1</span></button>
+            </figcaption>
+          </figure>
+
+          <figure class="gallery-card">
+            <img
+              src="figures/topologi_kontinjensi_terburuk.png"
+              alt="Diagram topologi jaringan IEEE 14-Bus saat kontinjensi terburuk pelepasan saluran L2-3 yang menyoroti 4 saluran mengalami overload termal berat."
+              width="1500"
+              height="1300"
+              loading="lazy"
+            >
+            <figcaption>
+              <span class="gallery-title">Topologi Kontinjensi Terburuk (Outage Saluran L2-3)</span>
+              <p class="gallery-desc">Visualisasi spasial limpahan daya 94,2 MW beban Bus 3 yang membebani koridor <code>L3-4</code>, <code>L2-4</code>, <code>L2-5</code>, dan <code>L4-5</code>.</p>
+              <button type="button" class="zoom-btn" data-img-src="figures/topologi_kontinjensi_terburuk.png" data-img-w="1500" data-img-h="1300" data-img-title="Diagram Topologi Kontinjensi Terburuk: Outage L2-3" data-img-desc="Dihasilkan oleh kode/modul4_n1.py: memperlihatkan jalur saluran yang mengalami overload termal di atas 100 persen akibat lepasnya koridor utama L2-3.">Perbesar Grafik <span class="visually-hidden">Topologi Kontinjensi Terburuk Outage Saluran L2-3</span></button>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== REPOSITORI KODE PYTHON ==================== -->
+    <section id="repositori" class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Arsitektur Repositori Kode Python Modular</h2>
+          <p>
+            Seluruh modul dilengkapi anotasi tipe statis (<code>NDArray[np.float64]</code>, <code>TypedDict</code>, <code>@dataclass</code>), dokumentasi bergaya NumPy, penanganan jaringan sakit (<em>ill-conditioned</em>), serta blok demo mandiri yang langsung dapat dieksekusi.
+          </p>
+        </div>
+
+        <div class="repo-grid">
+          <article class="repo-card">
+            <div class="repo-card-head">
+              <h3>1. <a href="ybus.py"><code>ybus.py</code></a> — Matriks Admitansi Sparse</h3>
+              <p>Merakit <code>Y_bus</code>, <code>Y_f</code>, dan <code>Y_t</code> berformat CSR dengan dukungan rasio tap kompleks <code>a = tap * exp(j*shift)</code> dan nomor bus eksternal acak.</p>
+            </div>
+            <div class="code-snippet">
+              <div class="code-toolbar">
+                <span>Cuplikan Inti · build_ybus()</span>
+                <button type="button" class="copy-btn" data-copy-target="snip-ybus" aria-label="Salin Kode cuplikan ybus.py">Salin Kode</button>
+              </div>
+              <pre tabindex="0"><code id="snip-ybus">a = tap * np.exp(1j * shift_rad)
+y_tt = y_s + 0.5j * b_c
+y_ff = y_tt / (np.abs(a) ** 2)
+y_ft = -y_s / np.conj(a)
+y_tf = -y_s / a
+
+y_bus = sp.coo_matrix(
+    (data, ( rows, cols )), shape=(n_bus, n_bus), dtype=np.complex128
+).tocsr()</code></pre>
+            </div>
+          </article>
+
+          <article class="repo-card">
+            <div class="repo-card-head">
+              <h3>2. <a href="newton_raphson.py"><code>newton_raphson.py</code></a> — Solver NR Polar</h3>
+              <p>Menyusun Jacobian <code>J1..J4</code> eksplisit &amp; sparse, agregasi multi-generator per bus, <em>step clamping</em>, serta mekanisme <em>PV ↔ PQ</em> dua arah berbasis AVR.</p>
+            </div>
+            <div class="code-snippet">
+              <div class="code-toolbar">
+                <span>Cuplikan Inti · solve_newton_raphson()</span>
+                <button type="button" class="copy-btn" data-copy-target="snip-nr" aria-label="Salin Kode cuplikan newton_raphson.py">Salin Kode</button>
+              </div>
+              <pre tabindex="0"><code id="snip-nr">j1, j2, j3, j4 = build_jacobian_submatrices(v, y_bus, pvpq_idx, pq_idx)
+j_mat = sp.bmat([[j1, j2], [j3, j4]], format="csc")
+dx = spsolve(j_mat, mismatch)
+
+va[pvpq_idx] += np.clip(dx[:n_pvpq], -max_da, max_da)
+vm[pq_idx] = np.maximum(vm[pq_idx] + np.clip(dx[n_pvpq:], -max_dv, max_dv), 1e-4)</code></pre>
+            </div>
+          </article>
+
+          <article class="repo-card">
+            <div class="repo-card-head">
+              <h3>3. <a href="pandapower_workflow.py"><code>pandapower_workflow.py</code></a> — Skrining N-1</h3>
+              <p>Otomatisasi kontinjensi N-1 cepat (saluran + transformator) menggunakan togel <code>in_service</code> dengan pemulihan state terjamin di blok <code>finally</code>.</p>
+            </div>
+            <div class="code-snippet">
+              <div class="code-toolbar">
+                <span>Cuplikan Inti · run_n1_line_contingency_screening()</span>
+                <button type="button" class="copy-btn" data-copy-target="snip-pp" aria-label="Salin Kode cuplikan pandapower_workflow.py">Salin Kode</button>
+              </div>
+              <pre tabindex="0"><code id="snip-pp">elem_table.at[idx, "in_service"] = False
+try:
+    work_net.bus["vm_pu"] = base_vm.values
+    pp.runpp(work_net, algorithm="nr", init="results", max_iteration=30)
+finally:
+    elem_table.at[idx, "in_service"] = True</code></pre>
+            </div>
+          </article>
+        </div>
+
+        <div class="companion-files">
+          <h3>Skrip Pendamping Laboratorium &amp; Berkas Proyek</h3>
+          <p>Selain tiga modul utama di atas, repositori menyediakan skrip pendamping per-modul yang telah diaudit dan teruji:</p>
+          <ul class="file-pills" role="list">
+            <li><a href="kode/ieee14_data.py">kode/ieee14_data.py</a></li>
+            <li><a href="kode/pf_core.py">kode/pf_core.py</a></li>
+            <li><a href="kode/validasi_modul1_2.py">kode/validasi_modul1_2.py</a></li>
+            <li><a href="kode/modul3_pandapower.py">kode/modul3_pandapower.py</a></li>
+            <li><a href="kode/modul4_n1.py">kode/modul4_n1.py</a></li>
+            <li><a href="hasil/n1_ranking.csv">hasil/n1_ranking.csv</a></li>
+            <li><a href="Buku_Panduan_Pelatihan_Power_Flow_Python.md">Buku_Panduan_Pelatihan_Power_Flow_Python.md</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== KUIS DIAGNOSTIK & CAPSTONE ==================== -->
+    <section id="evaluasi" class="section section-alt">
+      <div class="container">
+        <div class="section-header">
+          <h2>Kuis Diagnostik Mandiri (C2–C6) &amp; Proyek Akhir Capstone</h2>
+          <p>
+            Uji penguasaan konseptual dan numerik Anda melalui 5 soal diagnostik tingkat lanjut di bawah ini, lalu pilih salah satu dari 3 jalur Proyek Capstone untuk penugasan akhir pelatihan.
+          </p>
+        </div>
+
+        <form id="quiz-form" class="quiz-form">
+          <fieldset class="quiz-item">
+            <legend><span class="bloom-badge">C2</span> 1. Mengapa elemen diagonal sisi primer transformator ber-tap off-nominal dibagi oleh <code>|a|²</code> (yakni <code>Y_ff = (y_s + jB_c/2) / |a|²</code>), sedangkan sisi sekunder <code>Y_tt</code> tidak?</legend>
+            <div class="quiz-options">
+              <label class="quiz-option" for="q1-a">
+                <input type="radio" id="q1-a" name="q1" value="a">
+                <span>Karena impedansi seri diposisikan pada sisi sekunder (bus tujuan <em>t</em>), sehingga dilihat dari sisi primer ber-rasio <em>a : 1</em> arus dan tegangan mengalami penskalaan kuadrat rasio lilitan <em>|a|²</em>.</span>
+              </label>
+              <label class="quiz-option" for="q1-b">
+                <input type="radio" id="q1-b" name="q1" value="b">
+                <span>Karena rugi tembaga transformator selalu bernilai nol pada sisi sekunder.</span>
+              </label>
+              <label class="quiz-option" for="q1-c">
+                <input type="radio" id="q1-c" name="q1" value="c">
+                <span>Agar matriks admitansi <em>Y<sub>bus</sub></em> selalu simetris meskipun terdapat pergeseran sudut fasa <em>θ<sub>shift</sub> ≠ 0</em>.</span>
+              </label>
+            </div>
+            <div id="fb-q1" class="quiz-feedback" hidden></div>
+          </fieldset>
+
+          <fieldset class="quiz-item">
+            <legend><span class="bloom-badge">C3</span> 2. Pada sistem 14-Bus dengan 1 Slack Bus, 4 PV Bus, dan 9 PQ Bus, berapakah ukuran matriks Jacobian awal — dan bagaimana ukurannya berubah bila 2 PV Bus melanggar batas <code>Q_max</code> dan beralih menjadi PQ Bus?</legend>
+            <div class="quiz-options">
+              <label class="quiz-option" for="q2-a">
+                <input type="radio" id="q2-a" name="q2" value="a">
+                <span>Ukuran awal <code>28 × 28</code>, lalu menyusut menjadi <code>24 × 24</code>.</span>
+              </label>
+              <label class="quiz-option" for="q2-b">
+                <input type="radio" id="q2-b" name="q2" value="b">
+                <span>Ukuran awal <code>22 × 22</code> (karena <code>N_pv + 2·N_pq = 4 + 18 = 22</code>), lalu membesar menjadi <code>24 × 24</code> karena muncul 2 persamaan mismatch <code>ΔQ</code> dan 2 variabel <code>Δ|V|</code> baru.</span>
+              </label>
+              <label class="quiz-option" for="q2-c">
+                <input type="radio" id="q2-c" name="q2" value="c">
+                <span>Ukuran matriks Jacobian selalu tetap <code>13 × 13</code> sepanjang iterasi.</span>
+              </label>
+            </div>
+            <div id="fb-q2" class="quiz-feedback" hidden></div>
+          </fieldset>
+
+          <fieldset class="quiz-item">
+            <legend><span class="bloom-badge">C4</span> 3. Mengapa metode Fast Decoupled Load Flow (FDLF) melambat drastis atau gagal konvergen pada jaringan distribusi tegangan menengah yang memiliki rasio resistansi terhadap reaktansi (<em>R/X</em>) tinggi?</legend>
+            <div class="quiz-options">
+              <label class="quiz-option" for="q3-a">
+                <input type="radio" id="q3-a" name="q3" value="a">
+                <span>Karena FDLF mengabaikan sub-matriks kopling silang <em>J<sub>2</sub> = ∂P/∂|V|</em> dan <em>J<sub>3</sub> = ∂Q/∂θ</em> yang hanya bernilai kecil apabila konduktansi saluran <em>G ≪ B</em> (yakni saat <em>R ≪ X</em>).</span>
+              </label>
+              <label class="quiz-option" for="q3-b">
+                <input type="radio" id="q3-b" name="q3" value="b">
+                <span>Karena matriks <em>B'</em> dan <em>B''</em> tidak dapat disimpan dalam format sparse CSR.</span>
+              </label>
+              <label class="quiz-option" for="q3-c">
+                <input type="radio" id="q3-c" name="q3" value="c">
+                <span>Karena jaringan distribusi tidak memiliki Slack Bus referensi sudut.</span>
+              </label>
+            </div>
+            <div id="fb-q3" class="quiz-feedback" hidden></div>
+          </fieldset>
+
+          <fieldset class="quiz-item">
+            <legend><span class="bloom-badge">C5</span> 4. Saat bus yang tadinya beralih <em>PV → PQ</em> pada batas atas <code>Q_max</code> dievaluasi ulang di siklus berikutnya, syarat fisik apa yang menandakan AVR dapat memulihkan bus tersebut kembali ke mode <em>PV</em> (<em>back-switching</em>)?</legend>
+            <div class="quiz-options">
+              <label class="quiz-option" for="q4-a">
+                <input type="radio" id="q4-a" name="q4" value="a">
+                <span>Magnitudo tegangan terhitung <code>|V_i|</code> kembali melampaui setpoint <code>V_set</code> (<code>|V_i| &gt; V_set</code>), yang berarti mempertahankan <code>Q_max</code> justru mendorong tegangan terlalu tinggi sehingga injeksi reaktif dapat diturunkan kembali ke dalam batas aman.</span>
+              </label>
+              <label class="quiz-option" for="q4-b">
+                <input type="radio" id="q4-b" name="q4" value="b">
+                <span>Tegangan bus turun di bawah <code>0,90 p.u.</code> pada iterasi pertama.</span>
+              </label>
+              <label class="quiz-option" for="q4-c">
+                <input type="radio" id="q4-c" name="q4" value="c">
+                <span>Sudut fasa bus bernilai tepat nol derajat.</span>
+              </label>
+            </div>
+            <div id="fb-q4" class="quiz-feedback" hidden></div>
+          </fieldset>
+
+          <fieldset class="quiz-item">
+            <legend><span class="bloom-badge">C6</span> 5. Pada skrining N-1 IEEE 14-Bus, pelepasan saluran <code>L2-3</code> menyebabkan <code>L3-4</code> membengkak hingga &gt;250% karena beban 94,2 MW di Bus 3 kehilangan pasokan langsung dari koridor pembangkit utama. Tindakan operasi/perencanaan manakah yang paling efektif memitigasi risiko ini?</legend>
+            <div class="quiz-options">
+              <label class="quiz-option" for="q5-a">
+                <input type="radio" id="q5-a" name="q5" value="a">
+                <span>Melepas kapasitor shunt 19 MVAr di Bus 9 agar aliran daya aktif berkurang.</span>
+              </label>
+              <label class="quiz-option" for="q5-b">
+                <input type="radio" id="q5-b" name="q5" value="b">
+                <span>Penguatan koridor sirkuit ganda pada <code>L2-3</code>/<code>L3-4</code> atau skema <em>generation redispatch</em> / pelepasan beban terkendali (UVLS/SPS) di Bus 3 saat kontinjensi <code>L2-3</code> terdeteksi.</span>
+              </label>
+              <label class="quiz-option" for="q5-c">
+                <input type="radio" id="q5-c" name="q5" value="c">
+                <span>Mematikan kondensor sinkron di Bus 8 sehingga Bus 8 terisolasi.</span>
+              </label>
+            </div>
+            <div id="fb-q5" class="quiz-feedback" hidden></div>
+          </fieldset>
+
+          <div class="hero-actions">
+            <button type="submit" class="btn btn-primary">Periksa Jawaban Kuis</button>
+            <button type="reset" id="quiz-reset" class="btn btn-secondary">Atur Ulang Kuis</button>
+            <span id="quiz-score" aria-live="polite"></span>
+          </div>
+        </form>
+
+        <div class="capstone-grid">
+          <article class="capstone-card">
+            <span class="day-tag">Capstone Jalur A · C6</span>
+            <h3>Penalaan Tap Trafo &amp; Kompensasi Shunt Minimum-Loss</h3>
+            <p>Eksplorasi kombinasi posisi tap <code>T4-7</code>, <code>T4-9</code>, <code>T5-6</code> dan ukuran bank kapasitor Bus 9/Bus 14 untuk menekan <code>P_loss</code> di bawah <code>13,10 MW</code> dengan seluruh tegangan dalam rentang <code>[0,98; 1,06] p.u.</code></p>
+          </article>
+          <article class="capstone-card">
+            <span class="day-tag">Capstone Jalur B · C6</span>
+            <h3>Fast N-1 Contingency Screening &amp; Mitigasi IEEE 30-Bus</h3>
+            <p>Perluas mesin skrining cepat <code>pandapower_workflow.py</code> ke sistem IEEE 30-Bus (41 cabang), hitung peringkat <em>PI</em>, dan validasi manuver korektif untuk 3 kontinjensi teratas.</p>
+          </article>
+          <article class="capstone-card">
+            <span class="day-tag">Capstone Jalur C · C6</span>
+            <h3>Studi Hosting Capacity PLTS Terdistribusi (PV Hosting)</h3>
+            <p>Injeksi bertahap pembangkit surya pada Bus 10, 13, dan 14 untuk menemukan kapasitas maksimum MW sebelum muncul pelanggaran <em>overvoltage</em> <code>&gt; 1,05 p.u.</code> atau arus balik termal.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==================== MODAL LIGHTBOX NATIVE <dialog> ==================== -->
+  <!-- MANDATORY: Tanpa role="dialog" atau aria-modal karena <dialog> modal native menyediakannya -->
+  <dialog id="figure-lightbox" closedby="any" aria-labelledby="lightbox-title">
+    <div class="lightbox-header">
+      <h2 id="lightbox-title">Pratinjau Grafik Simulasi</h2>
+      <form method="dialog">
+        <button class="btn btn-secondary" value="close" autofocus>Tutup</button>
+      </form>
+    </div>
+    <div class="lightbox-body">
+      <img id="lightbox-img" src="figures/nr_convergence_curve.png" alt="Pratinjau grafik diperbesar" width="1650" height="990" fetchpriority="low" loading="lazy">
+      <p id="lightbox-desc"></p>
+    </div>
+  </dialog>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        <strong>Pelatihan Analisis Aliran Daya Menggunakan Python</strong>
+        <p>Kurikulum, Solver Numerik Sparse (NumPy/SciPy), &amp; Otomasi Kontinjensi N-1 (pandapower).</p>
+      </div>
+      <div>
+        <p>Jalankan server statis lokal bila diperlukan: <code>python3 -m http.server 8000</code></p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,1640 @@
+/* ==========================================================================
+   Portal Pelatihan Teknis: Analisis Aliran Daya Menggunakan Python
+   Arsitektur CSS Modern — Light/Dark Otomatis, Container Queries & Aksesibel
+   ========================================================================== */
+
+:root {
+  /* Raw Light Tokens (Kontras terverifikasi >= 4.5:1 teks, >= 3:1 batas UI) */
+  --bg-canvas-light: #f6f8fb;
+  --bg-surface-light: #ffffff;
+  --bg-elevated-light: #eef3f9;
+  --bg-code-light: #0f172a;
+  --text-primary-light: #0f172a;
+  --text-secondary-light: #334155;
+  --text-muted-light: #475569;
+  --border-subtle-light: #cbd5e1;
+  --border-strong-light: #64748b;
+  --brand-primary-light: #0b57d0;
+  --brand-primary-hover-light: #0842a0;
+  --brand-on-primary-light: #ffffff;
+  --brand-soft-light: #dbeafe;
+  --accent-teal-light: #0f766e;
+  --status-ok-bg-light: #dcfce7;
+  --status-ok-fg-light: #14532d;
+  --status-ok-border-light: #16a34a;
+  --status-warn-bg-light: #fef3c7;
+  --status-warn-fg-light: #78350f;
+  --status-warn-border-light: #d97706;
+  --status-crit-bg-light: #fee2e2;
+  --status-crit-fg-light: #7f1d1d;
+  --status-crit-border-light: #dc2626;
+  --focus-ring-light: #0b57d0;
+
+  /* Raw Dark Tokens */
+  --bg-canvas-dark: #0b1120;
+  --bg-surface-dark: #111827;
+  --bg-elevated-dark: #1e293b;
+  --bg-code-dark: #090d16;
+  --text-primary-dark: #f1f5f9;
+  --text-secondary-dark: #cbd5e1;
+  --text-muted-dark: #94a3b8;
+  --border-subtle-dark: #334155;
+  --border-strong-dark: #64748b;
+  --brand-primary-dark: #60a5fa;
+  --brand-primary-hover-dark: #93c5fd;
+  --brand-on-primary-dark: #08142c;
+  --brand-soft-dark: #172554;
+  --accent-teal-dark: #2dd4bf;
+  --status-ok-bg-dark: #052e16;
+  --status-ok-fg-dark: #bbf7d0;
+  --status-ok-border-dark: #22c55e;
+  --status-warn-bg-dark: #451a03;
+  --status-warn-fg-dark: #fde68a;
+  --status-warn-border-dark: #f59e0b;
+  --status-crit-bg-dark: #450a0a;
+  --status-crit-fg-dark: #fecaca;
+  --status-crit-border-dark: #f87171;
+  --focus-ring-dark: #60a5fa;
+
+  /* Default Fallback Tokens (Browsers sebelum light-dark()) */
+  --bg-canvas: var(--bg-canvas-light);
+  --bg-surface: var(--bg-surface-light);
+  --bg-elevated: var(--bg-elevated-light);
+  --bg-code: var(--bg-code-light);
+  --text-primary: var(--text-primary-light);
+  --text-secondary: var(--text-secondary-light);
+  --text-muted: var(--text-muted-light);
+  --border-subtle: var(--border-subtle-light);
+  --border-strong: var(--border-strong-light);
+  --brand-primary: var(--brand-primary-light);
+  --brand-primary-hover: var(--brand-primary-hover-light);
+  --brand-on-primary: var(--brand-on-primary-light);
+  --brand-soft: var(--brand-soft-light);
+  --accent-teal: var(--accent-teal-light);
+  --status-ok-bg: var(--status-ok-bg-light);
+  --status-ok-fg: var(--status-ok-fg-light);
+  --status-ok-border: var(--status-ok-border-light);
+  --status-warn-bg: var(--status-warn-bg-light);
+  --status-warn-fg: var(--status-warn-fg-light);
+  --status-warn-border: var(--status-warn-border-light);
+  --status-crit-bg: var(--status-crit-bg-light);
+  --status-crit-fg: var(--status-crit-fg-light);
+  --status-crit-border: var(--status-crit-border-light);
+  --focus-ring: var(--focus-ring-light);
+
+  /* Fallback untuk browser tanpa dukungan light-dark() */
+  @media (prefers-color-scheme: dark) {
+    --bg-canvas: var(--bg-canvas-dark);
+    --bg-surface: var(--bg-surface-dark);
+    --bg-elevated: var(--bg-elevated-dark);
+    --bg-code: var(--bg-code-dark);
+    --text-primary: var(--text-primary-dark);
+    --text-secondary: var(--text-secondary-dark);
+    --text-muted: var(--text-muted-dark);
+    --border-subtle: var(--border-subtle-dark);
+    --border-strong: var(--border-strong-dark);
+    --brand-primary: var(--brand-primary-dark);
+    --brand-primary-hover: var(--brand-primary-hover-dark);
+    --brand-on-primary: var(--brand-on-primary-dark);
+    --brand-soft: var(--brand-soft-dark);
+    --accent-teal: var(--accent-teal-dark);
+    --status-ok-bg: var(--status-ok-bg-dark);
+    --status-ok-fg: var(--status-ok-fg-dark);
+    --status-ok-border: var(--status-ok-border-dark);
+    --status-warn-bg: var(--status-warn-bg-dark);
+    --status-warn-fg: var(--status-warn-fg-dark);
+    --status-warn-border: var(--status-warn-border-dark);
+    --status-crit-bg: var(--status-crit-bg-dark);
+    --status-crit-fg: var(--status-crit-fg-dark);
+    --status-crit-border: var(--status-crit-border-dark);
+    --focus-ring: var(--focus-ring-dark);
+  }
+
+  /* Token dinamis dengan light-dark() mengikuti computed color-scheme */
+  @supports (color: light-dark(white, black)) {
+    --bg-canvas: light-dark(var(--bg-canvas-light), var(--bg-canvas-dark));
+    --bg-surface: light-dark(var(--bg-surface-light), var(--bg-surface-dark));
+    --bg-elevated: light-dark(var(--bg-elevated-light), var(--bg-elevated-dark));
+    --bg-code: light-dark(var(--bg-code-light), var(--bg-code-dark));
+    --text-primary: light-dark(var(--text-primary-light), var(--text-primary-dark));
+    --text-secondary: light-dark(var(--text-secondary-light), var(--text-secondary-dark));
+    --text-muted: light-dark(var(--text-muted-light), var(--text-muted-dark));
+    --border-subtle: light-dark(var(--border-subtle-light), var(--border-subtle-dark));
+    --border-strong: light-dark(var(--border-strong-light), var(--border-strong-dark));
+    --brand-primary: light-dark(var(--brand-primary-light), var(--brand-primary-dark));
+    --brand-primary-hover: light-dark(var(--brand-primary-hover-light), var(--brand-primary-hover-dark));
+    --brand-on-primary: light-dark(var(--brand-on-primary-light), var(--brand-on-primary-dark));
+    --brand-soft: light-dark(var(--brand-soft-light), var(--brand-soft-dark));
+    --accent-teal: light-dark(var(--accent-teal-light), var(--accent-teal-dark));
+    --status-ok-bg: light-dark(var(--status-ok-bg-light), var(--status-ok-bg-dark));
+    --status-ok-fg: light-dark(var(--status-ok-fg-light), var(--status-ok-fg-dark));
+    --status-ok-border: light-dark(var(--status-ok-border-light), var(--status-ok-border-dark));
+    --status-warn-bg: light-dark(var(--status-warn-bg-light), var(--status-warn-bg-dark));
+    --status-warn-fg: light-dark(var(--status-warn-fg-light), var(--status-warn-fg-dark));
+    --status-warn-border: light-dark(var(--status-warn-border-light), var(--status-warn-border-dark));
+    --status-crit-bg: light-dark(var(--status-crit-bg-light), var(--status-crit-bg-dark));
+    --status-crit-fg: light-dark(var(--status-crit-fg-light), var(--status-crit-fg-dark));
+    --status-crit-border: light-dark(var(--status-crit-border-light), var(--status-crit-border-dark));
+    --focus-ring: light-dark(var(--focus-ring-light), var(--focus-ring-dark));
+  }
+
+  /* Tipografi & Spasi */
+  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  --font-math: "Cambria Math", "STIX Two Math", "Latin Modern Math", Georgia, serif;
+  --radius-sm: 0.375rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 0.875rem;
+  --max-width: 78rem;
+
+  /* MANDATORY: Adaptasi otomatis antarmuka bawaan ke preferensi sistem */
+  color-scheme: light dark;
+  accent-color: var(--brand-primary);
+
+  /* Sinkronisasi override dari <meta name="color-scheme"> agar CSS mengikuti toggle */
+  &:has(> head > meta[name="color-scheme"][content="dark"]) {
+    color-scheme: dark;
+  }
+
+  &:has(> head > meta[name="color-scheme"][content="light"]) {
+    color-scheme: light;
+  }
+}
+
+/* Dukungan penuh Windows High Contrast / Forced Colors Mode */
+@media (forced-colors: active) {
+  :root {
+    --bg-canvas: Canvas;
+    --bg-surface: Canvas;
+    --bg-elevated: Canvas;
+    --text-primary: CanvasText;
+    --text-secondary: CanvasText;
+    --text-muted: CanvasText;
+    --border-subtle: ButtonBorder;
+    --border-strong: CanvasText;
+    --brand-primary: Highlight;
+    --brand-on-primary: HighlightText;
+    --focus-ring: Highlight;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  background-color: var(--bg-canvas);
+  color: var(--text-primary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg-canvas);
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Utilitas Visually Hidden (tetap di pohon aksesibilitas, terlihat saat fokus untuk skip-link) */
+.visually-hidden:where(:not(:focus-within, :active)) {
+  position: absolute !important;
+  clip-path: inset(50%) !important;
+  overflow: hidden !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  white-space: nowrap !important;
+}
+
+.skip-link:focus,
+.skip-link:active {
+  position: fixed;
+  inset-block-start: 0.75rem;
+  inset-inline-start: 0.75rem;
+  z-index: 100;
+  padding: 0.625rem 1rem;
+  background: var(--brand-primary);
+  color: var(--brand-on-primary);
+  border: 2px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* Indikator Fokus Kustom Kontras Tinggi >= 3:1 */
+:where(a:any-link, button, summary, input, select, [tabindex="0"]):focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  line-height: 1.25;
+  margin-block: 0 0.75rem;
+  letter-spacing: -0.015em;
+}
+
+h1:focus {
+  outline: none;
+}
+
+p {
+  margin-block: 0 1rem;
+  color: var(--text-secondary);
+}
+
+code,
+pre,
+kbd {
+  font-family: var(--font-mono);
+}
+
+code {
+  font-size: 0.9em;
+  padding: 0.125rem 0.35rem;
+  border-radius: 0.25rem;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+}
+
+pre code {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+}
+
+a {
+  color: var(--brand-primary);
+  text-underline-offset: 0.2em;
+}
+
+a:hover {
+  color: var(--brand-primary-hover);
+}
+
+.container {
+  max-inline-size: var(--max-width);
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 3vw, 2rem);
+}
+
+/* ==========================================================================
+   Header & Navigasi Utama
+   ========================================================================== */
+
+.site-header {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 40;
+  background: var(--bg-surface);
+  border-block-end: 1px solid var(--border-subtle);
+}
+
+.header-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1.25rem;
+  padding-block: 0.75rem;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  text-decoration: none;
+  color: var(--text-primary);
+  font-weight: 800;
+  font-size: 1rem;
+}
+
+.brand-mark {
+  display: inline-grid;
+  place-items: center;
+  inline-size: 2.25rem;
+  block-size: 2.25rem;
+  border-radius: var(--radius-sm);
+  background: var(--brand-soft);
+  border: 1px solid var(--brand-primary);
+  color: var(--brand-primary);
+  font-family: var(--font-mono);
+  font-weight: 800;
+  font-size: 0.875rem;
+}
+
+.nav-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+}
+
+.primary-nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.primary-nav a {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 2.5rem;
+  padding-inline: 0.625rem;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  color: var(--text-secondary);
+  font-weight: 600;
+  font-size: 0.92rem;
+}
+
+.primary-nav a:hover {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+}
+
+/* Tombol Dua-Status Tema (Mengikuti CSS tanpa ketergantungan JS untuk ikon/label) */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  min-block-size: 2.5rem;
+  min-inline-size: 2.5rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-strong);
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.theme-toggle:hover {
+  border-color: var(--brand-primary);
+}
+
+.theme-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* Secara bawaan (light), tampilkan opsi beralih ke gelap, sembunyikan opsi terang */
+.theme-to-light {
+  display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not(:has(> head > meta[name="color-scheme"][content="light"])) .theme-to-dark {
+    display: none;
+  }
+
+  :root:not(:has(> head > meta[name="color-scheme"][content="light"])) .theme-to-light {
+    display: inline-flex;
+  }
+}
+
+:root:has(> head > meta[name="color-scheme"][content="dark"]) .theme-to-dark {
+  display: none;
+}
+
+:root:has(> head > meta[name="color-scheme"][content="dark"]) .theme-to-light {
+  display: inline-flex;
+}
+
+/* ==========================================================================
+   Hero & Ringkasan Proyek
+   ========================================================================== */
+
+.hero {
+  padding-block: clamp(2rem, 5vw, 3.75rem) clamp(2rem, 4vw, 3rem);
+  border-block-end: 1px solid var(--border-subtle);
+  background:
+    radial-gradient(circle at 85% 15%, var(--brand-soft), transparent 42%),
+    var(--bg-surface);
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: clamp(1.5rem, 3.5vw, 3rem);
+  align-items: start;
+}
+
+@media (max-width: 960px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.3rem 0.75rem;
+  margin-block-end: 1rem;
+  border-radius: 999px;
+  background: var(--brand-soft);
+  border: 1px solid var(--brand-primary);
+  color: var(--brand-primary);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  font-size: clamp(1.85rem, 3.4vw, 2.75rem);
+  color: var(--text-primary);
+}
+
+.hero-lead {
+  font-size: 1.08rem;
+  max-inline-size: 64ch;
+  color: var(--text-secondary);
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-block: 1.25rem 1.75rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-block-size: 2.75rem;
+  padding: 0.6rem 1.15rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-strong);
+  font: inherit;
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: var(--brand-primary);
+  color: var(--brand-on-primary);
+  border-color: var(--brand-primary);
+}
+
+.btn-primary:hover {
+  background: var(--brand-primary-hover);
+  color: var(--brand-on-primary);
+}
+
+.btn-secondary {
+  background: var(--bg-surface);
+  color: var(--text-primary);
+}
+
+.btn-secondary:hover {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+}
+
+.metrics-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.metric-card {
+  padding: 0.875rem 1rem;
+  border-radius: var(--radius-md);
+  background: var(--bg-canvas);
+  border: 1px solid var(--border-subtle);
+}
+
+.metric-value {
+  display: block;
+  font-size: 1.3rem;
+  font-weight: 800;
+  font-family: var(--font-mono);
+  color: var(--brand-primary);
+}
+
+.metric-label {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-block-start: 0.2rem;
+}
+
+.hero-aside {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.hero-figure {
+  margin: 0;
+  padding: 0.875rem;
+  border-radius: var(--radius-lg);
+  background: var(--bg-canvas);
+  border: 1px solid var(--border-subtle);
+}
+
+.hero-figure img {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+  border-radius: var(--radius-sm);
+  background: #ffffff;
+  border: 1px solid var(--border-subtle);
+}
+
+.hero-figure figcaption {
+  margin-block-start: 0.625rem;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.quickstart-box {
+  border-radius: var(--radius-md);
+  background: var(--bg-code);
+  color: #f8fafc;
+  border: 1px solid var(--border-strong);
+  overflow: hidden;
+}
+
+.code-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.5rem 0.875rem;
+  background: #1e293b;
+  border-block-end: 1px solid #334155;
+  font-size: 0.8rem;
+  color: #cbd5e1;
+}
+
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-block-size: 2rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid #64748b;
+  background: #0f172a;
+  color: #f8fafc;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.copy-btn:hover {
+  border-color: #93c5fd;
+}
+
+.quickstart-box pre,
+.code-snippet pre {
+  margin: 0;
+  padding: 0.875rem 1rem;
+  overflow-x: auto;
+  font-size: 0.84rem;
+  line-height: 1.55;
+  color: #e2e8f0;
+  color-scheme: dark;
+}
+
+/* ==========================================================================
+   Bagian Umum & Kartu
+   ========================================================================== */
+
+.section {
+  padding-block: clamp(2.5rem, 5vw, 4rem);
+  border-block-end: 1px solid var(--border-subtle);
+}
+
+.section-alt {
+  background: var(--bg-surface);
+}
+
+.section-header {
+  max-inline-size: 68ch;
+  margin-block-end: 1.75rem;
+}
+
+.section-header h2 {
+  font-size: clamp(1.45rem, 2.5vw, 2rem);
+  color: var(--text-primary);
+}
+
+.schedule-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1rem;
+  margin: 0 0 2rem;
+  padding: 0;
+  list-style: none;
+}
+
+.schedule-card {
+  padding: 1.125rem;
+  border-radius: var(--radius-md);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+}
+
+.section-alt .schedule-card {
+  background: var(--bg-canvas);
+}
+
+.day-tag {
+  display: inline-block;
+  padding: 0.15rem 0.55rem;
+  margin-block-end: 0.5rem;
+  border-radius: var(--radius-sm);
+  background: var(--brand-soft);
+  border: 1px solid var(--brand-primary);
+  color: var(--brand-primary);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   Akordion Eksklusif Kurikulum (<details name="kurikulum-modul">)
+   ========================================================================== */
+
+.accordion-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+}
+
+.module-disclosure {
+  border-radius: var(--radius-md);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  overflow: hidden;
+}
+
+.section-alt .module-disclosure {
+  background: var(--bg-canvas);
+}
+
+.module-disclosure[open] {
+  border-color: var(--brand-primary);
+}
+
+.module-disclosure > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.1rem 1.25rem;
+  cursor: pointer;
+  list-style: none;
+  background: var(--bg-elevated);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.module-disclosure > summary::-webkit-details-marker {
+  display: none;
+}
+
+.summary-main {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+}
+
+.module-num {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-sm);
+  background: var(--brand-primary);
+  color: var(--brand-on-primary);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+}
+
+.summary-meta {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+/* Indikator arah eksplisit pengganti segitiga bawaan */
+.summary-chevron {
+  flex-shrink: 0;
+  inline-size: 1.75rem;
+  block-size: 1.75rem;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 999px;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-surface);
+  transition: transform 0.2s ease;
+}
+
+.module-disclosure[open] > summary .summary-chevron {
+  transform: rotate(180deg);
+}
+
+.module-body {
+  padding: 1.35rem 1.25rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+  gap: 1.25rem;
+}
+
+.module-panel {
+  padding: 1rem 1.125rem;
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+}
+
+.module-panel h3,
+.module-panel h4 {
+  font-size: 1.02rem;
+  margin-block-end: 0.65rem;
+  color: var(--text-primary);
+}
+
+.module-panel ul,
+.module-panel ol {
+  margin: 0;
+  padding-inline-start: 1.25rem;
+  color: var(--text-secondary);
+}
+
+.module-panel li + li {
+  margin-block-start: 0.45rem;
+}
+
+.bloom-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.1rem 0.45rem;
+  margin-inline-end: 0.35rem;
+  border-radius: 0.25rem;
+  border: 1px solid var(--brand-primary);
+  background: var(--brand-soft);
+  color: var(--brand-primary);
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.equation-box {
+  margin-block: 0.65rem;
+  padding: 0.75rem 0.9rem;
+  border-radius: var(--radius-sm);
+  background: var(--bg-elevated);
+  border-inline-start: 4px solid var(--brand-primary);
+  border-block: 1px solid var(--border-subtle);
+  border-inline-end: 1px solid var(--border-subtle);
+  overflow-x: auto;
+  font-family: var(--font-math);
+  font-size: 0.98rem;
+  color: var(--text-primary);
+}
+
+.checkpoint-note {
+  margin-block-start: 0.75rem;
+  padding: 0.65rem 0.85rem;
+  border-radius: var(--radius-sm);
+  background: var(--status-ok-bg);
+  border: 1px solid var(--status-ok-border);
+  color: var(--status-ok-fg);
+  font-size: 0.88rem;
+}
+
+/* ==========================================================================
+   Simulator Interaktif IEEE 14-Bus & Kurva Konvergensi
+   ========================================================================== */
+
+.scenario-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-block-end: 1.25rem;
+}
+
+.scenario-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-block-size: 2.5rem;
+  padding: 0.45rem 0.85rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-strong);
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.scenario-btn:hover {
+  background: var(--bg-elevated);
+}
+
+.scenario-btn[aria-pressed="true"] {
+  background: var(--brand-primary);
+  color: var(--brand-on-primary);
+  border-color: var(--brand-primary);
+}
+
+.simulator-layout {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 1.25rem;
+  align-items: start;
+}
+
+@media (max-width: 1024px) {
+  .simulator-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.sim-card {
+  padding: 1.15rem;
+  border-radius: var(--radius-md);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+}
+
+.section-alt .sim-card {
+  background: var(--bg-canvas);
+}
+
+.topology-svg-wrap {
+  border-radius: var(--radius-sm);
+  background: var(--bg-canvas);
+  border: 1px solid var(--border-subtle);
+  padding: 0.5rem;
+  overflow-x: auto;
+}
+
+.section-alt .topology-svg-wrap {
+  background: var(--bg-surface);
+}
+
+.topology-svg {
+  display: block;
+  inline-size: 100%;
+  min-inline-size: 32rem;
+  block-size: auto;
+}
+
+/* Elemen SVG Topologi IEEE 14-Bus (Pola garis + bentuk selain warna) */
+.svg-branch {
+  stroke: var(--border-strong);
+  stroke-width: 2.6;
+  cursor: pointer;
+}
+
+.svg-branch.is-overload {
+  stroke: var(--status-crit-border);
+  stroke-width: 4.5;
+  stroke-dasharray: 8 4;
+}
+
+.svg-branch.is-outage {
+  stroke: var(--text-muted);
+  stroke-width: 2.2;
+  stroke-dasharray: 3 5;
+  opacity: 0.65;
+}
+
+.svg-bus-node {
+  cursor: pointer;
+}
+
+.svg-bus-circle {
+  fill: var(--bg-surface);
+  stroke: var(--brand-primary);
+  stroke-width: 2.5;
+}
+
+.svg-bus-node.is-slack .svg-bus-circle {
+  fill: var(--brand-soft);
+  stroke-width: 3.5;
+}
+
+.svg-bus-node.is-switched .svg-bus-circle {
+  fill: var(--status-warn-bg);
+  stroke: var(--status-warn-border);
+  stroke-width: 3.5;
+  stroke-dasharray: 4 2;
+}
+
+.svg-bus-node.is-undervolt .svg-bus-circle {
+  fill: var(--status-crit-bg);
+  stroke: var(--status-crit-border);
+  stroke-width: 3.5;
+}
+
+.svg-bus-label {
+  fill: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-anchor: middle;
+  dominant-baseline: central;
+  pointer-events: none;
+}
+
+.svg-bus-volt {
+  fill: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-anchor: middle;
+  pointer-events: none;
+}
+
+.svg-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  margin-block-start: 0.75rem;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}
+
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+  margin-block-end: 1rem;
+}
+
+.kpi-box {
+  padding: 0.75rem;
+  border-radius: var(--radius-sm);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+}
+
+.kpi-title {
+  display: block;
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.kpi-val {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 1.02rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-block-start: 0.2rem;
+}
+
+.inspector-banner {
+  padding: 0.75rem 0.9rem;
+  margin-block-end: 1rem;
+  border-radius: var(--radius-sm);
+  background: var(--brand-soft);
+  border: 1px solid var(--brand-primary);
+  color: var(--text-primary);
+  font-size: 0.88rem;
+}
+
+.voltage-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 0.38rem;
+}
+
+.vbar-row {
+  display: grid;
+  grid-template-columns: 3.8rem 1fr 6.4rem;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  font-family: var(--font-mono);
+}
+
+.vbar-track {
+  position: relative;
+  block-size: 0.75rem;
+  border-radius: 999px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  overflow: hidden;
+}
+
+.vbar-fill {
+  block-size: 100%;
+  inline-size: var(--v-pct, 50%);
+  background: var(--brand-primary);
+  border-radius: 999px;
+}
+
+.vbar-row.is-low .vbar-fill {
+  background: var(--status-crit-border);
+}
+
+.vbar-row.is-switched .vbar-fill {
+  background: var(--status-warn-border);
+}
+
+/* Perbandingan Solver NR vs FDLF-XB vs Gauss-Seidel */
+.solver-compare-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+  gap: 1rem;
+  margin-block-start: 1.25rem;
+}
+
+.solver-card {
+  padding: 1rem 1.15rem;
+  border-radius: var(--radius-md);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+}
+
+.section-alt .solver-card {
+  background: var(--bg-canvas);
+}
+
+/* ==========================================================================
+   Pencarian & Tabel Responsif Kontinjensi N-1 (@container)
+   ========================================================================== */
+
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 0.875rem;
+  padding: 1rem;
+  margin-block-end: 0.875rem;
+  border-radius: var(--radius-md);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-inline-size: 13rem;
+  flex: 1 1 13rem;
+}
+
+.field-group label {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.field-group input,
+.field-group select {
+  min-block-size: 2.5rem;
+  padding: 0.45rem 0.7rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-strong);
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  font: inherit;
+  font-size: 0.9rem;
+}
+
+.filter-status {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-block-end: 0.75rem;
+}
+
+/* Kontainer Tabel Responsif sesuai pedoman responsive-table */
+.table-wrapper {
+  overflow: auto;
+  max-inline-size: 100%;
+  max-block-size: min(560px, 78vh);
+  container-type: inline-size;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+}
+
+.data-table {
+  inline-size: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.88rem;
+  --label-2: "Status";
+  --label-3: "Loading Maks.";
+  --label-4: "Cabang Terberat";
+  --label-5: "Jml Overload";
+  --label-6: "|V|min (Bus)";
+  --label-7: "Indeks PI";
+  --label-8: "Daftar Cabang Overload";
+}
+
+.data-table caption {
+  padding: 0.85rem 1rem;
+  text-align: start;
+  font-weight: 700;
+  color: var(--text-primary);
+  background: var(--bg-elevated);
+  border-block-end: 1px solid var(--border-subtle);
+}
+
+.data-table thead {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 2;
+}
+
+.data-table thead th {
+  padding: 0.75rem 0.85rem;
+  text-align: start;
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  border-block-end: 2px solid var(--border-strong);
+  white-space: nowrap;
+}
+
+.data-table tbody th,
+.data-table tbody td {
+  padding: 0.7rem 0.85rem;
+  border-block-end: 1px solid var(--border-subtle);
+  vertical-align: middle;
+}
+
+/* Sticky row header di desktop */
+.data-table tbody th {
+  position: sticky;
+  inset-inline-start: 0;
+  z-index: 1;
+  text-align: start;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  background: var(--bg-surface);
+  border-inline-end: 1px solid var(--border-subtle);
+}
+
+.data-table tbody tr:hover td,
+.data-table tbody tr:hover th {
+  background: var(--bg-elevated);
+}
+
+/* Badge Status selalu memadukan Ikon + Teks + Bentuk Batas */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.18rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+
+.badge-ok {
+  background: var(--status-ok-bg);
+  color: var(--status-ok-fg);
+  border-color: var(--status-ok-border);
+}
+
+.badge-warn {
+  background: var(--status-warn-bg);
+  color: var(--status-warn-fg);
+  border-color: var(--status-warn-border);
+}
+
+.badge-crit {
+  background: var(--status-crit-bg);
+  color: var(--status-crit-fg);
+  border-color: var(--status-crit-border);
+}
+
+/* Transformasi Stacked Card berbasis @container saat lebar kontainer < 640px */
+@container (width < 640px) {
+  .data-table,
+  .data-table thead,
+  .data-table tbody,
+  .data-table tr,
+  .data-table th,
+  .data-table td {
+    display: block;
+  }
+
+  .data-table thead {
+    /* MANDATORY: Sembunyikan header kolom dari layout dan screen reader di mode kartu */
+    display: none;
+  }
+
+  .data-table tbody tr {
+    margin: 0.75rem;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+  }
+
+  .data-table tbody th {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: 2;
+    background: var(--bg-elevated);
+    border-inline-end: 0;
+    border-block-end: 1px solid var(--border-strong);
+  }
+
+  .data-table tbody td {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.75rem;
+    text-align: end;
+  }
+
+  .data-table td::before {
+    font-weight: 700;
+    color: var(--text-secondary);
+    text-align: start;
+  }
+
+  .data-table td:nth-child(2)::before { content: var(--label-2) ": "; }
+  .data-table td:nth-child(3)::before { content: var(--label-3) ": "; }
+  .data-table td:nth-child(4)::before { content: var(--label-4) ": "; }
+  .data-table td:nth-child(5)::before { content: var(--label-5) ": "; }
+  .data-table td:nth-child(6)::before { content: var(--label-6) ": "; }
+  .data-table td:nth-child(7)::before { content: var(--label-7) ": "; }
+  .data-table td:nth-child(8)::before { content: var(--label-8) ": "; }
+}
+
+/* ==========================================================================
+   Galeri Visualisasi & Modal Native <dialog>
+   ========================================================================== */
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+  gap: 1.25rem;
+}
+
+.gallery-card {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-md);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  overflow: hidden;
+}
+
+.section-alt .gallery-card {
+  background: var(--bg-canvas);
+}
+
+.gallery-card img {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+  aspect-ratio: 16 / 10;
+  object-fit: contain;
+  background: #ffffff;
+  border-block-end: 1px solid var(--border-subtle);
+}
+
+.gallery-card figcaption {
+  padding: 0.9rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  flex: 1;
+}
+
+.gallery-title {
+  font-weight: 700;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+}
+
+.gallery-desc {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin: 0;
+  flex: 1;
+}
+
+.zoom-btn {
+  align-self: flex-start;
+  min-block-size: 2.35rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-strong);
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.zoom-btn:hover {
+  border-color: var(--brand-primary);
+}
+
+/* MANDATORY scroll containment untuk native modal <dialog> */
+dialog:modal {
+  overscroll-behavior: contain;
+}
+
+dialog::backdrop {
+  overflow: hidden;
+  overscroll-behavior: contain;
+  background: rgb(15 23 42 / 0.78);
+}
+
+/* Jangan pernah memasang display tanpa scope dialog[open] */
+#figure-lightbox {
+  max-inline-size: min(92vw, 72rem);
+  max-block-size: 90vh;
+  padding: 0;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  background: var(--bg-surface);
+  color: var(--text-primary);
+}
+
+#figure-lightbox[open] {
+  display: flex;
+  flex-direction: column;
+}
+
+.lightbox-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 1.15rem;
+  background: var(--bg-elevated);
+  border-block-end: 1px solid var(--border-subtle);
+}
+
+.lightbox-header h2 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.lightbox-body {
+  padding: 1rem;
+  overflow: auto;
+}
+
+.lightbox-body img {
+  display: block;
+  max-inline-size: 100%;
+  block-size: auto;
+  margin-inline: auto;
+  background: #ffffff;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+}
+
+.lightbox-body p {
+  margin: 0.75rem 0 0;
+  font-size: 0.9rem;
+}
+
+/* ==========================================================================
+   Repositori Kode Python, Kuis Diagnostik & Capstone
+   ========================================================================== */
+
+.repo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(21rem, 1fr));
+  gap: 1.25rem;
+}
+
+.repo-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-md);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  overflow: hidden;
+}
+
+.section-alt .repo-card {
+  background: var(--bg-canvas);
+}
+
+.repo-card-head {
+  padding: 1rem 1.15rem;
+  border-block-end: 1px solid var(--border-subtle);
+}
+
+.repo-card-head h3 {
+  font-size: 1.08rem;
+  margin-block-end: 0.35rem;
+}
+
+.code-snippet {
+  background: var(--bg-code);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.companion-files {
+  margin-block-start: 1.5rem;
+  padding: 1.1rem 1.25rem;
+  border-radius: var(--radius-md);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+}
+
+.file-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+  margin: 0.65rem 0 0;
+  padding: 0;
+}
+
+.file-pills a {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 2.35rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-strong);
+  font-family: var(--font-mono);
+  font-size: 0.83rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* Kuis Formatif Bloom C1-C6 */
+.quiz-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.quiz-item {
+  margin: 0;
+  padding: 1.1rem 1.25rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+}
+
+.section-alt .quiz-item {
+  background: var(--bg-canvas);
+}
+
+.quiz-item legend {
+  padding-inline: 0.35rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-block-start: 0.65rem;
+}
+
+.quiz-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  padding: 0.55rem 0.75rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-elevated);
+  cursor: pointer;
+}
+
+.quiz-option input[type="radio"] {
+  margin-block-start: 0.25rem;
+  inline-size: 1.1rem;
+  block-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.quiz-feedback {
+  margin-block-start: 0.75rem;
+  padding: 0.65rem 0.85rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.quiz-feedback[hidden] {
+  display: none;
+}
+
+.quiz-feedback.is-correct {
+  background: var(--status-ok-bg);
+  color: var(--status-ok-fg);
+  border: 1px solid var(--status-ok-border);
+}
+
+.quiz-feedback.is-wrong {
+  background: var(--status-crit-bg);
+  color: var(--status-crit-fg);
+  border: 1px solid var(--status-crit-border);
+}
+
+.capstone-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  gap: 1rem;
+  margin-block-start: 2rem;
+}
+
+.capstone-card {
+  padding: 1.15rem;
+  border-radius: var(--radius-md);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+}
+
+.section-alt .capstone-card {
+  background: var(--bg-canvas);
+}
+
+/* Perbesar target sentuh di perangkat pointer kasar */
+@media (pointer: coarse) {
+  .btn,
+  .scenario-btn,
+  .theme-toggle,
+  .zoom-btn,
+  .primary-nav a {
+    min-block-size: 2.75rem;
+  }
+}
+
+/* Footer */
+.site-footer {
+  padding-block: 2rem 2.75rem;
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+}

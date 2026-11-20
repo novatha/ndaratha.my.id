@@ -4,6 +4,11 @@
       "source": "/iot",
       "destination": "/iot/",
       "permanent": true
+    },
+    {
+      "source": "/w-pf",
+      "destination": "/w-pf/",
+      "permanent": true
     }
   ]
 }
