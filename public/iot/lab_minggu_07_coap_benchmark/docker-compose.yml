@@ -1,0 +1,33 @@
+services:
+  mosquitto:
+    image: eclipse-mosquitto:2.0
+    container_name: lab5_mosquitto
+    ports:
+      - "1883:1883"
+    volumes:
+      - ./mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+
+  coap-server:
+    build: .
+    container_name: lab5_coap_server
+    command: ["python3", "coap_server.py"]
+    ports:
+      - "5683:5683/udp"
+
+  http-server:
+    build: .
+    container_name: lab5_http_server
+    command: ["uvicorn", "http_sink_server:app", "--host", "0.0.0.0", "--port", "8000"]
+    ports:
+      - "8000:8000"
+
+  bench-client:
+    build: .
+    container_name: lab5_bench_client
+    cap_add:
+      - NET_ADMIN   # Wajib agar `tc qdisc ... netem` berjalan di dalam kontainer!
+    command: ["sleep", "infinity"]
+    depends_on:
+      - mosquitto
+      - coap-server
+      - http-server
