@@ -1,0 +1,106 @@
+\documentclass[conference]{IEEEtran}
+
+\usepackage[utf8]{inputenc}
+\usepackage[indonesian]{babel}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{cite}
+\usepackage[hidelinks]{hyperref}
+
+\begin{document}
+
+\title{Judul Proyek Akhir Peramalan Deret Waktu Sistem Tenaga Listrik\\
+{\footnotesize \textsuperscript{*}Laporan Proyek Akhir Mata Kuliah Analisis Deret Waktu dan Peramalan (TEE-412)}}
+
+\author{
+\IEEEauthorblockN{1\textsuperscript{st} Nama Mahasiswa Pertama}
+\IEEEauthorblockA{\textit{Program Studi S1 Teknik Elektro}\\
+\textit{Universitas Bengkulu}\\
+Bengkulu, Indonesia\\
+npm1@unib.ac.id}
+\and
+\IEEEauthorblockN{2\textsuperscript{nd} Nama Mahasiswa Kedua}
+\IEEEauthorblockA{\textit{Program Studi S1 Teknik Elektro}\\
+\textit{Universitas Bengkulu}\\
+Bengkulu, Indonesia\\
+npm2@unib.ac.id}
+\and
+\IEEEauthorblockN{3\textsuperscript{rd} Nama Mahasiswa Ketiga}
+\IEEEauthorblockA{\textit{Program Studi S1 Teknik Elektro}\\
+\textit{Universitas Bengkulu}\\
+Bengkulu, Indonesia\\
+npm3@unib.ac.id}
+}
+
+\maketitle
+
+\begin{abstract}
+Tuliskan abstrak penelitian proyek akhir Anda secara ringkas ($\le 200$ kata) yang mencakup: (1) latar belakang permasalahan ketenagalistrikan (mis. peramalan beban jangka pendek, daya PLTS/PLTB, atau deteksi pencurian listrik \textit{smart meter}), (2) dataset dan protokol pemisahan kronologis bebas \textit{data leakage}, (3) model pembanding yang dievaluasi (minimal 1 \textit{baseline} statistik vs. 2 model ML/DL), serta (4) temuan kuantitatif utama (MAE, RMSE, MAPE/WAPE, atau F1-Score) dan implikasi keteknikannya.
+\end{abstract}
+
+\begin{IEEEkeywords}
+analisis deret waktu, peramalan beban listrik, SARIMAX, XGBoost, LSTM, smart grid
+\end{IEEEkeywords}
+
+\section{Pendahuluan}
+Jelaskan konteks rekayasa sistem tenaga yang melatarbelakangi studi kasus tim Anda, misalnya pentingnya akurasi \textit{Short-Term Load Forecasting} (STLF) atau kuantisasi ketidakpastian daya surya untuk penjadwalan \textit{Unit Commitment} dan BESS \cite{box2015, hyndman2021}. Rumuskan masalah, tujuan penelitian, serta ringkasan kontribusi tim Anda pada bagian akhir pendahuluan.
+
+\section{Deskripsi Dataset \& Prapemrosesan}
+Uraikan secara transparan sumber data, resolusi pencuplikan (mis. per-jam atau per-15 menit), periode pengamatan, dan statistik deskriptif utama. Jelaskan langkah prapemrosesan yang diterapkan:
+\begin{itemize}
+    \item Penanganan \textit{missing values} dan \textit{outlier} sensor.
+    \item Analisis eksploratif: dekomposisi tren/musiman, uji stasioneritas ADF/KPSS, dan korelogram ACF/PACF.
+    \item \textbf{Protokol Anti-\textit{Data Leakage}:} Pemisahan data latih, validasi, dan uji dilakukan secara kronologis (\textit{temporal split}). Seluruh transformasi skala (\texttt{MinMaxScaler}/\texttt{StandardScaler}) dan fitur \textit{rolling} dihitung secara kausal hanya dari histori masa lalu.
+\end{itemize}
+
+\section{Metodologi \& Arsitektur Model}
+Bandingkan minimal satu model \textit{baseline} parametrik terhadap minimal dua model pembelajaran mesin / \textit{deep learning}. Tuliskan persamaan matematis inti, misalnya model SARIMA:
+\begin{equation}
+\Phi_P(B^s)\phi_p(B)(1-B)^d(1-B^s)^D y_t = \Theta_Q(B^s)\theta_q(B)\epsilon_t
+\label{eq:sarima}
+\end{equation}
+serta metrik evaluasi utama seperti RMSE dan WAPE:
+\begin{equation}
+\text{RMSE} = \sqrt{\frac{1}{N}\sum_{t=1}^{N}(y_t - \hat{y}_t)^2}, \quad
+\text{WAPE} = \frac{\sum_{t=1}^{N}|y_t - \hat{y}_t|}{\sum_{t=1}^{N}|y_t|} \times 100\%.
+\label{eq:metrics}
+\end{equation}
+Jelaskan pula konfigurasi hiperparameter, perangkat komputasi (Google Colab/lokal), dan nilai \textit{random seed} untuk reproduksibilitas.
+
+\section{Hasil Eksperimen \& Pembahasan}
+Sajikan hasil evaluasi kuantitatif pada data uji (\textit{out-of-sample}) menggunakan tabel standar IEEE seperti pada Tabel~\ref{tab:hasil}. Lengkapi dengan grafik perbandingan sinyal aktual vs. prediksi, analisis residual (uji Ljung-Box / distribusi error), serta pembahasan kondisi ekstrem (hari libur, awan tebal, atau lonjakan beban puncak).
+
+\begin{table}[htbp]
+\caption{Contoh Perbandingan Kinerja Model Peramalan pada Data Uji}
+\begin{center}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Model} & \textbf{MAE (MW)} & \textbf{RMSE (MW)} & \textbf{WAPE (\%)} \\
+\midrule
+Holt-Winters (Baseline) & 9.45 & 12.80 & 2.41 \\
+SARIMAX (Cuaca) & 7.12 & 9.64 & 1.82 \\
+XGBoost (Lag + Siklis) & 5.84 & 7.95 & 1.49 \\
+LSTM Multi-Step (24 Jam) & \textbf{5.31} & \textbf{7.20} & \textbf{1.35} \\
+\bottomrule
+\end{tabular}
+\label{tab:hasil}
+\end{center}
+\end{table}
+
+Diskusikan implikasi praktis hasil tersebut terhadap operasi sistem tenaga listrik, misalnya pengurangan kebutuhan cadangan putar (\textit{spinning reserve}) atau penghematan biaya dispatch baterai BESS.
+
+\section{Kesimpulan \& Saran}
+Ringkas temuan paling signifikan yang menjawab rumusan masalah (didukung angka kinerja utama), sebutkan keterbatasan studi (mis. ketergantungan pada akurasi prakiraan cuaca), dan berikan saran pengembangan lanjutan.
+
+\section*{Deklarasi Penggunaan AI \& Repositori Kode}
+Tim menyatakan bahwa seluruh eksperimen dijalankan secara mandiri dan bebas \textit{data leakage}. Kode sumber lengkap (\texttt{.ipynb}, \texttt{requirements.txt}, dan \texttt{README.md}) tersedia pada: \url{https://github.com/username/nama-repositori-tim}. \textit{(Tuliskan secara jujur apabila menggunakan alat bantu AI untuk debugging atau penyuntingan bahasa.)}
+
+\begin{thebibliography}{9}
+\bibitem{box2015} G. E. P. Box, G. M. Jenkins, G. C. Reinsel, and G. M. Ljung, \textit{Time Series Analysis: Forecasting and Control}, 5th ed. Hoboken, NJ, USA: Wiley, 2015.
+\bibitem{hyndman2021} R. J. Hyndman and G. Athanasopoulos, \textit{Forecasting: Principles and Practice}, 3rd ed. Melbourne, Australia: OTexts, 2021.
+\bibitem{fei2020} S. Fei and Y. He, \textit{Load Forecasting in Electric Power Systems: Models and Methods}. Singapore: Springer, 2020.
+\bibitem{benidis2022} K. Benidis et al., ``Deep learning for time series forecasting: Tutorial and literature survey,'' \textit{ACM Comput. Surv.}, vol. 55, no. 6, pp. 1--36, 2022.
+\end{thebibliography}
+
+\end{document}
